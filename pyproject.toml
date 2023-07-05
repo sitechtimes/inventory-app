@@ -9,6 +9,8 @@ packages = [{include = "inventory_app"}]
 [tool.poetry.dependencies]
 python = "^3.11"
 django = "^4.2.3"
+djangorestframework = "^3.14.0"
+pygments = "^2.15.1"
 
 
 [build-system]
