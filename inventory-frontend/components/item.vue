@@ -1,5 +1,5 @@
 <template>
-  <div class="itemMain">
+  <div class="itemMain" ref="main">
     <div class="name-avail">
       <div class="name">{{ name }} ({{ quantity }})</div>
       <div class="avail-updated">
@@ -9,10 +9,10 @@
         </div>
         <div class="updated">Last updated: {{ updated }}</div>
       </div>
-      <button class="dropdown" @click="wow = !wow"></button>
+      <button class="dropdown" @click="clicked"></button>
     </div>
 
-    <div class="description" v-if="wow">
+    <div class="description" v-if="info">
       {{ description }}
     </div>
   </div>
@@ -24,7 +24,7 @@
   width: 75vw;
   max-width: 35rem;
   border-radius: 2rem;
-  background-color: #a687ca;
+  background-color: rgb(68, 27, 88);
   display: flex;
   flex-direction: row;
   position: relative;
@@ -72,11 +72,12 @@
 .description {
   max-height: 100%;
   width: 60%;
-  padding: 1rem;
-  color: black;
+  padding: 1.5rem;
+  color: #b696db;
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: all 0.4s;
 }
 .dropdown {
   visibility: hidden;
@@ -84,7 +85,8 @@
 @media screen and (max-width: 575px) {
   .itemMain {
     flex-direction: column;
-    height: 6.8rem;
+    height: fit-content;
+    padding-bottom: 3.5rem;
   }
   .name-avail {
     width: 100%;
@@ -92,6 +94,12 @@
   .name {
     font-size: 1.05rem;
     padding-right: 1rem;
+  }
+  .avail-updated {
+    position: absolute;
+    bottom: 0;
+    height: fit-content;
+    padding-top: 0.4rem;
   }
   .availability,
   .updated {
@@ -127,6 +135,7 @@
   .description {
     width: 80%;
     padding-left: 1.5rem;
+    padding-bottom: 0.5rem;
   }
 }
 </style>
@@ -143,14 +152,25 @@ export default {
   },
   data() {
     return {
-      wow: false,
+      info: false,
     };
   },
   methods: {
     clicked() {
       console.log("clicked");
-      this.wow = true;
+      this.info = !this.info;
     },
+
+    infoScreen() {
+      if (window.matchMedia("(min-width: 575px)").matches) {
+        this.info = true;
+      } else {
+        this.info = false;
+      }
+    },
+  },
+  mounted() {
+    this.infoScreen();
   },
 };
 </script>

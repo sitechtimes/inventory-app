@@ -17,7 +17,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300&display=swap");
 
 body {
-  background-color: #fffcf8;
+  background-color: #ebe3e2;
   color: #ffffff;
   font-family: "Fira Sans", sans-serif;
 }
@@ -31,7 +31,7 @@ body {
 </style>
 
 <script>
-import { Item } from "./components/item.vue";
+import Item from "./components/item.vue";
 
 export default {
   name: "app",
