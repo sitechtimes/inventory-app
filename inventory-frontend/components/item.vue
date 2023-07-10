@@ -23,8 +23,8 @@
   height: 7.5rem;
   width: 75vw;
   max-width: 35rem;
-  border-radius: 2rem;
-  background-color: rgb(68, 27, 88);
+
+  background-color: rgb(240, 240, 240);
   display: flex;
   flex-direction: row;
   position: relative;
