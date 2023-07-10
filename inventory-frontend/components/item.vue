@@ -9,10 +9,10 @@
         </div>
         <div class="updated">Last updated: {{ updated }}</div>
       </div>
-      <button class="dropdown"></button>
+      <button class="dropdown" @click="clicked"></button>
     </div>
 
-    <div class="description">
+    <div class="description" v-if="wow">
       {{ description }}
     </div>
   </div>
@@ -70,7 +70,6 @@
 
 .description {
   max-height: 100%;
-
   width: 60%;
   padding: 1rem;
   color: #dbd8c6;
@@ -113,6 +112,11 @@
     border: none;
     background-color: #fbf7e4;
   }
+
+  .description {
+    width: 80%;
+    padding-left: 1.5rem;
+  }
 }
 </style>
 
@@ -123,7 +127,14 @@ export default {
   data() {
     return {
       available: true,
+      wow: false,
     };
+  },
+  methods: {
+    clicked() {
+      console.log("clicked");
+      wow = true;
+    },
   },
 };
 </script>
