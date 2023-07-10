@@ -1,6 +1,6 @@
 from django.db import models
-from pygments.lexers import get_all_lexers
-from pygments.styles import get_all_styles
+""" from pygments.lexers import get_all_lexers
+from pygments.styles import get_all_styles """
 
 categories = [('HARDWARE','Hardware'),('ART SUPPLIES','Art Supplies'),('OTHER','Other')]
 class Item(models.Model):
