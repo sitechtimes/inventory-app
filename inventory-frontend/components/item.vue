@@ -9,7 +9,7 @@
         </div>
         <div class="updated">Last updated: {{ updated }}</div>
       </div>
-      <button class="dropdown" @click="clicked"></button>
+      <button class="dropdown" @click="wow = !wow"></button>
     </div>
 
     <div class="description" v-if="wow">
@@ -24,7 +24,7 @@
   width: 75vw;
   max-width: 35rem;
   border-radius: 2rem;
-  background-color: #2b3355;
+  background-color: #a687ca;
   display: flex;
   flex-direction: row;
   position: relative;
@@ -60,19 +60,20 @@
 }
 .availability {
   padding-top: 0.5rem;
+  padding-bottom: 0.2rem;
 }
 .availY {
-  color: rgb(0, 172, 120);
+  color: rgb(126, 255, 216);
 }
 .availN {
-  color: rgb(212, 55, 95);
+  color: rgb(255, 66, 122);
 }
 
 .description {
   max-height: 100%;
   width: 60%;
   padding: 1rem;
-  color: #dbd8c6;
+  color: black;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -83,7 +84,7 @@
 @media screen and (max-width: 575px) {
   .itemMain {
     flex-direction: column;
-    height: 6.5rem;
+    height: 6.8rem;
   }
   .name-avail {
     width: 100%;
@@ -96,9 +97,13 @@
   .updated {
     font-size: 0.75rem;
   }
+  .availability {
+    padding-bottom: 0rem;
+  }
 
   .updated {
     padding-top: 0.2rem;
+    padding-bottom: 0.3rem;
   }
 
   .dropdown {
@@ -111,6 +116,12 @@
     bottom: 1rem;
     border: none;
     background-color: #fbf7e4;
+    z-index: 1000;
+  }
+  .dropdown:hover {
+    cursor: pointer;
+    background-color: #dfdbd7;
+    scale: 1.1;
   }
 
   .description {
@@ -123,17 +134,22 @@
 <script>
 export default {
   name: "Item",
-  props: ["name", "quantity", "description", "updated"],
+  props: {
+    name: String,
+    quantity: Number,
+    description: String,
+    updated: String,
+    available: Boolean,
+  },
   data() {
     return {
-      available: true,
       wow: false,
     };
   },
   methods: {
     clicked() {
       console.log("clicked");
-      wow = true;
+      this.wow = true;
     },
   },
 };
