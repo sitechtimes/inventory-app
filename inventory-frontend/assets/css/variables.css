@@ -1,0 +1,14 @@
+:root {
+    --whitebg: #ffffff
+    --gray: rgb(240,240,240)
+    --darkgray: rgb(150,150,150)
+    --black: #000
+    
+
+    --h1: 7rem;
+  --h2: 6rem;
+  --h3: 4.5rem;
+  --h4: 3.4rem;
+  --h5: 2.2rem;
+  --h6: 1.5rem;
+}
