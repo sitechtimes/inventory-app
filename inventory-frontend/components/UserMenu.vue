@@ -61,12 +61,18 @@
 
 <script setup>
 let NavCont = "";
+
 onMounted(() => {
   NavCont = document.querySelector(".nav-cont");
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 1200) {
+      NavCont.classList.remove("dismiss");
+      NavCont.classList.remove("selected");
+    }
+  });
 });
 
 function NavMenu() {
-  console.log(NavCont);
   if (NavCont.classList.contains("selected")) {
     NavCont.classList.remove("selected");
     NavCont.classList.add("dismiss");
@@ -91,7 +97,7 @@ function NavMenu() {
   top: 0%;
   left: 0%;
   height: 100vh;
-  width: 20.5 rem;
+  width: 19.5rem;
   background-color: #6d7275;
   display: flex;
   flex-flow: row;
@@ -123,6 +129,7 @@ function NavMenu() {
   justify-content: space-evenly;
   align-items: center;
   overflow: hidden;
+  margin-top: 1rem;
 }
 .user-title {
   color: #ecebf3;
@@ -144,10 +151,11 @@ function NavMenu() {
 
 .user-info {
   margin-left: 1rem;
-  width: 14rem;
+  width: 12rem;
   overflow: hidden;
 }
 .menu-container {
+  margin-top: 1rem;
   width: 100%;
   display: flex;
   flex-flow: column nowrap;
