@@ -1,0 +1,22 @@
+import { defineStore } from 'pinia'
+
+
+export const useItemsStore = defineStore('items', {
+  state: () => ({
+    items: null
+  }),
+
+  getters: {
+
+  },
+
+  actions: {
+    async getItems(){
+    const response = await fetch('http://127.0.0.1:8000/items/')
+    const results = await response.json()
+    console.log(results)
+    this.items = results
+    return results
+    }
+  },
+})
