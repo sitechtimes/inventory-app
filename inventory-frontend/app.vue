@@ -1,6 +1,8 @@
 <template>
   <div>
     <!-- <NuxtWelcome /> -->
-    <UserMenu />
+
+    <!-- <UserMenu /> -->
+    <NuxtPage />
   </div>
 </template>
