@@ -1,15 +1,21 @@
 from django.db import models
-from pygments.lexers import get_all_lexers
-from pygments.styles import get_all_styles
 
-categories = [('HARDWARE','Hardware'),('ART SUPPLIES','Art Supplies'),('OTHER','Other')]
+categories = [('CC', 'Choose Category'),('TLS', 'Tools'), ('PT', 'Paint'), ('TP', 'Tape'), ('WR', 'Wire'), ('FA', 'First Aid'), ('FAB', 'Fabric'), ('PM', 'Paper Mache'), ('GL', 'Glue'), ('SE', 'Sewing'), ('MISC', 'Miscellaneous'), ('CM', 'Coloring Materials'), ('SC', 'Sculpture'), ('WD', 'Wood'), ('CS', 'Craft Supplies'), ('FM', 'Foam'), ('PRTM', 'Printmaking'), ('PAP', 'Paper'), ('DR', 'Drawing')]
+vendors = [('CV', 'Choose Vendor'),('DOE', 'ShopDOE'), ('AMZ', 'Amazon'), ('BLICK', 'Blick'), ('HD', 'Home Depot')]
+locations = [('CL', 'Choose Location'),('MS', 'Makerspace'), ('BR', 'Back Room')]
+
 class Item(models.Model):
-    updated = models.DateTimeField(auto_now=True, editable=True)
-    name = models.CharField(max_length=100, blank=True, default='')
-    description = models.TextField()
+    """ item_id = models.CharField(max_length=100, blank=True, default='') """
+    name = models.CharField(max_length=100, blank=True, default="")
+    purchase_link = models.CharField(max_length=1000, blank=True, default="")
+    """ might want to change to image field """
+    image = models.CharField(max_length=1000, blank=True, default="") 
+    """ ^^^ """
+    last_purchased = models.DateTimeField(auto_now=True, editable=True)
     quantity = models.IntegerField(default=0)
-    is_available = models.BooleanField(default=True)
-    category = models.CharField(max_length=50, choices=categories, default='')
+    category = models.CharField(max_length=50, choices=categories, default="")
+    vendor = models.CharField(max_length=50, choices=vendors, default="")
+    location = models.CharField(max_length=50, choices=locations, default="")
 
     def __str__(self):
         return self.name
