@@ -1,36 +1,39 @@
 <template>
   <div class="itemMain" ref="main">
+    <div class="image" v-if="info">
+      <img class="imageView" :src="image" :alt="name_id" />
+    </div>
     <div class="name-avail">
-      <div class="name">{{ name }} ({{ quantity }})</div>
+      <div class="name text">{{ name }}</div>
+      <div class="name text quantity">{{ quantity }}</div>
       <div class="avail-updated">
         <div class="availability">
-          <span class="availY" v-if="available">Currently Available</span>
-          <span class="availN" v-else>Currently Unavailable</span>
+          <span class="availY smalltext" v-if="available"
+            >Currently Available</span
+          >
+          <span class="availN smalltext" v-else>Currently Unavailable</span>
         </div>
-        <div class="updated">Last updated: {{ updated }}</div>
+        <div class="updated smalltext">Last updated: {{ updated }}</div>
       </div>
       <button class="dropdown" @click="clicked"></button>
-    </div>
-
-    <div class="description" v-if="info">
-      {{ description }}
     </div>
   </div>
 </template>
 
 <style scoped>
 .itemMain {
-  height: 7.5rem;
-  width: 75vw;
-  max-width: 35rem;
-  border-radius: 2rem;
-  background-color: rgb(68, 27, 88);
+  height: 12.5rem;
+
+  width: 28vw;
+
+  background-color: var(--whitebg);
   display: flex;
   flex-direction: row;
   position: relative;
+  margin: 1rem;
 }
 .name-avail {
-  width: 40%;
+  width: 70%;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -43,11 +46,12 @@
 
 .name {
   padding-top: 1.2rem;
-  font-size: 1.1rem;
 
   max-height: 6rem;
 }
-
+.quantity {
+  color: var(--darkgray);
+}
 .avail-updated {
   height: 50%;
 
@@ -56,22 +60,29 @@
   flex-direction: column;
   margin-bottom: 0.75rem;
   justify-content: space-evenly;
-  font-size: 0.8rem;
+
+  position: absolute;
+  bottom: 0;
+  height: fit-content;
+}
+.updated {
+  padding-top: 0.2rem;
+  padding-bottom: 0.3rem;
 }
 .availability {
   padding-top: 0.5rem;
-  padding-bottom: 0.2rem;
+  padding-bottom: 0.4rem;
 }
 .availY {
-  color: rgb(126, 255, 216);
+  color: rgb(53, 199, 155);
 }
 .availN {
-  color: rgb(255, 66, 122);
+  color: rgb(255, 43, 106);
 }
 
-.description {
+.image {
   max-height: 100%;
-  width: 60%;
+  width: 30%;
   padding: 1.5rem;
   color: #b696db;
   display: flex;
@@ -86,32 +97,16 @@
   .itemMain {
     flex-direction: column;
     height: fit-content;
-    padding-bottom: 3.5rem;
+    padding-bottom: 4.5rem;
+    width: 90%;
+    max-width: none;
   }
   .name-avail {
-    width: 100%;
+    width: 98%;
   }
   .name {
-    font-size: 1.05rem;
+    font-size: var(--h4);
     padding-right: 1rem;
-  }
-  .avail-updated {
-    position: absolute;
-    bottom: 0;
-    height: fit-content;
-    padding-top: 0.4rem;
-  }
-  .availability,
-  .updated {
-    font-size: 0.75rem;
-  }
-  .availability {
-    padding-bottom: 0rem;
-  }
-
-  .updated {
-    padding-top: 0.2rem;
-    padding-bottom: 0.3rem;
   }
 
   .dropdown {
@@ -132,10 +127,16 @@
     scale: 1.1;
   }
 
-  .description {
+  .image {
     width: 80%;
     padding-left: 1.5rem;
     padding-bottom: 0.5rem;
+    position: relative;
+  }
+  .imageView {
+    height: 90%;
+    width: auto;
+    position: absolute;
   }
 }
 </style>
@@ -149,6 +150,8 @@ export default {
     description: String,
     updated: String,
     available: Boolean,
+    image: String,
+    name_id: String,
   },
   data() {
     return {
