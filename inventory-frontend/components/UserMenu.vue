@@ -7,6 +7,9 @@
         </div>
       </button>
     </div>
+    <div class="return-box" @click="NavMenu()">
+      <div></div>
+    </div>
     <div class="nav-cont">
       <div>
         <div class="user">
@@ -48,26 +51,32 @@
           </button>
         </div>
       </div>
-      <div class="back-cont">
+      <!-- back button if you want if have this button nav-cont: width: 18rem
+      with back button nav-cont: width: 19.5rem-->
+      <!-- <div class="back-cont">
         <button class="back-btn" @click="NavMenu()">
           <div class="back-icon">
             <font-awesome-icon :icon="['fas', 'angles-left']" />
           </div>
         </button>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
 
 <script setup>
 let NavCont = "";
+let returnbox = "";
 
 onMounted(() => {
   NavCont = document.querySelector(".nav-cont");
+  returnbox = document.querySelector(".return-box");
   window.addEventListener("resize", () => {
     if (window.innerWidth > 1200) {
       NavCont.classList.remove("dismiss");
       NavCont.classList.remove("selected");
+      returnbox.classList.remove("return-box-display");
+      returnbox.classList.remove("return-box-nodisplay");
     }
   });
 });
@@ -77,16 +86,21 @@ function NavMenu() {
     NavCont.classList.remove("selected");
     NavCont.classList.add("dismiss");
     console.log("dismiss");
+    returnbox.classList.remove("return-box-display");
+    returnbox.classList.add("return-box-nodisplay");
   } else if (NavCont.classList.contains("dismiss")) {
     NavCont.classList.remove("dismiss");
     NavCont.classList.add("selected");
     console.log("selected");
+    returnbox.classList.remove("return-box-nodisplay");
+    returnbox.classList.add("return-box-display");
   } else if (
     !NavCont.classList.contains("dismiss") ||
     !NavCont.classList.contains("selected")
   ) {
     NavCont.classList.add("selected");
     console.log("selected");
+    returnbox.classList.add("return-box-display");
   }
 }
 </script>
@@ -97,12 +111,31 @@ function NavMenu() {
   top: 0%;
   left: 0%;
   height: 100vh;
-  width: 19.5rem;
+  width: 18rem;
   background-color: #6d7275;
   display: flex;
   flex-flow: row;
 }
-
+.return-box-display {
+  display: display;
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  height: 100vh;
+  width: 100vw;
+  opacity: 0.2;
+  background-color: #6d7275;
+}
+.return-box-nodisplay {
+  display: none;
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  height: 100vh;
+  width: 100vw;
+  opacity: 0.2;
+  background-color: #6d7275;
+}
 .back-cont {
   display: none;
   width: 1.5rem;
