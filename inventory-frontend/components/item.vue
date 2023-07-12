@@ -5,16 +5,15 @@
     </div>
     <div class="name-avail">
       <div class="name text">{{ name }}</div>
-      <div class="name text quantity">{{ quantity }}</div>
-      <div class="avail-updated">
-        <div class="availability">
-          <span class="availY smalltext" v-if="available"
-            >Currently Available</span
-          >
-          <span class="availN smalltext" v-else>Currently Unavailable</span>
-        </div>
-        <div class="updated smalltext">Last updated: {{ updated }}</div>
+
+      <div class="quantity smalltext">
+        {{ quantity }}
+        <span class="availY avail smalltext" v-if="quantity > 0">
+          Available</span
+        >
+        <span class="availN avail smalltext" v-else> Available</span>
       </div>
+
       <button class="dropdown" @click="clicked"></button>
     </div>
   </div>
@@ -22,57 +21,61 @@
 
 <style scoped>
 .itemMain {
-  height: 12.5rem;
-
-  width: 28vw;
-
+  min-height: 9rem;
+  height: fit-content;
+  flex-basis: 23%;
+  max-width: 23%;
   background-color: var(--whitebg);
   display: flex;
   flex-direction: row;
   position: relative;
   margin: 1rem;
+  margin-left: 2rem;
+  border-radius: 0.5rem;
+  border: solid 1px var(--darkgray);
 }
 .name-avail {
   width: 70%;
-  height: 100%;
+  height: auto;
   display: flex;
   flex-direction: column;
+  padding-right: 2.5rem;
 }
 .name,
-.availability,
+.quantity,
 .updated {
   padding-left: 1.5rem;
 }
 
 .name {
   padding-top: 1.2rem;
+  margin-bottom: 3.5rem;
 
-  max-height: 6rem;
+  height: fit-content;
 }
 .quantity {
   color: var(--darkgray);
-}
-.avail-updated {
+
   height: 50%;
 
   min-height: 1.5rem;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   margin-bottom: 0.75rem;
   justify-content: space-evenly;
 
   position: absolute;
   bottom: 0;
   height: fit-content;
+  padding-top: 0.5rem;
+  padding-bottom: 0.4rem;
 }
+
 .updated {
   padding-top: 0.2rem;
   padding-bottom: 0.3rem;
 }
-.availability {
-  padding-top: 0.5rem;
-  padding-bottom: 0.4rem;
-}
+
 .availY {
   color: rgb(53, 199, 155);
 }
@@ -80,32 +83,53 @@
   color: rgb(255, 43, 106);
 }
 
+.avail {
+  padding-left: 0.5rem;
+}
+
 .image {
-  max-height: 100%;
+  height: 8rem;
   width: 30%;
-  padding: 1.5rem;
-  color: #b696db;
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: all 0.4s;
+  color: #b696db;
+  position: relative;
+  overflow: hidden;
+}
+.imageView {
+  position: absolute;
+  max-height: 80%;
+  max-width: 80%;
+  object-fit: scale-down;
+  object-position: center;
 }
 .dropdown {
   visibility: hidden;
 }
-@media screen and (max-width: 575px) {
+@media screen and (max-width: 1600px) {
   .itemMain {
-    flex-direction: column;
-    height: fit-content;
-    padding-bottom: 4.5rem;
-    width: 90%;
-    max-width: none;
+    max-width: 30%;
+    flex-basis: 30%;
+  }
+}
+@media screen and (max-width: 1100px) {
+  .itemMain {
+    max-width: 45%;
+    flex-basis: 45%;
+  }
+}
+@media screen and (max-width: 760px) {
+  .itemMain {
+    max-width: 95%;
+    flex-basis: 95%;
+    border: none;
+    margin-left: 0;
   }
   .name-avail {
     width: 98%;
   }
   .name {
-    font-size: var(--h4);
     padding-right: 1rem;
   }
 
@@ -125,18 +149,6 @@
     cursor: pointer;
     background-color: #dfdbd7;
     scale: 1.1;
-  }
-
-  .image {
-    width: 80%;
-    padding-left: 1.5rem;
-    padding-bottom: 0.5rem;
-    position: relative;
-  }
-  .imageView {
-    height: 90%;
-    width: auto;
-    position: absolute;
   }
 }
 </style>
