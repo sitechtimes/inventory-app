@@ -16,10 +16,10 @@ def run():
                 purchase_link=rows["Purchase Link"],
                 image=rows["Image"],
                 last_purchased=rows["Date Last Purchased"],
-                quantity=0,
+                quantity=2,
                 category=rows["Category"],
                 vendor=rows["Vendor"],
-                location="Makerspace"
+                location="Back Room"
             )
             item.save()
         except django.db.utils.IntegrityError:
