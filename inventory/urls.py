@@ -4,7 +4,7 @@ from inventory import views
 
 urlpatterns = [
     path("category/", views.ItemsView.as_view()),
-    path("categoryy/<str:category_name>/", views.category_list.as_view()),
+    path("category/<str:category_name>/", views.category_list.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
