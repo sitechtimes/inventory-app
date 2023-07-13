@@ -1,6 +1,6 @@
 <template>
-  <div class="itemMain" ref="main">
-    <div class="image" v-if="info">
+  <div class="itemMain" ref="main" @mousedown="clicked">
+    <div class="image">
       <img class="imageView" :src="image" :alt="name_id" />
     </div>
     <div class="name-avail">
@@ -13,8 +13,6 @@
         >
         <span class="availN avail smalltext" v-else> Available</span>
       </div>
-
-      <button class="dropdown" @click="clicked"></button>
     </div>
   </div>
 </template>
@@ -33,6 +31,11 @@
   margin-left: 2rem;
   border-radius: 0.5rem;
   border: solid 1px var(--darkgray);
+  transition: all 0.2s;
+}
+.itemMain:hover {
+  border-color: var(--darkergray);
+  box-shadow: 0 0.25rem 5px var(--darkergray);
 }
 .name-avail {
   width: 70%;
@@ -54,7 +57,7 @@
   height: fit-content;
 }
 .quantity {
-  color: var(--darkgray);
+  color: var(--darkergray);
 
   height: 50%;
 
@@ -88,25 +91,21 @@
 }
 
 .image {
-  height: 8rem;
+  height: 9rem;
   width: 30%;
   display: flex;
   justify-content: center;
   align-items: center;
   color: #b696db;
-  position: relative;
+
   overflow: hidden;
 }
 .imageView {
-  position: absolute;
   max-height: 80%;
   max-width: 80%;
   object-fit: scale-down;
-  object-position: center;
 }
-.dropdown {
-  visibility: hidden;
-}
+
 @media screen and (max-width: 1600px) {
   .itemMain {
     max-width: 30%;
@@ -121,39 +120,36 @@
 }
 @media screen and (max-width: 760px) {
   .itemMain {
-    max-width: 95%;
-    flex-basis: 95%;
+    max-width: 100%;
+    flex-basis: 100%;
     border: none;
-    margin-left: 0;
+    margin: 0;
+    border-radius: 0;
   }
   .name-avail {
     width: 98%;
+    justify-content: center;
   }
   .name {
     padding-right: 1rem;
+    margin-bottom: 0;
   }
-
-  .dropdown {
-    visibility: visible;
-    clip-path: polygon(50% 100%, 0 0, 100% 0);
-    width: 0.7rem;
-    height: 0.6rem;
-    position: absolute;
-    right: 1.5rem;
-    bottom: 1rem;
-    border: none;
-    background-color: #fbf7e4;
-    z-index: 1000;
+  .quantity {
+    padding-top: 1rem;
+    position: inherit;
+    justify-content: left;
   }
-  .dropdown:hover {
-    cursor: pointer;
-    background-color: #dfdbd7;
-    scale: 1.1;
+  .itemMain:hover {
+    border-color: none;
+    box-shadow: none;
+    background-color: var(--gray);
   }
 }
 </style>
 
 <script>
+import { useItemsStore } from "~/store/ItemsStore";
+
 export default {
   name: "Item",
   props: {
@@ -164,28 +160,41 @@ export default {
     available: Boolean,
     image: String,
     name_id: String,
+    category: String,
+    vendor: String,
   },
+
   data() {
     return {
-      info: false,
+      store: useItemsStore(),
     };
   },
   methods: {
     clicked() {
       console.log("clicked");
-      this.info = !this.info;
-    },
 
-    infoScreen() {
-      if (window.matchMedia("(min-width: 575px)").matches) {
-        this.info = true;
+      if (this.store.popup.name === this.name) {
+        if (this.store.info === false) {
+          this.store.$patch({ info: true });
+        } else {
+          this.store.$patch({ info: false });
+        }
       } else {
-        this.info = false;
+        this.store.$patch({
+          popup: {
+            image: this.image,
+            name: this.name,
+            category: this.category,
+            quantity: this.quantity,
+            link: this.description,
+            vendor: this.vendor,
+            date: this.updated,
+          },
+        });
+        this.store.$patch({ info: true });
       }
     },
   },
-  mounted() {
-    this.infoScreen();
-  },
+  mounted() {},
 };
 </script>

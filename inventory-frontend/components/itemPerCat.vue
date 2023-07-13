@@ -4,13 +4,16 @@
       <div class="subheading catHead">{{ name }}</div>
       <div class="itemHolder">
         <Item
-          v-for="result in category"
+          v-for="result in list"
           :key="result.id"
           :name="result.name"
           :quantity="result.quantity"
           :image="result.image"
           :available="true"
           :updated="result.last_purchased"
+          :vendor="result.vendor"
+          :link="result.purchase_link"
+          :category="result.category"
         />
       </div>
     </div>
@@ -47,7 +50,7 @@ import Item from "./item.vue";
 
 export default {
   name: "ItemPerCat",
-  props: { category: Array, name: String },
+  props: { list: Array, name: String },
   components: { Item },
 };
 </script>

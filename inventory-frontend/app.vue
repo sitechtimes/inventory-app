@@ -3,14 +3,26 @@
     <div id="search" class="heading">search</div>
     <div id="navHolder">nav</div>
     <div id="itemHeader" class="subheading">items</div>
-    <div id="itemHolderAll">
-      <div class="category">
+    <div id="itemHolderAll" ref="allItems">
+      <div class="categoryHolder">
         <ItemPerCat
           v-for="(each, index) in categories"
           :key="index"
-          :category="each"
+          :list="each"
           :name="nameType(index)"
         ></ItemPerCat>
+      </div>
+
+      <div class="infoDesc" v-if="all.info">
+        <Info
+          :img_link="all.popup.image"
+          :name="all.popup.name"
+          :category="all.popup.category"
+          :quantity="all.popup.quantity"
+          :link="all.popup.link"
+          :vendor="all.popup.vendor"
+          :date="all.popup.updated"
+        />
       </div>
     </div>
   </div>
@@ -40,7 +52,7 @@
   border-right: solid 1px var(--darkgray);
 }
 #itemHeader {
-  grid-row: 2/3;
+  grid-row: 2 / 3;
   grid-column: 2/3;
   border-bottom: solid 1px var(--darkgray);
 }
@@ -52,20 +64,44 @@
   overflow-y: scroll;
   height: 100%;
   width: 100%;
-  flex-direction: column;
+
+  display: flex;
+  flex-direction: row;
+}
+.infoDesc {
+  height: 100%;
+  width: 70%;
+  min-width: 40rem;
+  position: sticky;
+  top: 0;
+  overflow: hidden;
+}
+@media screen and (max-width: 760px) {
+  .infoDesc {
+    width: auto;
+    align-self: flex-start;
+    justify-self: flex-start;
+    position: fixed;
+    margin-top: 11rem;
+    margin-left: 7rem;
+    left: 0;
+    right: 0;
+  }
 }
 </style>
 
 <script>
 import ItemPerCat from "./components/itemPerCat.vue";
+import Info from "./components/info.vue";
 import { useItemsStore } from "~/store/ItemsStore";
 
 export default {
   name: "app",
-  components: { ItemPerCat },
+  components: { ItemPerCat, Info },
   data() {
     return {
       all: useItemsStore(),
+
       categories: [],
       coloring: [],
       craft: [],

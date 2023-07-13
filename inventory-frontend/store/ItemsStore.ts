@@ -1,9 +1,10 @@
 import { defineStore } from 'pinia'
 
-
 export const useItemsStore = defineStore('items', {
   state: () => ({
-    items: null
+    items: null,
+    popup: {name:null},
+    info: false,
   }),
 
   getters: {
@@ -17,6 +18,10 @@ export const useItemsStore = defineStore('items', {
     console.log(results)
     this.items = results
     return results
-    }
-  },
+    },
+   
+  }
+  
 })
+
+

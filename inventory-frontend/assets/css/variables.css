@@ -1,7 +1,10 @@
 :root {
     --whitebg: #ffffff;
     --lightgray: rgb(249, 249, 249);
+    --gray: rgb(235, 235, 235);
     --darkgray: rgb(220,220,220);
+    --darkergray: rgb(180,180,180);
+    --darkestgray: rgb(130,130,130);
     --black: #000;
     
     --h1: 3rem;
