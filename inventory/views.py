@@ -11,12 +11,13 @@ class ItemsView(generics.GenericAPIView, mixins.ListModelMixin):
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
 
+
 class category_list(generics.ListAPIView): 
     serializer_class = ItemSerializer
     
 
     def get_queryset(self):
         category_name = self.kwargs["category_name"]
-        queryset = Item.objects.filter(category__name=category_name)
+        queryset = Item.objects.filter(category=category_name)
         return queryset
     

@@ -4,11 +4,12 @@ from inventory.models import Item
 
 def run():
     dataframe = pd.read_csv('scripts/csv/inventory.csv')
-    print(dataframe)
+    print(dataframe["Category"])
     print(Item.objects.all())
+
     for index, rows in dataframe.iterrows():
         try:
-            # item quantity and location still need to updated, just using default values for now
+
             item = Item(
                 item_id=rows[" Item ID"],
                 name=rows["Name"],

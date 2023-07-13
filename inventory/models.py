@@ -6,12 +6,6 @@ categories = [('TLS', 'Tools'), ('PT', 'Paint'), ('TP', 'Tape'), ('WR', 'Wire'),
 vendors = [('DOE', 'ShopDOE'), ('AMZ', 'Amazon'), ('BLICK', 'Blick'), ('HD', 'Home Depot')]
 locations = [('MS', 'Makerspace'), ('BR', 'Back Room')]
 
-class Category(models.Model):
-    
-    name = models.CharField(max_length=50, choices=categories)
-
-    def __str__(self):
-        return self.name
 
 
 class Item(models.Model):
@@ -21,7 +15,7 @@ class Item(models.Model):
     image = models.CharField(max_length=1000, blank=True, default='')
     last_purchased = models.DateTimeField(auto_now=True, editable=True)
     quantity = models.IntegerField(default=0)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category =  models.CharField(max_length=50, choices=categories)
     vendor = models.CharField(max_length=50, choices=vendors, default='')
     location = models.CharField(max_length=50, choices=locations, default='')
 
