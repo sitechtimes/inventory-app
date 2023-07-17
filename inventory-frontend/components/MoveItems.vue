@@ -22,10 +22,10 @@
       <h2>None left in {{ room }}</h2>
     </div>
     <div class="btn">
-      <button @click="toMakerspace">
+      <button v-if="!edit" @click="toMakerspace">
         <font-awesome-icon :icon="['fas', 'angles-left']" />
       </button>
-      <button @click="toBackRoom">
+      <button v-if="!edit" @click="toBackRoom">
         <font-awesome-icon :icon="['fas', 'angles-right']" />
       </button>
     </div>

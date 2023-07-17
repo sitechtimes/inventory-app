@@ -4,6 +4,7 @@ from django.http import JsonResponse
 from .models import Item
 from .serializer import ItemSerializer
 import datetime
+from .models import categories
 
 class ItemsView(generics.GenericAPIView, mixins.ListModelMixin):
     queryset = Item.objects.all()
@@ -12,7 +13,7 @@ class ItemsView(generics.GenericAPIView, mixins.ListModelMixin):
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
 
-class category_list(generics.ListAPIView): 
+class sortByCategory(generics.ListAPIView): 
     serializer_class = ItemSerializer
     
     def get_queryset(self):
