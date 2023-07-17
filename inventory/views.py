@@ -12,11 +12,9 @@ class ItemsView(generics.GenericAPIView, mixins.ListModelMixin):
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
 
-
 class category_list(generics.ListAPIView): 
     serializer_class = ItemSerializer
     
-
     def get_queryset(self):
         category_name = self.kwargs["category_name"]
         queryset = Item.objects.filter(category=category_name)
@@ -33,7 +31,14 @@ class BackroomView(generics.ListAPIView):
     serializer_class = ItemSerializer
 
     def get_queryset(self):
-        queryset = Item.objects.filter(location="Backroom")
+        queryset = Item.objects.filter(location="Back Room")
+        return queryset
+
+class getItems(generics.ListAPIView):
+    serializer_class = ItemSerializer
+    
+    def get_queryset(self):
+        queryset = Item.objects.filter(item_id=self.kwargs["item_name"])
         return queryset
 
 class moveItems(generics.UpdateAPIView):
@@ -61,7 +66,8 @@ class moveItems(generics.UpdateAPIView):
             obj2.save()
             return JsonResponse(self.get_serializer(obj2).data)
 
-        
+class UpdateItem(generics.UpdateAPIView):
+    queryset = Item.objects.all()
 
 class UpdateLastPurchase(generics.UpdateAPIView):
     queryset = Item.objects.all()
