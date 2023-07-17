@@ -1,5 +1,13 @@
 <template>
   <div class="change">
+    <div class="change-btn">
+      <button v-if="!edit" @click="edit = true" class="edit-btn">
+        <font-awesome-icon :icon="['fas', 'pen-to-square']" />
+      </button>
+      <button v-if="edit" @click="manualEdit" class="save-btn">
+        <font-awesome-icon :icon="['fas', 'floppy-disk']" />
+      </button>
+    </div>
     <div class="location">
       <h2>Makerspace</h2>
       <h2>Back Room</h2>
@@ -14,29 +22,25 @@
       <h2>None left in {{ room }}</h2>
     </div>
     <div class="btn">
-      <button @click="toMakerspace"></button>
-      <button @click="toBackRoom"></button>
-    </div>
-    <div class="change-btn">
-      <button v-if="!edit" @click="edit = true">
-        <font-awesome-icon :icon="['fas', 'pen-to-square']" />
+      <button @click="toMakerspace">
+        <font-awesome-icon :icon="['fas', 'angles-left']" />
       </button>
-      <button v-if="edit" @click="edit = false">
-        <font-awesome-icon :icon="['fas', 'floppy-disk']" />
+      <button @click="toBackRoom">
+        <font-awesome-icon :icon="['fas', 'angles-right']" />
       </button>
     </div>
   </div>
 </template>
 
 <script setup>
-let Makerspace = ref(2);
+let Makerspace = ref(0);
 let Backroom = ref(0);
 let haveSupplies = ref(false);
 let room = ref("");
 let edit = ref(false);
 
 onMounted(() => {
-  $fetch("http://127.0.0.1:8000/items/category/", {
+  $fetch("http://127.0.0.1:8000/items/CurrentItem/AcrylicMedium_1/", {
     method: "GET",
     mode: "cors",
     cache: "no-cache",
@@ -47,7 +51,15 @@ onMounted(() => {
     redirect: "follow",
     referrerPolicy: "no-referrer",
   })
-    .then((response) => console.log(response))
+    .then((response) =>
+      response.forEach((item) => {
+        if (item.location === "Makerspace") {
+          Makerspace.value = item.quantity;
+        } else if (item.location === "Back Room") {
+          Backroom.value = item.quantity;
+        }
+      })
+    )
     .catch((error) => console.log(error));
 });
 function toBackRoom() {
@@ -56,6 +68,24 @@ function toBackRoom() {
     haveSupplies.value = false;
     Backroom.value += 1;
     Makerspace.value -= 1;
+    $fetch(
+      `http://127.0.0.1:8000/items/updateQuantity/AcrylicMedium_1/1/Makerspace/Back Room/`,
+      {
+        method: "PUT",
+        mode: "cors",
+        cache: "no-cache",
+        credentials: "same-origin",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        redirect: "follow",
+        referrerPolicy: "no-referrer",
+      }
+    )
+      .then((response) => console.log(response))
+      .catch((error) => {
+        console.log(error);
+      });
   } else {
     room.value = "Makerspace";
     haveSupplies.value = true;
@@ -66,12 +96,55 @@ function toMakerspace() {
   if (Backroom.value > 0) {
     room.value = "";
     haveSupplies.value = false;
-
     Makerspace.value += 1;
     Backroom.value -= 1;
+    $fetch(
+      `http://127.0.0.1:8000/items/updateQuantity/AcrylicMedium_1/1/Back Room/Makerspace/`,
+      {
+        method: "PUT",
+        mode: "cors",
+        cache: "no-cache",
+        credentials: "same-origin",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        redirect: "follow",
+        referrerPolicy: "no-referrer",
+      }
+    )
+      .then((response) => console.log(response))
+      .catch((error) => {
+        console.log(error);
+      });
   } else {
     room.value = "Backroom";
     haveSupplies.value = true;
+  }
+}
+
+function manualEdit() {
+  if (Makerspace.value > 0 && Backroom.value > 0) {
+    fetch(
+      `http://127.0.0.1:8000/items/updateQuantity/manual/AcrylicMedium_1/${Makerspace.value}/${Backroom.value}/`,
+      {
+        method: "PUT",
+        mode: "cors",
+        cache: "no-cache",
+        credentials: "same-origin",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        redirect: "follow",
+        referrerPolicy: "no-referrer",
+      }
+    )
+      .then((response) => {
+        console.log(response);
+        edit.value = false;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 }
 </script>
@@ -92,12 +165,39 @@ function toMakerspace() {
   justify-content: space-evenly;
   align-items: center;
 }
+.location {
+  height: 3rem;
+}
 .amount {
   height: 3rem;
 }
+
 button {
   border: none;
   width: 5rem;
   height: 2.5rem;
+}
+
+input {
+  text-align: center;
+  width: 38%;
+  height: 2rem;
+  margin: 1rem;
+}
+
+.change-btn {
+  height: 1rem;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: end;
+}
+.edit-btn,
+.save-btn {
+  position: relative;
+  top: 0;
+  right: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: none;
 }
 </style>

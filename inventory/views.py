@@ -57,7 +57,7 @@ class moveItems(generics.UpdateAPIView):
         obj = self.get_object(item_name, fromspace)
         obj2 = self.get_object(item_name, tospace)
 
-        if obj.quantiy == 0:
+        if obj.quantity == 0:
             return JsonResponse({"error": "Item is out of stock"}, status=400)
         else: 
             obj.quantity -= amount 
@@ -67,7 +67,23 @@ class moveItems(generics.UpdateAPIView):
             return JsonResponse(self.get_serializer(obj2).data)
 
 class UpdateItem(generics.UpdateAPIView):
-    queryset = Item.objects.all()
+    serializer_class = ItemSerializer
+
+    def update(self, *args, **kwargs): 
+        makerspace_amount = self.kwargs["makerspace"]
+        backroom_amount = self.kwargs["backroom"]
+        queryset = Item.objects.filter(item_id=self.kwargs["item_name"])
+
+        obj = queryset.get(location="Makerspace")
+        obj2 = queryset.get(location="Back Room")
+        obj.quantity = makerspace_amount
+        obj.save()
+        obj2.quantity = backroom_amount
+        obj2.save()
+    
+
+        return JsonResponse(self.get_serializer(obj).data)
+    
 
 class UpdateLastPurchase(generics.UpdateAPIView):
     queryset = Item.objects.all()
