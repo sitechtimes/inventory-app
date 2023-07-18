@@ -1,6 +1,5 @@
 from rest_framework import serializers
-from .models import Item, Category
-from django.db.models import Count
+from .models import Item, Categories
 
 class ItemSerializer(serializers.ModelSerializer):
     class Meta:
@@ -8,13 +7,13 @@ class ItemSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class CategorySerializer(serializers.ModelSerializer):
+    count = serializers.SerializerMethodField()
 
-    posts = serializers.SerializerMethodField()
-
-    class Meta:
-        model = Category
-        fields = ('title', 'posts')
-
-    def get_posts(self,obj):
-        posts = Item.objects.values('category').annotate(count=Count('category')).filter(category=obj)
-        return posts
+    class Meta: 
+        model = Categories
+        fields = ('category_name', 'count')
+    
+    def get_count(self, obj):
+        count = Item.objects.filter(category__in=[obj]).count()
+        return count
+   
