@@ -1,78 +1,84 @@
 <template>
-  <div class="itemMain" ref="main">
-    <div class="image" v-if="info">
+  <div class="itemMain" ref="main" @mousedown="clicked">
+    <div class="image">
       <img class="imageView" :src="image" :alt="name_id" />
     </div>
     <div class="name-avail">
       <div class="name text">{{ name }}</div>
-      <div class="name text quantity">{{ quantity }}</div>
-      <div class="avail-updated">
-        <div class="availability">
-          <span class="availY smalltext" v-if="available"
-            >Currently Available</span
-          >
-          <span class="availN smalltext" v-else>Currently Unavailable</span>
-        </div>
-        <div class="updated smalltext">Last updated: {{ updated }}</div>
+
+      <div class="quantity smalltext">
+        {{ quantity }}
+        <span class="availY avail smalltext" v-if="quantity > 0">
+          Available</span
+        >
+        <span class="availN avail smalltext" v-else> Available</span>
       </div>
-      <button class="dropdown" @click="clicked"></button>
     </div>
   </div>
 </template>
 
-<style scoped>
+<style >
 .itemMain {
-  height: 12.5rem;
-
-  width: 28vw;
-
+  min-height: 9rem;
+  height: fit-content;
+  flex-basis: 23%;
+  max-width: 23%;
   background-color: var(--whitebg);
   display: flex;
   flex-direction: row;
   position: relative;
   margin: 1rem;
+  margin-left: 2rem;
+  border-radius: 0.5rem;
+  border: solid 1px var(--darkgray);
+  transition: all 0.2s;
+}
+.itemMain:hover {
+  border-color: var(--darkergray);
+  box-shadow: 0 0.25rem 5px var(--darkergray);
 }
 .name-avail {
   width: 70%;
-  height: 100%;
+  height: auto;
   display: flex;
   flex-direction: column;
+  padding-right: 2.5rem;
 }
 .name,
-.availability,
+.quantity,
 .updated {
   padding-left: 1.5rem;
 }
 
 .name {
   padding-top: 1.2rem;
+  margin-bottom: 3.5rem;
 
-  max-height: 6rem;
+  height: fit-content;
 }
 .quantity {
-  color: var(--darkgray);
-}
-.avail-updated {
+  color: var(--darkergray);
+
   height: 50%;
 
   min-height: 1.5rem;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   margin-bottom: 0.75rem;
   justify-content: space-evenly;
 
   position: absolute;
   bottom: 0;
   height: fit-content;
+  padding-top: 0.5rem;
+  padding-bottom: 0.4rem;
 }
+
 .updated {
   padding-top: 0.2rem;
   padding-bottom: 0.3rem;
 }
-.availability {
-  padding-top: 0.5rem;
-  padding-bottom: 0.4rem;
-}
+
 .availY {
   color: rgb(53, 199, 155);
 }
@@ -80,68 +86,70 @@
   color: rgb(255, 43, 106);
 }
 
+.avail {
+  padding-left: 0.5rem;
+}
+
 .image {
-  max-height: 100%;
+  height: 9rem;
   width: 30%;
-  padding: 1.5rem;
-  color: #b696db;
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: all 0.4s;
+  color: #b696db;
+
+  overflow: hidden;
 }
-.dropdown {
-  visibility: hidden;
+.imageView {
+  max-height: 80%;
+  max-width: 80%;
+  object-fit: scale-down;
 }
-@media screen and (max-width: 575px) {
+
+@media screen and (max-width: 1600px) {
   .itemMain {
-    flex-direction: column;
-    height: fit-content;
-    padding-bottom: 4.5rem;
-    width: 90%;
-    max-width: none;
+    max-width: 30%;
+    flex-basis: 30%;
+  }
+}
+@media screen and (max-width: 1100px) {
+  .itemMain {
+    max-width: 45%;
+    flex-basis: 45%;
+  }
+}
+@media screen and (max-width: 760px) {
+  .itemMain {
+    max-width: 100%;
+    flex-basis: 100%;
+    border: none;
+    margin: 0;
+    border-radius: 0;
   }
   .name-avail {
     width: 98%;
+    justify-content: center;
   }
   .name {
-    font-size: var(--h4);
     padding-right: 1rem;
+    margin-bottom: 0;
   }
-
-  .dropdown {
-    visibility: visible;
-    clip-path: polygon(50% 100%, 0 0, 100% 0);
-    width: 0.7rem;
-    height: 0.6rem;
-    position: absolute;
-    right: 1.5rem;
-    bottom: 1rem;
-    border: none;
-    background-color: #fbf7e4;
-    z-index: 1000;
+  .quantity {
+    padding-top: 1rem;
+    position: inherit;
+    justify-content: left;
   }
-  .dropdown:hover {
-    cursor: pointer;
-    background-color: #dfdbd7;
-    scale: 1.1;
-  }
-
-  .image {
-    width: 80%;
-    padding-left: 1.5rem;
-    padding-bottom: 0.5rem;
-    position: relative;
-  }
-  .imageView {
-    height: 90%;
-    width: auto;
-    position: absolute;
+  .itemMain:hover {
+    border-color: none;
+    box-shadow: none;
+    background-color: var(--gray);
   }
 }
 </style>
 
 <script>
+import { useItemsStore } from "~/store/ItemsStore";
+
 export default {
   name: "Item",
   props: {
@@ -152,28 +160,41 @@ export default {
     available: Boolean,
     image: String,
     name_id: String,
+    category: String,
+    vendor: String,
   },
+
   data() {
     return {
-      info: false,
+      store: useItemsStore(),
     };
   },
   methods: {
     clicked() {
       console.log("clicked");
-      this.info = !this.info;
-    },
 
-    infoScreen() {
-      if (window.matchMedia("(min-width: 575px)").matches) {
-        this.info = true;
+      if (this.store.popup.name === this.name) {
+        if (this.store.info === false) {
+          this.store.$patch({ info: true });
+        } else {
+          this.store.$patch({ info: false });
+        }
       } else {
-        this.info = false;
+        this.store.$patch({
+          popup: {
+            image: this.image,
+            name: this.name,
+            category: this.category,
+            quantity: this.quantity,
+            link: this.description,
+            vendor: this.vendor,
+            date: this.updated,
+          },
+        });
+        this.store.$patch({ info: true });
       }
     },
   },
-  mounted() {
-    this.infoScreen();
-  },
+  mounted() {},
 };
 </script>
