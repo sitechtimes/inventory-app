@@ -17,7 +17,7 @@
   </div>
 </template>
 
-<style scoped>
+<style >
 .itemMain {
   min-height: 9rem;
   height: fit-content;

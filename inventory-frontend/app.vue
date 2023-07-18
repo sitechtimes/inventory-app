@@ -2,15 +2,19 @@
   <div class="app">
     <div id="search" class="heading">search</div>
     <div id="navHolder">nav</div>
-    <div id="itemHeader" class="subheading">items</div>
-    <div id="itemHolderAll" ref="allItems">
-      <div class="categoryHolder">
-        <ItemPerCat
-          v-for="(each, index) in categories"
-          :key="index"
-          :list="each"
-          :name="nameType(index)"
-        ></ItemPerCat>
+    <div id="largeItemHolder">
+      <div id="mainItems">
+        <div id="itemHeader" class="subheading">items</div>
+        <div id="itemHolderAll" ref="allItems">
+          <div class="categoryHolder">
+            <ItemPerCat
+              v-for="(each, index) in categories"
+              :key="index"
+              :list="each"
+              :name="nameType(index)"
+            ></ItemPerCat>
+          </div>
+        </div>
       </div>
 
       <div class="infoDesc" v-if="all.info">
@@ -34,7 +38,7 @@
   width: 100%;
   display: grid;
   grid-template-columns: 7rem 1fr;
-  grid-template-rows: 5.5rem 5.5rem 1fr;
+  grid-template-rows: 5.5rem 1fr;
   position: absolute;
   top: 0;
   left: 0;
@@ -47,27 +51,41 @@
   border-bottom: solid 1px var(--darkgray);
 }
 #navHolder {
-  grid-row: 2 / 4;
+  grid-row: 2 / 3;
   grid-column: 1 / 2;
   border-right: solid 1px var(--darkgray);
 }
-#itemHeader {
-  grid-row: 2 / 3;
+#largeItemHolder {
+  grid-row: 2/3;
   grid-column: 2/3;
+  display: flex;
+  flex-direction: row;
+  overflow-y: scroll;
+  background-color: var(--lightgray);
+}
+#mainItems {
+  display: flex;
+
+  flex-direction: column;
+}
+#itemHeader {
+  min-height: 5.5rem;
   border-bottom: solid 1px var(--darkgray);
+  background-color: var(--whitebg);
+  position: sticky;
+  top: 0;
+  z-index: 500;
 }
 #itemHolderAll {
   grid-column: 2 / 3;
   grid-row: 3 / 4;
-  background-color: var(--lightgray);
+
   justify-content: center;
-  overflow-y: scroll;
+
   height: 100%;
   width: 100%;
-
-  display: flex;
-  flex-direction: row;
 }
+
 .infoDesc {
   height: 100%;
   width: 70%;
@@ -75,6 +93,7 @@
   position: sticky;
   top: 0;
   overflow: hidden;
+  resize: horizontal;
 }
 @media screen and (max-width: 760px) {
   .infoDesc {
