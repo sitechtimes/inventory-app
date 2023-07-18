@@ -19,7 +19,7 @@ def run():
                 quantity=2,
                 category=rows["Category"],
                 vendor=rows["Vendor"],
-                location="Makerspace"
+                location="Back Room"
             )
             item.save()
         except django.db.utils.IntegrityError:

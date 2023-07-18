@@ -5,6 +5,7 @@ from inventory import views
 urlpatterns = [
     path("category/", views.ItemsView.as_view()),
     path("category/<str:category_name>/", views.sortByCategory.as_view()),
+    path("categoryCount/", views.categoryCount.as_view()),
     path("location/makerspace/", views.MakerspaceView.as_view()),
     path("location/backroom/", views.BackroomView.as_view()),
     path("lastpurchase/<int:pk>/", views.UpdateLastPurchase.as_view()),

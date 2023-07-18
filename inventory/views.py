@@ -2,9 +2,8 @@ from django.shortcuts import render
 from rest_framework import mixins, generics
 from django.http import JsonResponse
 from .models import Item
-from .serializer import ItemSerializer
+from .serializer import ItemSerializer, CategorySerializer
 import datetime
-from .models import categories
 
 class ItemsView(generics.GenericAPIView, mixins.ListModelMixin):
     queryset = Item.objects.all()
@@ -19,6 +18,14 @@ class sortByCategory(generics.ListAPIView):
     def get_queryset(self):
         category_name = self.kwargs["category_name"]
         queryset = Item.objects.filter(category=category_name)
+        return queryset
+
+class categoryCount(generics.ListAPIView):
+    
+    serializer_class = CategorySerializer
+
+    def get_queryset(self):
+        queryset = Item.objects.all()
         return queryset
 
 class MakerspaceView(generics.ListAPIView):
