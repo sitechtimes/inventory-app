@@ -13,7 +13,7 @@ export const useItemsStore = defineStore('items', {
 
   actions: {
     async getItems(){
-    const response = await fetch('http://127.0.0.1:8000/items/')
+    const response = await fetch('http://127.0.0.1:8000/items/category')
     const results = await response.json()
     console.log(results)
     this.items = results

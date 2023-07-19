@@ -84,6 +84,14 @@
 
   height: 100%;
   width: 100%;
+  flex: 1 1 0%;
+  contain: paint;
+}
+
+@container (min-width:500px) {
+  #itemHolderAll {
+    background-color: red;
+  }
 }
 
 .infoDesc {
@@ -93,7 +101,7 @@
   position: sticky;
   top: 0;
   overflow: hidden;
-  resize: horizontal;
+  flex: 1 1 0%;
 }
 @media screen and (max-width: 760px) {
   .infoDesc {
