@@ -51,15 +51,10 @@ onMounted(() => {
     redirect: "follow",
     referrerPolicy: "no-referrer",
   })
-    .then((response) =>
-      response.forEach((item) => {
-        if (item.location === "Makerspace") {
-          Makerspace.value = item.quantity;
-        } else if (item.location === "Back Room") {
-          Backroom.value = item.quantity;
-        }
-      })
-    )
+    .then((response) => {
+      Makerspace.value = response[0].makerspace_quantity;
+      Backroom.value = response[0].backroom_quantity;
+    })
     .catch((error) => console.log(error));
 });
 function toBackRoom() {
@@ -69,7 +64,7 @@ function toBackRoom() {
     Backroom.value += 1;
     Makerspace.value -= 1;
     $fetch(
-      `http://127.0.0.1:8000/items/updateQuantity/AcrylicMedium_1/1/Makerspace/Back Room/`,
+      `http://127.0.0.1:8000/items/updateQuantity/AcrylicMedium_1/1/makerspace_quantity/`,
       {
         method: "PUT",
         mode: "cors",
@@ -99,7 +94,7 @@ function toMakerspace() {
     Makerspace.value += 1;
     Backroom.value -= 1;
     $fetch(
-      `http://127.0.0.1:8000/items/updateQuantity/AcrylicMedium_1/1/Back Room/Makerspace/`,
+      `http://127.0.0.1:8000/items/updateQuantity/AcrylicMedium_1/1/backroom_quantity/`,
       {
         method: "PUT",
         mode: "cors",

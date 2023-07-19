@@ -1,23 +1,31 @@
 import django
 import pandas as pd
 from inventory.models import Item
+from inventory.models import Category
+
 
 def run():
     dataframe = pd.read_csv('scripts/csv/inventory.csv')
-    print(dataframe["Category"])
-    print(Item.objects.all())
 
+    Item.objects.all().delete()
+    Category.objects.all().delete()
+    print('Hello world!')
     for index, rows in dataframe.iterrows():
         try:
-
+            Category.objects.get(category_name=rows["Category"])
+        except:
+            category_name = Category(category_name=rows["Category"])
+            category_name.save()
+        try:
             item = Item(
                 item_id=rows[" Item ID"],
                 name=rows["Name"],
                 purchase_link=rows["Purchase Link"],
                 image=rows["Image"],
                 last_purchased=rows["Date Last Purchased"],
-                quantity=2,
-                category=rows["Category"],
+                backroom_quantity=2,
+                makerspace_quantity=2,
+                category=Category.objects.get(category_name=rows["Category"]),
                 vendor=rows["Vendor"],
                 location="Makerspace"
             )
