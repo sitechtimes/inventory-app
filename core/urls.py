@@ -22,4 +22,5 @@ from inventory.views import ItemsView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('items/', include('inventory.urls')),
+    path('', include('gsheets.urls'))
 ]

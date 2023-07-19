@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'inventory',
-    'django_extensions'
+    'django_extensions',
+    'gsheets'
 ]
 
 MIDDLEWARE = [
@@ -138,3 +139,11 @@ CORS_ALLOWED_ORIGINS = [
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:3000",
 ]
+
+GSHEETS = {
+    'CLIENT_SECRETS': 'client_secret.json'
+}
+
+SECURE_SSL_REDIRECT=False
+SESSION_COOKIE_SECURE=False
+CSRF_COOKIE_SECURE=False
