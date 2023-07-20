@@ -1,19 +1,20 @@
-from django.shortcuts import render
-from rest_framework import mixins, generics
+from rest_framework import generics
 from django.http import JsonResponse
 from rest_framework.response import Response
-from django.db.models import Count
-from .models import Item, Category
-from .serializer import ItemSerializer, CategorySerializer
+from .models import Item, Category, Vendor
+from .serializer import ItemSerializer, CategorySerializer, VendorSerializer
 import datetime
 from rest_framework.views import APIView
 
 
-class AllView(APIView):
-    def get(self, request, *args, **kwargs):
-        allCategories = Category.objects.all()
-        serializer = CategorySerializer(allCategories, many=True)
-        return Response(serializer.data)
+class CategoryView(generics.ListAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+
+
+class VendorView(generics.ListAPIView):
+    queryset = Vendor.objects.all()
+    serializer_class = VendorSerializer
 
 
 class sortByCategory(generics.ListAPIView):
@@ -24,78 +25,6 @@ class sortByCategory(generics.ListAPIView):
         queryset = Category.objects.filter(category_name=category_name)
         return queryset
 
-class getItems(generics.ListAPIView):
-    serializer_class = ItemSerializer
-
-    def get_queryset(self):
-        queryset = Item.objects.filter(item_id=self.kwargs["item_name"])
-        return queryset
-
-
-class moveItems(generics.UpdateAPIView):
-    serializer_class = ItemSerializer
-
-    def get_object(self, obj_id):
-        return Item.objects.get(item_id=obj_id)
-
-    def update(self, request, *args, **kwargs):
-        item_name = self.kwargs["item_name"]
-        fromspace = self.kwargs["from"]
-        amount = self.kwargs["amount"]
-
-        obj = self.get_object(item_name)
-
-        if fromspace == 'makerspace_quantity':
-            if obj.makerspace_quantity < 0:
-                return JsonResponse({"error": "Item is out of stock"}, status=400)
-            else:
-                if fromspace == 'makerspace_quantity':
-                    obj.makerspace_quantity -= amount
-                    obj.save()
-                    obj.backroom_quantity += amount
-                    obj.save()
-                else:
-                    obj.backroom_quantity -= amount
-                    obj.save()
-                    obj.makerspace_quantity += amount
-                    obj.save()
-                return JsonResponse(self.get_serializer(obj).data)
-        elif fromspace == 'backroom_quantity':
-            if obj.backroom_quantity < 0:
-                return JsonResponse({"error": "Item is out of stock"}, status=400)
-            else:
-                if fromspace == 'makerspace_quantity':
-                    obj.makerspace_quantity -= amount
-                    obj.save()
-                    obj.backroom_quantity += amount
-                    obj.save()
-                else:
-                    obj.backroom_quantity -= amount
-                    obj.save()
-                    obj.makerspace_quantity += amount
-                    obj.save()
-                return JsonResponse(self.get_serializer(obj).data)
-
-
-class UpdateItem(generics.UpdateAPIView):
-    serializer_class = ItemSerializer
-
-    def get_object(self, obj_id):
-        return Item.objects.get(item_id=obj_id)
-
-    def update(self, *args, **kwargs):
-        makerspace_amount = self.kwargs["makerspace"]
-        backroom_amount = self.kwargs["backroom"]
-        """ queryset = Item.objects.filter(item_id=self.kwargs["item_name"]) """
-
-        obj = self.get_object(self.kwargs["item_name"])
-        obj.makerspace_quantity = makerspace_amount
-        obj.save()
-        obj.backroom_quantity = backroom_amount
-        obj.save()
-
-        return JsonResponse(self.get_serializer(obj).data)
-
 
 class UpdateLastPurchase(generics.UpdateAPIView):
     queryset = Item.objects.all()
@@ -103,6 +32,58 @@ class UpdateLastPurchase(generics.UpdateAPIView):
 
     def update(self, request, *args, **kwargs):
         item = self.get_object()
-        item.last_purchase = datetime.datetime.now()
+        item.last_purchased = datetime.datetime.now()
         item.save()
         return JsonResponse(self.get_serializer(item).data)
+
+
+class getItems(generics.ListAPIView):
+    serializer_class = ItemSerializer
+
+    def get_queryset(self):
+        queryset = Item.objects.filter(id=self.kwargs["pk"])
+        return queryset
+
+
+class moveItems(generics.UpdateAPIView):
+    serializer_class = ItemSerializer
+
+    def update(self, request, *args, **kwargs):
+        queryset = Item.objects.get(id=self.kwargs["pk"])
+        itemfrom = self.kwargs['from']
+
+        if itemfrom == 'backroom':
+            if queryset.backroom_quantity == 0:
+                return JsonResponse({'error': 'Item is out of stock in BackRoom'}, status=400)
+            else:
+                queryset.backroom_quantity -= 1
+                queryset.makerspace_quantity += 1
+                queryset.save()
+
+                return JsonResponse(self.get_serializer(queryset).data)
+        if itemfrom == 'makerspace':
+            if queryset.makerspace_quantity == 0:
+                return JsonResponse({'error': 'Item is out of stock in MakerSpace'}, status=400)
+            else:
+                queryset.makerspace_quantity -= 1
+                queryset.backroom_quantity += 1
+                queryset.save()
+
+                return JsonResponse(self.get_serializer(queryset).data)
+
+
+class ManualEditQuantity(generics.UpdateAPIView):
+    serializer_class = ItemSerializer
+
+    def update(self, request, *args, **kwargs):
+        queryset = Item.objects.get(id=self.kwargs["pk"])
+        makerspace = self.kwargs["makerspace"]
+        backroom = self.kwargs["backroom"]
+        if makerspace >= 0 and backroom >= 0:
+            queryset.makerspace_quantity = makerspace
+            queryset.backroom_quantity = backroom
+            queryset.save()
+
+            return JsonResponse(self.serializer_class(queryset).data)
+        else:
+            return JsonResponse({'error': 'Invalid input'}, status=400)

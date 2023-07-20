@@ -40,7 +40,7 @@ let room = ref("");
 let edit = ref(false);
 
 onMounted(() => {
-  $fetch("http://127.0.0.1:8000/items/CurrentItem/AcrylicMedium_1/", {
+  $fetch("http://127.0.0.1:8000/items/CurrentItem/1/", {
     method: "GET",
     mode: "cors",
     cache: "no-cache",
@@ -58,69 +58,61 @@ onMounted(() => {
     .catch((error) => console.log(error));
 });
 function toBackRoom() {
-  if (Makerspace.value > 0) {
-    room.value = "";
-    haveSupplies.value = false;
-    Backroom.value += 1;
-    Makerspace.value -= 1;
-    $fetch(
-      `http://127.0.0.1:8000/items/updateQuantity/AcrylicMedium_1/1/makerspace_quantity/`,
-      {
-        method: "PUT",
-        mode: "cors",
-        cache: "no-cache",
-        credentials: "same-origin",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        redirect: "follow",
-        referrerPolicy: "no-referrer",
-      }
-    )
-      .then((response) => console.log(response))
-      .catch((error) => {
-        console.log(error);
-      });
-  } else {
-    room.value = "Makerspace";
-    haveSupplies.value = true;
-  }
+  room.value = "";
+  haveSupplies.value = false;
+  $fetch(`http://127.0.0.1:8000/items/updateQuantity/1/makerspace/`, {
+    method: "PUT",
+    mode: "cors",
+    cache: "no-cache",
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    redirect: "follow",
+    referrerPolicy: "no-referrer",
+  })
+    .then((response) => {
+      console.log(response);
+      Backroom.value += 1;
+      Makerspace.value -= 1;
+    })
+    .catch((error) => {
+      console.log(error);
+      room.value = "Makerspace";
+      haveSupplies.value = true;
+    });
 }
 
 function toMakerspace() {
-  if (Backroom.value > 0) {
-    room.value = "";
-    haveSupplies.value = false;
-    Makerspace.value += 1;
-    Backroom.value -= 1;
-    $fetch(
-      `http://127.0.0.1:8000/items/updateQuantity/AcrylicMedium_1/1/backroom_quantity/`,
-      {
-        method: "PUT",
-        mode: "cors",
-        cache: "no-cache",
-        credentials: "same-origin",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        redirect: "follow",
-        referrerPolicy: "no-referrer",
-      }
-    )
-      .then((response) => console.log(response))
-      .catch((error) => {
-        console.log(error);
-      });
-  } else {
-    room.value = "Backroom";
-    haveSupplies.value = true;
-  }
+  room.value = "";
+  haveSupplies.value = false;
+  $fetch(`http://127.0.0.1:8000/items/updateQuantity/1/backroom/`, {
+    method: "PUT",
+    mode: "cors",
+    cache: "no-cache",
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    redirect: "follow",
+    referrerPolicy: "no-referrer",
+  })
+    .then((response) => {
+      console.log(response);
+      Makerspace.value += 1;
+      Backroom.value -= 1;
+    })
+    .catch((error) => {
+      console.log(error);
+      room.value = "Backroom";
+      haveSupplies.value = true;
+    });
 }
 
 function manualEdit() {
   if (Makerspace.value > 0 && Backroom.value > 0) {
     fetch(
-      `http://127.0.0.1:8000/items/updateQuantity/manual/AcrylicMedium_1/${Makerspace.value}/${Backroom.value}/`,
+      `http://127.0.0.1:8000/items/updateQuantity/manual/1/${Makerspace.value}/${Backroom.value}/`,
       {
         method: "PUT",
         mode: "cors",
@@ -184,7 +176,7 @@ input {
   height: 1rem;
   display: flex;
   flex-flow: row nowrap;
-  justify-content: end;
+  justify-content: flex-end;
 }
 .edit-btn,
 .save-btn {

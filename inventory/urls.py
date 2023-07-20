@@ -3,16 +3,13 @@ from rest_framework.urlpatterns import format_suffix_patterns
 from inventory import views
 
 urlpatterns = [
-    path("category/", views.AllView.as_view()),
+    path("category/", views.CategoryView.as_view()),
+    path("vendor/", views.VendorView.as_view()),
     path("category/<str:category_name>/", views.sortByCategory.as_view()),
-    path("categoryCount/", views.categoryCount.as_view()),
     path("lastpurchase/<int:pk>/", views.UpdateLastPurchase.as_view()),
-    path("CurrentItem/<str:item_name>/", views.getItems.as_view()),
-    path("updateQuantity/<str:item_name>/<int:amount>/<str:from>/",
-         views.moveItems.as_view()),
-    path("updateQuantity/manual/<str:item_name>/<int:makerspace>/<int:backroom>/",
-         views.UpdateItem.as_view()),
-
-
+    path("CurrentItem/<int:pk>/", views.getItems.as_view()),
+    path("updateQuantity/<int:pk>/<str:from>/", views.moveItems.as_view()),
+    path("updateQuantity/manual/<int:pk>/<int:makerspace>/<int:backroom>/",
+         views.ManualEditQuantity.as_view()),
 ]
 urlpatterns = format_suffix_patterns(urlpatterns)
