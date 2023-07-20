@@ -5,7 +5,6 @@ from .models import Item
 from .serializer import ItemSerializer
 import datetime
 from .models import categories
-import gspread
 
 
 class ItemsView(generics.GenericAPIView, mixins.ListModelMixin):
@@ -14,10 +13,6 @@ class ItemsView(generics.GenericAPIView, mixins.ListModelMixin):
 
     def get(self, request, *args, **kwargs):
 
-        gc = gspread.service_account()
-
-        sheet = gc.open_by_key('1dxfDzx7JmYQrJ_Q5THy829wOpCkEAjLQ30L6OqQCUlY')
-        sheet.get_all_values()
 
 
 
