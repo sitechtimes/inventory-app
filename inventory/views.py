@@ -26,6 +26,15 @@ class sortByCategory(generics.ListAPIView):
         return queryset
 
 
+class sortByVendor(generics.ListAPIView):
+    serializer_class = VendorSerializer
+
+    def get_queryset(self):
+        vendor_name = self.kwargs["vendor_name"]
+        queryset = Vendor.objects.filter(vendor_name=vendor_name)
+        return queryset
+
+
 class UpdateLastPurchase(generics.UpdateAPIView):
     queryset = Item.objects.all()
     serializer_class = ItemSerializer

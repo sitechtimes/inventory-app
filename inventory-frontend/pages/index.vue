@@ -3,6 +3,7 @@
     <MoveItems />
     <CategoryCount />
     <VendorCount />
+    <Card />
   </div>
 </template>
 

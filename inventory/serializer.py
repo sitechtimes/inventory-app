@@ -4,6 +4,8 @@ from .models import Item, Category, Vendor
 
 class ItemSerializer(serializers.ModelSerializer):
 
+    total = serializers.SerializerMethodField()
+
     class Meta:
         model = Item
         fields = '__all__'
@@ -13,6 +15,10 @@ class ItemSerializer(serializers.ModelSerializer):
         rep['category'] = instance.category.category_name
         rep['vendor'] = instance.vendor.vendor_name
         return rep
+
+    def get_total(self, obj):
+        total = obj.backroom_quantity + obj.makerspace_quantity
+        return total
 
 
 class CategorySerializer(serializers.ModelSerializer):

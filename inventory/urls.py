@@ -6,6 +6,7 @@ urlpatterns = [
     path("category/", views.CategoryView.as_view()),
     path("vendor/", views.VendorView.as_view()),
     path("category/<str:category_name>/", views.sortByCategory.as_view()),
+    path("vendor/<str:vendor_name>/", views.sortByVendor.as_view()),
     path("lastpurchase/<int:pk>/", views.UpdateLastPurchase.as_view()),
     path("CurrentItem/<int:pk>/", views.getItems.as_view()),
     path("updateQuantity/<int:pk>/<str:from>/", views.moveItems.as_view()),
