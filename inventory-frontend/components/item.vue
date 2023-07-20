@@ -1,12 +1,12 @@
 <template>
-  <div class="itemMain" ref="main" @mousedown="clicked">
+  <div class="itemMain mainSize" ref="main" @mousedown="clicked">
     <div class="image">
       <img class="imageView" :src="image" :alt="name_id" />
     </div>
-    <div class="name-avail">
-      <div class="name text">{{ name }}</div>
+    <div class="name-avail" ref="textbox">
+      <div class="name text" ref="name">{{ name }}</div>
 
-      <div class="quantity smalltext">
+      <div class="quantity smalltext" ref="quant">
         {{ quantity }}
         <span class="availY avail smalltext" v-if="quantity > 0">
           Available</span
@@ -17,12 +17,11 @@
   </div>
 </template>
 
-<style >
+<style>
 .itemMain {
   min-height: 9rem;
   height: fit-content;
-  flex-basis: 23%;
-  max-width: 23%;
+
   background-color: var(--whitebg);
   display: flex;
   flex-direction: row;
@@ -37,6 +36,15 @@
   border-color: var(--darkergray);
   box-shadow: 0 0.25rem 5px var(--darkergray);
 }
+.mainSize {
+  flex-basis: 23%;
+  max-width: 23%;
+}
+.infoFull {
+  flex-basis: 30%;
+  max-width: 30%;
+}
+
 .name-avail {
   width: 70%;
   height: auto;
@@ -107,19 +115,48 @@
 }
 
 @media screen and (max-width: 1600px) {
-  .itemMain {
+  .mainSize {
     max-width: 30%;
     flex-basis: 30%;
   }
-}
-@media screen and (max-width: 1100px) {
-  .itemMain {
+  .infoFull {
     max-width: 45%;
     flex-basis: 45%;
   }
 }
+@media screen and (max-width: 1100px) {
+  .mainSize {
+    max-width: 45%;
+    flex-basis: 45%;
+  }
+  .infoFull {
+    max-width: 100%;
+    flex-basis: 100%;
+    border: none;
+    margin: 0;
+    border-radius: 0;
+  }
+  .infoFull:hover {
+    border-color: none;
+    box-shadow: none;
+    background-color: var(--gray);
+  }
+  .info-name-avail {
+    width: 98%;
+    justify-content: center;
+  }
+  .info-name {
+    padding-right: 1rem;
+    margin-bottom: 0;
+  }
+  .info-quantity {
+    padding-top: 1rem;
+    position: inherit;
+    justify-content: left;
+  }
+}
 @media screen and (max-width: 760px) {
-  .itemMain {
+  .mainSize {
     max-width: 100%;
     flex-basis: 100%;
     border: none;
@@ -170,6 +207,32 @@ export default {
     };
   },
   methods: {
+    resizing() {
+      let main = this.$refs.main;
+      let parent =
+        this.$refs["main"].parentElement.parentElement.parentElement
+          .parentElement;
+      let textbox = this.$refs["textbox"];
+      let name = this.$refs["name"];
+      let quant = this.$refs["quant"];
+
+      if (this.store.info === true) {
+        textbox.classList.add("info-name-avail");
+        name.classList.add("info-name");
+        quant.classList.add("info-quantity");
+
+        for (item in main) {
+          item.classList.remove("mainSize");
+          item.classList.add("infoFull");
+        }
+      } else {
+        parent.style.border = "solid 1px green";
+        for (item in main) {
+          item.classList.add("mainSize");
+          item.classList.remove("infoFull");
+        }
+      }
+    },
     clicked() {
       console.log("clicked");
 
@@ -193,6 +256,7 @@ export default {
         });
         this.store.$patch({ info: true });
       }
+      this.resizing();
     },
   },
   mounted() {},

@@ -88,12 +88,6 @@
   contain: paint;
 }
 
-@container (min-width:500px) {
-  #itemHolderAll {
-    background-color: red;
-  }
-}
-
 .infoDesc {
   height: 100%;
   width: 70%;
