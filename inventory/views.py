@@ -17,25 +17,12 @@ class AllView(APIView):
 
 
 class sortByCategory(generics.ListAPIView):
-    serializer_class = ItemSerializer
+    serializer_class = CategorySerializer
 
     def get_queryset(self):
         category_name = self.kwargs["category_name"]
-        queryset = Item.objects.filter(category=category_name)
+        queryset = Category.objects.filter(category_name=category_name)
         return queryset
-
-
-class categoryCount(generics.ListAPIView):
-    queryset = Item.objects.values(
-        'category').annotate(count=Count('category'))
-    serializer_class = CategorySerializer
-
-    def get_list(self, request, *args, **kwargs):
-        """ categories_with_counts = self.get_queryset()
-        serialized_data = self.get_serializer(
-            categories_with_counts, many=True).data """
-        return self.list(request, *args, **kwargs)
-
 
 class getItems(generics.ListAPIView):
     serializer_class = ItemSerializer
