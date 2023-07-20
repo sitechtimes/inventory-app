@@ -5,12 +5,22 @@ from .models import Item
 from .serializer import ItemSerializer
 import datetime
 from .models import categories
+import gspread
+
 
 class ItemsView(generics.GenericAPIView, mixins.ListModelMixin):
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
 
     def get(self, request, *args, **kwargs):
+
+        gc = gspread.service_account()
+
+        sheet = gc.open_by_key('1dxfDzx7JmYQrJ_Q5THy829wOpCkEAjLQ30L6OqQCUlY')
+        sheet.get_all_values()
+
+
+
         return self.list(request, *args, **kwargs)
 
 class sortByCategory(generics.ListAPIView): 
