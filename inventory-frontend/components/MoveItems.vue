@@ -4,7 +4,7 @@
       <button v-if="!edit" @click="edit = true" class="edit-btn">
         <font-awesome-icon :icon="['fas', 'pen-to-square']" />
       </button>
-      <button v-if="edit" @click="manualEdit" class="save-btn">
+      <button v-if="edit" @click="manualEdit()" class="save-btn">
         <font-awesome-icon :icon="['fas', 'floppy-disk']" />
       </button>
     </div>
@@ -22,10 +22,10 @@
       <h2>None left in {{ room }}</h2>
     </div>
     <div class="btn">
-      <button v-if="!edit" @click="toMakerspace">
+      <button v-if="!edit" @click="toMakerspace()">
         <font-awesome-icon :icon="['fas', 'angles-left']" />
       </button>
-      <button v-if="!edit" @click="toBackRoom">
+      <button v-if="!edit" @click="toBackRoom()">
         <font-awesome-icon :icon="['fas', 'angles-right']" />
       </button>
     </div>
@@ -33,14 +33,15 @@
 </template>
 
 <script setup>
+const props = defineProps(["id"]);
 let Makerspace = ref(0);
 let Backroom = ref(0);
 let haveSupplies = ref(false);
 let room = ref("");
 let edit = ref(false);
 
-onMounted(() => {
-  $fetch("http://127.0.0.1:8000/items/CurrentItem/1/", {
+function item() {
+  $fetch(`http://127.0.0.1:8000/items/CurrentItem/${props.id}/`, {
     method: "GET",
     mode: "cors",
     cache: "no-cache",
@@ -52,15 +53,16 @@ onMounted(() => {
     referrerPolicy: "no-referrer",
   })
     .then((response) => {
-      Makerspace.value = response[0].makerspace_quantity;
-      Backroom.value = response[0].backroom_quantity;
+      Makerspace.value = response.makerspace_quantity;
+      Backroom.value = response.backroom_quantity;
     })
     .catch((error) => console.log(error));
-});
+}
+
 function toBackRoom() {
   room.value = "";
   haveSupplies.value = false;
-  $fetch(`http://127.0.0.1:8000/items/updateQuantity/1/makerspace/`, {
+  $fetch(`http://127.0.0.1:8000/items/updateQuantity/${props.id}/makerspace/`, {
     method: "PUT",
     mode: "cors",
     cache: "no-cache",
@@ -86,7 +88,7 @@ function toBackRoom() {
 function toMakerspace() {
   room.value = "";
   haveSupplies.value = false;
-  $fetch(`http://127.0.0.1:8000/items/updateQuantity/1/backroom/`, {
+  $fetch(`http://127.0.0.1:8000/items/updateQuantity/${props.id}/backroom/`, {
     method: "PUT",
     mode: "cors",
     cache: "no-cache",
@@ -112,7 +114,7 @@ function toMakerspace() {
 function manualEdit() {
   if (Makerspace.value > 0 && Backroom.value > 0) {
     fetch(
-      `http://127.0.0.1:8000/items/updateQuantity/manual/1/${Makerspace.value}/${Backroom.value}/`,
+      `http://127.0.0.1:8000/items/updateQuantity/manual/${props.id}/${Makerspace.value}/${Backroom.value}/`,
       {
         method: "PUT",
         mode: "cors",
