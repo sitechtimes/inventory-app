@@ -46,12 +46,9 @@ class UpdateLastPurchase(generics.UpdateAPIView):
         return JsonResponse(self.get_serializer(item).data)
 
 
-class getItems(generics.ListAPIView):
+class getItems(generics.RetrieveAPIView):
+    queryset = Item.objects.all()
     serializer_class = ItemSerializer
-
-    def get_queryset(self):
-        queryset = Item.objects.filter(id=self.kwargs["pk"])
-        return queryset
 
 
 class moveItems(generics.UpdateAPIView):
