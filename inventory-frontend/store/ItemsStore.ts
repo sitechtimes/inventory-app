@@ -5,6 +5,8 @@ export const useItemsStore = defineStore('items', {
     items: null,
     popup: {name:null},
     info: false,
+    main: [],
+     
   }),
 
   getters: {

@@ -208,10 +208,6 @@ export default {
   },
   methods: {
     resizing() {
-      let main = this.$refs.main;
-      let parent =
-        this.$refs["main"].parentElement.parentElement.parentElement
-          .parentElement;
       let textbox = this.$refs["textbox"];
       let name = this.$refs["name"];
       let quant = this.$refs["quant"];
@@ -221,16 +217,15 @@ export default {
         name.classList.add("info-name");
         quant.classList.add("info-quantity");
 
-        for (item in main) {
+        this.store.main.forEach((item) => {
           item.classList.remove("mainSize");
           item.classList.add("infoFull");
-        }
+        });
       } else {
-        parent.style.border = "solid 1px green";
-        for (item in main) {
+        this.store.main.forEach((item) => {
           item.classList.add("mainSize");
           item.classList.remove("infoFull");
-        }
+        });
       }
     },
     clicked() {
@@ -259,6 +254,8 @@ export default {
       this.resizing();
     },
   },
-  mounted() {},
+  mounted() {
+    this.store.main.push(this.$refs.main);
+  },
 };
 </script>

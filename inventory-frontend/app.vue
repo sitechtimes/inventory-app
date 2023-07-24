@@ -85,7 +85,6 @@
   height: 100%;
   width: 100%;
   flex: 1 1 0%;
-  contain: paint;
 }
 
 .infoDesc {
