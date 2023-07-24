@@ -208,24 +208,37 @@ export default {
   },
   methods: {
     resizing() {
-      let textbox = this.$refs["textbox"];
-      let name = this.$refs["name"];
-      let quant = this.$refs["quant"];
-
       if (this.store.info === true) {
-        textbox.classList.add("info-name-avail");
-        name.classList.add("info-name");
-        quant.classList.add("info-quantity");
+        this.store.textbox.forEach((item) => {
+          item.classList.add("info-name-avail");
+        });
+        this.store.name.forEach((item) => {
+          item.classList.add("info-name");
+        });
+        this.store.quant.forEach((item) => {
+          item.classList.add("info-quantity");
+        });
 
         this.store.main.forEach((item) => {
           item.classList.remove("mainSize");
           item.classList.add("infoFull");
         });
+        this.store.cat.forEach((item) => item.classList.add("info-cat"));
       } else {
         this.store.main.forEach((item) => {
           item.classList.add("mainSize");
           item.classList.remove("infoFull");
         });
+        this.store.textbox.forEach((item) => {
+          item.classList.remove("info-name-avail");
+        });
+        this.store.name.forEach((item) => {
+          item.classList.remove("info-name");
+        });
+        this.store.quant.forEach((item) => {
+          item.classList.remove("info-quantity");
+        });
+        this.store.cat.forEach((item) => item.classList.remove("info-cat"));
       }
     },
     clicked() {
@@ -253,9 +266,15 @@ export default {
       }
       this.resizing();
     },
+    push() {
+      this.store.quant.push(this.$refs.quant);
+      this.store.main.push(this.$refs.main);
+      this.store.textbox.push(this.$refs.textbox);
+      this.store.name.push(this.$refs.name);
+    },
   },
   mounted() {
-    this.store.main.push(this.$refs.main);
+    this.push();
   },
 };
 </script>

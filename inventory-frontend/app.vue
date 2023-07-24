@@ -95,6 +95,7 @@
   top: 0;
   overflow: hidden;
   flex: 1 1 0%;
+  border-left: solid 1px var(--darkgray);
 }
 @media screen and (max-width: 760px) {
   .infoDesc {
@@ -106,6 +107,7 @@
     margin-left: 7rem;
     left: 0;
     right: 0;
+    border: none;
   }
 }
 </style>

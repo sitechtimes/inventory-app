@@ -6,7 +6,10 @@ export const useItemsStore = defineStore('items', {
     popup: {name:null},
     info: false,
     main: [],
-     
+    textbox: [],
+    name:[],
+    quant:[],
+    cat:[]
   }),
 
   getters: {

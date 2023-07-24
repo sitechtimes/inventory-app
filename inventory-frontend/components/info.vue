@@ -45,7 +45,6 @@
   background-color: var(--whitebg);
   display: flex;
   flex-direction: column;
-  border-left: solid 1px var(--darkgray);
 }
 .imagePop {
   display: flex;
