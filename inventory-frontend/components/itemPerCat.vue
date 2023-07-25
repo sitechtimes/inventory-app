@@ -36,14 +36,14 @@
 }
 @media screen and (max-width: 1100px) {
   .info-cat {
-    border-top: solid 1px var(--darkgray);
-    border-bottom: solid 1px var(--darkgray);
+    border-top: var(--border);
+    border-bottom: var(--border);
   }
 }
 @media screen and (max-width: 760px) {
   .catHead {
-    border-top: solid 1px var(--darkgray);
-    border-bottom: solid 1px var(--darkgray);
+    border-top: var(--border);
+    border-bottom: var(--border);
   }
   .itemHolder {
     background-color: var(--whitebg);

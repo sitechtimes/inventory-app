@@ -29,7 +29,7 @@
   margin: 1rem;
   margin-left: 2rem;
   border-radius: 0.5rem;
-  border: solid 1px var(--darkgray);
+  border: var(--border);
   transition: all 0.2s;
 }
 .itemMain:hover {
@@ -207,48 +207,20 @@ export default {
     };
   },
   methods: {
-    resizing() {
-      if (this.store.info === true) {
-        this.store.textbox.forEach((item) => {
-          item.classList.add("info-name-avail");
-        });
-        this.store.name.forEach((item) => {
-          item.classList.add("info-name");
-        });
-        this.store.quant.forEach((item) => {
-          item.classList.add("info-quantity");
-        });
-
-        this.store.main.forEach((item) => {
-          item.classList.remove("mainSize");
-          item.classList.add("infoFull");
-        });
-        this.store.cat.forEach((item) => item.classList.add("info-cat"));
-      } else {
-        this.store.main.forEach((item) => {
-          item.classList.add("mainSize");
-          item.classList.remove("infoFull");
-        });
-        this.store.textbox.forEach((item) => {
-          item.classList.remove("info-name-avail");
-        });
-        this.store.name.forEach((item) => {
-          item.classList.remove("info-name");
-        });
-        this.store.quant.forEach((item) => {
-          item.classList.remove("info-quantity");
-        });
-        this.store.cat.forEach((item) => item.classList.remove("info-cat"));
-      }
-    },
     clicked() {
       console.log("clicked");
-
+      console.log(this.store.vendor);
       if (this.store.popup.name === this.name) {
         if (this.store.info === false) {
           this.store.$patch({ info: true });
         } else {
-          this.store.$patch({ info: false });
+          this.store.$patch({
+            info: false,
+            vendor: false,
+            vendorHeader: false,
+            categoryPop: false,
+            categoryHeader: false,
+          });
         }
       } else {
         this.store.$patch({
@@ -262,9 +234,15 @@ export default {
             date: this.updated,
           },
         });
-        this.store.$patch({ info: true });
+        this.store.$patch({
+          info: true,
+          vendor: false,
+          vendorHeader: false,
+          categoryPop: false,
+          categoryHeader: false,
+        });
       }
-      this.resizing();
+      this.store.resizing();
     },
     push() {
       this.store.quant.push(this.$refs.quant);

@@ -9,7 +9,12 @@ export const useItemsStore = defineStore('items', {
     textbox: [],
     name:[],
     quant:[],
-    cat:[]
+    cat:[],
+    vendor:false,
+    vendorHeader: false,
+    categoryPop: false,
+    categoryHeader: false,
+ 
   }),
 
   getters: {
@@ -24,7 +29,40 @@ export const useItemsStore = defineStore('items', {
     this.items = results
     return results
     },
-   
+    resizing() {
+      if (this.info === true) {
+        this.textbox.forEach((item) => {
+          item.classList.add("info-name-avail");
+        });
+        this.name.forEach((item) => {
+          item.classList.add("info-name");
+        });
+        this.quant.forEach((item) => {
+          item.classList.add("info-quantity");
+        });
+
+        this.main.forEach((item) => {
+          item.classList.remove("mainSize");
+          item.classList.add("infoFull");
+        });
+        this.cat.forEach((item) => item.classList.add("info-cat"));
+      } else {
+        this.main.forEach((item) => {
+          item.classList.add("mainSize");
+          item.classList.remove("infoFull");
+        });
+        this.textbox.forEach((item) => {
+          item.classList.remove("info-name-avail");
+        });
+        this.name.forEach((item) => {
+          item.classList.remove("info-name");
+        });
+        this.quant.forEach((item) => {
+          item.classList.remove("info-quantity");
+        });
+        this.cat.forEach((item) => item.classList.remove("info-cat"));
+      }
+    },
   }
   
 })

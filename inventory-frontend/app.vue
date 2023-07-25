@@ -17,7 +17,7 @@
         </div>
       </div>
 
-      <div class="infoDesc" v-if="all.info">
+      <div class="infoDesc" v-if="all.info" ref="infoHolder">
         <Info
           :img_link="all.popup.image"
           :name="all.popup.name"
@@ -48,19 +48,19 @@
   grid-column: 1 / 3;
   width: 100%;
   height: 100%;
-  border-bottom: solid 1px var(--darkgray);
+  border-bottom: var(--border);
 }
 #navHolder {
   grid-row: 2 / 3;
   grid-column: 1 / 2;
-  border-right: solid 1px var(--darkgray);
+  border-right: var(--border);
 }
 #largeItemHolder {
   grid-row: 2/3;
   grid-column: 2/3;
   display: flex;
   flex-direction: row;
-  overflow-y: scroll;
+  overflow-y: hidden;
   background-color: var(--lightgray);
 }
 #mainItems {
@@ -70,7 +70,7 @@
 }
 #itemHeader {
   min-height: 5.5rem;
-  border-bottom: solid 1px var(--darkgray);
+  border-bottom: var(--border);
   background-color: var(--whitebg);
   position: sticky;
   top: 0;
@@ -79,7 +79,7 @@
 #itemHolderAll {
   grid-column: 2 / 3;
   grid-row: 3 / 4;
-
+  overflow-y: scroll;
   justify-content: center;
 
   height: 100%;
@@ -90,12 +90,17 @@
 .infoDesc {
   height: 100%;
   width: 70%;
-  min-width: 40rem;
+  min-width: 50rem;
   position: sticky;
   top: 0;
   overflow: hidden;
   flex: 1 1 0%;
-  border-left: solid 1px var(--darkgray);
+  border-left: var(--border);
+}
+@media screen and (min-width: 1600px) {
+  .infoDesc {
+    min-width: 80rem;
+  }
 }
 @media screen and (max-width: 760px) {
   .infoDesc {
@@ -103,11 +108,12 @@
     align-self: flex-start;
     justify-self: flex-start;
     position: fixed;
-    margin-top: 11rem;
+    margin-top: 5.5rem;
     margin-left: 7rem;
     left: 0;
     right: 0;
     border: none;
+    z-index: 2000;
   }
 }
 </style>

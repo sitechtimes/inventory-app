@@ -17,23 +17,32 @@ body {
     font-family: "Fira Sans", sans-serif;
   
 }
-
+button {
+    background-color: var(--whitebg);
+    border: none;
+}
+button:hover {
+    cursor: pointer;
+}
 .heading {
     font-size: var(--h1);
     font-weight: 300;
-  
+    
 }
 
 .subheading {
     font-size: var(--h2);
     font-weight: 300;
+    font-family: "Fira Sans", sans-serif;
 }
 
 .text {
     font-size: var(--h4);
     font-weight: 400;
+    font-family: "Fira Sans", sans-serif;
 }
 
 .smalltext {
     font-size: var(--h5);
+    font-family: "Fira Sans", sans-serif;
 }
