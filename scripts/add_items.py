@@ -36,7 +36,8 @@ def run():
                 makerspace_quantity=2,
                 category=Category.objects.get(category_name=rows["Category"]),
                 vendor=Vendor.objects.get(vendor_name=rows["Vendor"]),
-                location="Makerspace"
+                location="Makerspace",
+                suppliesNeeded=False,
             )
             item.save()
         except django.db.utils.IntegrityError:

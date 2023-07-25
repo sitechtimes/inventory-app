@@ -8,7 +8,7 @@
             class="item-btn"
             v-for="supply in items.itemsCategory"
             :key="supply"
-            @click="NavMenu()"
+            @click="$emit('item', supply.id)"
           >
             <div class="item-cont">
               <div class="image-cont">
@@ -27,7 +27,6 @@
         </div>
       </div>
     </div>
-    <div class="cont"><div></div></div>
   </div>
 </template>
 
@@ -58,11 +57,11 @@ onMounted(() => {
   display: flex;
   flex-flow: row nowrap;
   width: 98vw;
-  height: 100vh;
 }
 .category-cont {
   display: flex;
   flex-flow: column nowrap;
+  width: 70vw;
 }
 .cont {
   width: 25rem;
@@ -109,13 +108,5 @@ onMounted(() => {
 .total-cont {
   width: 15rem;
   height: 3rem;
-}
-
-.nav-cont {
-  height: 100vh;
-  width: 25rem;
-  background-color: #6d7275;
-  display: flex;
-  flex-flow: row;
 }
 </style>

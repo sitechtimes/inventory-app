@@ -5,6 +5,7 @@ from .models import Item, Category, Vendor
 class ItemSerializer(serializers.ModelSerializer):
 
     total = serializers.SerializerMethodField()
+    alert = serializers.SerializerMethodField()
 
     class Meta:
         model = Item
@@ -19,6 +20,15 @@ class ItemSerializer(serializers.ModelSerializer):
     def get_total(self, obj):
         total = obj.backroom_quantity + obj.makerspace_quantity
         return total
+
+    def get_alert(self, obj):
+        total = obj.backroom_quantity + obj.makerspace_quantity
+        if (total < 5):
+            alert = True
+        else:
+            alert = False
+
+        return alert
 
 
 class CategorySerializer(serializers.ModelSerializer):

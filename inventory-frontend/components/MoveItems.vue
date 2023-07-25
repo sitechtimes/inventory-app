@@ -39,6 +39,15 @@ let Backroom = ref(0);
 let haveSupplies = ref(false);
 let room = ref("");
 let edit = ref(false);
+onMounted(() => {
+  watch(
+    () => props.id,
+    () => {
+      item();
+    },
+    { immediate: true }
+  );
+});
 
 function item() {
   $fetch(`http://127.0.0.1:8000/items/CurrentItem/${props.id}/`, {

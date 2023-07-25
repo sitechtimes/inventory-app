@@ -2,8 +2,7 @@
   <div>
     <CategoryCount />
     <VendorCount />
-    <Card />
-    <!-- <user-menu /> -->
+    <DisplayInfo />
   </div>
 </template>
 
