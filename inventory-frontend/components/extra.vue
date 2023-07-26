@@ -63,9 +63,19 @@ export default {
   methods: {
     vendorInfo() {
       this.store.$patch({ vendor: true, vendorHeader: true });
+      this.store.inactive(".extraTab", ".tab1", ".tab1btn");
+      if (this.store.categoryHeader) {
+        this.store.inactive(".categoryTab", ".tab3", ".tab3btn");
+      }
+      this.store.active(".vendorTab", ".tab2", ".tab2btn");
     },
     categoryInfo() {
       this.store.$patch({ categoryPop: true, categoryHeader: true });
+      if (this.store.vendorHeader) {
+        this.store.inactive(".vendorTab", ".tab2", ".tab2btn");
+      }
+      this.store.inactive(".extraTab", ".tab1", ".tab1btn");
+      this.store.active(".categoryTab", ".tab3", ".tab3btn");
     },
   },
 };

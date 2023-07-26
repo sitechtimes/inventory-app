@@ -14,7 +14,7 @@ export const useItemsStore = defineStore('items', {
     vendorHeader: false,
     categoryPop: false,
     categoryHeader: false,
- 
+    
   }),
 
   getters: {
@@ -62,6 +62,17 @@ export const useItemsStore = defineStore('items', {
         });
         this.cat.forEach((item) => item.classList.remove("info-cat"));
       }
+    },
+    inactive(maintab, tabnumber, btn) {
+      document.querySelector(maintab).classList.add("inactive");
+      document.querySelector(tabnumber).classList.add("inactive");
+      document.querySelector(btn).classList.add("inactivebtn");
+    },
+    active(maintab, tabnumber, btn) {
+      document.querySelector(maintab).classList.add("active");
+      document.querySelector(maintab).classList.remove("inactive");
+      document.querySelector(tabnumber).classList.remove("inactive");
+      document.querySelector(btn).classList.remove("inactivebtn");
     },
   }
   

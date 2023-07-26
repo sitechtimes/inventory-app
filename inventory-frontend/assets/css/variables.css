@@ -1,6 +1,7 @@
 :root {
     --whitebg: #ffffff;
     --lightgray: rgb(249, 249, 249);
+    --halflightgray: rgb(240,240,240);
     --gray: rgb(235, 235, 235);
     --darkgray: rgb(220,220,220);
     --darkergray: rgb(180,180,180);

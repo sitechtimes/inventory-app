@@ -5,19 +5,19 @@
         <button class="extraTab tabtext text" @click="swapMain">
           {{ name }}
         </button>
-        <button class="exitbtn heading" @click="exit">X</button>
+        <button class="exitbtn heading tab1btn" @click="exit">X</button>
       </div>
       <div class="tab tab2" v-if="this.store.vendorHeader">
         <button class="vendorTab tabtext text" @click="swapVendor">
           {{ vendor }}
         </button>
-        <button class="exitbtn heading" @click="closeVendor">X</button>
+        <button class="exitbtn heading tab2btn" @click="closeVendor">X</button>
       </div>
       <div class="tab tab3" v-if="this.store.categoryHeader">
-        <button class="vendorTab tabtext text" @click="swapCat">
+        <button class="categoryTab tabtext text" @click="swapCat">
           {{ category }}
         </button>
-        <button class="exitbtn heading" @click="closeCat">X</button>
+        <button class="exitbtn heading tab3btn" @click="closeCat">X</button>
       </div>
     </div>
     <div
@@ -109,6 +109,25 @@
   height: 100%;
   width: 100%;
 }
+.active {
+  background-color: var(--whitebg);
+}
+.inactive {
+  background-color: var(--halflightgray);
+  color: var(--darkergray);
+  transition: all 0.5s;
+}
+.inactivebtn {
+  opacity: 0;
+  background-color: var(--halflightgray);
+  transition: all 0.5s;
+}
+.inactivebtn:hover {
+  opacity: 1;
+}
+.inactive:hover > .inactivebtn {
+  opacity: 1;
+}
 </style>
 
 <script>
@@ -139,28 +158,49 @@ export default {
     };
   },
   methods: {
+    swapMain() {
+      this.store.$patch({ vendor: false, categoryPop: false });
+      if (this.store.vendorHeader) {
+        this.store.inactive(".vendorTab", ".tab2", ".tab2btn");
+      }
+      if (this.store.categoryHeader) {
+        this.store.inactive(".categoryTab", ".tab3", ".tab3btn");
+      }
+      this.store.active(".extraTab", ".tab1", ".tab1btn");
+    },
+    swapVendor() {
+      this.store.$patch({ vendor: true, categoryPop: false });
+      this.store.inactive(".extraTab", ".tab1", ".tab1btn");
+      if (this.store.categoryHeader) {
+        this.store.inactive(".categoryTab", ".tab3", ".tab3btn");
+      }
+      this.store.active(".vendorTab", ".tab2", ".tab2btn");
+    },
+    swapCat() {
+      this.store.$patch({ vendor: false, categoryPop: true });
+      if (this.store.vendorHeader) {
+        this.store.inactive(".vendorTab", ".tab2", ".tab2btn");
+      }
+      this.store.inactive(".extraTab", ".tab1", ".tab1btn");
+      this.store.active(".categoryTab", ".tab3", ".tab3btn");
+    },
     closeVendor() {
       this.store.$patch({ vendor: false, vendorHeader: false });
       console.log(this.store.vendor);
+      this.swapMain();
     },
     closeCat() {
       this.store.$patch({ categoryPop: false, categoryHeader: false });
+      this.swapMain();
     },
     exit() {
       this.store.$patch({ info: false });
       this.closeVendor();
-      this.closeCat;
+      this.closeCat();
+      this.swapMain();
       this.store.resizing();
     },
-    swapMain() {
-      this.store.$patch({ vendor: false, categoryPop: false });
-    },
-    swapVendor() {
-      this.store.$patch({ vendor: true, categoryPop: false });
-    },
-    swapCat() {
-      this.store.$patch({ vendor: false, categoryPop: true });
-    },
   },
+  mounted() {},
 };
 </script>
