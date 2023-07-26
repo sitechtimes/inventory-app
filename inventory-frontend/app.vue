@@ -1,5 +1,8 @@
 <template>
-  <div class="app">
+  <div>
+    <NuxtPage />
+  </div>
+  <!-- <div class="app">
     <div id="search" class="heading">search</div>
     <div id="navHolder">nav</div>
     <div id="largeItemHolder">
@@ -29,7 +32,7 @@
         />
       </div>
     </div>
-  </div>
+  </div> -->
 </template>
 
 <style>

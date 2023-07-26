@@ -6,8 +6,8 @@ categories = [('TLS', 'Tools'), ('PT', 'Paint'), ('TP', 'Tape'), ('WR', 'Wire'),
 
 vendors = [('DOE', 'ShopDOE'), ('AMZ', 'Amazon'),
            ('BLICK', 'Blick'), ('HD', 'Home Depot')]
-locations = [('MS', 'Makerspace'), ('BR', 'Back Room')]
-
+""" locations = [('MS', 'Makerspace'), ('BR', 'Back Room')]
+ """
 
 class Category(models.Model):
     category_name = models.CharField(choices=categories, max_length=100)
