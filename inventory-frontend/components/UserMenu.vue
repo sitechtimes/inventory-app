@@ -1,13 +1,13 @@
 <template>
   <div>
     <div class="open-menu-cont">
-      <button class="open-menu-btn" @click="NavMenu()">
+      <button class="open-menu-btn" @click="NavMenu">
         <div class="open-menu-icon-cont">
           <font-awesome-icon :icon="['fas', 'bars']" class="open-menu-icon" />
         </div>
       </button>
     </div>
-    <div class="return-box" @click="NavMenu()">
+    <div class="return-box" @click="NavMenu">
       <div></div>
     </div>
     <div class="nav-cont">
@@ -51,104 +51,87 @@
           </button>
         </div>
       </div>
-      <!-- back button if you want if have this button nav-cont: width: 18rem
-      with back button nav-cont: width: 19.5rem-->
-      <!-- <div class="back-cont">
-        <button class="back-btn" @click="NavMenu()">
-          <div class="back-icon">
-            <font-awesome-icon :icon="['fas', 'angles-left']" />
-          </div>
-        </button>
-      </div> -->
     </div>
   </div>
 </template>
 
-<script setup>
-let NavCont = "";
-let returnbox = "";
-
-onMounted(() => {
-  NavCont = document.querySelector(".nav-cont");
-  returnbox = document.querySelector(".return-box");
-  window.addEventListener("resize", () => {
-    if (window.innerWidth > 1200) {
-      NavCont.classList.remove("dismiss");
-      NavCont.classList.remove("selected");
-      returnbox.classList.remove("return-box-display");
-      returnbox.classList.remove("return-box-nodisplay");
-    }
-  });
-});
-
-function NavMenu() {
-  if (NavCont.classList.contains("selected")) {
-    NavCont.classList.remove("selected");
-    NavCont.classList.add("dismiss");
-    console.log("dismiss");
-    returnbox.classList.remove("return-box-display");
-    returnbox.classList.add("return-box-nodisplay");
-  } else if (NavCont.classList.contains("dismiss")) {
-    NavCont.classList.remove("dismiss");
-    NavCont.classList.add("selected");
-    console.log("selected");
-    returnbox.classList.remove("return-box-nodisplay");
-    returnbox.classList.add("return-box-display");
-  } else if (
-    !NavCont.classList.contains("dismiss") ||
-    !NavCont.classList.contains("selected")
-  ) {
-    NavCont.classList.add("selected");
-    console.log("selected");
-    returnbox.classList.add("return-box-display");
-  }
-}
+<script>
+export default {
+  name: "UserMenu",
+  props: {},
+  components: {},
+  data() {
+    return {
+      NavCont: document.querySelector(".nav-cont"),
+      returnbox: document.querySelector(".return-box"),
+    };
+  },
+  methods: {
+    NavMenu() {
+      if (this.NavCont.classList.contains("selected")) {
+        this.NavCont.classList.remove("selected");
+        this.NavCont.classList.add("dismiss");
+        console.log("dismiss");
+        this.returnbox.classList.remove("return-box-display");
+        this.returnbox.classList.add("return-box-nodisplay");
+      } else if (this.NavCont.classList.contains("dismiss")) {
+        this.NavCont.classList.remove("dismiss");
+        this.NavCont.classList.add("selected");
+        console.log("selected");
+        this.returnbox.classList.remove("return-box-nodisplay");
+        this.returnbox.classList.add("return-box-display");
+      } else if (
+        !this.NavCont.classList.contains("dismiss") ||
+        !this.NavCont.classList.contains("selected")
+      ) {
+        this.NavCont.classList.add("selected");
+        console.log("selected");
+        this.returnbox.classList.add("return-box-display");
+      }
+    },
+    runOnMounted() {
+      window.addEventListener("resize", () => {
+        if (window.innerWidth > 1200) {
+          this.NavCont.classList.remove("dismiss");
+          this.NavCont.classList.remove("selected");
+          this.returnbox.classList.remove("return-box-display");
+          this.returnbox.classList.remove("return-box-nodisplay");
+        }
+      });
+    },
+  },
+  mounted() {
+    this.runOnMounted();
+  },
+};
 </script>
 
 <style scoped>
 .nav-cont {
-  position: absolute;
-  top: 0%;
-  left: 0%;
   height: 100vh;
   width: 18rem;
-  background-color: #6d7275;
+
   display: flex;
   flex-flow: row;
 }
 .return-box-display {
   display: display;
-  position: absolute;
-  top: 0%;
-  left: 0%;
+
   height: 100vh;
   width: 100vw;
   opacity: 0.2;
-  background-color: #6d7275;
 }
 .return-box-nodisplay {
   display: none;
-  position: absolute;
-  top: 0%;
-  left: 0%;
+
   height: 100vh;
   width: 100vw;
   opacity: 0.2;
-  background-color: #6d7275;
 }
 .back-cont {
   display: none;
   width: 1.5rem;
   height: 100%;
-}
-.back-btn {
-  border: none;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #c7d6d5;
 }
 
 .icon {
@@ -199,14 +182,14 @@ function NavMenu() {
 .menu-icon {
   width: 1rem;
   height: 1rem;
-  background-color: #6d7275;
+
   border-radius: 2rem;
 }
 .menu-btn {
   padding: 1rem;
   width: 100%;
   border: none;
-  background-color: #6d7275;
+
   color: white;
   text-decoration: none;
   display: flex;
@@ -216,7 +199,7 @@ function NavMenu() {
   transition: background-color 0.2s linear;
 }
 .menu-btn:hover {
-  background-color: #ecebf3;
+  background-color: var(--lightblue);
 }
 .catalog-icon,
 .borrowed-icon,
@@ -275,9 +258,6 @@ function NavMenu() {
 /* media query */
 /* mobile */
 @media (max-width: 1200px) {
-  .back-cont {
-    display: block;
-  }
   .nav-cont {
     transform: translateX(-100%);
   }
