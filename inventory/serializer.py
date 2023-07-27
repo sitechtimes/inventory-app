@@ -5,6 +5,7 @@ from .models import Item, Category, Vendor
 class ItemSerializer(serializers.ModelSerializer):
 
     total = serializers.SerializerMethodField()
+    image_url = serializers.ImageField(required=False)
 
     class Meta:
         model = Item

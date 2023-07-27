@@ -1,30 +1,30 @@
 <template>
   <div>
-    <form action="">
+    <form action="" @submit.prevent="submitForm()">
       <div class="biggerCont">
         <div class="Textcont">
           <div class="cont1">
             <div class="itemName">
-              <input type="text" name="name" placeholder="Enter the Name of the Item" class="nameText" />
+              <input id="name" type="text" placeholder="Enter the Name of the Item" class="nameText" required />
             </div>
             <div class="quantity-cont">
-              <input id="quantity" type="number" name="makerspace" placeholder="Maker Space Quantity">
-              <input id="quantity" type="number" name="backrrom" placeholder="Back Room Quantity">
+              <input id="quantity-makerspace" type="number" placeholder="Maker Space Quantity" required>
+              <input id="quantity-backroom" type="number" placeholder="Back Room Quantity" required>
             </div>
           </div>
           <div class="cont2">
             <div>
-              <input id="location" type="text" name="location" placeholder="Enter the location of the Item" />
+              <input id="location" type="text" placeholder="Enter the location of the Item" required />
             </div>
             <div>
-              <select name="Vendor" id="">
+              <select name="Vendor" id="Vendor" required>
                 <option value="">Choose a Vendor</option>
                 <option value="DOE">ShopDOE</option>
                 <option value="AMZ">Amazon</option>
                 <option value="BLICK">Blick</option>
                 <option value="HD">Home Depot</option>
               </select>
-              <select name="Category" id="">
+              <select name="Category" id="Category" required>
                 <option value="">Choose a Category</option>
                 <option value="TLS">Tools</option>
                 <option value="PT">Paint</option>
@@ -50,8 +50,8 @@
         </div>
         <div class="imagecont">
           <div class="preview">
-            <img src="" alt="" id="preview-selected-image"><input type="file" id="actual-btn" accept="image/*"
-              @change="previewImage" hidden />
+            <img src="" alt="" id="preview-selected-image">
+            <input type="file" id="actual-btn" accept="image/*" @change="previewImage" hidden required />
             <label class="imageLabel" for="actual-btn">Choose Image File</label>
           </div>
           <div class="addPhotoBtn">
@@ -67,6 +67,7 @@
 </template>
 
 <script setup>
+
 function previewImage(event) {
   const imageFiles = event.target.files;
   const imageFilesLength = imageFiles.length;
@@ -74,10 +75,47 @@ function previewImage(event) {
   if (imageFilesLength > 0) {
     const imageSrc = URL.createObjectURL(imageFiles[0]);
     const imagePreviewElement = document.querySelector("#preview-selected-image");
+    const imageLabelElement = document.querySelector(".imageLabel");
+    imageLabelElement.style.opacity = 0;
     imagePreviewElement.src = imageSrc;
     imagePreviewElement.style.display = "block";
   }
 };
+
+function submitForm() {
+
+  let name = document.getElementById("name").value;
+  let makerspace = document.getElementById("quantity-makerspace").value;
+  let backroom = document.getElementById("quantity-backroom").value;
+  let location = document.getElementById("location").value;
+  let Vendor = document.getElementById("Vendor").value;
+  let Category = document.getElementById("Category").value;
+  let image = document.getElementById("preview-selected-image").src;
+
+  const formData = new FormData();
+  formData.append("image", image);
+  formData.append("name", name);
+  formData.append("makerspace", makerspace);
+  formData.append("backroom", backroom);
+  formData.append("location", location);
+  formData.append("Vendor", Vendor);
+  formData.append("Category", Category);
+
+  fetch("http://127.0.0.1:8000/items/addItems/", {
+    method: "POST",
+    mode: "cors",
+    cache: "no-cache",
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    redirect: "follow",
+    referrerPolicy: "no-referrer",
+    body: formData
+  }).then((response) => {
+    console.log(response)
+  });
+}
 </script>
 
 <style scoped>
@@ -102,6 +140,7 @@ form {
 }
 
 input {
+
   height: 6rem;
   font-size: 1.6rem;
   margin-bottom: .8rem;
@@ -141,7 +180,8 @@ select {
   flex-flow: row nowrap;
 }
 
-#quantity {
+#quantity-makerspace,
+#quantity-backroom {
   width: 15rem;
 
 }
@@ -177,8 +217,8 @@ select {
 
 .preview {
   border: solid 0.2px;
-  width: 30rem;
-  height: 30rem;
+  width: 32rem;
+  height: 32rem;
   border-radius: 1.2rem;
   display: flex;
   justify-content: center;
@@ -223,6 +263,6 @@ select {
   height: 4rem;
   background-color: rgb(195, 206, 206);
   border: solid 1px;
-  border-radius: 1rem;
+  border-radius: .5rem;
 }
 </style>

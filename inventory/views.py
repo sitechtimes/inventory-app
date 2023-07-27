@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from .models import Item, Category, Vendor
 from .serializer import ItemSerializer, CategorySerializer, VendorSerializer
 import datetime
-from rest_framework.views import APIView
+from rest_framework.parsers import MultiPartParser, FormParser
 
 
 class CategoryView(generics.ListAPIView):
@@ -94,8 +94,11 @@ class ManualEditQuantity(generics.UpdateAPIView):
         else:
             return JsonResponse({'error': 'Invalid input'}, status=400)
 
-#probably works idk
+# probably works idk
+
+
 class addItems(generics.CreateAPIView):
+    parser_classes = (MultiPartParser, FormParser)
     def post(self, request, *args, **kwargs):
         itemInfo = request.data
 
@@ -114,3 +117,10 @@ class addItems(generics.CreateAPIView):
         item.save()
 
         return item
+
+
+class deleteItems(generics.DestroyAPIView):
+    def delete(self, request, *args, **kwargs):
+        self.get_object().delete()
+
+        return Response("Item deleted", status=204)

@@ -6,8 +6,8 @@ categories = [('TLS', 'Tools'), ('PT', 'Paint'), ('TP', 'Tape'), ('WR', 'Wire'),
 
 vendors = [('DOE', 'ShopDOE'), ('AMZ', 'Amazon'),
            ('BLICK', 'Blick'), ('HD', 'Home Depot')]
-""" locations = [('MS', 'Makerspace'), ('BR', 'Back Room')]
- """
+locations = [('MS', 'Makerspace'), ('BR', 'Back Room')]
+
 
 class Category(models.Model):
     category_name = models.CharField(choices=categories, max_length=100)
@@ -23,11 +23,17 @@ class Vendor(models.Model):
         return self.vendor_name
 
 
+def upload_to(instance, filename):
+    return 'images/{filename}'.format(filename=filename)
+
+
 class Item(models.Model):
     item_id = models.CharField(max_length=100, blank=True, default='')
     name = models.CharField(max_length=100, blank=True, default='')
     purchase_link = models.CharField(max_length=1000, blank=True, default='')
     image = models.CharField(max_length=1000, blank=True, default='')
+    """ image = models.ImageField(
+        upload_to=upload_to, blank=True, null=True) """
     last_purchased = models.DateTimeField(auto_now=True, editable=True)
     backroom_quantity = models.IntegerField(default=0)
     makerspace_quantity = models.IntegerField(default=0)
@@ -39,3 +45,8 @@ class Item(models.Model):
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        count_obj = Item.objects.all().count()+1
+        self.id = count_obj
+        super(Item, self).save(*args, **kwargs)
