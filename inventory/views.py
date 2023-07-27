@@ -93,3 +93,24 @@ class ManualEditQuantity(generics.UpdateAPIView):
             return JsonResponse(self.serializer_class(queryset).data)
         else:
             return JsonResponse({'error': 'Invalid input'}, status=400)
+
+#probably works idk
+class addItems(generics.CreateAPIView):
+    def post(self, request, *args, **kwargs):
+        itemInfo = request.data
+
+        item = Item(
+            item_id=itemInfo["item_id"],
+            name=itemInfo["name"],
+            purchase_link=itemInfo["purchase_link"],
+            image=itemInfo["image"],
+            last_purchased=itemInfo["last_purchased"],
+            backroom_quantity=itemInfo["backroom_quantity"],
+            makerspace_quantity=itemInfo["makerspace_quantity"],
+            category=itemInfo["category"],
+            vendor=itemInfo["vendor"],
+            location=itemInfo["location"],
+        )
+        item.save()
+
+        return item

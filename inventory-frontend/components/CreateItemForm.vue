@@ -1,7 +1,7 @@
 <template>
   <div>
     <form action="">
-      <div class="cont">
+      <div class="biggerCont">
         <div class="Textcont">
           <div class="cont1">
             <div class="itemName">
@@ -12,12 +12,9 @@
               <input id="quantity" type="number" name="backrrom" placeholder="Back Room Quantity">
             </div>
           </div>
-
-
           <div class="cont2">
             <div>
               <input id="location" type="text" name="location" placeholder="Enter the location of the Item" />
-
             </div>
             <div>
               <select name="Vendor" id="">
@@ -48,26 +45,23 @@
                 <option value="Paper">Paper</option>
                 <option value="Drawing">Drawing</option>
               </select>
-
             </div>
-
           </div>
-
         </div>
-
-
         <div class="imagecont">
-
-
-
           <div class="preview">
-            <img src="" alt="" id="preview-selected-image">
+            <img src="" alt="" id="preview-selected-image"><input type="file" id="actual-btn" accept="image/*"
+              @change="previewImage" hidden />
+            <label class="imageLabel" for="actual-btn">Choose Image File</label>
           </div>
-          <input id="imageInput" type="file" name="imageinput" accept="image/*" @change="previewImage" />
+          <div class="addPhotoBtn">
+
+          </div>
         </div>
       </div>
-
-      <input type="submit">
+      <div class="submitCont">
+        <input id="submitBtn" type="submit">
+      </div>
     </form>
   </div>
 </template>
@@ -93,39 +87,35 @@ form {
   left: 50%;
   transform: translate(-50%, -50%);
   width: 80rem;
-  height: 60rem;
-  background-color: red;
+  height: 50rem;
+  background-color: rgb(221, 221, 221);
   border-radius: 0.5rem;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-flow: column nowrap;
+}
+
+.biggerCont {
+  display: flex;
+  flex-flow: row now;
+  height: 44rem;
+
 }
 
 input {
-  height: 5rem;
-  font-size: 1.5rem;
-  margin-bottom: .5rem;
+  height: 6rem;
+  font-size: 1.6rem;
+  margin-bottom: .8rem;
 }
 
 option {
-  font-size: 1.5rem;
-
+  font-size: 1.6rem;
 }
 
 select {
-  height: 5rem;
-  font-size: 1.5rem;
+  height: 6rem;
+  font-size: 1.6rem;
   width: 30rem;
-  margin-bottom: .5rem;
-}
-
-
-.cont {
-  width: 90%;
-  height: 90%;
-  background-color: green;
-  display: flex;
-  flex-flow: row nowrap;
+  margin-bottom: .8rem;
 }
 
 .Textcont {
@@ -171,6 +161,7 @@ select {
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
+  justify-content: center;
   width: 50%;
 }
 
@@ -185,9 +176,53 @@ select {
 }
 
 .preview {
-  border: dotted;
+  border: solid 0.2px;
+  width: 30rem;
+  height: 30rem;
+  border-radius: 1.2rem;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+#imageInput {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: none;
+  width: 5rem;
+  height: 2rem;
+}
+
+#preview-selected-image {
   width: 100%;
-  height: 65%;
+  height: 100%;
+}
+
+.imageLabel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  width: 29rem;
+  height: 28rem;
+  color: white;
+  padding: 0.5rem;
+  font-family: sans-serif;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.submitCont {
+  display: flex;
+  justify-content: center;
+}
+
+#submitBtn {
+  width: 12rem;
+  height: 4rem;
+  background-color: rgb(195, 206, 206);
+  border: solid 1px;
   border-radius: 1rem;
 }
 </style>
