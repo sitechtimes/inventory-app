@@ -1,9 +1,8 @@
 <template>
   <div>
-    <MoveItems />
     <CategoryCount />
     <VendorCount />
-    <Card />
+    <DisplayInfo />
   </div>
 </template>
 
