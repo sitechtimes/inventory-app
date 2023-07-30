@@ -32,11 +32,12 @@ def run():
                 purchase_link=rows["Purchase Link"],
                 image=rows["Image"],
                 last_purchased=rows["Date Last Purchased"],
-                backroom_quantity=2,
-                makerspace_quantity=2,
+                backroom_quantity=["Backroom_Quantity"],
+                makerspace_quantity=["MakerSpace_Quantity"],
                 category=Category.objects.get(category_name=rows["Category"]),
                 vendor=Vendor.objects.get(vendor_name=rows["Vendor"]),
-                location="Makerspace"
+                location=["Location"]
+
             )
             item.save()
         except django.db.utils.IntegrityError:

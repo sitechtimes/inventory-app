@@ -1,11 +1,11 @@
 <template>
-  <div>
-    <!--  <MoveItems />
-    <CategoryCount />
-    <VendorCount />
-    <Card /> -->
-    <CreateItemForm />
-  </div>
+    <div>
+        <!--  <MoveItems />
+        <CategoryCount />
+        <VendorCount />
+        <Card /> -->
+        <CreateItemForm />
+    </div>
 </template>
 
 <script setup></script>
