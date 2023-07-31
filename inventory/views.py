@@ -1,90 +1,39 @@
-from django.shortcuts import render
-from rest_framework import mixins, generics
+from rest_framework import generics
 from django.http import JsonResponse
-from .models import Item
-from .serializer import ItemSerializer
+from rest_framework.response import Response
+from .models import Item, Category, Vendor
+from .serializer import ItemSerializer, CategorySerializer, VendorSerializer
 import datetime
-from .models import categories
+from rest_framework.views import APIView
 
-class ItemsView(generics.GenericAPIView, mixins.ListModelMixin):
-    queryset = Item.objects.all()
-    serializer_class = ItemSerializer
 
-    def get(self, request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
+class CategoryView(generics.ListAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
 
-class sortByCategory(generics.ListAPIView): 
-    serializer_class = ItemSerializer
-    
+
+class VendorView(generics.ListAPIView):
+    queryset = Vendor.objects.all()
+    serializer_class = VendorSerializer
+
+
+class sortByCategory(generics.ListAPIView):
+    serializer_class = CategorySerializer
+
     def get_queryset(self):
         category_name = self.kwargs["category_name"]
-        queryset = Item.objects.filter(category=category_name)
+        queryset = Category.objects.filter(category_name=category_name)
         return queryset
 
-class MakerspaceView(generics.ListAPIView):
-    serializer_class = ItemSerializer
+
+class sortByVendor(generics.ListAPIView):
+    serializer_class = VendorSerializer
 
     def get_queryset(self):
-        queryset = Item.objects.filter(location="Makerspace")
+        vendor_name = self.kwargs["vendor_name"]
+        queryset = Vendor.objects.filter(vendor_name=vendor_name)
         return queryset
 
-class BackroomView(generics.ListAPIView):
-    serializer_class = ItemSerializer
-
-    def get_queryset(self):
-        queryset = Item.objects.filter(location="Back Room")
-        return queryset
-
-class getItems(generics.ListAPIView):
-    serializer_class = ItemSerializer
-    
-    def get_queryset(self):
-        queryset = Item.objects.filter(item_id=self.kwargs["item_name"])
-        return queryset
-
-class moveItems(generics.UpdateAPIView):
-    serializer_class = ItemSerializer
-
-    def get_object(self, obj_id, obj_location):
-        return Item.objects.get(item_id=obj_id, location=obj_location)
-    
-    def update(self, request, *args, **kwargs): 
-        item_name = self.kwargs["item_name"]
-        fromspace = self.kwargs["from"]
-        tospace = self.kwargs["to"]
-        amount = self.kwargs["amount"]
-        
-
-        obj = self.get_object(item_name, fromspace)
-        obj2 = self.get_object(item_name, tospace)
-
-        if obj.quantity == 0:
-            return JsonResponse({"error": "Item is out of stock"}, status=400)
-        else: 
-            obj.quantity -= amount 
-            obj.save()
-            obj2.quantity += amount
-            obj2.save()
-            return JsonResponse(self.get_serializer(obj2).data)
-
-class UpdateItem(generics.UpdateAPIView):
-    serializer_class = ItemSerializer
-
-    def update(self, *args, **kwargs): 
-        makerspace_amount = self.kwargs["makerspace"]
-        backroom_amount = self.kwargs["backroom"]
-        queryset = Item.objects.filter(item_id=self.kwargs["item_name"])
-
-        obj = queryset.get(location="Makerspace")
-        obj2 = queryset.get(location="Back Room")
-        obj.quantity = makerspace_amount
-        obj.save()
-        obj2.quantity = backroom_amount
-        obj2.save()
-    
-
-        return JsonResponse(self.get_serializer(obj).data)
-    
 
 class UpdateLastPurchase(generics.UpdateAPIView):
     queryset = Item.objects.all()
@@ -92,6 +41,55 @@ class UpdateLastPurchase(generics.UpdateAPIView):
 
     def update(self, request, *args, **kwargs):
         item = self.get_object()
-        item.last_purchase = datetime.datetime.now()
+        item.last_purchased = datetime.datetime.now()
         item.save()
         return JsonResponse(self.get_serializer(item).data)
+
+
+class getItems(generics.RetrieveAPIView):
+    queryset = Item.objects.all()
+    serializer_class = ItemSerializer
+
+
+class moveItems(generics.UpdateAPIView):
+    serializer_class = ItemSerializer
+
+    def update(self, request, *args, **kwargs):
+        queryset = Item.objects.get(id=self.kwargs["pk"])
+        itemfrom = self.kwargs['from']
+
+        if itemfrom == 'backroom':
+            if queryset.backroom_quantity == 0:
+                return JsonResponse({'error': 'Item is out of stock in BackRoom'}, status=400)
+            else:
+                queryset.backroom_quantity -= 1
+                queryset.makerspace_quantity += 1
+                queryset.save()
+
+                return JsonResponse(self.get_serializer(queryset).data)
+        if itemfrom == 'makerspace':
+            if queryset.makerspace_quantity == 0:
+                return JsonResponse({'error': 'Item is out of stock in MakerSpace'}, status=400)
+            else:
+                queryset.makerspace_quantity -= 1
+                queryset.backroom_quantity += 1
+                queryset.save()
+
+                return JsonResponse(self.get_serializer(queryset).data)
+
+
+class ManualEditQuantity(generics.UpdateAPIView):
+    serializer_class = ItemSerializer
+
+    def update(self, request, *args, **kwargs):
+        queryset = Item.objects.get(id=self.kwargs["pk"])
+        makerspace = self.kwargs["makerspace"]
+        backroom = self.kwargs["backroom"]
+        if makerspace >= 0 and backroom >= 0:
+            queryset.makerspace_quantity = makerspace
+            queryset.backroom_quantity = backroom
+            queryset.save()
+
+            return JsonResponse(self.serializer_class(queryset).data)
+        else:
+            return JsonResponse({'error': 'Invalid input'}, status=400)
