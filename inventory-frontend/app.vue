@@ -3,7 +3,9 @@
     <div id="search" class="heading">
       <Search />
     </div>
-    <div id="navHolder">nav</div>
+    <div id="navHolder">
+      <UserMenu />
+    </div>
     <div id="largeItemHolder">
       <Catalog />
     </div>
@@ -47,10 +49,11 @@
 import { useItemsStore } from "~/store/ItemsStore";
 import Search from "./components/search.vue";
 import Catalog from "./components/catalog.vue";
+import UserMenu from "./components/UserMenu.vue";
 
 export default {
   name: "app",
-  components: { Search, Catalog },
+  components: { Search, Catalog, UserMenu },
   data() {
     return {
       store: useItemsStore(),

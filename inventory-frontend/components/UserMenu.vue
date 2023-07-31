@@ -137,10 +137,11 @@ export default {
     runOnMounted() {
       window.addEventListener("resize", () => {
         if (window.innerWidth > 1200) {
-          this.NavCont.classList.remove("dismiss");
-          this.NavCont.classList.remove("selected");
-          this.returnbox.classList.remove("return-box-display");
-          this.returnbox.classList.remove("return-box-nodisplay");
+          const NavCont = document.querySelector(".nav-cont");
+          NavCont.classList.remove("dismiss");
+          NavCont.classList.remove("selected");
+          // this.returnbox.classList.remove("return-box-display");
+          // this.returnbox.classList.remove("return-box-nodisplay");
         }
       });
     },
@@ -241,6 +242,8 @@ export default {
   align-items: center;
   transition: background-color 0.2s linear;
 }
+
+h2,
 h3 {
   color: black;
   padding-left: 0.5rem;
@@ -257,17 +260,16 @@ h3 {
   height: 2rem;
 }
 .open-menu-cont {
-  display: none;
+  display: grid;
   width: 2rem;
   height: 2rem;
-  top: 1%;
+  top: 0.7rem;
+  left: 2rem;
   position: fixed;
 }
 .open-menu-btn {
   width: 100%;
   height: 100%;
-}
-.open-menu-btn {
   border: none;
   background-color: transparent;
 }
@@ -280,10 +282,6 @@ h3 {
   height: 200%;
 }
 .mobile-menu {
-  display: grid;
-  grid-template-columns: 4rem 1fr;
-  grid-template-rows: 4rem 1fr;
-  padding-top: 5vh;
   flex-direction: column;
   position: relative;
   z-index: 1;
@@ -291,33 +289,34 @@ h3 {
   width: 100vw;
   height: 100vh;
 }
-.mobile-menu-btn {
-  margin-top: 3rem;
+.mobile-menu-btn,
+.mobile-user {
+  display: grid;
+  grid-template-columns: 4rem 1fr;
+  grid-template-rows: 4rem 1fr;
+  margin-top: 5vh;
   width: 100%;
-  height: 10vh;
+  height: 6vh;
   text-decoration: none;
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-evenly;
-  align-items: center;
 }
 .mobile-user-icon,
 .mobile-icon {
+  display: grid;
   color: #c7d6d5;
-  width: 4rem;
-  height: 4rem;
+  width: 5rem;
+  height: 5rem;
 }
 .mobile-user-icon {
   color: black;
 }
-.mobile-user-title,
-.mobile-username,
+.mobile-user-info,
 .mobile-tag {
+  display: grid;
   color: black;
   font-size: 4rem;
 }
 .mobile-user {
-  display: flex;
+  display: grid;
   flex-flow: row nowrap;
   justify-content: space-evenly;
   align-items: center;
