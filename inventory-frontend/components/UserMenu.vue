@@ -280,6 +280,8 @@ h3 {
   background-color: white;
   width: 100vw;
   height: 100vh;
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
 .mobile-menu-btn,
 .mobile-user {
@@ -382,13 +384,61 @@ h3 {
 }
 
 /* media query */
+/* media queries max width
+    sm:	 ≥576px
+ 	  md:  ≥768px
+    lg:	 ≥992px
+    xl:  ≥1200px
+    xxl: ≥1400px
+*/
+
 /* mobile */
-@media (max-width: 1200px) {
+@media screen and (max-width: 1200px) {
   .nav-cont {
     transform: translateX(-100%);
   }
   .open-menu-cont {
     display: block;
+  }
+}
+@media screen and (max-width: 576px) {
+  .mobile-user {
+    margin-top: 0.9vh;
+  }
+  .mobile-icon {
+    height: 4rem;
+    width: 4rem;
+  }
+  .mobile-tag {
+    font-size: 3rem;
+  }
+}
+@media screen and (max-width: 375px) {
+  .mobile-user {
+    margin-top: 1.2vh;
+  }
+  .mobile-icon {
+    height: 3.5rem;
+    width: 3.5rem;
+  }
+  .mobile-tag {
+    font-size: 2.5rem;
+  }
+}
+@media screen and (max-width: 320px) {
+  .mobile-user-icon {
+    height: 4rem;
+    width: 4rem;
+  }
+  .mobile-user {
+    margin-top: 1.4vh;
+  }
+  .mobile-icon {
+    height: 3rem;
+    width: 3rem;
+  }
+  .mobile-tag {
+    font-size: 2rem;
   }
 }
 </style>
