@@ -1,4 +1,5 @@
-from rest_framework import generics
+import statistics
+from rest_framework import generics, viewsets
 from django.http import JsonResponse
 from rest_framework.response import Response
 from .models import Item, Category, Vendor
@@ -97,26 +98,39 @@ class ManualEditQuantity(generics.UpdateAPIView):
 # probably works idk
 
 
-class addItems(generics.CreateAPIView):
+""" class AddItems(viewsets.ModelViewSet):
     parser_classes = (MultiPartParser, FormParser)
-    def post(self, request, *args, **kwargs):
-        itemInfo = request.data
+    queryset = Item.objects.all()
+    serializer_class = ItemSerializer
 
-        item = Item(
-            item_id=itemInfo["item_id"],
-            name=itemInfo["name"],
-            purchase_link=itemInfo["purchase_link"],
-            image=itemInfo["image"],
-            last_purchased=itemInfo["last_purchased"],
-            backroom_quantity=itemInfo["backroom_quantity"],
-            makerspace_quantity=itemInfo["makerspace_quantity"],
-            category=itemInfo["category"],
-            vendor=itemInfo["vendor"],
-            location=itemInfo["location"],
-        )
-        item.save()
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        return Response(request.data) """
 
-        return item
+# serializer.data, 200
+
+
+class AddItems(viewsets.ModelViewSet):
+    parser_classes = (MultiPartParser, FormParser)
+    queryset = Item.objects.all()
+    serializer_class = ItemSerializer
+
+    def create(self, request, *args, **kwargs):
+        image_file = request.FILES.get('image')
+        if image_file is None:
+            return Response({'message': 'Image file is required.'}, status=400)
+
+        # Create a new serializer instance with only the image file data
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        # Save the image file separately, perform_create method can be used
+        # to handle further creation logic if needed
+        self.perform_create(serializer)
+
+        return Response(serializer.data, status=201)
 
 
 class deleteItems(generics.DestroyAPIView):

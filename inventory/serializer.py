@@ -5,7 +5,7 @@ from .models import Item, Category, Vendor
 class ItemSerializer(serializers.ModelSerializer):
 
     total = serializers.SerializerMethodField()
-    image_url = serializers.ImageField(required=False)
+    image = serializers.ImageField(required=False)
 
     class Meta:
         model = Item
@@ -28,7 +28,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Category
-        fields = ('category_name', 'itemsCategory', 'count')
+        fields = ('id', 'category_name', 'itemsCategory', 'count')
 
     def get_count(self, obj):
         count = Item.objects.filter(category=obj).count()

@@ -3,35 +3,39 @@
     <form @submit.prevent="submitForm">
       <div class="input-container">
         <label for="name">Name of the Item</label>
-        <input id="name" type="text" placeholder="Enter the Name of the Item" required />
+        <input id="name" type="text" ref="name" placeholder="Enter the Name of the Item" required />
       </div>
       <div class="input-container">
         <label>Quantity</label>
         <div class="quantity-inputs">
-          <input id="quantity-makerspace" type="number" placeholder="Maker Space Quantity" required />
-          <input id="quantity-backroom" type="number" placeholder="Back Room Quantity" required />
+          <input id="quantity-makerspace" type="number" ref="makerspace" placeholder="Maker Space Quantity" required />
+          <input id="quantity-backroom" type="number" ref="backroom" placeholder="Back Room Quantity" required />
         </div>
       </div>
       <div class="input-container">
         <label for="location">Location of the Item</label>
-        <input id="location" type="text" placeholder="Enter the location of the Item" required />
+        <input id="location" type="text" ref="location" placeholder="Enter the location of the Item" required />
+      </div>
+      <div class="input-container">
+        <label for="purchase_link">Purchase Link</label>
+        <input id="purchase_link" type="text" ref="purchase_link" placeholder="Purhcase Link" required>
       </div>
       <div class="input-container">
         <label for="Vendor">Vendor</label>
-        <select id="Vendor" required>
-          <option value="">Choose a Vendor</option>
-          <option value="DOE">ShopDOE</option>
-          <option value="AMZ">Amazon</option>
-          <option value="BLICK">Blick</option>
-          <option value="HD">Home Depot</option>
+        <select id="Vendor" ref="vendor" required>
+          <option disabled value="">Choose a Vendor</option>
+          <option value=1>ShopDOE</option>
+          <option value=2>Amazon</option>
+          <option value=3>Blick</option>
+          <option value=4>Home Depot</option>
         </select>
       </div>
       <div class="input-container">
         <label for="Category">Category</label>
-        <select id="Category" required>
-          <option value="">Choose a Category</option>
-          <option value="TLS">Tools</option>
-          <option value="PT">Paint</option>
+        <select id="Category" ref="category" required>
+          <option disabled value="">Choose a Category</option>
+          <option value=1>Tools</option>
+          <option value=2>Paint</option>
           <!-- Add other options here -->
         </select>
       </div>
@@ -79,6 +83,14 @@ const showModal = ref(false);
 const previewImage = ref("");
 const previewImageModal = ref("");
 const fileName = ref("");
+const name = ref("");
+const location = ref("");
+const makerspace = ref(0);
+const backroom = ref(0)
+const vendor = ref("");
+const category = ref("");
+const purchase_link = ref("");
+
 
 // Functions
 function handleDragOver(event) {
@@ -110,10 +122,12 @@ function handleDrop(event) {
 
 function handleFileChange(event) {
   const file = event.target.files[0];
+  console.log(file)
   showPreview.value = true;
   if (file) {
     showPreview.value = true;
     if (file.type.startsWith("image/")) {
+
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => {
@@ -138,6 +152,38 @@ function handleImageClick() {
 function closeModal() {
   showModal.value = false;
 }
+
+async function submitForm() {
+  const formData = new FormData();
+  formData.append("image", previewImageModal.value); // Assuming "previewImageModal" is an input element of type "file"
+  formData.append("name", name.value.value)
+  formData.append("purchase_link", purchase_link.value.value)
+  formData.append("backroom_quantity", backroom.value.value)
+  formData.append("makerspace_quantity", makerspace.value.value)
+  formData.append("vendor", vendor.value.value)
+  formData.append("category", category.value.value)
+  formData.append("location", location.value.value)
+
+
+
+  try {
+
+    const response = await fetch("http://127.0.0.1:8000/items/addItems/", {
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      body: formData,
+    });
+
+    const data = await response.json();
+    console.log(data)
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+
 </script>
 
 <style scoped>
