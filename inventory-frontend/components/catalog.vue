@@ -107,6 +107,7 @@ export default {
 #mainItems {
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 #itemHeader {
   min-height: 5.5rem;

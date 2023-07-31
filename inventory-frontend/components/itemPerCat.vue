@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <div class="subheading catHead" ref="cat" v-if="min">
+      <div class="subheading catHead" ref="cat" v-show="min">
         {{ name }}
       </div>
       <div class="itemHolder">
@@ -27,6 +27,7 @@
   display: flex;
   height: fit-content;
   width: 100%;
+
   flex-direction: row;
   flex-wrap: wrap;
   align-items: stretch;

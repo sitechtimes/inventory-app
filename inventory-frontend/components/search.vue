@@ -4,8 +4,8 @@
       type="text"
       id="searchform"
       v-model="input"
-      @keyup.enter="filteredItems(input)"
-      placeholder="Search Inventory..."
+      @keyup="filteredItems(input)"
+      placeholder="Search Inventory"
     />
     <button class="exitbtn heading searchclear" @click="clearSearch">X</button>
   </div>
@@ -37,13 +37,16 @@ export default {
         this.store.newlist,
         "storenewlist"
       );
-      this.store.$patch({ newlist: this.newlist, search: true });
+      this.store.$patch({ newlist: this.newlist, search: true, info: false });
 
       this.store.sort();
+      this.store.resizing();
     },
     clearSearch() {
-      this.store.$patch({ search: false });
+      this.store.$patch({ search: false, info: false });
       this.store.sort();
+      this.store.resizing();
+      document.getElementById("searchform").value = "";
     },
   },
   mounted() {},
@@ -64,14 +67,40 @@ export default {
   font-size: 1.5rem;
   padding-left: 1.5rem;
 }
+#searchform:focus,
+input:focus {
+  outline: none;
+  background-color: var(--whitebg);
+  border: solid 1px rgba(0, 0, 0, 0);
+  box-shadow: 0.2rem 0.2rem 1rem var(--darkergray);
+}
 .searchclear {
-  background-color: var(--halflightgray);
+  background-color: rgba(0, 0, 0, 0);
   position: absolute;
-  right: 2rem;
+  right: 4rem;
   opacity: 0;
+  border-radius: 3rem;
+  height: 5rem;
+  width: 5rem;
 }
 #searchform:hover ~ .searchclear,
 .searchclear:hover {
   opacity: 1;
+}
+.searchclear:hover {
+  background-color: var(--tpgray);
+}
+.searchclear:active {
+  background-color: var(--tpdarkgray);
+}
+@media screen and (max-width: 1500px) {
+  .searchclear {
+    right: 2rem;
+  }
+}
+@media screen and (max-width: 760px) {
+  .searchclear {
+    right: 0;
+  }
 }
 </style>

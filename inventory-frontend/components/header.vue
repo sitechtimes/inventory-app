@@ -5,7 +5,7 @@
         <div class="navnavnavnav"></div>
       </div>
 
-      <div class="subheading sitename">Makerspace Inventory</div>
+      <div class="heading sitename">Makerspace Inventory</div>
     </div>
 
     <div class="searchbar">
