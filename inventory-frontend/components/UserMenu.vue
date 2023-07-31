@@ -58,10 +58,10 @@
           <div class="user-icon-cont">
             <font-awesome-icon :icon="['fas', 'user']" class="user-icon" />
           </div>
-          <div class="user-info">
+          <!-- <div class="user-info">
             <h2 class="user-title">My Account</h2>
             <h3 class="username">user1234@gmail.com</h3>
-          </div>
+          </div> -->
         </div>
         <div class="menu-container">
           <button class="menu-btn">
@@ -71,7 +71,7 @@
                 class="catalog-icon"
               />
             </div>
-            <h3 class="tag">CATALOG</h3>
+            <!-- <h3 class="tag">CATALOG</h3> -->
           </button>
           <button class="menu-btn">
             <div>
@@ -80,7 +80,7 @@
                 class="borrowed-icon"
               />
             </div>
-            <h3 class="tag">BORROWED</h3>
+            <!-- <h3 class="tag">BORROWED</h3> -->
           </button>
           <button class="menu-btn">
             <div>
@@ -89,7 +89,7 @@
                 class="needed-icon"
               />
             </div>
-            <h3 class="tag">SUPPLIES NEEDED</h3>
+            <!-- <h3 class="tag">SUPPLIES NEEDED</h3> -->
           </button>
         </div>
       </div>
@@ -182,7 +182,7 @@ export default {
   height: 90%;
 }
 .user {
-  width: 100%;
+  width: 6.9rem;
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-evenly;
@@ -196,16 +196,9 @@ export default {
 .username {
   color: #ecebf3;
 }
-.user-icon-cont {
-  width: 4rem;
-  height: 4rem;
-  display: flex;
-  align-content: center;
-  justify-content: center;
-}
 .user-icon {
-  width: 80%;
-  height: 80%;
+  width: 3rem;
+  height: 3rem;
 }
 
 .user-info {
@@ -225,14 +218,13 @@ export default {
 .menu-icon {
   width: 1rem;
   height: 1rem;
-
+  justify-self: center;
   border-radius: 2rem;
 }
 .menu-btn {
   padding: 1rem;
-  width: 38.5%;
+  width: 6.9rem;
   border: none;
-
   color: white;
   text-decoration: none;
   display: flex;
