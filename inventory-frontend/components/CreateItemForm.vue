@@ -163,6 +163,8 @@ async function submitForm() {
   formData.append("vendor", vendor.value.value)
   formData.append("category", category.value.value)
   formData.append("location", location.value.value)
+  //add item_id thing 
+  //clean up db get rid of all the unneeded stuff 
 
 
 

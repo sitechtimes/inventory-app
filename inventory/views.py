@@ -97,19 +97,7 @@ class ManualEditQuantity(generics.UpdateAPIView):
 
 # probably works idk
 
-
-""" class AddItems(viewsets.ModelViewSet):
-    parser_classes = (MultiPartParser, FormParser)
-    queryset = Item.objects.all()
-    serializer_class = ItemSerializer
-
-    def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        return Response(request.data) """
-
-# serializer.data, 200
+# idk it works
 
 
 class AddItems(viewsets.ModelViewSet):
