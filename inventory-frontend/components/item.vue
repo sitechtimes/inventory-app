@@ -1,12 +1,12 @@
 <template>
-  <div class="itemMain" ref="main" @mousedown="clicked">
+  <div class="itemMain mainSize" ref="main" @mousedown="clicked">
     <div class="image">
       <img class="imageView" :src="image" :alt="name_id" />
     </div>
-    <div class="name-avail">
-      <div class="name text">{{ name }}</div>
+    <div class="name-avail" ref="textbox">
+      <div class="name text" ref="name">{{ name }}</div>
 
-      <div class="quantity smalltext">
+      <div class="quantity smalltext" ref="quant">
         {{ quantity }}
         <span class="availY avail smalltext" v-if="quantity > 0">
           Available</span
@@ -17,12 +17,11 @@
   </div>
 </template>
 
-<style >
+<style>
 .itemMain {
   min-height: 9rem;
   height: fit-content;
-  flex-basis: 23%;
-  max-width: 23%;
+
   background-color: var(--whitebg);
   display: flex;
   flex-direction: row;
@@ -30,13 +29,22 @@
   margin: 1rem;
   margin-left: 2rem;
   border-radius: 0.5rem;
-  border: solid 1px var(--darkgray);
+  border: var(--border);
   transition: all 0.2s;
 }
 .itemMain:hover {
   border-color: var(--darkergray);
   box-shadow: 0 0.25rem 5px var(--darkergray);
 }
+.mainSize {
+  flex-basis: 23%;
+  max-width: 23%;
+}
+.infoFull {
+  flex-basis: 30%;
+  max-width: 30%;
+}
+
 .name-avail {
   width: 70%;
   height: auto;
@@ -107,19 +115,48 @@
 }
 
 @media screen and (max-width: 1600px) {
-  .itemMain {
+  .mainSize {
     max-width: 30%;
     flex-basis: 30%;
   }
-}
-@media screen and (max-width: 1100px) {
-  .itemMain {
+  .infoFull {
     max-width: 45%;
     flex-basis: 45%;
   }
 }
+@media screen and (max-width: 1100px) {
+  .mainSize {
+    max-width: 45%;
+    flex-basis: 45%;
+  }
+  .infoFull {
+    max-width: 100%;
+    flex-basis: 100%;
+    border: none;
+    margin: 0;
+    border-radius: 0;
+  }
+  .infoFull:hover {
+    border-color: none;
+    box-shadow: none;
+    background-color: var(--gray);
+  }
+  .info-name-avail {
+    width: 98%;
+    justify-content: center;
+  }
+  .info-name {
+    padding-right: 1rem;
+    margin-bottom: 0;
+  }
+  .info-quantity {
+    padding-top: 1rem;
+    position: inherit;
+    justify-content: left;
+  }
+}
 @media screen and (max-width: 760px) {
-  .itemMain {
+  .mainSize {
     max-width: 100%;
     flex-basis: 100%;
     border: none;
@@ -172,12 +209,18 @@ export default {
   methods: {
     clicked() {
       console.log("clicked");
-
+      console.log(this.store.vendor);
       if (this.store.popup.name === this.name) {
         if (this.store.info === false) {
           this.store.$patch({ info: true });
         } else {
-          this.store.$patch({ info: false });
+          this.store.$patch({
+            info: false,
+            vendor: false,
+            vendorHeader: false,
+            categoryPop: false,
+            categoryHeader: false,
+          });
         }
       } else {
         this.store.$patch({
@@ -191,10 +234,25 @@ export default {
             date: this.updated,
           },
         });
-        this.store.$patch({ info: true });
+        this.store.$patch({
+          info: true,
+          vendor: false,
+          vendorHeader: false,
+          categoryPop: false,
+          categoryHeader: false,
+        });
       }
+      this.store.resizing();
+    },
+    push() {
+      this.store.quant.push(this.$refs.quant);
+      this.store.main.push(this.$refs.main);
+      this.store.textbox.push(this.$refs.textbox);
+      this.store.name.push(this.$refs.name);
     },
   },
-  mounted() {},
+  mounted() {
+    this.push();
+  },
 };
 </script>
