@@ -50,9 +50,8 @@
         </div>
       </div>
     </div>
-    <div class="return-box" @click="NavMenu">
-      <div></div>
-    </div>
+    <!-- <div class="return-box" @click="NavMenu">
+    </div> -->
     <div class="nav-cont">
       <div>
         <div class="user">
@@ -266,6 +265,7 @@ h3 {
   top: 0.7rem;
   left: 2rem;
   position: fixed;
+  z-index: 900;
 }
 .open-menu-btn {
   width: 100%;
@@ -284,7 +284,7 @@ h3 {
 .mobile-menu {
   flex-direction: column;
   position: relative;
-  z-index: 1;
+  z-index: 10;
   background-color: white;
   width: 100vw;
   height: 100vh;
@@ -294,10 +294,13 @@ h3 {
   display: grid;
   grid-template-columns: 4rem 1fr;
   grid-template-rows: 4rem 1fr;
-  margin-top: 5vh;
+  margin-top: 3vh;
+  padding-top: 2vh;
+  padding-bottom: 2vh;
   width: 100%;
-  height: 6vh;
+  height: 8vh;
   text-decoration: none;
+  background-color: white;
 }
 .mobile-user-icon,
 .mobile-icon {
@@ -316,10 +319,14 @@ h3 {
   font-size: 4rem;
 }
 .mobile-user {
+  background-color: white;
   display: grid;
   flex-flow: row nowrap;
-  justify-content: space-evenly;
   align-items: center;
+  margin-top: 0.8vh;
+  padding-top: 2.5vh;
+  height: 10vh;
+  justify-self: center;
 }
 .mobile-user-title,
 .mobile-username {
