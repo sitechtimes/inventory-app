@@ -1,7 +1,7 @@
 <template>
   <div class="app">
     <div id="search" class="heading">
-      <Search />
+      <Header />
     </div>
     <div id="navHolder">nav</div>
     <div id="largeItemHolder">
@@ -45,12 +45,12 @@
 
 <script>
 import { useItemsStore } from "~/store/ItemsStore";
-import Search from "./components/search.vue";
+import Header from "./components/header.vue";
 import Catalog from "./components/catalog.vue";
 
 export default {
   name: "app",
-  components: { Search, Catalog },
+  components: { Header, Catalog },
   data() {
     return {
       store: useItemsStore(),

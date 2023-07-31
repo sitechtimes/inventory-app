@@ -1,103 +1,77 @@
 <template>
-  <div class="longrow">
-    <div class="fixedleft">
-      <div class="fromnav">
-        <div class="navnavnavnav"></div>
-      </div>
-
-      <div class="subheading sitename">Makerspace Inventory</div>
-    </div>
-
-    <div class="searchbar">
-      <div class="searchform"></div>
-    </div>
-    <div class="buttonbar">
-      <div class="notif"></div>
-    </div>
+  <div class="searchbar compsearchbar">
+    <input
+      type="text"
+      id="searchform"
+      v-model="input"
+      @keyup.enter="filteredItems(input)"
+      placeholder="Search Inventory..."
+    />
+    <button class="exitbtn heading searchclear" @click="clearSearch">X</button>
   </div>
 </template>
 
 <script>
+import { useItemsStore } from "~/store/ItemsStore";
+
 export default {
   name: "Search",
+  data() {
+    return {
+      store: useItemsStore(),
+
+      newlist: [],
+    };
+  },
+  methods: {
+    filteredItems(i) {
+      this.newlist = this.store.returnlist.filter((item) =>
+        item.name.toLowerCase().includes(i.toLowerCase())
+      );
+
+      console.log(
+        this.store.items,
+        "items",
+        this.newlist,
+        "newlist",
+        this.store.newlist,
+        "storenewlist"
+      );
+      this.store.$patch({ newlist: this.newlist, search: true });
+
+      this.store.sort();
+    },
+    clearSearch() {
+      this.store.$patch({ search: false });
+      this.store.sort();
+    },
+  },
+  mounted() {},
 };
 </script>
 
 <style>
-.navnavnavnav {
-  width: 4rem;
-  height: 4rem;
-  border: 1px solid black;
-  margin: 1rem;
+.compsearchbar {
+  min-width: 100%;
+  position: relative;
 }
-.fromnav {
-  width: fit-content;
-
-  position: fixed;
-  left: 1rem;
-}
-.longrow {
-  width: 100vw;
-  height: 100%;
-}
-.longrow,
-.searchbar,
-.site-name,
-.fixedleft,
-.buttonbar {
-  display: flex;
-  flex-direction: row;
-
-  align-items: center;
-}
-.fixedleft {
-  width: 35%;
-}
-.searchbar {
-  width: 50%;
-  height: 100%;
-}
-.searchform {
+#searchform {
   width: 95%;
   height: 80%;
   background-color: var(--halflightgray);
   border-radius: 1rem;
-  margin-left: -15rem;
+  border: none;
+  font-size: 1.5rem;
+  padding-left: 1.5rem;
 }
-
-.sitename {
-  position: sticky;
-  left: 8rem;
-
-  overflow: hidden;
-  width: 70%;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+.searchclear {
+  background-color: var(--halflightgray);
+  position: absolute;
+  right: 2rem;
+  opacity: 0;
 }
-.buttonbar {
-  width: 15%;
-}
-.notif {
-  border: 1px solid black;
-  height: 4rem;
-  width: 4rem;
-  position: fixed;
-  right: 3rem;
-}
-@media screen and (max-width: 1450px) {
-  .searchform {
-    margin-left: 0;
-  }
-}
-@media screen and (max-width: 760px) {
-  .sitename {
-    visibility: hidden;
-  }
-  .searchbar {
-    width: 70%;
-  }
-  .fixedleft {
-    width: 9rem;
-  }
+#searchform:hover ~ .searchclear,
+.searchclear:hover {
+  opacity: 1;
 }
 </style>

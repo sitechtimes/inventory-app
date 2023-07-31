@@ -1,7 +1,9 @@
 <template>
   <div>
     <div>
-      <div class="subheading catHead" ref="cat">{{ name }}</div>
+      <div class="subheading catHead" ref="cat" v-if="min">
+        {{ name }}
+      </div>
       <div class="itemHolder">
         <Item
           v-for="result in list"
@@ -56,7 +58,7 @@ import Item from "./item.vue";
 import { useItemsStore } from "~/store/ItemsStore";
 export default {
   name: "ItemPerCat",
-  props: { list: Array, name: String },
+  props: { list: Array, name: String, min: Boolean },
   components: { Item },
   data() {
     return {

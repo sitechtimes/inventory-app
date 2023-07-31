@@ -5,10 +5,11 @@
       <div id="itemHolderAll" ref="allItems">
         <div class="categoryHolder">
           <ItemPerCat
-            v-for="(each, index) in categories"
+            v-for="(each, index) in store.categories"
             :key="index"
             :list="each"
             :name="nameType(index)"
+            :min="minimum(each)"
           ></ItemPerCat>
         </div>
       </div>
@@ -38,69 +39,15 @@ export default {
   data() {
     return {
       store: useItemsStore(),
-      categories: [],
-      coloring: [],
-      craft: [],
-      drawing: [],
-      fabric: [],
-      firstaid: [],
-      foam: [],
-      glue: [],
-      misc: [],
-      paint: [],
-      paper: [],
-      print: [],
-      sculpture: [],
-      sewing: [],
-      tape: [],
-      tools: [],
-      wire: [],
-      wood: [],
     };
   },
   methods: {
-    sort() {
-      this.coloring = this.store.items.filter((item) => item.category === "CM");
-      this.craft = this.store.items.filter((item) => item.category === "CS");
-      this.drawing = this.store.items.filter((item) => item.category === "DR");
-      this.fabric = this.store.items.filter((item) => item.category === "FAB");
-      this.firstaid = this.store.items.filter((item) => item.category === "FA");
-      this.foam = this.store.items.filter((item) => item.category === "FM");
-      this.glue = this.store.items.filter((item) => item.category === "GL");
-      this.misc = this.store.items.filter((item) => item.category === "MISC");
-      this.paint = this.store.items.filter((item) => item.category === "PT");
-      this.paper = this.store.items.filter((item) => item.category === "PAP");
-      this.print = this.store.items.filter((item) => item.category === "PRTM");
-      this.sculpture = this.store.items.filter(
-        (item) => item.category === "SC"
-      );
-      this.sewing = this.store.items.filter((item) => item.category === "SE");
-      this.tape = this.store.items.filter((item) => item.category === "TP");
-      this.tools = this.store.items.filter((item) => item.category === "TLS");
-      this.wire = this.store.items.filter((item) => item.category === "WR");
-      this.wood = this.store.items.filter((item) => item.category === "WD");
-
-      console.log(this.categories);
-
-      this.categories = [
-        this.coloring,
-        this.craft,
-        this.drawing,
-        this.fabric,
-        this.firstaid,
-        this.foam,
-        this.glue,
-        this.misc,
-        this.paint,
-        this.paper,
-        this.print,
-        this.sculpture,
-        this.sewing,
-        this.tape,
-        this.tools,
-        this.wire,
-        this.wood,
-      ];
+    minimum(list) {
+      if (list.length >= 1) {
+        return true;
+      } else {
+        return false;
+      }
     },
     nameType(number) {
       if (number === 0) {
@@ -144,7 +91,7 @@ export default {
   },
   async mounted() {
     await this.store.getItems();
-    this.sort();
+    this.store.sort();
   },
 };
 </script>
@@ -155,6 +102,7 @@ export default {
   flex-direction: row;
   overflow-y: hidden;
   background-color: var(--lightgray);
+  min-width: 100%;
 }
 #mainItems {
   display: flex;
