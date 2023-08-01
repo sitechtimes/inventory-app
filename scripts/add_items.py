@@ -37,7 +37,7 @@ def run():
                 category=Category.objects.get(category_name=rows["Category"]),
                 vendor=Vendor.objects.get(vendor_name=rows["Vendor"]),
                 location=["Location"]
-
+                alert=rows["Alert"]
             )
             item.save()
         except django.db.utils.IntegrityError:

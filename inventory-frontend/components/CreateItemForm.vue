@@ -55,8 +55,8 @@
           @dragover.prevent="handleDragOver" @dragleave="handleDragLeave" @drop.prevent="handleDrop">
           <label for="file-input" class="block w-full h-full text-gray-500 p-4 text-sm cursor-pointer">
             {{ dropAreaText }}
-          </label><!-- accept="image/*" -->
-          <input name="file" type="file" id="file-input" class="hidden" @change="handleFileChange" />
+          </label>
+          <input name="file" type="file" id="file-input" accept="image/*" class="hidden" @change="handleFileChange" />
           <!-- Image upload input -->
           <div class="preview-container" :class="{ hidden: !showPreview }">
             <div class="preview-image w-36 h-36 bg-cover bg-center rounded-md cursor-pointer"
@@ -178,10 +178,6 @@ async function submitForm() {
   formData.append("vendor", vendor.value.value)
   formData.append("category", category.value.value)
   formData.append("location", location.value.value)
-  //add item_id thing 
-  //clean up db get rid of all the unneeded stuff 
-
-
 
   try {
 
