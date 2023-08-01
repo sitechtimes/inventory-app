@@ -1,9 +1,24 @@
 <template>
   <div>
     <div class="open-menu-cont">
-      <button class="open-menu-btn" @click="NavMenu">
-        <div class="open-menu-icon-cont">
+      <button class="open-menu-btn">
+        <div
+          v-if="dismiss === true"
+          class="open-menu-icon-cont"
+          @click="NavMenu"
+        >
           <font-awesome-icon :icon="['fas', 'bars']" class="open-menu-icon" />
+        </div>
+        <div
+          v-if="dismiss === false"
+          class="open-menu-icon-cont"
+          @click="NavMenu"
+        >
+          <font-awesome-icon
+            :icon="['fas', 'xmark']"
+            style="color: #000000"
+            class="open-menu-icon"
+          />
         </div>
       </button>
       <div class="mobile-menu dismiss">
@@ -27,7 +42,7 @@
                 class="mobile-icon"
               />
             </div>
-            <h3 class="mobile-tag">CATALOG</h3>
+            <h3 class="mobile-tag">Catalog</h3>
           </button>
           <button class="mobile-menu-btn">
             <div>
@@ -36,7 +51,7 @@
                 class="mobile-icon"
               />
             </div>
-            <h3 class="mobile-tag">BORROWED</h3>
+            <h3 class="mobile-tag">Borrowed</h3>
           </button>
           <button class="mobile-menu-btn">
             <div>
@@ -45,7 +60,7 @@
                 class="mobile-icon"
               />
             </div>
-            <h3 class="mobile-tag">SUPPLIES NEEDED</h3>
+            <h3 class="mobile-tag">Supplies Needed</h3>
           </button>
         </div>
       </div>
@@ -104,8 +119,9 @@ export default {
   components: {},
   data() {
     return {
-      NavCont: document.querySelector(".nav-cont"),
-      returnbox: document.querySelector(".return-box"),
+      // NavCont: document.querySelector(".nav-cont"),
+      // returnbox: document.querySelector(".return-box"),
+      dismiss: true,
     };
   },
   methods: {
@@ -115,11 +131,13 @@ export default {
       if (MobileMenu.classList.contains("selected")) {
         MobileMenu.classList.remove("selected");
         MobileMenu.classList.add("dismiss");
+        this.dismiss = true;
         console.log("dismiss");
         // returnbox.classList.remove("return-box-display");
         // returnbox.classList.add("return-box-nodisplay");
       } else if (MobileMenu.classList.contains("dismiss")) {
         MobileMenu.classList.remove("dismiss");
+        this.dismiss = false;
         MobileMenu.classList.add("selected");
         console.log("selected");
         // returnbox.classList.remove("return-box-nodisplay");
@@ -133,21 +151,21 @@ export default {
         // returnbox.classList.add("return-box-display");
       }
     },
-    runOnMounted() {
-      window.addEventListener("resize", () => {
-        if (window.innerWidth > 1200) {
-          const NavCont = document.querySelector(".nav-cont");
-          NavCont.classList.remove("dismiss");
-          NavCont.classList.remove("selected");
-          // this.returnbox.classList.remove("return-box-display");
-          // this.returnbox.classList.remove("return-box-nodisplay");
-        }
-      });
-    },
+    // runOnMounted() {
+    //   window.addEventListener("resize", () => {
+    //     if (window.innerWidth > 1200) {
+    //       const NavCont = document.querySelector(".nav-cont");
+    //       NavCont.classList.remove("dismiss");
+    //       NavCont.classList.remove("selected");
+    //       // this.returnbox.classList.remove("return-box-display");
+    //       // this.returnbox.classList.remove("return-box-nodisplay");
+    //     }
+    //   });
+    // },
   },
-  mounted() {
-    this.runOnMounted();
-  },
+  // mounted() {
+  //   this.runOnMounted();
+  // },
 };
 </script>
 
@@ -270,10 +288,10 @@ h3 {
   height: 100%;
 }
 .open-menu-icon {
-  width: 200%;
-  height: 200%;
+  display: none;
 }
 .mobile-menu {
+  display: none;
   flex-direction: column;
   position: relative;
   z-index: 10;
@@ -296,6 +314,7 @@ h3 {
   text-decoration: none;
   background-color: white;
 }
+
 .mobile-user-icon,
 .mobile-icon {
   display: grid;
@@ -328,9 +347,6 @@ h3 {
   display: flex;
   flex-flow: column;
   align-items: center;
-}
-.mobile-menu-btn:hover {
-  background-color: var(--lightblue);
 }
 /* animations  */
 .selected {
@@ -393,17 +409,29 @@ h3 {
 */
 
 /* mobile */
-@media screen and (max-width: 1200px) {
-  .nav-cont {
-    transform: translateX(-100%);
+@media (hover: hover) {
+  .mobile-menu-btn:hover {
+    background-color: var(--lightblue);
+    cursor: pointer;
   }
+}
+@media screen and (max-width: 1200px) {
   .open-menu-cont {
     display: block;
   }
 }
 @media screen and (max-width: 576px) {
-  .mobile-user {
-    margin-top: 0.9vh;
+  .nav-cont {
+    display: none;
+  }
+  .open-menu-icon {
+    height: 200%;
+    width: 200%;
+    display: block;
+  }
+  .mobile-menu {
+    display: flex;
+    margin-top: 140%;
   }
   .mobile-icon {
     height: 4rem;
@@ -414,8 +442,13 @@ h3 {
   }
 }
 @media screen and (max-width: 375px) {
-  .mobile-user {
-    margin-top: 1.2vh;
+  .nav-cont {
+    display: none;
+  }
+  .open-menu-icon {
+    height: 200%;
+    width: 200%;
+    display: block;
   }
   .mobile-icon {
     height: 3.5rem;
@@ -426,12 +459,17 @@ h3 {
   }
 }
 @media screen and (max-width: 320px) {
+  .nav-cont {
+    display: none;
+  }
+  .open-menu-icon {
+    height: 200%;
+    width: 200%;
+    display: block;
+  }
   .mobile-user-icon {
     height: 4rem;
     width: 4rem;
-  }
-  .mobile-user {
-    margin-top: 1.4vh;
   }
   .mobile-icon {
     height: 3rem;
