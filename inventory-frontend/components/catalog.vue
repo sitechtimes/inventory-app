@@ -11,9 +11,9 @@
       <div id="itemHolderAll" ref="allItems">
         <div class="categoryHolder">
           <ItemPerCat
-            v-for="(each, index) in store.categories"
+            v-for="(each, index) in store.returnlist"
             :key="index"
-            :list="each"
+            :list="each.itemsCategory"
             :name="nameType(index)"
             :min="minimum(each)"
           ></ItemPerCat>
@@ -57,39 +57,39 @@ export default {
     },
     nameType(number) {
       if (number === 0) {
-        return "Coloring Materials";
-      } else if (number === 1) {
-        return "Craft Supplies";
-      } else if (number === 2) {
-        return "Drawing";
-      } else if (number === 3) {
-        return "Fabric";
-      } else if (number === 4) {
-        return "First Aid";
-      } else if (number === 5) {
-        return "Foam";
-      } else if (number === 6) {
-        return "Glue";
-      } else if (number === 7) {
-        return "Miscellaneous";
-      } else if (number === 8) {
         return "Paint";
-      } else if (number === 9) {
-        return "Paper";
-      } else if (number === 10) {
-        return "Print Making";
-      } else if (number === 11) {
+      } else if (number === 1) {
         return "Sculpture";
-      } else if (number === 12) {
-        return "Sewing";
-      } else if (number === 13) {
-        return "Tape";
-      } else if (number === 14) {
+      } else if (number === 2) {
+        return "Print Making";
+      } else if (number === 3) {
+        return "Craft Supplies";
+      } else if (number === 4) {
+        return "Fabric";
+      } else if (number === 5) {
+        return "Coloring Materials";
+      } else if (number === 6) {
         return "Tools";
+      } else if (number === 7) {
+        return "Wood";
+      } else if (number === 8) {
+        return "Tape";
+      } else if (number === 9) {
+        return "Glue";
+      } else if (number === 10) {
+        return "First Aid";
+      } else if (number === 11) {
+        return "Foam";
+      } else if (number === 12) {
+        return "Miscellaneous";
+      } else if (number === 13) {
+        return "Sewing";
+      } else if (number === 14) {
+        return "Paper";
       } else if (number === 15) {
         return "Wire";
       } else if (number === 16) {
-        return "Wood";
+        return "Drawing";
       } else {
         return "Error";
       }

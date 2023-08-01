@@ -25,8 +25,11 @@ export default {
   },
   methods: {
     filteredItems(i) {
-      this.newlist = this.store.returnlist.filter((item) =>
-        item.name.toLowerCase().includes(i.toLowerCase())
+      this.store.returnlist.forEach(
+        (arr) =>
+          (this.newlist = arr.filter((item) =>
+            item.name.toLowerCase().includes(i.toLowerCase())
+          ))
       );
 
       console.log(

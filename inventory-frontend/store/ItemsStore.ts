@@ -56,54 +56,7 @@ export const useItemsStore = defineStore('items', {
     return results
     },
     //filter api by category
-    sort() {
-      //choose api to filter by search 
-      if (!this.search){
-   this.items = this.returnlist;
-      } else {
-        this.items = this.newlist
-      }
-      //filter to different arrays
-      this.coloring = this.items.filter((item) => item.category === "CM");
-      this.craft = this.items.filter((item) => item.category === "CS");
-      this.drawing = this.items.filter((item) => item.category === "DR");
-      this.fabric = this.items.filter((item) => item.category === "FAB");
-      this.firstaid = this.items.filter((item) => item.category === "FA");
-      this.foam = this.items.filter((item) => item.category === "FM");
-      this.glue = this.items.filter((item) => item.category === "GL");
-      this.misc = this.items.filter((item) => item.category === "MISC");
-      this.paint = this.items.filter((item) => item.category === "PT");
-      this.paper = this.items.filter((item) => item.category === "PAP");
-      this.print = this.items.filter((item) => item.category === "PRTM");
-      this.sculpture = this.items.filter(
-        (item) => item.category === "SC"
-      );
-      this.sewing = this.items.filter((item) => item.category === "SE");
-      this.tape = this.items.filter((item) => item.category === "TP");
-      this.tools = this.items.filter((item) => item.category === "TLS");
-      this.wire = this.items.filter((item) => item.category === "WR");
-      this.wood = this.items.filter((item) => item.category === "WD");
-      //mass array of all filtered arrays
-      this.categories = [
-        this.coloring,
-        this.craft,
-        this.drawing,
-        this.fabric,
-        this.firstaid,
-        this.foam,
-        this.glue,
-        this.misc,
-        this.paint,
-        this.paper,
-        this.print,
-        this.sculpture,
-        this.sewing,
-        this.tape,
-        this.tools,
-        this.wire,
-        this.wood,
-      ];
-    },
+   
     //resize individual items when clicked for more information by adding/removing classes
     resizing() {
       if (this.info === true) {

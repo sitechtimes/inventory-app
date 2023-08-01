@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <div class="subheading catHead" ref="cat" v-show="min">
+      <div class="subheading catHead" ref="cat">
         {{ name }}
       </div>
       <div class="itemHolder">
