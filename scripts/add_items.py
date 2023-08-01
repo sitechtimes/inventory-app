@@ -54,7 +54,7 @@ from inventory.models import Vendor
 
 
 def run():
-    dataframe = pd.read_csv('scripts/csv/inventory.csv')
+    dataframe = pd.read_csv('scripts/csv/inventory - inventory.csv')
 
     Item.objects.all().delete()
     Category.objects.all().delete()
@@ -82,8 +82,8 @@ def run():
                 purchase_link=rows["Purchase Link"],
                 image=image,
                 last_purchased=rows["Date Last Purchased"],
-                backroom_quantity=rows["Backroom_Quantity"],
-                makerspace_quantity=rows["MakerSpace_Quantity"],
+                backroom_quantity=rows["Backroom_quantity"],
+                makerspace_quantity=rows["Makerspace_quantity"],
                 category=Category.objects.get(category_name=rows["Category"]),
                 vendor=Vendor.objects.get(vendor_name=rows["Vendor"]),
                 location=rows["Location"],

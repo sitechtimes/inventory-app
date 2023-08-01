@@ -53,6 +53,7 @@ import { useItemsStore } from "~/store/ItemsStore";
 import Header from "./components/header.vue";
 import Catalog from "./components/catalog.vue";
 import UserMenu from "./components/UserMenu.vue";
+import Search from "./components/search.vue";
 
 export default {
   name: "app",

@@ -12,7 +12,7 @@
         <div class="categoryHolder">
           <ItemPerCat
             v-for="(each, index) in store.returnlist"
-            :key="index"
+            :key="each.id"
             :list="each.itemsCategory"
             :name="nameType(index)"
             :min="minimum(each)"
@@ -95,9 +95,8 @@ export default {
       }
     },
   },
-  async mounted() {
-    await this.store.getItems();
-    this.store.sort();
+  mounted() {
+    this.store.getItems();
   },
 };
 </script>

@@ -25,24 +25,25 @@ export default {
   },
   methods: {
     filteredItems(i) {
-      this.store.returnlist.forEach(
+      /* this.store.returnlist.forEach(
         (arr) =>
           (this.newlist = arr.filter((item) =>
             item.name.toLowerCase().includes(i.toLowerCase())
           ))
-      );
-
+      ); */
+      this.newlist = Array.from(this.store.returnlist);
       console.log(
         this.store.items,
         "items",
         this.newlist,
         "newlist",
         this.store.newlist,
-        "storenewlist"
+        "storenewlist",
+        this.newlist.forEach((item) => item.id)
       );
       this.store.$patch({ newlist: this.newlist, search: true, info: false });
 
-      this.store.sort();
+      /*  this.store.sort(); */
       this.store.resizing();
     },
     clearSearch() {

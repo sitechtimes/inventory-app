@@ -53,6 +53,7 @@ export const useItemsStore = defineStore('items', {
     const results = await response.json()
     console.log(results)
     this.returnlist = results
+    this.items = results
     return results
     },
     //filter api by category
