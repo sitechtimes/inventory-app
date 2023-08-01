@@ -6,6 +6,7 @@ class ItemSerializer(serializers.ModelSerializer):
 
     total = serializers.SerializerMethodField()
     image = serializers.ImageField(required=False)
+    alert = serializers.SerializerMethodField()
 
     class Meta:
         model = Item
@@ -20,6 +21,17 @@ class ItemSerializer(serializers.ModelSerializer):
     def get_total(self, obj):
         total = obj.backroom_quantity + obj.makerspace_quantity
         return total
+
+    def get_alert(self, obj):
+        total = obj.backroom_quantity + obj.makerspace_quantity
+
+        if total > 0:
+            alert = False
+
+        else:
+            alert = True
+
+        return alert
 
 
 class CategorySerializer(serializers.ModelSerializer):

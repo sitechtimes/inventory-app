@@ -35,6 +35,7 @@ class Item(models.Model):
     last_purchased = models.DateTimeField(auto_now=True, editable=True)
     backroom_quantity = models.IntegerField(default=0)
     makerspace_quantity = models.IntegerField(default=0)
+    min_amount = models.IntegerField(default=0)
     category = models.ForeignKey(
         Category, related_name='itemsCategory', on_delete=models.CASCADE)
     vendor = models.ForeignKey(

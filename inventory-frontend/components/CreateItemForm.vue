@@ -2,6 +2,10 @@
   <div class="form-container">
     <form @submit.prevent="submitForm">
       <div class="input-container">
+        <label for="item_id">Item ID</label>
+        <input id="item_id" type="text" ref="item_id" placeholder="Enter Item ID" required>
+      </div>
+      <div class="input-container">
         <label for="name">Name of the Item</label>
         <input id="name" type="text" ref="name" placeholder="Enter the Name of the Item" required />
       </div>
@@ -11,6 +15,10 @@
           <input id="quantity-makerspace" type="number" ref="makerspace" placeholder="Maker Space Quantity" required />
           <input id="quantity-backroom" type="number" ref="backroom" placeholder="Back Room Quantity" required />
         </div>
+      </div>
+      <div class="input-container">
+        <label for="min_amount">Minimum amount of Items to display alert</label>
+        <input id="min_amount" type="number" ref="min_amount" placeholder="Enter Minium amount of Items to display Alert">
       </div>
       <div class="input-container">
         <label for="location">Location of the Item</label>
@@ -47,8 +55,8 @@
           @dragover.prevent="handleDragOver" @dragleave="handleDragLeave" @drop.prevent="handleDrop">
           <label for="file-input" class="block w-full h-full text-gray-500 p-4 text-sm cursor-pointer">
             {{ dropAreaText }}
-          </label>
-          <input name="file" type="file" id="file-input" accept="image/*" class="hidden" @change="handleFileChange" />
+          </label><!-- accept="image/*" -->
+          <input name="file" type="file" id="file-input" class="hidden" @change="handleFileChange" />
           <!-- Image upload input -->
           <div class="preview-container" :class="{ hidden: !showPreview }">
             <div class="preview-image w-36 h-36 bg-cover bg-center rounded-md cursor-pointer"
@@ -83,14 +91,16 @@ const showModal = ref(false);
 const previewImage = ref("");
 const previewImageModal = ref("");
 const fileName = ref("");
+const item_id = ref("");
 const name = ref("");
 const location = ref("");
 const makerspace = ref(0);
 const backroom = ref(0)
+const min_amount = ref(0);
 const vendor = ref("");
 const category = ref("");
 const purchase_link = ref("");
-
+let thisfile = ""
 
 // Functions
 function handleDragOver(event) {
@@ -105,6 +115,7 @@ function handleDragLeave() {
 function handleDrop(event) {
   event.preventDefault();
   const file = event.dataTransfer.files[0];
+  thisfile = file
   showPreview.value = true;
   if (file) {
     showPreview.value = true;
@@ -123,6 +134,7 @@ function handleDrop(event) {
 function handleFileChange(event) {
   const file = event.target.files[0];
   console.log(file)
+  thisfile = file
   showPreview.value = true;
   if (file) {
     showPreview.value = true;
@@ -154,12 +166,15 @@ function closeModal() {
 }
 
 async function submitForm() {
+  console.log(thisfile.value)
   const formData = new FormData();
-  formData.append("image", previewImageModal.value); // Assuming "previewImageModal" is an input element of type "file"
+  formData.append("item_id", item_id.value.value)
+  formData.append("image", thisfile); // Assuming "previewImageModal" is an input element of type "file"
   formData.append("name", name.value.value)
   formData.append("purchase_link", purchase_link.value.value)
   formData.append("backroom_quantity", backroom.value.value)
   formData.append("makerspace_quantity", makerspace.value.value)
+  formData.append("min_amount", min_amount.value.value)
   formData.append("vendor", vendor.value.value)
   formData.append("category", category.value.value)
   formData.append("location", location.value.value)
