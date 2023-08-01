@@ -206,7 +206,7 @@ h3 {
   height: 2rem;
 }
 .open-menu-cont {
-  display: grid;
+  display: none;
   width: 2rem;
   height: 2rem;
   top: 0.7rem;
@@ -353,13 +353,13 @@ h3 {
   }
 }
 @media screen and (max-width: 1200px) {
-  .open-menu-cont {
-    display: block;
-  }
 }
 @media screen and (max-width: 576px) {
   .nav-cont {
     display: none;
+  }
+  .open-menu-cont {
+    display: block;
   }
   .open-menu-icon {
     height: 200%;
@@ -382,6 +382,9 @@ h3 {
   .nav-cont {
     display: none;
   }
+  .open-menu-cont {
+    display: block;
+  }
   .open-menu-icon {
     height: 200%;
     width: 200%;
@@ -398,6 +401,9 @@ h3 {
 @media screen and (max-width: 320px) {
   .nav-cont {
     display: none;
+  }
+  .open-menu-cont {
+    display: block;
   }
   .open-menu-icon {
     height: 200%;
