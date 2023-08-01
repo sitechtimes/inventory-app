@@ -86,7 +86,8 @@ def run():
                 makerspace_quantity=rows["MakerSpace_Quantity"],
                 category=Category.objects.get(category_name=rows["Category"]),
                 vendor=Vendor.objects.get(vendor_name=rows["Vendor"]),
-                location="makerspace",
+                location=rows["Location"],
+                min_amount=rows["Alert"]
             )
             item.save()
         except Exception as e:

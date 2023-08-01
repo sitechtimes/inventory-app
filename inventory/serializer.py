@@ -25,7 +25,7 @@ class ItemSerializer(serializers.ModelSerializer):
     def get_alert(self, obj):
         total = obj.backroom_quantity + obj.makerspace_quantity
 
-        if total > 0:
+        if total > obj.min_amount:
             alert = False
 
         else:

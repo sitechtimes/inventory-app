@@ -73,6 +73,7 @@ class Item(models.Model):
     vendor = models.ForeignKey(
         Vendor, related_name='itemsVendor', on_delete=models.CASCADE)
     location = models.CharField(max_length=50, default='')
+    min_amount = models.IntegerField(default=5)
 
     def __str__(self):
         return self.name
