@@ -19,6 +19,7 @@ class Category(models.Model):
 class Vendor(models.Model):
     vendor_name = models.CharField(choices=vendors, max_length=100)
 
+
     def __str__(self):
         return self.vendor_name
 
