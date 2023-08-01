@@ -3,16 +3,14 @@
     <div id="search" class="heading">
       <Header />
     </div>
-  <div>
-    <NuxtPage />
-  </div>
-  <!-- <div class="app">
-    <div id="search" class="heading">search</div>
     <div id="navHolder">nav</div>
     <div id="largeItemHolder">
       <Catalog />
     </div>
-  </div> -->
+    <div v-if="store.editform">
+      <NuxtPage />
+    </div>
+  </div>
 </template>
 
 <style>

@@ -14,6 +14,7 @@ export const useItemsStore = defineStore('items', {
     vendorHeader: false,
     categoryPop: false,
     categoryHeader: false,
+    editform:false,
     //for resizing on toggling extra info
     main: [],
     textbox: [],
