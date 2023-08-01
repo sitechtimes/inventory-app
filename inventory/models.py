@@ -26,7 +26,7 @@ class Vendor(models.Model):
 def upload_to(instance, filename):
     return 'images/{filename}'.format(filename=filename)
 
-
+"""  min_amount = models.IntegerField(default=0) """
 class Item(models.Model):
     item_id = models.CharField(max_length=100, blank=False, default='')
     name = models.CharField(max_length=100, blank=True, default='')
@@ -35,7 +35,6 @@ class Item(models.Model):
     last_purchased = models.DateTimeField(auto_now=True, editable=True)
     backroom_quantity = models.IntegerField(default=0)
     makerspace_quantity = models.IntegerField(default=0)
-    min_amount = models.IntegerField(default=0)
     category = models.ForeignKey(
         Category, related_name='itemsCategory', on_delete=models.CASCADE)
     vendor = models.ForeignKey(
