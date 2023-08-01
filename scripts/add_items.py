@@ -1,60 +1,15 @@
-""" import django
-import pandas as pd
-from inventory.models import Item
-from inventory.models import Category
-from inventory.models import Vendor
-
-
-def run():
-    dataframe = pd.read_csv('scripts/csv/inventory.csv')
-
-    Item.objects.all().delete()
-    Category.objects.all().delete()
-    Vendor.objects.all().delete()
-    print('Hello world!')
-    for index, rows in dataframe.iterrows():
-        try:
-            Category.objects.get(category_name=rows["Category"])
-
-        except:
-            category_name = Category(category_name=rows["Category"])
-            category_name.save()
-
-        try:
-            Vendor.objects.get(vendor_name=rows["Vendor"])
-        except:
-            vendor_name = Vendor(vendor_name=rows["Vendor"])
-            vendor_name.save()
-        try:
-            item = Item(
-                item_id=rows["Item ID"],
-                name=rows["Name"],
-                purchase_link=rows["Purchase Link"],
-                image=rows["Image"],
-                last_purchased=rows["Date Last Purchased"],
-                backroom_quantity=rows["Backroom_Quantity"],
-                makerspace_quantity=rows["MakerSpace_Quantity"],
-                category=Category.objects.get(category_name=rows["Category"]),
-                vendor=Vendor.objects.get(vendor_name=rows["Vendor"]),
-                location="makerspace",
-            )
-            item.save()
-            # django.db.utils.IntegrityError
-        except:
-            item = rows["Item ID"]
-            print(item)
-            # pass
-    print("Successfully added items from csv to inventory.")
- """
+from django.conf import settings
+import os
 import django
 import pandas as pd
 from inventory.models import Item
 from inventory.models import Category
 from inventory.models import Vendor
+from django.core.files import File
 
 
 def run():
-    dataframe = pd.read_csv('scripts/csv/inventory.csv')
+    dataframe = pd.read_csv('scripts/csv/inventory - inventory.csv')
 
     Item.objects.all().delete()
     Category.objects.all().delete()
@@ -75,15 +30,16 @@ def run():
             vendor_name.save()
 
         try:
-            image = rows["Image"] if pd.notnull(rows["Image"]) else None
+            image_path = rows["Image"] if pd.notnull(rows["Image"]) else None
+            print(image_path)
             item = Item(
                 item_id=rows["Item ID"],
                 name=rows["Name"],
                 purchase_link=rows["Purchase Link"],
-                image=image,
+                image=image_path,
                 last_purchased=rows["Date Last Purchased"],
-                backroom_quantity=rows["Backroom_Quantity"],
-                makerspace_quantity=rows["MakerSpace_Quantity"],
+                backroom_quantity=rows["Backroom_quantity"],
+                makerspace_quantity=rows["Makerspace_quantity"],
                 category=Category.objects.get(category_name=rows["Category"]),
                 vendor=Vendor.objects.get(vendor_name=rows["Vendor"]),
                 location=rows["Location"],
