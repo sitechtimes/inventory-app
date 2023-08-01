@@ -1,25 +1,82 @@
 <template>
   <div>
     <div class="open-menu-cont">
-      <button class="open-menu-btn" @click="NavMenu()">
-        <div class="open-menu-icon-cont">
+      <button class="open-menu-btn">
+        <div
+          v-if="dismiss === true"
+          class="open-menu-icon-cont"
+          @click="NavMenu"
+        >
           <font-awesome-icon :icon="['fas', 'bars']" class="open-menu-icon" />
         </div>
+        <div
+          v-if="dismiss === false"
+          class="open-menu-icon-cont"
+          @click="NavMenu"
+        >
+          <font-awesome-icon
+            :icon="['fas', 'xmark']"
+            style="color: #000000"
+            class="open-menu-icon"
+          />
+        </div>
       </button>
+      <div class="mobile-menu dismiss">
+        <div class="mobile-user">
+          <div class="user-icon-cont">
+            <font-awesome-icon
+              :icon="['fas', 'user']"
+              class="mobile-user-icon"
+            />
+          </div>
+          <div class="mobile-user-info">
+            <h2 class="mobile-user-title">My Account</h2>
+            <h3 class="mobile-username">user1234@gmail.com</h3>
+          </div>
+        </div>
+        <div class="mobile-menu-container">
+          <button class="mobile-menu-btn">
+            <div>
+              <font-awesome-icon
+                :icon="['fas', 'boxes-stacked']"
+                class="mobile-icon"
+              />
+            </div>
+            <h3 class="mobile-tag">Catalog</h3>
+          </button>
+          <button class="mobile-menu-btn">
+            <div>
+              <font-awesome-icon
+                :icon="['fas', 'hand-holding-hand']"
+                class="mobile-icon"
+              />
+            </div>
+            <h3 class="mobile-tag">Borrowed</h3>
+          </button>
+          <button class="mobile-menu-btn">
+            <div>
+              <font-awesome-icon
+                :icon="['fas', 'circle-exclamation']"
+                class="mobile-icon"
+              />
+            </div>
+            <h3 class="mobile-tag">Supplies Needed</h3>
+          </button>
+        </div>
+      </div>
     </div>
-    <div class="return-box" @click="NavMenu()">
-      <div></div>
-    </div>
+    <!-- <div class="return-box" @click="NavMenu">
+    </div> -->
     <div class="nav-cont">
       <div>
         <div class="user">
           <div class="user-icon-cont">
             <font-awesome-icon :icon="['fas', 'user']" class="user-icon" />
           </div>
-          <div class="user-info">
+          <!-- <div class="user-info">
             <h2 class="user-title">My Account</h2>
             <h3 class="username">user1234@gmail.com</h3>
-          </div>
+          </div> -->
         </div>
         <div class="menu-container">
           <button class="menu-btn">
@@ -29,7 +86,7 @@
                 class="catalog-icon"
               />
             </div>
-            <h3 class="tag">CATALOG</h3>
+            <!-- <h3 class="tag">CATALOG</h3> -->
           </button>
           <button class="menu-btn">
             <div>
@@ -38,7 +95,7 @@
                 class="borrowed-icon"
               />
             </div>
-            <h3 class="tag">BORROWED</h3>
+            <!-- <h3 class="tag">BORROWED</h3> -->
           </button>
           <button class="menu-btn">
             <div>
@@ -47,116 +104,59 @@
                 class="needed-icon"
               />
             </div>
-            <h3 class="tag">SUPPLIES NEEDED</h3>
+            <!-- <h3 class="tag">SUPPLIES NEEDED</h3> -->
           </button>
         </div>
       </div>
-      <!-- back button if you want if have this button nav-cont: width: 18rem
-      with back button nav-cont: width: 19.5rem-->
-      <!-- <div class="back-cont">
-        <button class="back-btn" @click="NavMenu()">
-          <div class="back-icon">
-            <font-awesome-icon :icon="['fas', 'angles-left']" />
-          </div>
-        </button>
-      </div> -->
     </div>
   </div>
 </template>
 
-<script setup>
-let NavCont = "";
-let returnbox = "";
-
-onMounted(() => {
-  NavCont = document.querySelector(".nav-cont");
-  returnbox = document.querySelector(".return-box");
-  window.addEventListener("resize", () => {
-    if (window.innerWidth > 1200) {
-      NavCont.classList.remove("dismiss");
-      NavCont.classList.remove("selected");
-      returnbox.classList.remove("return-box-display");
-      returnbox.classList.remove("return-box-nodisplay");
-    }
-  });
-});
-
-function NavMenu() {
-  if (NavCont.classList.contains("selected")) {
-    NavCont.classList.remove("selected");
-    NavCont.classList.add("dismiss");
-    console.log("dismiss");
-    returnbox.classList.remove("return-box-display");
-    returnbox.classList.add("return-box-nodisplay");
-  } else if (NavCont.classList.contains("dismiss")) {
-    NavCont.classList.remove("dismiss");
-    NavCont.classList.add("selected");
-    console.log("selected");
-    returnbox.classList.remove("return-box-nodisplay");
-    returnbox.classList.add("return-box-display");
-  } else if (
-    !NavCont.classList.contains("dismiss") ||
-    !NavCont.classList.contains("selected")
-  ) {
-    NavCont.classList.add("selected");
-    console.log("selected");
-    returnbox.classList.add("return-box-display");
-  }
-}
+<script>
+export default {
+  name: "UserMenu",
+  props: {},
+  components: {},
+  data() {
+    return {
+      dismiss: true,
+    };
+  },
+  methods: {
+    NavMenu() {
+      const MobileMenu = document.querySelector(".mobile-menu");
+      if (MobileMenu.classList.contains("selected")) {
+        MobileMenu.classList.remove("selected");
+        MobileMenu.classList.add("dismiss");
+        this.dismiss = true;
+        console.log("dismiss");
+      } else if (MobileMenu.classList.contains("dismiss")) {
+        MobileMenu.classList.remove("dismiss");
+        this.dismiss = false;
+        MobileMenu.classList.add("selected");
+        console.log("selected");
+      } else if (
+        !MobileMenu.classList.contains("dismiss") ||
+        !MobileMenu.classList.contains("selected")
+      ) {
+        MobileMenu.classList.add("selected");
+        console.log("selected");
+      }
+    },
+  },
+};
 </script>
 
 <style scoped>
 .nav-cont {
-  position: absolute;
-  top: 0%;
-  left: 0%;
   height: 100vh;
   width: 18rem;
-  background-color: #6d7275;
+
   display: flex;
   flex-flow: row;
 }
-.return-box-display {
-  display: display;
-  position: absolute;
-  top: 0%;
-  left: 0%;
-  height: 100vh;
-  width: 100vw;
-  opacity: 0.2;
-  background-color: #6d7275;
-}
-.return-box-nodisplay {
-  display: none;
-  position: absolute;
-  top: 0%;
-  left: 0%;
-  height: 100vh;
-  width: 100vw;
-  opacity: 0.2;
-  background-color: #6d7275;
-}
-.back-cont {
-  display: none;
-  width: 1.5rem;
-  height: 100%;
-}
-.back-btn {
-  border: none;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #c7d6d5;
-}
-
-.icon {
-  width: 90%;
-  height: 90%;
-}
 .user {
-  width: 100%;
+  width: 6.9rem;
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-evenly;
@@ -164,49 +164,22 @@ function NavMenu() {
   overflow: hidden;
   margin-top: 1rem;
 }
-.user-title {
-  color: #ecebf3;
-}
-.username {
-  color: #ecebf3;
-}
-.user-icon-cont {
-  width: 4rem;
-  height: 4rem;
-  display: flex;
-  align-content: center;
-  justify-content: center;
-}
 .user-icon {
-  width: 80%;
-  height: 80%;
+  width: 3rem;
+  height: 3rem;
 }
 
-.user-info {
-  margin-left: 1rem;
-  width: 12rem;
-  overflow: hidden;
-}
 .menu-container {
   margin-top: 1rem;
   width: 100%;
   display: flex;
   flex-flow: column nowrap;
 }
-.tag {
-  width: 14rem;
-}
-.menu-icon {
-  width: 1rem;
-  height: 1rem;
-  background-color: #6d7275;
-  border-radius: 2rem;
-}
+
 .menu-btn {
   padding: 1rem;
-  width: 100%;
+  width: 6.9rem;
   border: none;
-  background-color: #6d7275;
   color: white;
   text-decoration: none;
   display: flex;
@@ -215,8 +188,15 @@ function NavMenu() {
   align-items: center;
   transition: background-color 0.2s linear;
 }
+
+h2,
+h3 {
+  color: black;
+  padding-left: 0.5rem;
+  font-size: 0.6rem;
+}
 .menu-btn:hover {
-  background-color: #ecebf3;
+  background-color: var(--lightblue);
 }
 .catalog-icon,
 .borrowed-icon,
@@ -229,12 +209,14 @@ function NavMenu() {
   display: none;
   width: 2rem;
   height: 2rem;
+  top: 0.7rem;
+  left: 2rem;
+  position: fixed;
+  z-index: 900;
 }
 .open-menu-btn {
   width: 100%;
   height: 100%;
-}
-.open-menu-btn {
   border: none;
   background-color: transparent;
 }
@@ -243,8 +225,65 @@ function NavMenu() {
   height: 100%;
 }
 .open-menu-icon {
+  display: none;
+}
+.mobile-menu {
+  display: none;
+  flex-direction: column;
+  position: relative;
+  z-index: 10;
+  background-color: white;
+  width: 100vw;
+  height: 100vh;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+.mobile-menu-btn,
+.mobile-user {
+  display: grid;
+  grid-template-columns: 4rem 1fr;
+  grid-template-rows: 4rem 1fr;
+  margin-top: 3vh;
+  padding-top: 2vh;
+  padding-bottom: 2vh;
   width: 100%;
-  height: 100%;
+  height: 8vh;
+  text-decoration: none;
+  background-color: white;
+}
+
+.mobile-user-icon,
+.mobile-icon {
+  display: grid;
+  color: #c7d6d5;
+  width: 5rem;
+  height: 5rem;
+}
+.mobile-user-icon {
+  color: black;
+}
+.mobile-user-info,
+.mobile-tag {
+  display: grid;
+  color: black;
+  font-size: 4rem;
+}
+.mobile-user {
+  background-color: white;
+  display: grid;
+  flex-flow: row nowrap;
+  align-items: center;
+  margin-top: 0.8vh;
+  padding-top: 2.5vh;
+  height: 10vh;
+  justify-self: center;
+}
+.mobile-user-title,
+.mobile-username {
+  font-size: 2rem;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
 }
 /* animations  */
 .selected {
@@ -258,31 +297,129 @@ function NavMenu() {
 }
 @keyframes slide-out {
   0% {
+    -webkit-transform: translateX(0%);
     transform: translateX(0%);
   }
   100% {
-    transform: translateX(-100%);
+    -webkit-transform: translateX(-500%);
+    transform: translateX(-500%);
+  }
+}
+@-webkit-keyframes slide-out {
+  0% {
+    -webkit-transform: translateX(0%);
+    transform: translateX(0%);
+  }
+  100% {
+    -webkit-transform: translateX(-500%);
+    transform: translateX(-500%);
   }
 }
 @keyframes slide-in {
   0% {
-    -webkit-transform: translateX(-100%);
+    -webkit-transform: translateX(-500%);
+    transform: translateX(-500%);
   }
   100% {
     -webkit-transform: translateX(0%);
+    transform: translateX(0%);
   }
 }
-/* media query */
-/* mobile */
-@media (max-width: 1200px) {
-  .back-cont {
-    display: block;
+@-webkit-keyframes slide-in {
+  0% {
+    -webkit-transform: translateX(-500%);
+    transform: translateX(-500%);
   }
+  100% {
+    -webkit-transform: translateX(0%);
+    transform: translateX(0%);
+  }
+}
+
+/* media query */
+/* media queries max width
+    sm:	 ≥576px
+ 	  md:  ≥768px
+    lg:	 ≥992px
+    xl:  ≥1200px
+    xxl: ≥1400px
+*/
+
+/* mobile */
+@media (hover: hover) {
+  .mobile-menu-btn:hover {
+    background-color: var(--lightblue);
+    cursor: pointer;
+  }
+}
+@media screen and (max-width: 1200px) {
+}
+@media screen and (max-width: 576px) {
   .nav-cont {
-    transform: translateX(-100%);
+    display: none;
   }
   .open-menu-cont {
     display: block;
+  }
+  .open-menu-icon {
+    height: 200%;
+    width: 200%;
+    display: block;
+  }
+  .mobile-menu {
+    display: flex;
+    margin-top: 140%;
+  }
+  .mobile-icon {
+    height: 4rem;
+    width: 4rem;
+  }
+  .mobile-tag {
+    font-size: 3rem;
+  }
+}
+@media screen and (max-width: 375px) {
+  .nav-cont {
+    display: none;
+  }
+  .open-menu-cont {
+    display: block;
+  }
+  .open-menu-icon {
+    height: 200%;
+    width: 200%;
+    display: block;
+  }
+  .mobile-icon {
+    height: 3.5rem;
+    width: 3.5rem;
+  }
+  .mobile-tag {
+    font-size: 2.5rem;
+  }
+}
+@media screen and (max-width: 320px) {
+  .nav-cont {
+    display: none;
+  }
+  .open-menu-cont {
+    display: block;
+  }
+  .open-menu-icon {
+    height: 200%;
+    width: 200%;
+    display: block;
+  }
+  .mobile-user-icon {
+    height: 4rem;
+    width: 4rem;
+  }
+  .mobile-icon {
+    height: 3rem;
+    width: 3rem;
+  }
+  .mobile-tag {
+    font-size: 2rem;
   }
 }
 </style>
