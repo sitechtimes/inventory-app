@@ -23,19 +23,18 @@ class Vendor(models.Model):
         return self.vendor_name
 
 
-def upload_to(instance, filename):
-    return 'images/{filename}'.format(filename=filename)
-
-
 """  min_amount = models.IntegerField(default=0) """
+
+
+""" def upload_to(instance, filename):
+    return 'images/{filename}'.format(filename=filename)
 
 
 class Item(models.Model):
     item_id = models.CharField(max_length=100, blank=False, default='')
     name = models.CharField(max_length=100, blank=True, default='')
     purchase_link = models.CharField(max_length=1000, blank=True, default='')
-    image = models.CharField(max_length=100)
-    """ image = models.ImageField(upload_to=upload_to, blank=True, null=True) """
+    image = models.ImageField(upload_to=upload_to, blank=True, null=True)
     last_purchased = models.DateTimeField(auto_now=True, editable=True)
     backroom_quantity = models.IntegerField(default=0)
     makerspace_quantity = models.IntegerField(default=0)
@@ -50,6 +49,36 @@ class Item(models.Model):
 
     def save(self, *args, **kwargs):
         count_obj = Item.objects.all().count()+1
+        self.id = count_obj
+        super(Item, self).save(*args, **kwargs)
+ """
+
+
+def upload_to(instance, filename):
+    count_obj = Item.objects.all().count() + 1
+    return 'images/{count}/{filename}'.format(count=count_obj, filename=filename)
+
+
+class Item(models.Model):
+    item_id = models.CharField(max_length=100, blank=True, default='')
+    name = models.CharField(max_length=100, blank=True, default='')
+    purchase_link = models.CharField(max_length=1000, blank=True, default='')
+    image = models.ImageField(
+        upload_to=upload_to, blank=True, null=False, default=None)
+    last_purchased = models.DateTimeField(auto_now=True, editable=True)
+    backroom_quantity = models.IntegerField(default=0)
+    makerspace_quantity = models.IntegerField(default=0)
+    category = models.ForeignKey(
+        Category, related_name='itemsCategory', on_delete=models.CASCADE)
+    vendor = models.ForeignKey(
+        Vendor, related_name='itemsVendor', on_delete=models.CASCADE)
+    location = models.CharField(max_length=50, default='')
+
+    def __str__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):
+        count_obj = Item.objects.all().count() + 1
         self.id = count_obj
         super(Item, self).save(*args, **kwargs)
 
