@@ -97,13 +97,20 @@
   width: fit-content;
 }
 .exitbtn {
-  margin-right: 2rem;
   color: var(--darkergray);
   transition: all 0.1s;
+  border-radius: 3rem;
+  height: 5rem;
+  width: 5rem;
+  background-color: rgba(0, 0, 0, 0);
 }
 .exitbtn:hover {
   cursor: pointer;
   color: var(--darkestgray);
+  background-color: var(--tpgray);
+}
+.exitbtn:active {
+  background-color: var(--tpdarkgray);
 }
 .extraInfoPanel {
   height: 100%;

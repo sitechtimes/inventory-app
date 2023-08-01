@@ -75,24 +75,16 @@ input:focus {
   box-shadow: 0.2rem 0.2rem 1rem var(--darkergray);
 }
 .searchclear {
-  background-color: rgba(0, 0, 0, 0);
+  margin-right: 2rem;
   position: absolute;
   right: 4rem;
   opacity: 0;
-  border-radius: 3rem;
-  height: 5rem;
-  width: 5rem;
 }
 #searchform:hover ~ .searchclear,
 .searchclear:hover {
   opacity: 1;
 }
-.searchclear:hover {
-  background-color: var(--tpgray);
-}
-.searchclear:active {
-  background-color: var(--tpdarkgray);
-}
+
 @media screen and (max-width: 1500px) {
   .searchclear {
     right: 2rem;

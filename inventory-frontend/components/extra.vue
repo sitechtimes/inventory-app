@@ -37,7 +37,8 @@
       </div>
     </div>
     <div class="logPop">
-      <div class="text">Inventory Change Log</div>
+      <div class="subheading changelog">Inventory Change Log</div>
+      <button class="text logorg">DateTime</button>
     </div>
   </div>
 </template>
@@ -122,6 +123,24 @@ export default {
   padding-right: 5rem;
 }
 .extrabtn {
-  width: fit-content;
+  width: 20%;
+  text-align: left;
+}
+.extrabtn:active {
+  box-shadow: 0.2rem 0.2rem 1rem var(--tpdarkgray);
+}
+.changelog,
+.logorg {
+  padding: 1.5rem;
+  border-bottom: var(--border);
+}
+.changelog {
+  border-top: var(--border);
+}
+
+.logorg {
+  text-align: left;
+  width: 100%;
+  font-weight: 400;
 }
 </style>

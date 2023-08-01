@@ -2,6 +2,12 @@
   <div class="bigdiv">
     <div id="mainItems">
       <div id="itemHeader" class="subheading">Items</div>
+      <div
+        class="errorsearch subheading"
+        v-if="store.search === true && store.newlist.length < 1"
+      >
+        No Items
+      </div>
       <div id="itemHolderAll" ref="allItems">
         <div class="categoryHolder">
           <ItemPerCat
@@ -142,6 +148,13 @@ export default {
   border-left: var(--border);
   z-index: 2000;
 }
+.errorsearch {
+  text-align: center;
+  min-width: 100%;
+  color: var(--darkestgray);
+  margin-top: 5rem;
+}
+
 @media screen and (min-width: 1600px) {
   .infoDesc {
     min-width: 80rem;
