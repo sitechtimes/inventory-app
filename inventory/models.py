@@ -27,12 +27,16 @@ class Vendor(models.Model):
 def upload_to(instance, filename):
     return 'images/{filename}'.format(filename=filename)
 
+
 """  min_amount = models.IntegerField(default=0) """
+
+
 class Item(models.Model):
     item_id = models.CharField(max_length=100, blank=False, default='')
     name = models.CharField(max_length=100, blank=True, default='')
     purchase_link = models.CharField(max_length=1000, blank=True, default='')
-    image = models.ImageField(upload_to=upload_to, blank=True, null=True)
+    image = models.CharField(max_length=100)
+    """ image = models.ImageField(upload_to=upload_to, blank=True, null=True) """
     last_purchased = models.DateTimeField(auto_now=True, editable=True)
     backroom_quantity = models.IntegerField(default=0)
     makerspace_quantity = models.IntegerField(default=0)

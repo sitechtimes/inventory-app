@@ -5,7 +5,7 @@ from .models import Item, Category, Vendor
 class ItemSerializer(serializers.ModelSerializer):
 
     total = serializers.SerializerMethodField()
-    image = serializers.ImageField(required=False)
+    """  image = serializers.ImageField(required=False) """
     alert = serializers.SerializerMethodField()
 
     class Meta:
