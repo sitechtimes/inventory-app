@@ -119,53 +119,31 @@ export default {
   components: {},
   data() {
     return {
-      // NavCont: document.querySelector(".nav-cont"),
-      // returnbox: document.querySelector(".return-box"),
       dismiss: true,
     };
   },
   methods: {
     NavMenu() {
       const MobileMenu = document.querySelector(".mobile-menu");
-      // const returnbox = document.querySelector(".return-box");
       if (MobileMenu.classList.contains("selected")) {
         MobileMenu.classList.remove("selected");
         MobileMenu.classList.add("dismiss");
         this.dismiss = true;
         console.log("dismiss");
-        // returnbox.classList.remove("return-box-display");
-        // returnbox.classList.add("return-box-nodisplay");
       } else if (MobileMenu.classList.contains("dismiss")) {
         MobileMenu.classList.remove("dismiss");
         this.dismiss = false;
         MobileMenu.classList.add("selected");
         console.log("selected");
-        // returnbox.classList.remove("return-box-nodisplay");
-        // returnbox.classList.add("return-box-display");
       } else if (
         !MobileMenu.classList.contains("dismiss") ||
         !MobileMenu.classList.contains("selected")
       ) {
         MobileMenu.classList.add("selected");
         console.log("selected");
-        // returnbox.classList.add("return-box-display");
       }
     },
-    // runOnMounted() {
-    //   window.addEventListener("resize", () => {
-    //     if (window.innerWidth > 1200) {
-    //       const NavCont = document.querySelector(".nav-cont");
-    //       NavCont.classList.remove("dismiss");
-    //       NavCont.classList.remove("selected");
-    //       // this.returnbox.classList.remove("return-box-display");
-    //       // this.returnbox.classList.remove("return-box-nodisplay");
-    //     }
-    //   });
-    // },
   },
-  // mounted() {
-  //   this.runOnMounted();
-  // },
 };
 </script>
 
@@ -177,28 +155,6 @@ export default {
   display: flex;
   flex-flow: row;
 }
-.return-box-display {
-  height: 100vh;
-  width: 100vw;
-  opacity: 1;
-}
-.return-box-nodisplay {
-  display: none;
-
-  height: 100vh;
-  width: 100vw;
-  opacity: 0.2;
-}
-.back-cont {
-  display: none;
-  width: 1.5rem;
-  height: 100%;
-}
-
-.icon {
-  width: 90%;
-  height: 90%;
-}
 .user {
   width: 6.9rem;
   display: flex;
@@ -208,37 +164,18 @@ export default {
   overflow: hidden;
   margin-top: 1rem;
 }
-.user-title {
-  color: #ecebf3;
-}
-.username {
-  color: #ecebf3;
-}
 .user-icon {
   width: 3rem;
   height: 3rem;
 }
 
-.user-info {
-  margin-left: 1rem;
-  width: 12rem;
-  overflow: hidden;
-}
 .menu-container {
   margin-top: 1rem;
   width: 100%;
   display: flex;
   flex-flow: column nowrap;
 }
-.tag {
-  width: 14rem;
-}
-.menu-icon {
-  width: 1rem;
-  height: 1rem;
-  justify-self: center;
-  border-radius: 2rem;
-}
+
 .menu-btn {
   padding: 1rem;
   width: 6.9rem;
