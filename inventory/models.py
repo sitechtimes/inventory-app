@@ -26,7 +26,10 @@ class Vendor(models.Model):
 def upload_to(instance, filename):
     return 'images/{filename}'.format(filename=filename)
 
+
 """  min_amount = models.IntegerField(default=0) """
+
+
 class Item(models.Model):
     item_id = models.CharField(max_length=100, blank=False, default='')
     name = models.CharField(max_length=100, blank=True, default='')
