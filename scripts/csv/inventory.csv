@@ -1,4 +1,4 @@
-Item ID,Name,Purchase Link,Image_url,Image_file,Date Last Purchased,Category,Vendor,Makerspace_quantity,Backroom_quantity,Location,Alert
+Item ID,Name,Purchase Link,Image_url,Image_file,Date Last Purchased,category_code,vendor_code,Makerspace_quantity,Backroom_quantity,Location,Alert
 AcrylicMedium_1,"Acrylic Medium, 1 qt Bottle, Matte","Sax True Flow Non-Toxic Acrylic Medium, 1 qt Bottle, Matte",https://images.schoolspecialty.com/images/442139_ecommthumbnail.jpg,,12/30/2022,PT,DOE,1,0,,0
 AluminumFoil_1,"Aluminum Foil , 18 in x 500 ft, Heavy Duty","Crystalware Commercial Grade Aluminum Foil , 18 in x 500 ft, Heavy Duty",https://images.schoolspecialty.com/images/2003401_A_ecommthumbnail.jpg,,3/22/2023,SC,DOE,2,0,,0
 Baren_1,"Speedball Baren for Block Printing, 4 in","Speedball Hardwood Handle Plastic Durable Round Baren for Block Printing, 4 in, Red",https://images.schoolspecialty.com/images/407267_ecommthumbnail.jpg,,11/30/2022,PRTM,DOE,0,0,,0
@@ -144,7 +144,7 @@ WoodTreasureChest_1,"Pacon Wood Treasure Chest, Assorted Size, 10 lb","Pacon Woo
 Brush_ClassSet,"Royal Brush Waterproof Standard Golden Taklon Hardwood Handle Paint Brush Combo Pack, Assorted Size, Blue, Pack of 144","Royal Brush Waterproof Standard Golden Taklon Hardwood Handle Paint Brush Combo Pack, Assorted Size, Blue, Pack of 144",https://images.schoolspecialty.com/images/401155_B_ecommthumbnail.jpg,,4/22/2023,PT,DOE,1,0,,0
 Brush_10Pack,"Royal Brush Light-Weight Golden Taklon Hair Acrylic Handle Ultra Short Brush Set, Assorted Size, Translucent Blue, Set of 10","Royal Brush Light-Weight Golden Taklon Hair Acrylic Handle Ultra Short Brush Set, Assorted Size, Translucent Blue, Set of 10",https://images.schoolspecialty.com/images/410603_ecommthumbnail.jpg,,4/22/2023,PT,DOE,7,0,,0
 Brush_Dynasty,"Dynasty C-400 Sapphire Round Synthetic Fiber Short Acrylic Handle Paint Brush Assortment, Multiple Size, Clear with Blue, Pack of 72","Dynasty C-400 Sapphire Round Synthetic Fiber Short Acrylic Handle Paint Brush Assortment, Multiple Size, Clear with Blue, Pack of 72",https://images.schoolspecialty.com/images/405387_ecommthumbnail.jpg,,4/22/2023,PT,DOE,1,0,,0
-Canvas_9x12,Artist's Loft Canvas Panel 9x12,,,,4/23/2023,PT,,10,0,,0
+Canvas_9x12,Artist's Loft Canvas Panel 9x12,,,,4/23/2023,PT,AMZ,10,0,,0
 Drawing_Charcoal_Set,"General's Charcoal Drawing School Pack, Assorted Tip, Assorted Color, Pack of 235","General's Charcoal Drawing School Pack, Assorted Tip, Assorted Color, Pack of 235",https://images.schoolspecialty.com/images/405667_ecommthumbnail.jpg,,4/22/2023,DR,DOE,1,0,,0
 DewaltCircularSaw7.5in_dw362,Circular Saw 7 1/4 in,,,Items_Images/DewaltCircularSaw7.5in_dw362.Image.135739.jpg,6/1/2020,TLS,HD,2,0,,0
 RyobiReciprocatingSaw_RJC181,Ryobi Rep Saw,,,Items_Images/RyobiReciprocatingSaw_RJC181.Image.141239.jpg,,TLS,HD,2,0,,0

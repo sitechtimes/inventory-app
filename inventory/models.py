@@ -10,14 +10,20 @@ locations = [('MS', 'Makerspace'), ('BR', 'Back Room')]
 
 
 class Category(models.Model):
-    category_name = models.CharField(choices=categories, max_length=100)
+    category_code = models.CharField(
+        choices=categories, max_length=100, default="")
+    category_name = models.CharField(
+        choices=categories, max_length=100, default="")
 
     def __str__(self):
         return self.category_name
 
 
 class Vendor(models.Model):
-    vendor_name = models.CharField(choices=vendors, max_length=100)
+    vendor_code = models.CharField(
+        choices=vendors, max_length=100, default=None)
+    vendor_name = models.CharField(
+        choices=vendors, max_length=100, default=None)
 
     def __str__(self):
         return self.vendor_name
