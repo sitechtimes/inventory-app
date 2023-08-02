@@ -9,7 +9,7 @@ from django.core.files import File
 
 
 def run():
-    dataframe = pd.read_csv('scripts/csv/inventory - inventory.csv')
+    dataframe = pd.read_csv('scripts/csv/inventory.csv')
 
     Item.objects.all().delete()
     Category.objects.all().delete()
@@ -30,20 +30,21 @@ def run():
             vendor_name.save()
 
         try:
-            image_path = rows["Image"] if pd.notnull(rows["Image"]) else None
-            print(image_path)
+            image_path = rows["Image_file"] if pd.notnull(
+                rows["Image_file"]) else None
             item = Item(
                 item_id=rows["Item ID"],
                 name=rows["Name"],
                 purchase_link=rows["Purchase Link"],
-                image=image_path,
+                image_url=rows["Image_url"],
+                image_file=image_path,
                 last_purchased=rows["Date Last Purchased"],
                 backroom_quantity=rows["Backroom_quantity"],
                 makerspace_quantity=rows["Makerspace_quantity"],
                 category=Category.objects.get(category_name=rows["Category"]),
                 vendor=Vendor.objects.get(vendor_name=rows["Vendor"]),
                 location=rows["Location"],
-                min_amount=rows["Alert"]
+                min_amount=rows["Alert"],
             )
             item.save()
         except Exception as e:
