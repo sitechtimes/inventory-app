@@ -117,7 +117,7 @@ export default {
   grid-row: 3 / 4;
   overflow-y: scroll;
   justify-content: center;
-
+  margin-bottom: 10rem;
   height: 100%;
   width: 100%;
   flex: 1 1 0%;

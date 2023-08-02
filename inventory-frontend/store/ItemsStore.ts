@@ -5,7 +5,7 @@ export const useItemsStore = defineStore('items', {
     //for search function filtering
     items: [],
     returnlist: [],
-    newlist:[],
+    empty:false,
     search: false,
     //toggle extra info
     popup: {name:null},
@@ -21,25 +21,7 @@ export const useItemsStore = defineStore('items', {
     name:[],
     quant:[],
     cat:[],
-    //for filtering massive api
-    categories: [],
-    coloring: [],
-    craft: [],
-    drawing: [],
-    fabric: [],
-    firstaid: [],
-    foam: [],
-    glue: [],
-    misc: [],
-    paint: [],
-    paper: [],
-    print: [],
-    sculpture: [],
-    sewing: [],
-    tape: [],
-    tools: [],
-    wire: [],
-    wood: [],
+  
   }),
 
   getters: {
@@ -56,7 +38,7 @@ export const useItemsStore = defineStore('items', {
     this.items = results
     return results
     },
-    //filter api by category
+   
    
     //resize individual items when clicked for more information by adding/removing classes
     resizing() {

@@ -4,14 +4,23 @@
       <div id="itemHeader" class="subheading">Items</div>
       <div
         class="errorsearch subheading"
-        v-if="store.search === true && store.newlist.length < 1"
+        v-if="store.search === true && store.empty === true"
       >
         No Items
       </div>
       <div id="itemHolderAll" ref="allItems">
-        <div class="categoryHolder">
+        <div class="categoryHolder" v-if="store.search">
           <ItemPerCat
-            v-for="(each, index) in store.returnlist"
+            v-for="(each, index) in store.items"
+            :key="each.id"
+            :list="each"
+            :name="nameType(index)"
+            :min="minimum(each)"
+          ></ItemPerCat>
+        </div>
+        <div class="categoryHolder" v-else>
+          <ItemPerCat
+            v-for="(each, index) in store.items"
             :key="each.id"
             :list="each.itemsCategory"
             :name="nameType(index)"

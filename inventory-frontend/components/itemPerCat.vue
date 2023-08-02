@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <div class="subheading catHead" ref="cat">
+      <div class="subheading catHead" ref="cat" v-if="list.length >= 1">
         {{ name }}
       </div>
       <div class="itemHolder">

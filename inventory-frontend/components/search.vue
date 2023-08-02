@@ -19,36 +19,44 @@ export default {
   data() {
     return {
       store: useItemsStore(),
-
       newlist: [],
+      empties: 0,
     };
   },
   methods: {
     filteredItems(i) {
-      /* this.store.returnlist.forEach(
-        (arr) =>
-          (this.newlist = arr.filter((item) =>
+      this.newlist = [];
+      this.store.returnlist.forEach((arr) => {
+        let itemsCategory = Array.from(
+          arr.itemsCategory.filter((item) =>
             item.name.toLowerCase().includes(i.toLowerCase())
-          ))
-      ); */
-      this.newlist = Array.from(this.store.returnlist);
-      console.log(
-        this.store.items,
-        "items",
-        this.newlist,
-        "newlist",
-        this.store.newlist,
-        "storenewlist",
-        this.newlist.forEach((item) => item.id)
-      );
-      this.store.$patch({ newlist: this.newlist, search: true, info: false });
+          )
+        );
+        this.newlist.push(itemsCategory);
+      });
+      console.log(this.newlist);
 
-      /*  this.store.sort(); */
+      this.store.$patch({ items: this.newlist, search: true, info: false });
+      this.empties = 0;
+      this.store.items.forEach((item) => {
+        if (item.length < 1) {
+          this.empties++;
+        }
+      });
+      if (this.empties === 17) {
+        this.store.$patch({ empty: true });
+      } else {
+        this.store.$patch({ empty: false });
+      }
       this.store.resizing();
     },
     clearSearch() {
-      this.store.$patch({ search: false, info: false });
-      this.store.sort();
+      this.store.$patch({
+        search: false,
+        info: false,
+        items: this.store.returnlist,
+      });
+
       this.store.resizing();
       document.getElementById("searchform").value = "";
     },
