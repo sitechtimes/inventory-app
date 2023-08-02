@@ -1,5 +1,5 @@
 <template>
-  <div class="app">
+  <div class="app dismiss">
     <div id="search" class="heading">
       <Header />
     </div>
@@ -79,6 +79,7 @@ export default {
   top: 0;
   left: 0;
   overflow: hidden;
+  transition: all 0.5s linear;
 }
 #search {
   grid-column: 1 / 3;

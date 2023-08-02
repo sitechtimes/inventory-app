@@ -98,7 +98,7 @@
 }
 .exitbtn {
   color: var(--darkergray);
-  transition: all 0.1s;
+  transition: all 0.1s linear;
   border-radius: 3rem;
   height: 5rem;
   width: 5rem;

@@ -6,7 +6,7 @@
         class="errorsearch subheading"
         v-if="store.search === true && store.empty === true"
       >
-        No Items
+        No Items Found
       </div>
       <div id="itemHolderAll" ref="allItems">
         <div class="categoryHolder" v-if="store.search">

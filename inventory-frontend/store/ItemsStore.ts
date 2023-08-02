@@ -21,7 +21,8 @@ export const useItemsStore = defineStore('items', {
     name:[],
     quant:[],
     cat:[],
-  
+    //nav
+    dismiss: true,
   }),
 
   getters: {
