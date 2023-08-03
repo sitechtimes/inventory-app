@@ -8,5 +8,4 @@ export default defineNuxtConfig({
   ],
   pages: true,
   modules: ["@pinia/nuxt"],
-  /* plugins: ["@/plugins/chart.js"], */
 });

@@ -28,7 +28,7 @@
       <VendorInfo :vendorName="vendor" />
     </div>
     <div class="extraInfoPanel" v-if="this.store.categoryPop">
-      <CategoryInfo />
+      <CategoryInfo :categoryName="category" />
     </div>
   </div>
 </template>

@@ -1,12 +1,12 @@
 <template>
   <div class="popUpPanel vendorPanel">
-    <canvas id="myChart" height="800"></canvas>
+    <canvas id="myChart" height="650"></canvas>
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import { Chart, Ticks } from 'chart.js/auto';
+import { Chart } from 'chart.js/auto';
 
 const props = defineProps(["vendorName"])
 
@@ -38,6 +38,15 @@ const chartOptions = ref({
         maxRotation: 80,
         minRotation: 80,
         fontSize: 16,
+      },
+      beforeUpdate(axis) {
+        const labels = axis.chart.data.labels;
+        for (let i = 0; i < labels.length; i++) {
+          const lbl = labels[i];
+          if (typeof lbl === 'string' && lbl.length > 10) {
+            labels[i] = lbl.substring(0, 10) + "..."; // cutting
+          }
+        }
       }
     },
   },
@@ -84,7 +93,6 @@ async function fetchData() {
 
     const VendorName = props.vendorName
     data.forEach((vendor) => {
-      console.log(vendor)
       if (VendorName === vendor.vendor_name) {
         vendor.itemsVendor.forEach((item) => {
           VendorItem.value.push(item.name)
