@@ -1,23 +1,24 @@
 <template>
   <div class="app">
-    <div id="search" class="heading">
+    <!-- <div id="search" class="heading">
       <Header> </Header>
     </div>
     <div id="navHolder">
       <UserMenu />
-    </div>
+    </div> -->
     <!-- <div> -->
     <!-- <NuxtPage />
   </div> -->
-    <!-- <div class="app">
-    <div id="search" class="heading">search</div>
-    <div id="navHolder">nav</div>
-    <div id="largeItemHolder">
-      <Catalog />
+    <div class="app">
+      <div id="search" class="heading">search</div>
+      <div id="navHolder">nav</div>
+      <div id="largeItemHolder">
+        <Catalog />
+      </div>
+      <div v-if="store.editform">
+        <NuxtPage />
+      </div>
     </div>
-    <div v-if="store.editform">
-      <NuxtPage />
-    </div>-->
   </div>
 </template>
 
@@ -65,7 +66,8 @@ import UserMenu from "./components/UserMenu.vue";
 
 export default {
   name: "app",
-  components: { Search, Catalog, UserMenu },
+  /* Search */
+  components: { Catalog, UserMenu },
   components: { Header, Catalog },
   data() {
     return {
