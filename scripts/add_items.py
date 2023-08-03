@@ -93,7 +93,6 @@ def run():
                 category=Category.objects.get(category_name=rows["Category"]),
                 vendor=Vendor.objects.get(vendor_name=rows["Vendor"]),
                 location="Makerspace",
-                suppliesNeeded=False,
             )
             item.save()
         except django.db.utils.IntegrityError:
