@@ -2,13 +2,20 @@
   <div class="bigdiv">
     <div id="mainItems">
       <div id="itemHeader" class="subheading">Items</div>
+      <div
+        class="errorsearch subheading"
+        v-if="store.search === true && store.newlist.length < 1"
+      >
+        No Items
+      </div>
       <div id="itemHolderAll" ref="allItems">
         <div class="categoryHolder">
           <ItemPerCat
-            v-for="(each, index) in categories"
+            v-for="(each, index) in store.returnlist"
             :key="index"
-            :list="each"
+            :list="each.itemsCategory"
             :name="nameType(index)"
+            :min="minimum(each)"
           ></ItemPerCat>
         </div>
       </div>
@@ -38,105 +45,51 @@ export default {
   data() {
     return {
       store: useItemsStore(),
-      categories: [],
-      coloring: [],
-      craft: [],
-      drawing: [],
-      fabric: [],
-      firstaid: [],
-      foam: [],
-      glue: [],
-      misc: [],
-      paint: [],
-      paper: [],
-      print: [],
-      sculpture: [],
-      sewing: [],
-      tape: [],
-      tools: [],
-      wire: [],
-      wood: [],
     };
   },
   methods: {
-    sort() {
-      this.coloring = this.store.items.filter((item) => item.category === "CM");
-      this.craft = this.store.items.filter((item) => item.category === "CS");
-      this.drawing = this.store.items.filter((item) => item.category === "DR");
-      this.fabric = this.store.items.filter((item) => item.category === "FAB");
-      this.firstaid = this.store.items.filter((item) => item.category === "FA");
-      this.foam = this.store.items.filter((item) => item.category === "FM");
-      this.glue = this.store.items.filter((item) => item.category === "GL");
-      this.misc = this.store.items.filter((item) => item.category === "MISC");
-      this.paint = this.store.items.filter((item) => item.category === "PT");
-      this.paper = this.store.items.filter((item) => item.category === "PAP");
-      this.print = this.store.items.filter((item) => item.category === "PRTM");
-      this.sculpture = this.store.items.filter(
-        (item) => item.category === "SC"
-      );
-      this.sewing = this.store.items.filter((item) => item.category === "SE");
-      this.tape = this.store.items.filter((item) => item.category === "TP");
-      this.tools = this.store.items.filter((item) => item.category === "TLS");
-      this.wire = this.store.items.filter((item) => item.category === "WR");
-      this.wood = this.store.items.filter((item) => item.category === "WD");
-
-      console.log(this.categories);
-
-      this.categories = [
-        this.coloring,
-        this.craft,
-        this.drawing,
-        this.fabric,
-        this.firstaid,
-        this.foam,
-        this.glue,
-        this.misc,
-        this.paint,
-        this.paper,
-        this.print,
-        this.sculpture,
-        this.sewing,
-        this.tape,
-        this.tools,
-        this.wire,
-        this.wood,
-      ];
+    minimum(list) {
+      if (list.length >= 1) {
+        return true;
+      } else {
+        return false;
+      }
     },
     nameType(number) {
       if (number === 0) {
-        return "Coloring Materials";
-      } else if (number === 1) {
-        return "Craft Supplies";
-      } else if (number === 2) {
-        return "Drawing";
-      } else if (number === 3) {
-        return "Fabric";
-      } else if (number === 4) {
-        return "First Aid";
-      } else if (number === 5) {
-        return "Foam";
-      } else if (number === 6) {
-        return "Glue";
-      } else if (number === 7) {
-        return "Miscellaneous";
-      } else if (number === 8) {
         return "Paint";
-      } else if (number === 9) {
-        return "Paper";
-      } else if (number === 10) {
-        return "Print Making";
-      } else if (number === 11) {
+      } else if (number === 1) {
         return "Sculpture";
-      } else if (number === 12) {
-        return "Sewing";
-      } else if (number === 13) {
-        return "Tape";
-      } else if (number === 14) {
+      } else if (number === 2) {
+        return "Print Making";
+      } else if (number === 3) {
+        return "Craft Supplies";
+      } else if (number === 4) {
+        return "Fabric";
+      } else if (number === 5) {
+        return "Coloring Materials";
+      } else if (number === 6) {
         return "Tools";
+      } else if (number === 7) {
+        return "Wood";
+      } else if (number === 8) {
+        return "Tape";
+      } else if (number === 9) {
+        return "Glue";
+      } else if (number === 10) {
+        return "First Aid";
+      } else if (number === 11) {
+        return "Foam";
+      } else if (number === 12) {
+        return "Miscellaneous";
+      } else if (number === 13) {
+        return "Sewing";
+      } else if (number === 14) {
+        return "Paper";
       } else if (number === 15) {
         return "Wire";
       } else if (number === 16) {
-        return "Wood";
+        return "Drawing";
       } else {
         return "Error";
       }
@@ -144,7 +97,7 @@ export default {
   },
   async mounted() {
     await this.store.getItems();
-    this.sort();
+    this.store.sort();
   },
 };
 </script>
@@ -155,10 +108,12 @@ export default {
   flex-direction: row;
   overflow-y: hidden;
   background-color: var(--lightgray);
+  min-width: 100%;
 }
 #mainItems {
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 #itemHeader {
   min-height: 5.5rem;
@@ -193,6 +148,13 @@ export default {
   border-left: var(--border);
   z-index: 2000;
 }
+.errorsearch {
+  text-align: center;
+  min-width: 100%;
+  color: var(--darkestgray);
+  margin-top: 5rem;
+}
+
 @media screen and (min-width: 1600px) {
   .infoDesc {
     min-width: 80rem;

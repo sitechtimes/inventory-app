@@ -2,19 +2,44 @@ import { defineStore } from 'pinia'
 
 export const useItemsStore = defineStore('items', {
   state: () => ({
-    items: null,
+    //for search function filtering
+    items: [],
+    returnlist: [],
+    newlist:[],
+    search: false,
+    //toggle extra info
     popup: {name:null},
     info: false,
+    vendor:false,
+    vendorHeader: false,
+    categoryPop: false,
+    categoryHeader: false,
+    editform:false,
+    //for resizing on toggling extra info
     main: [],
     textbox: [],
     name:[],
     quant:[],
     cat:[],
-    vendor:false,
-    vendorHeader: false,
-    categoryPop: false,
-    categoryHeader: false,
-    
+    //for filtering massive api
+    categories: [],
+    coloring: [],
+    craft: [],
+    drawing: [],
+    fabric: [],
+    firstaid: [],
+    foam: [],
+    glue: [],
+    misc: [],
+    paint: [],
+    paper: [],
+    print: [],
+    sculpture: [],
+    sewing: [],
+    tape: [],
+    tools: [],
+    wire: [],
+    wood: [],
   }),
 
   getters: {
@@ -22,13 +47,17 @@ export const useItemsStore = defineStore('items', {
   },
 
   actions: {
+    //fetch api
     async getItems(){
     const response = await fetch('http://127.0.0.1:8000/items/category')
     const results = await response.json()
     console.log(results)
-    this.items = results
+    this.returnlist = results
     return results
     },
+    //filter api by category
+   
+    //resize individual items when clicked for more information by adding/removing classes
     resizing() {
       if (this.info === true) {
         this.textbox.forEach((item) => {
@@ -63,11 +92,13 @@ export const useItemsStore = defineStore('items', {
         this.cat.forEach((item) => item.classList.remove("info-cat"));
       }
     },
+    //change classes for info pop up headers - inactive
     inactive(maintab, tabnumber, btn) {
       document.querySelector(maintab).classList.add("inactive");
       document.querySelector(tabnumber).classList.add("inactive");
       document.querySelector(btn).classList.add("inactivebtn");
     },
+    //change classes for info pop up headers - active
     active(maintab, tabnumber, btn) {
       document.querySelector(maintab).classList.add("active");
       document.querySelector(maintab).classList.remove("inactive");

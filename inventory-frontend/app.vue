@@ -1,21 +1,24 @@
 <template>
   <div class="app">
     <div id="search" class="heading">
-      <Search />
+      <Header> </Header>
     </div>
     <div id="navHolder">
       <UserMenu />
     </div>
-    <div>
-      <!-- <NuxtPage />
+    <!-- <div> -->
+    <!-- <NuxtPage />
   </div> -->
-      <!-- <div class="app">
+    <!-- <div class="app">
     <div id="search" class="heading">search</div>
     <div id="navHolder">nav</div>
     <div id="largeItemHolder">
       <Catalog />
     </div>
-  </div> -->
+    <div v-if="store.editform">
+      <NuxtPage />
+    </div>-->
+  </div>
 </template>
 
 <style>
@@ -56,13 +59,14 @@
 
 <script>
 import { useItemsStore } from "~/store/ItemsStore";
-import Search from "./components/search.vue";
+import Header from "./components/header.vue";
 import Catalog from "./components/catalog.vue";
 import UserMenu from "./components/UserMenu.vue";
 
 export default {
   name: "app",
   components: { Search, Catalog, UserMenu },
+  components: { Header, Catalog },
   data() {
     return {
       store: useItemsStore(),
@@ -164,4 +168,5 @@ export default {
     border: none;
     z-index: 2000;
   }
-}</style>
+}
+</style>

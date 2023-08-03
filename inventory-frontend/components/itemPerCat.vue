@@ -1,7 +1,9 @@
 <template>
   <div>
     <div>
-      <div class="subheading catHead" ref="cat">{{ name }}</div>
+      <div class="subheading catHead" ref="cat">
+        {{ name }}
+      </div>
       <div class="itemHolder">
         <Item
           v-for="result in list"
@@ -25,6 +27,7 @@
   display: flex;
   height: fit-content;
   width: 100%;
+
   flex-direction: row;
   flex-wrap: wrap;
   align-items: stretch;
@@ -56,7 +59,7 @@ import Item from "./item.vue";
 import { useItemsStore } from "~/store/ItemsStore";
 export default {
   name: "ItemPerCat",
-  props: { list: Array, name: String },
+  props: { list: Array, name: String, min: Boolean },
   components: { Item },
   data() {
     return {
