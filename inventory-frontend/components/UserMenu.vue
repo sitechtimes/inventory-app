@@ -2,36 +2,39 @@
   <div>
     <div class="menu">
       <div class="menu-container">
-        <button class="menu-btn exitbtn shrink" @click="catalog">
+        <button
+          class="menu-btn exitbtn shrink catalogbtn activepage"
+          @click="catalog"
+        >
           <div class="icon-holder">
             <font-awesome-icon
               :icon="['fas', 'boxes-stacked']"
               class="mobile-icon"
             />
           </div>
-          <div class="icon-tag heading">Items</div>
+          <div class="icon-tag heading cat-tag activetag">Items</div>
           <div class="popup-tag text" v-if="store.dismiss">Items</div>
         </button>
 
-        <button class="menu-btn exitbtn shrink" @click="monitor">
+        <button class="menu-btn exitbtn shrink monitorbtn" @click="monitor">
           <div class="icon-holder">
             <font-awesome-icon
               :icon="['fas', 'hand-holding-hand']"
               class="mobile-icon"
             />
           </div>
-          <div class="icon-tag heading">Monitor</div>
+          <div class="icon-tag heading mon-tag">Monitor</div>
           <div class="popup-tag text" v-if="store.dismiss">Monitor</div>
         </button>
 
-        <button class="menu-btn exitbtn shrink" @click="vendors">
+        <button class="menu-btn exitbtn shrink vendorsbtn" @click="vendors">
           <div class="icon-holder">
             <font-awesome-icon
               :icon="['fas', 'circle-exclamation']"
               class="mobile-icon"
             />
           </div>
-          <div class="icon-tag heading">Vendors</div>
+          <div class="icon-tag heading ven-tag">Vendors</div>
           <div class="popup-tag text" v-if="store.dismiss">Vendors</div>
         </button>
       </div>
@@ -56,18 +59,50 @@ export default {
   methods: {
     catalog() {
       this.store.$patch({ catalog: true, monitor: false, vendors: false });
+      document.querySelector(".catalogbtn").classList.add("activepage");
+      document.querySelector(".monitorbtn").classList.remove("activepage");
+      document.querySelector(".vendorsbtn").classList.remove("activepage");
+      document.querySelector(".cat-tag").classList.add("activetag");
+      document.querySelector(".mon-tag").classList.remove("activetag");
+      document.querySelector(".ven-tag").classList.remove("activetag");
     },
     monitor() {
       this.store.$patch({ catalog: false, monitor: true, vendors: false });
+      document.querySelector(".catalogbtn").classList.remove("activepage");
+
+      document.querySelector(".monitorbtn").classList.add("activepage");
+      document.querySelector(".vendorsbtn").classList.remove("activepage");
+      document.querySelector(".cat-tag").classList.remove("activetag");
+      document.querySelector(".mon-tag").classList.add("activetag");
+      document.querySelector(".ven-tag").classList.remove("activetag");
+      document
+        .querySelector(".fa-hand-holding-hand")
+        .classList.add("activesvg");
     },
     vendors() {
       this.store.$patch({ catalog: false, monitor: false, vendors: true });
+      document.querySelector(".catalogbtn").classList.remove("activepage");
+
+      document.querySelector(".monitorbtn").classList.remove("activepage");
+      document.querySelector(".vendorsbtn").classList.add("activepage");
+      document.querySelector(".cat-tag").classList.remove("activetag");
+      document.querySelector(".mon-tag").classList.remove("activetag");
+      document.querySelector(".ven-tag").classList.add("activetag");
     },
   },
 };
 </script>
 
 <style scoped>
+.activepage {
+  background-color: var(--lightblue);
+}
+.activepage:hover {
+  background-color: var(--lightblue);
+}
+.activesvg:nth-child(1) {
+  fill: var(--darkblue);
+}
 .nav-cont {
   height: 100vh;
   width: 18rem;
@@ -130,6 +165,9 @@ export default {
   opacity: 0;
   transform: scale(0);
   transition: all 0.15s;
+}
+.activetag {
+  color: var(--darkblue);
 }
 .menu-btn:hover > .popup-tag {
   transform: scale(1);
