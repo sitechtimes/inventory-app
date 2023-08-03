@@ -95,10 +95,6 @@ class ManualEditQuantity(generics.UpdateAPIView):
         else:
             return JsonResponse({'error': 'Invalid input'}, status=400)
 
-# probably works idk
-
-# idk it works
-
 
 class AddItems(viewsets.ModelViewSet):
     parser_classes = (MultiPartParser, FormParser)
