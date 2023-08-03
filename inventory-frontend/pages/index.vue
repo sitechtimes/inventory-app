@@ -1,8 +1,10 @@
 <template>
   <div>
-    <CategoryCount />
-    <VendorCount />
-    <DisplayInfo />
+    <!--  <MoveItems />
+        <CategoryCount />
+        <VendorCount />
+        <Card /> -->
+    <CreateItemForm />
   </div>
 </template>
 

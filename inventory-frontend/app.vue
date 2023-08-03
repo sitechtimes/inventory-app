@@ -6,10 +6,16 @@
     <div id="navHolder">
       <UserMenu />
     </div>
+    <div>
+      <!-- <NuxtPage />
+  </div> -->
+      <!-- <div class="app">
+    <div id="search" class="heading">search</div>
+    <div id="navHolder">nav</div>
     <div id="largeItemHolder">
       <Catalog />
     </div>
-  </div>
+  </div> -->
 </template>
 
 <style>
@@ -24,17 +30,20 @@
   left: 0;
   overflow: hidden;
 }
+
 #search {
   grid-column: 1 / 3;
   width: 100%;
   height: 100%;
   border-bottom: var(--border);
 }
+
 #navHolder {
   grid-row: 2 / 3;
   grid-column: 1 / 2;
   border-right: var(--border);
 }
+
 #largeItemHolder {
   grid-row: 2/3;
   grid-column: 2/3;
@@ -60,7 +69,7 @@ export default {
     };
   },
   methods: {},
-  mounted() {},
+  mounted() { },
 };
 </script>
 
@@ -76,17 +85,20 @@ export default {
   left: 0;
   overflow: hidden;
 }
+
 #search {
   grid-column: 1 / 3;
   width: 100%;
   height: 100%;
   border-bottom: var(--border);
 }
+
 #navHolder {
   grid-row: 2 / 3;
   grid-column: 1 / 2;
   border-right: var(--border);
 }
+
 #largeItemHolder {
   grid-row: 2/3;
   grid-column: 2/3;
@@ -95,11 +107,13 @@ export default {
   overflow-y: hidden;
   background-color: var(--lightgray);
 }
+
 #mainItems {
   display: flex;
 
   flex-direction: column;
 }
+
 #itemHeader {
   min-height: 5.5rem;
   border-bottom: var(--border);
@@ -108,6 +122,7 @@ export default {
   top: 0;
   z-index: 500;
 }
+
 #itemHolderAll {
   grid-column: 2 / 3;
   grid-row: 3 / 4;
@@ -129,11 +144,13 @@ export default {
   flex: 1 1 0%;
   border-left: var(--border);
 }
+
 @media screen and (min-width: 1600px) {
   .infoDesc {
     min-width: 80rem;
   }
 }
+
 @media screen and (max-width: 760px) {
   .infoDesc {
     width: auto;
@@ -147,5 +164,4 @@ export default {
     border: none;
     z-index: 2000;
   }
-}
-</style>
+}</style>

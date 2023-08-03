@@ -1,10 +1,11 @@
-from rest_framework import generics
+import statistics
+from rest_framework import generics, viewsets
 from django.http import JsonResponse
 from rest_framework.response import Response
 from .models import Item, Category, Vendor
 from .serializer import ItemSerializer, CategorySerializer, VendorSerializer
 import datetime
-from rest_framework.views import APIView
+from rest_framework.parsers import MultiPartParser, FormParser
 
 
 class CategoryView(generics.ListAPIView):
@@ -93,3 +94,35 @@ class ManualEditQuantity(generics.UpdateAPIView):
             return JsonResponse(self.serializer_class(queryset).data)
         else:
             return JsonResponse({'error': 'Invalid input'}, status=400)
+
+# probably works idk
+
+# idk it works
+
+
+class AddItems(viewsets.ModelViewSet):
+    parser_classes = (MultiPartParser, FormParser)
+    queryset = Item.objects.all()
+    serializer_class = ItemSerializer
+
+    def create(self, request, *args, **kwargs):
+        image_file = request.FILES.get('image')
+        if image_file is None:
+            return Response({'message': 'Image file is required.'}, status=400)
+
+        # Create a new serializer instance with only the image file data
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        # Save the image file separately, perform_create method can be used
+        # to handle further creation logic if needed
+        self.perform_create(serializer)
+
+        return Response(serializer.data, status=201)
+
+
+class deleteItems(generics.DestroyAPIView):
+    def delete(self, request, *args, **kwargs):
+        self.get_object().delete()
+
+        return Response("Item deleted", status=204)

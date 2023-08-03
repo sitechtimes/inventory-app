@@ -12,5 +12,9 @@ urlpatterns = [
     path("updateQuantity/<int:pk>/<str:from>/", views.moveItems.as_view()),
     path("updateQuantity/manual/<int:pk>/<int:makerspace>/<int:backroom>/",
          views.ManualEditQuantity.as_view()),
+    path("deleteItem/<int:pk>/",
+         views.deleteItems.as_view()),
+    # send Data to these Url as request body
+    path("addItems/", views.AddItems.as_view({"post": "create"})),
 ]
 urlpatterns = format_suffix_patterns(urlpatterns)
