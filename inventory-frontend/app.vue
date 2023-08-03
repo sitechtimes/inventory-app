@@ -1,7 +1,7 @@
 <template>
   <div class="app">
     <div id="search" class="heading">
-      <Header />
+      <Header> </Header>
     </div>
     <div id="navHolder">nav</div>
     <div id="largeItemHolder">
@@ -25,17 +25,20 @@
   left: 0;
   overflow: hidden;
 }
+
 #search {
   grid-column: 1 / 3;
   width: 100%;
   height: 100%;
   border-bottom: var(--border);
 }
+
 #navHolder {
   grid-row: 2 / 3;
   grid-column: 1 / 2;
   border-right: var(--border);
 }
+
 #largeItemHolder {
   grid-row: 2/3;
   grid-column: 2/3;
@@ -60,6 +63,6 @@ export default {
     };
   },
   methods: {},
-  mounted() {},
+  mounted() { },
 };
 </script>

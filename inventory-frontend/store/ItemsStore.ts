@@ -1,26 +1,26 @@
-import { defineStore } from 'pinia'
+import { defineStore } from "pinia";
 
-export const useItemsStore = defineStore('items', {
+export const useItemsStore = defineStore("items", {
   state: () => ({
     //for search function filtering
     items: [],
     returnlist: [],
-    newlist:[],
+    newlist: [],
     search: false,
     //toggle extra info
-    popup: {name:null},
+    popup: { name: null },
     info: false,
-    vendor:false,
+    vendor: false,
     vendorHeader: false,
     categoryPop: false,
     categoryHeader: false,
-    editform:false,
+    editform: false,
     //for resizing on toggling extra info
     main: [],
     textbox: [],
-    name:[],
-    quant:[],
-    cat:[],
+    name: [],
+    quant: [],
+    cat: [],
     //for filtering massive api
     categories: [],
     coloring: [],
@@ -42,21 +42,19 @@ export const useItemsStore = defineStore('items', {
     wood: [],
   }),
 
-  getters: {
-
-  },
+  getters: {},
 
   actions: {
     //fetch api
-    async getItems(){
-    const response = await fetch('http://127.0.0.1:8000/items/category')
-    const results = await response.json()
-    console.log(results)
-    this.returnlist = results
-    return results
+    async getItems() {
+      const response = await fetch("http://127.0.0.1:8000/items/category/");
+      const results = await response.json();
+      console.log(results);
+      this.returnlist = results;
+      return results;
     },
     //filter api by category
-   
+
     //resize individual items when clicked for more information by adding/removing classes
     resizing() {
       if (this.info === true) {
@@ -105,8 +103,5 @@ export const useItemsStore = defineStore('items', {
       document.querySelector(tabnumber).classList.remove("inactive");
       document.querySelector(btn).classList.remove("inactivebtn");
     },
-  }
-  
-})
-
-
+  },
+});

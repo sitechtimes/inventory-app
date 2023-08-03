@@ -1,6 +1,6 @@
 <template>
   <div class="popUpPanel vendorPanel">
-    <canvas id="myChart" height="650"></canvas>
+    <canvas id="myChart"></canvas>
   </div>
 </template>
 
@@ -119,7 +119,8 @@ async function fetchData() {
 
 #myChart {
   position: relative;
-  top: 5%;
-  height: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 </style>
