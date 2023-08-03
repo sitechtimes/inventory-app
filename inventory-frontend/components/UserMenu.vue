@@ -2,7 +2,7 @@
   <div>
     <div class="menu">
       <div class="menu-container">
-        <button class="menu-btn exitbtn shrink">
+        <button class="menu-btn exitbtn shrink" @click="catalog">
           <div class="icon-holder">
             <font-awesome-icon
               :icon="['fas', 'boxes-stacked']"
@@ -10,8 +10,10 @@
             />
           </div>
           <div class="icon-tag heading">Items</div>
+          <div class="popup-tag text" v-if="store.dismiss">Items</div>
         </button>
-        <button class="menu-btn exitbtn shrink">
+
+        <button class="menu-btn exitbtn shrink" @click="monitor">
           <div class="icon-holder">
             <font-awesome-icon
               :icon="['fas', 'hand-holding-hand']"
@@ -19,8 +21,10 @@
             />
           </div>
           <div class="icon-tag heading">Monitor</div>
+          <div class="popup-tag text" v-if="store.dismiss">Monitor</div>
         </button>
-        <button class="menu-btn exitbtn shrink">
+
+        <button class="menu-btn exitbtn shrink" @click="vendors">
           <div class="icon-holder">
             <font-awesome-icon
               :icon="['fas', 'circle-exclamation']"
@@ -28,6 +32,7 @@
             />
           </div>
           <div class="icon-tag heading">Vendors</div>
+          <div class="popup-tag text" v-if="store.dismiss">Vendors</div>
         </button>
       </div>
     </div>
@@ -38,14 +43,27 @@
 </template>
 
 <script>
+import { useItemsStore } from "~/store/ItemsStore";
 export default {
   name: "UserMenu",
   props: {},
   components: {},
   data() {
-    return {};
+    return {
+      store: useItemsStore(),
+    };
   },
-  methods: {},
+  methods: {
+    catalog() {
+      this.store.$patch({ catalog: true, monitor: false, vendors: false });
+    },
+    monitor() {
+      this.store.$patch({ catalog: false, monitor: true, vendors: false });
+    },
+    vendors() {
+      this.store.$patch({ catalog: false, monitor: false, vendors: true });
+    },
+  },
 };
 </script>
 
@@ -90,13 +108,33 @@ export default {
   align-items: center;
   height: 100%;
 }
-h2,
-h3 {
-  color: black;
-  padding-left: 0.5rem;
-  font-size: 0.6rem;
+.popup-tag {
+  position: absolute;
+  left: 5.5rem;
+  margin-top: 1rem;
+  z-index: 1000;
+  width: fit-content;
+  clip-path: polygon(
+    10% 0,
+    100% 0%,
+    100% 100%,
+    10% 100%,
+    10% 60%,
+    0 50%,
+    10% 40%
+  );
+  background-color: var(--tpdarkestgray);
+  color: var(--whitebg);
+  padding: 0.5rem 0.75rem 0.5rem 1.5rem;
+  text-align: left;
+  opacity: 0;
+  transform: scale(0);
+  transition: all 0.15s;
 }
-
+.menu-btn:hover > .popup-tag {
+  transform: scale(1);
+  opacity: 1;
+}
 .catalog-icon,
 .borrowed-icon,
 .needed-icon {

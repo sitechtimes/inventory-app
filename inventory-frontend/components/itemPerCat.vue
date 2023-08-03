@@ -4,8 +4,22 @@
       <div class="subheading catHead" ref="cat" v-if="list.length >= 1">
         {{ name }}
       </div>
-      <div class="itemHolder">
+      <div class="itemHolder" v-if="store.catalog === true">
         <Item
+          v-for="result in list"
+          :key="result.id"
+          :name="result.name"
+          :quantity="result.quantity"
+          :image="result.image"
+          :available="true"
+          :updated="result.last_purchased"
+          :vendor="result.vendor"
+          :link="result.purchase_link"
+          :category="result.category"
+        />
+      </div>
+      <div class="itemHolder itemHolderM" v-if="store.monitor === true">
+        <ItemMonitor
           v-for="result in list"
           :key="result.id"
           :name="result.name"
@@ -37,6 +51,9 @@
   padding-top: 1rem;
   padding-bottom: 1rem;
 }
+.itemHolderM {
+  flex-direction: column;
+}
 @media screen and (max-width: 1100px) {
   .info-cat {
     border-top: var(--border);
@@ -57,10 +74,12 @@
 <script>
 import Item from "./item.vue";
 import { useItemsStore } from "~/store/ItemsStore";
+import ItemMonitor from "./itemMonitor.vue";
+
 export default {
   name: "ItemPerCat",
   props: { list: Array, name: String, min: Boolean },
-  components: { Item },
+  components: { Item, ItemMonitor },
   data() {
     return {
       store: useItemsStore(),

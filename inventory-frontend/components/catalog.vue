@@ -1,14 +1,14 @@
 <template>
   <div class="bigdiv">
     <div id="mainItems">
-      <div id="itemHeader" class="subheading">Items</div>
+      <div class="itemHeader subheading">Items</div>
       <div
         class="errorsearch subheading"
         v-if="store.search === true && store.empty === true"
       >
         No Items Found
       </div>
-      <div id="itemHolderAll" ref="allItems">
+      <div class="itemHolderAll" ref="allItems">
         <div class="categoryHolder" v-if="store.search">
           <ItemPerCat
             v-for="(each, index) in store.items"
@@ -23,7 +23,7 @@
             v-for="(each, index) in store.items"
             :key="each.id"
             :list="each.itemsCategory"
-            :name="nameType(index)"
+            :name="store.nameType(index)"
             :min="minimum(each)"
           ></ItemPerCat>
         </div>
@@ -64,45 +64,6 @@ export default {
         return false;
       }
     },
-    nameType(number) {
-      if (number === 0) {
-        return "Paint";
-      } else if (number === 1) {
-        return "Sculpture";
-      } else if (number === 2) {
-        return "Print Making";
-      } else if (number === 3) {
-        return "Craft Supplies";
-      } else if (number === 4) {
-        return "Fabric";
-      } else if (number === 5) {
-        return "Coloring Materials";
-      } else if (number === 6) {
-        return "Tools";
-      } else if (number === 7) {
-        return "Wood";
-      } else if (number === 8) {
-        return "Tape";
-      } else if (number === 9) {
-        return "Glue";
-      } else if (number === 10) {
-        return "First Aid";
-      } else if (number === 11) {
-        return "Foam";
-      } else if (number === 12) {
-        return "Miscellaneous";
-      } else if (number === 13) {
-        return "Sewing";
-      } else if (number === 14) {
-        return "Paper";
-      } else if (number === 15) {
-        return "Wire";
-      } else if (number === 16) {
-        return "Drawing";
-      } else {
-        return "Error";
-      }
-    },
   },
   mounted() {
     this.store.getItems();
@@ -123,7 +84,7 @@ export default {
   flex-direction: column;
   width: 100%;
 }
-#itemHeader {
+.itemHeader {
   min-height: 5.5rem;
   border-bottom: var(--border);
   background-color: var(--whitebg);
@@ -134,7 +95,7 @@ export default {
   align-items: center;
   padding-left: 2rem;
 }
-#itemHolderAll {
+.itemHolderAll {
   grid-column: 2 / 3;
   grid-row: 3 / 4;
 

@@ -23,6 +23,9 @@ export const useItemsStore = defineStore('items', {
     cat:[],
     //nav
     dismiss: true,
+    catalog:true,
+    monitor:false,
+    vendors:false,
   }),
 
   getters: {
@@ -88,6 +91,46 @@ export const useItemsStore = defineStore('items', {
       document.querySelector(maintab).classList.remove("inactive");
       document.querySelector(tabnumber).classList.remove("inactive");
       document.querySelector(btn).classList.remove("inactivebtn");
+    },
+    //Headers
+    nameType(number) {
+      if (number === 0) {
+        return "Paint";
+      } else if (number === 1) {
+        return "Sculpture";
+      } else if (number === 2) {
+        return "Print Making";
+      } else if (number === 3) {
+        return "Craft Supplies";
+      } else if (number === 4) {
+        return "Fabric";
+      } else if (number === 5) {
+        return "Coloring Materials";
+      } else if (number === 6) {
+        return "Tools";
+      } else if (number === 7) {
+        return "Wood";
+      } else if (number === 8) {
+        return "Tape";
+      } else if (number === 9) {
+        return "Glue";
+      } else if (number === 10) {
+        return "First Aid";
+      } else if (number === 11) {
+        return "Foam";
+      } else if (number === 12) {
+        return "Miscellaneous";
+      } else if (number === 13) {
+        return "Sewing";
+      } else if (number === 14) {
+        return "Paper";
+      } else if (number === 15) {
+        return "Wire";
+      } else if (number === 16) {
+        return "Drawing";
+      } else {
+        return "Error";
+      }
     },
   }
   
