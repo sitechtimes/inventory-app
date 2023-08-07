@@ -5,6 +5,10 @@ from .models import Item, Category, Vendor
 class ItemSerializer(serializers.ModelSerializer):
 
     total = serializers.SerializerMethodField()
+
+    image = serializers.ImageField(required=False)
+    url = serializers.URLField(required=False, allow_blank=True)
+
     alert = serializers.SerializerMethodField()
 
     class Meta:
@@ -39,7 +43,8 @@ class CategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Category
-        fields = ('id', 'category_name', 'itemsCategory', 'count')
+        fields = ('id', 'category_name', "category_code",
+                  'itemsCategory', 'count')
 
     def get_count(self, obj):
         count = Item.objects.filter(category=obj).count()
@@ -52,7 +57,7 @@ class VendorSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Vendor
-        fields = ('vendor_name', 'itemsVendor', 'count')
+        fields = ('vendor_name', 'vendor_code', 'itemsVendor', 'count')
 
     def get_count(self, obj):
         count = Item.objects.filter(vendor=obj).count()

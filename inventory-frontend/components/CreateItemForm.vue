@@ -3,7 +3,7 @@
     <form @submit.prevent="submitForm">
       <div class="input-container">
         <label for="item_id">Item ID</label>
-        <input id="item_id" type="text" ref="item_id" placeholder="Enter Item ID" required>
+        <input id="item_id" type="text" ref="item_id" placeholder="Enter Item ID" required />
       </div>
       <div class="input-container">
         <label for="name">Name of the Item</label>
@@ -18,7 +18,8 @@
       </div>
       <div class="input-container">
         <label for="min_amount">Minimum amount of Items to display alert</label>
-        <input id="min_amount" type="number" ref="min_amount" placeholder="Enter Minium amount of Items to display Alert">
+        <input id="min_amount" type="number" ref="min_amount"
+          placeholder="Enter Minium amount of Items to display Alert" />
       </div>
       <div class="input-container">
         <label for="location">Location of the Item</label>
@@ -26,26 +27,30 @@
       </div>
       <div class="input-container">
         <label for="purchase_link">Purchase Link</label>
-        <input id="purchase_link" type="text" ref="purchase_link" placeholder="Purhcase Link" required>
+        <input id="purchase_link" type="text" ref="purchase_link" placeholder="Purhcase Link" required />
       </div>
       <div class="input-container">
         <label for="Vendor">Vendor</label>
         <select id="Vendor" ref="vendor" required>
           <option disabled value="">Choose a Vendor</option>
-          <option value=1>ShopDOE</option>
-          <option value=2>Amazon</option>
-          <option value=3>Blick</option>
-          <option value=4>Home Depot</option>
+          <option value="1">ShopDOE</option>
+          <option value="2">Amazon</option>
+          <option value="3">Blick</option>
+          <option value="4">Home Depot</option>
         </select>
       </div>
       <div class="input-container">
         <label for="Category">Category</label>
         <select id="Category" ref="category" required>
           <option disabled value="">Choose a Category</option>
-          <option value=1>Tools</option>
-          <option value=2>Paint</option>
+          <option value="1">Tools</option>
+          <option value="2">Paint</option>
           <!-- Add other options here -->
         </select>
+      </div>
+      <div class="input-container">
+        <label for="image_url">Image Url</label>
+        <input id="image_url" type="text" ref="image_url" placeholder="Enter Image Url" />
       </div>
 
       <!-- image pre view container  -->
@@ -61,7 +66,9 @@
           <div class="preview-container" :class="{ hidden: !showPreview }">
             <div class="preview-image w-36 h-36 bg-cover bg-center rounded-md cursor-pointer"
               :style="{ backgroundImage: previewImage }" @click="handleImageClick"></div>
-            <span class="file-name my-4 text-sm font-medium" v-if="fileName">{{ fileName }}</span>
+            <span class="file-name my-4 text-sm font-medium" v-if="fileName">{{
+              fileName
+            }}</span>
             <p class="close-button cursor-pointer transition-all mb-4 rounded-md px-3 py-1 border text-xs text-red-500 border-red-500 hover:bg-red-500 hover:text-white"
               @click="handleClose">
               Delete
@@ -95,12 +102,13 @@ const item_id = ref("");
 const name = ref("");
 const location = ref("");
 const makerspace = ref(0);
-const backroom = ref(0)
+const backroom = ref(0);
 const min_amount = ref(0);
 const vendor = ref("");
 const category = ref("");
 const purchase_link = ref("");
-let thisfile = ""
+const image_url = ref("");
+let thisfile = "";
 
 // Functions
 function handleDragOver(event) {
@@ -115,7 +123,7 @@ function handleDragLeave() {
 function handleDrop(event) {
   event.preventDefault();
   const file = event.dataTransfer.files[0];
-  thisfile = file
+  thisfile = file;
   showPreview.value = true;
   if (file) {
     showPreview.value = true;
@@ -133,13 +141,12 @@ function handleDrop(event) {
 
 function handleFileChange(event) {
   const file = event.target.files[0];
-  console.log(file)
-  thisfile = file
+  console.log(file);
+  thisfile = file;
   showPreview.value = true;
   if (file) {
     showPreview.value = true;
     if (file.type.startsWith("image/")) {
-
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => {
@@ -166,21 +173,21 @@ function closeModal() {
 }
 
 async function submitForm() {
-  console.log(thisfile.value)
+  console.log(thisfile.value);
   const formData = new FormData();
-  formData.append("item_id", item_id.value.value)
-  formData.append("image", thisfile); // Assuming "previewImageModal" is an input element of type "file"
-  formData.append("name", name.value.value)
-  formData.append("purchase_link", purchase_link.value.value)
-  formData.append("backroom_quantity", backroom.value.value)
-  formData.append("makerspace_quantity", makerspace.value.value)
-  formData.append("min_amount", min_amount.value.value)
-  formData.append("vendor", vendor.value.value)
-  formData.append("category", category.value.value)
-  formData.append("location", location.value.value)
+  formData.append("item_id", item_id.value.value);
+  formData.append("image_file", thisfile); // Assuming "previewImageModal" is an input element of type "file"
+  formData.append("image_url", image_url.value.value);
+  formData.append("name", name.value.value);
+  formData.append("purchase_link", purchase_link.value.value);
+  formData.append("backroom_quantity", backroom.value.value);
+  formData.append("makerspace_quantity", makerspace.value.value);
+  formData.append("min_amount", min_amount.value.value);
+  formData.append("vendor", vendor.value.value);
+  formData.append("category", category.value.value);
+  formData.append("location", location.value.value);
 
   try {
-
     const response = await fetch("http://127.0.0.1:8000/items/addItems/", {
       method: "POST",
       mode: "cors",
@@ -190,13 +197,11 @@ async function submitForm() {
     });
 
     const data = await response.json();
-    console.log(data)
+    console.log(data);
   } catch (error) {
     console.log(error);
   }
 }
-
-
 </script>
 
 <style scoped>
@@ -282,7 +287,6 @@ async function submitForm() {
 /* Hidden file input styles */
 .hidden {
   display: none !important;
-
 }
 
 /* Preview container styles */
