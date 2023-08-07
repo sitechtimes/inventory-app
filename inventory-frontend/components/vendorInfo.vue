@@ -1,6 +1,27 @@
 <template>
-  <div class="popUpPanel vendorPanel">
-    <canvas id="myChart"></canvas>
+  <div id="popUpPanel" class="popUpPanel vendorPanel">
+    <div class="chart1-cont">
+      <div>
+        <canvas id="myChart1"></canvas>
+      </div>
+      <div class="btn-cont">
+        <button class="maximize-button" @click="maximizeChart()">
+          <font-awesome-icon :icon="['fas', 'maximize']" />
+        </button>
+      </div>
+
+    </div>
+
+    <div class="no-show" ref="chart2">
+      <div class="chart2-cont">
+        <canvas id="myChart2"></canvas>
+      </div>
+      <button class="minimize-button" @click="maximizeChart()">
+        <font-awesome-icon :icon="['fas', 'minimize']" />
+      </button>
+    </div>
+
+
   </div>
 </template>
 
@@ -10,8 +31,22 @@ import { Chart } from 'chart.js/auto';
 
 const props = defineProps(["vendorName"])
 
+const isMaximized = ref(false);
+const chart2 = ref()
 let VendorItem = ref([])
 let ItemCount = ref([])
+
+const maximizeChart = () => {
+  isMaximized.value = !isMaximized.value;
+  if (isMaximized.value) {
+    console.log(chart2.value)
+    chart2.value.classList.remove('no-show')
+    chart2.value.classList.add('fullScreen')
+  } else if (!isMaximized.value) {
+    chart2.value.classList.add('no-show')
+    chart2.value.classList.remove('fullScreen')
+  }
+};
 
 const chartData = ref({
   labels: VendorItem.value,
@@ -61,15 +96,24 @@ const chartOptions = ref({
   }
 });
 
-
 const createChart = () => {
-  const ctx = document.getElementById('myChart').getContext('2d');
-  const chart = new Chart(ctx, {
+  const ctx1 = document.getElementById('myChart1').getContext('2d');
+
+  const chart1 = new Chart(ctx1, {
+    type: 'bar',
+    data: chartData.value,
+    options: chartOptions.value,
+  });
+
+  const ctx2 = document.getElementById("myChart2").getContext('2d');
+
+  const chart2 = new Chart(ctx2, {
     type: 'bar',
     data: chartData.value,
     options: chartOptions.value,
   });
 };
+
 
 onMounted(() => {
   fetchData();
@@ -108,7 +152,6 @@ async function fetchData() {
 }
 
 </script>
-
 <style>
 .popUpPanel {
   height: 100%;
@@ -117,10 +160,71 @@ async function fetchData() {
   flex-direction: column;
 }
 
+.no-show {
+  display: none;
+}
+
+.fullScreen {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0;
+  margin: 0;
+  z-index: 9999;
+  background-color: white;
+}
+
 #myChart {
   position: relative;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.chart2-cont {
+  height: 800px;
+  display: flex;
+  justify-content: center;
+}
+
+.maximize-button,
+.minimize-button {
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.minimize-button {
+  position: relative;
+  left: 50%;
+  width: 8rem;
+}
+
+.maximize-button {
+  width: 4rem;
+
+}
+
+.maximize-button:hover,
+.minimize-button:hover {
+  background-color: #2980b9;
+}
+
+.maximize-button:active,
+.minimize-button:active {
+  background-color: #1f639e;
+}
+
+.btn-cont {
+  display: flex;
+  justify-content: flex-end;
+  padding: 5px;
 }
 </style>
