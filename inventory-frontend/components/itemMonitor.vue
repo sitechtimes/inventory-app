@@ -1,5 +1,10 @@
 <template>
-  <div class="itemMonitor" ref="main" @mousedown="clickedMonitor">
+  <div
+    class="itemMonitor"
+    :class="blue(name) ? 'activeBlue' : ''"
+    ref="main"
+    @mousedown="clickedMonitor"
+  >
     <div class="nameM text" ref="name">{{ name }}</div>
     <div class="quantityM smalltext" ref="quant">{{ quantity }}</div>
   </div>
@@ -13,6 +18,11 @@ export default {
   props: {
     name: String,
     quantity: Number,
+    image: String,
+    vendor: String,
+    link: String,
+    updated: String,
+    category: String
   },
   data() {
     return {
@@ -20,6 +30,13 @@ export default {
     };
   },
   methods: {
+    blue(insert) {
+      if (this.store.popup.name === insert && this.store.info === true) {
+        return true;
+      } else {
+        return false;
+      }
+    },
     clickedMonitor() {
       if (this.store.popup.name === this.name) {
         if (this.store.info === false) {
@@ -75,9 +92,7 @@ export default {
   width: 60%;
   max-width: 70rem;
 }
-.activeBlue {
-  background-color: var(--lightblue);
-}
+
 .quantityM {
   height: 100%;
 
@@ -92,6 +107,9 @@ export default {
   transition: all 0.2s;
 }
 .itemMonitor:hover {
+  background-color: var(--lightblue);
+}
+.activeBlue {
   background-color: var(--lightblue);
 }
 </style>

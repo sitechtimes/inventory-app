@@ -32,23 +32,25 @@ export default {
             item.name.toLowerCase().includes(i.toLowerCase())
           )
         );
-        this.newlist.push(itemsCategory);
+        let categories = [arr.category_name, itemsCategory];
+
+        this.newlist.push(categories);
       });
       console.log(this.newlist);
 
       this.store.$patch({ items: this.newlist, search: true, info: false });
       this.empties = 0;
       this.store.items.forEach((item) => {
-        if (item.length < 1) {
+        if (item[1].length < 1) {
           this.empties++;
+          console.log(this.empties);
         }
       });
-      if (this.empties === 17) {
+      if (this.empties >= this.store.items.length) {
         this.store.$patch({ empty: true });
       } else {
         this.store.$patch({ empty: false });
       }
-      this.store.resizing();
     },
     clearSearch() {
       this.store.$patch({

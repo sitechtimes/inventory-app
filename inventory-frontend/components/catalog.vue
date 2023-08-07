@@ -12,9 +12,9 @@
         <div class="categoryHolder" v-if="store.search">
           <ItemPerCat
             v-for="each in store.items"
-            :key="each.id"
-            :list="each"
-            :name="each.category_name"
+            :key="each[0]"
+            :list="each[1]"
+            :name="each[0]"
             :min="minimum(each)"
           ></ItemPerCat>
         </div>

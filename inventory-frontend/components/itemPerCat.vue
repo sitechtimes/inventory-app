@@ -5,7 +5,7 @@
         class="subheading catHead"
         :class="store.monitor && 'monitorCatHead'"
         ref="cat"
-        v-if="list.length >= 1"
+        v-if="list.length > 0"
       >
         {{ name }}
       </div>
@@ -16,7 +16,6 @@
           :name="result.name"
           :quantity="result.total"
           :image="result.image_url"
-          :available="true"
           :updated="result.last_purchased"
           :vendor="result.vendor"
           :link="result.purchase_link"
@@ -29,8 +28,7 @@
           :key="result.id"
           :name="result.name"
           :quantity="result.total"
-          :image="result.image"
-          :available="true"
+          :image="result.image_url"
           :updated="result.last_purchased"
           :vendor="result.vendor"
           :link="result.purchase_link"
@@ -41,7 +39,28 @@
   </div>
 </template>
 
-<style scoped>
+<script>
+import Item from "./item.vue";
+import { useItemsStore } from "~/store/ItemsStore";
+import ItemMonitor from "./itemMonitor.vue";
+
+export default {
+  name: "ItemPerCat",
+  props: { list: Array, name: String, min: Boolean },
+  components: { Item, ItemMonitor },
+  data() {
+    return {
+      store: useItemsStore(),
+    };
+  },
+  methods: {},
+  mounted() {
+    this.store.cat.push(this.$refs.cat);
+  },
+};
+</script>
+
+<style>
 .itemHolder {
   display: flex;
   height: fit-content;
@@ -79,24 +98,3 @@
   }
 }
 </style>
-
-<script>
-import Item from "./item.vue";
-import { useItemsStore } from "~/store/ItemsStore";
-import ItemMonitor from "./itemMonitor.vue";
-
-export default {
-  name: "ItemPerCat",
-  props: { list: Array, name: String, min: Boolean },
-  components: { Item, ItemMonitor },
-  data() {
-    return {
-      store: useItemsStore(),
-    };
-  },
-  methods: {},
-  mounted() {
-    this.store.cat.push(this.$refs.cat);
-  },
-};
-</script>

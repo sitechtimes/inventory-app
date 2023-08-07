@@ -143,7 +143,7 @@ export default {
 .sitename {
   position: sticky;
   left: 8rem;
-
+  margin-right: 0.5rem;
   overflow: hidden;
   width: 70%;
   white-space: nowrap;
