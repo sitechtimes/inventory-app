@@ -15,7 +15,7 @@ vendors = [('DOE', 'ShopDOE'), ('AMZ', 'Amazon'),
 
 
 def run():
-    dataframe = pd.read_csv('scripts/csv/inventory - inventory.csv')
+    dataframe = pd.read_csv('scripts/csv/inventory.csv')
 
     Item.objects.all().delete()
     Category.objects.all().delete()

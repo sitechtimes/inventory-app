@@ -1,16 +1,65 @@
 <template>
   <div class="itemMonitor" ref="main" @mousedown="clickedMonitor">
     <div class="nameM text" ref="name">{{ name }}</div>
-    <div class="quantityM smalltext" ref="quant">{{ quantity }} 2</div>
+    <div class="quantityM smalltext" ref="quant">{{ quantity }}</div>
   </div>
 </template>
 
 <script>
+import { useItemsStore } from "~/store/ItemsStore";
+
 export default {
   name: "ItemMonitor",
   props: {
     name: String,
     quantity: Number,
+  },
+  data() {
+    return {
+      store: useItemsStore(),
+    };
+  },
+  methods: {
+    clickedMonitor() {
+      if (this.store.popup.name === this.name) {
+        if (this.store.info === false) {
+          this.store.$patch({ info: true });
+        } else {
+          this.store.$patch({
+            info: false,
+            vendor: false,
+            vendorHeader: false,
+            categoryPop: false,
+            categoryHeader: false,
+          });
+        }
+      } else {
+        this.store.$patch({
+          popup: {
+            image: this.image,
+            name: this.name,
+            category: this.category,
+            quantity: this.quantity,
+            link: this.description,
+            vendor: this.vendor,
+            date: this.updated,
+          },
+        });
+        this.store.$patch({
+          info: true,
+          vendor: false,
+          vendorHeader: false,
+          categoryPop: false,
+          categoryHeader: false,
+        });
+      }
+      const bigdivM = document.querySelector(".bigdivM");
+      if (this.store.info === true) {
+        bigdivM.style.flexDirection = "row";
+      } else {
+        bigdivM.style.flexDirection = "column";
+      }
+    },
   },
 };
 </script>
@@ -23,21 +72,26 @@ export default {
 
   white-space: nowrap;
   text-overflow: ellipsis;
-  max-width: 70%;
+  width: 60%;
+  max-width: 70rem;
+}
+.activeBlue {
+  background-color: var(--lightblue);
 }
 .quantityM {
-  max-width: 25rem;
-  width: 20%;
   height: 100%;
 
-  padding: 1rem;
+  padding: 1rem 2rem;
 }
 .itemMonitor {
   background-color: var(--whitebg);
   border-bottom: var(--border);
   display: flex;
   align-items: center;
-  width: 95%;
-  justify-content: space-between;
+  width: 100%;
+  transition: all 0.2s;
+}
+.itemMonitor:hover {
+  background-color: var(--lightblue);
 }
 </style>

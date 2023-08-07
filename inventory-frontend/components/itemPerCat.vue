@@ -1,7 +1,12 @@
 <template>
   <div>
     <div>
-      <div class="subheading catHead" ref="cat" v-if="list.length >= 1">
+      <div
+        class="subheading catHead"
+        :class="store.monitor && 'monitorCatHead'"
+        ref="cat"
+        v-if="list.length >= 1"
+      >
         {{ name }}
       </div>
       <div class="itemHolder" v-if="store.catalog === true">
@@ -9,8 +14,8 @@
           v-for="result in list"
           :key="result.id"
           :name="result.name"
-          :quantity="result.quantity"
-          :image="result.image"
+          :quantity="result.total"
+          :image="result.image_url"
           :available="true"
           :updated="result.last_purchased"
           :vendor="result.vendor"
@@ -23,7 +28,7 @@
           v-for="result in list"
           :key="result.id"
           :name="result.name"
-          :quantity="result.quantity"
+          :quantity="result.total"
           :image="result.image"
           :available="true"
           :updated="result.last_purchased"
@@ -50,6 +55,10 @@
   padding-left: 2rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
+}
+.monitorCatHead {
+  border-bottom: var(--border);
+  font-size: var(--h3);
 }
 .itemHolderM {
   flex-direction: column;

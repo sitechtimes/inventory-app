@@ -38,9 +38,11 @@ export const useItemsStore = defineStore('items', {
     const response = await fetch('http://127.0.0.1:8000/items/category')
     const results = await response.json()
     console.log(results)
-    this.returnlist = results
-    this.items = results
-    return results
+    const newresults = results.sort((a,b) => (a.category_name > b.category_name) ? 1 : ((b.category_name > a.category_name) ? -1 : 0))
+    this.returnlist = newresults
+
+    this.items = newresults
+    return newresults
     },
    
    
@@ -92,46 +94,7 @@ export const useItemsStore = defineStore('items', {
       document.querySelector(tabnumber).classList.remove("inactive");
       document.querySelector(btn).classList.remove("inactivebtn");
     },
-    //Headers
-    nameType(number) {
-      if (number === 0) {
-        return "Paint";
-      } else if (number === 1) {
-        return "Sculpture";
-      } else if (number === 2) {
-        return "Print Making";
-      } else if (number === 3) {
-        return "Craft Supplies";
-      } else if (number === 4) {
-        return "Fabric";
-      } else if (number === 5) {
-        return "Coloring Materials";
-      } else if (number === 6) {
-        return "Tools";
-      } else if (number === 7) {
-        return "Wood";
-      } else if (number === 8) {
-        return "Tape";
-      } else if (number === 9) {
-        return "Glue";
-      } else if (number === 10) {
-        return "First Aid";
-      } else if (number === 11) {
-        return "Foam";
-      } else if (number === 12) {
-        return "Miscellaneous";
-      } else if (number === 13) {
-        return "Sewing";
-      } else if (number === 14) {
-        return "Paper";
-      } else if (number === 15) {
-        return "Wire";
-      } else if (number === 16) {
-        return "Drawing";
-      } else {
-        return "Error";
-      }
-    },
+
   }
   
 })

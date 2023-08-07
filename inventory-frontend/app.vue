@@ -93,7 +93,7 @@ export default {
 #itemHolderAll {
   grid-column: 2 / 3;
   grid-row: 3 / 4;
-  overflow-y: scroll;
+  overflow-y: hidden;
   justify-content: center;
   padding-bottom: 8rem;
   height: 100%;
@@ -114,6 +114,7 @@ export default {
 .replacer {
   height: 100%;
   width: 100%;
+  overflow-y: scroll;
 }
 @media screen and (min-width: 1600px) {
   .infoDesc {

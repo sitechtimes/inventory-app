@@ -11,19 +11,19 @@
       <div class="itemHolderAll" ref="allItems">
         <div class="categoryHolder" v-if="store.search">
           <ItemPerCat
-            v-for="(each, index) in store.items"
+            v-for="each in store.items"
             :key="each.id"
             :list="each"
-            :name="nameType(index)"
+            :name="each.category_name"
             :min="minimum(each)"
           ></ItemPerCat>
         </div>
         <div class="categoryHolder" v-else>
           <ItemPerCat
-            v-for="(each, index) in store.items"
+            v-for="each in store.items"
             :key="each.id"
             :list="each.itemsCategory"
-            :name="store.nameType(index)"
+            :name="each.category_name"
             :min="minimum(each)"
           ></ItemPerCat>
         </div>
@@ -75,7 +75,7 @@ export default {
 .bigdiv {
   display: flex;
   flex-direction: row;
-  overflow-y: hidden;
+
   background-color: var(--lightgray);
   min-width: 100%;
 }
@@ -100,7 +100,7 @@ export default {
   grid-row: 3 / 4;
 
   justify-content: center;
-  overflow-y: scroll;
+
   height: 100%;
   width: 100%;
   flex: 1 1 0%;

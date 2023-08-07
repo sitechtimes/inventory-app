@@ -58,7 +58,13 @@ export default {
   },
   methods: {
     catalog() {
-      this.store.$patch({ catalog: true, monitor: false, vendors: false });
+      this.store.$patch({
+        catalog: true,
+        monitor: false,
+        vendors: false,
+        search: false,
+        info: false,
+      });
       document.querySelector(".catalogbtn").classList.add("activepage");
       document.querySelector(".monitorbtn").classList.remove("activepage");
       document.querySelector(".vendorsbtn").classList.remove("activepage");
@@ -67,7 +73,13 @@ export default {
       document.querySelector(".ven-tag").classList.remove("activetag");
     },
     monitor() {
-      this.store.$patch({ catalog: false, monitor: true, vendors: false });
+      this.store.$patch({
+        catalog: false,
+        monitor: true,
+        vendors: false,
+        search: false,
+        info: false,
+      });
       document.querySelector(".catalogbtn").classList.remove("activepage");
 
       document.querySelector(".monitorbtn").classList.add("activepage");
@@ -80,7 +92,13 @@ export default {
         .classList.add("activesvg");
     },
     vendors() {
-      this.store.$patch({ catalog: false, monitor: false, vendors: true });
+      this.store.$patch({
+        catalog: false,
+        monitor: false,
+        vendors: true,
+        search: false,
+        info: false,
+      });
       document.querySelector(".catalogbtn").classList.remove("activepage");
 
       document.querySelector(".monitorbtn").classList.remove("activepage");

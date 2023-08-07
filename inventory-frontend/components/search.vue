@@ -57,7 +57,6 @@ export default {
         items: this.store.returnlist,
       });
 
-      this.store.resizing();
       document.getElementById("searchform").value = "";
     },
   },

@@ -205,7 +205,11 @@ export default {
       this.closeVendor();
       this.closeCat();
       this.swapMain();
-      this.store.resizing();
+      if (this.store.catalog) {
+        this.store.resizing();
+      } else if (this.store.monitor) {
+        document.querySelector(".bigdivM").style.flexDirection = "column";
+      }
     },
   },
   mounted() {},

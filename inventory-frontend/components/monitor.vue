@@ -1,31 +1,34 @@
 <template>
-  <div class="bigdiv">
-    <div id="mainItems">
-      <div class="itemHeader subheading">Monitor</div>
-      <div class="subheadorg">
-        <div class="itemSub heading">Name</div>
-        <div class="itemSub totalstock heading">Total Stock Available</div>
+  <div class="bigdiv bigdivM">
+    <div class="monitorCol">
+      <div id="mainItems" class="monitorSticky">
+        <div class="itemHeader subheading">Monitor</div>
+        <div class="subheadorg">
+          <div class="itemSub subname heading">Name</div>
+          <div class="itemSub totalstock heading">Total Stock Available</div>
+        </div>
+      </div>
+
+      <div class="itemHolderAll monitorHolder">
+        <div class="categoryHolder search" v-if="store.search">
+          <ItemPerCat
+            v-for="each in store.items"
+            :key="each.id"
+            :list="each"
+            :name="each.category_name"
+          ></ItemPerCat>
+        </div>
+        <div class="categoryHolder">
+          <ItemPerCat
+            v-for="each in store.items"
+            :key="each.id"
+            :list="each.itemsCategory"
+            :name="each.category_name"
+          ></ItemPerCat>
+        </div>
       </div>
     </div>
 
-    <div class="itemHolderAll monitorHolder">
-      <div class="categoryHolder search" v-if="store.search">
-        <ItemPerCat
-          v-for="(each, index) in store.items"
-          :key="each.id"
-          :list="each"
-          :name="nameType(index)"
-        ></ItemPerCat>
-      </div>
-      <div class="categoryHolder">
-        <ItemPerCat
-          v-for="(each, index) in store.items"
-          :key="each.id"
-          :list="each.itemsCategory"
-          :name="store.nameType(index)"
-        ></ItemPerCat>
-      </div>
-    </div>
     <div class="infoDesc" v-if="store.info" ref="infoHolder">
       <Info
         :img_link="store.popup.image"
@@ -57,9 +60,13 @@ export default {
 </script>
 
 <style>
+.bigdivM {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+}
 .monitorHolder {
-  position: fixed;
-  margin-top: 10rem;
+  margin-right: 0;
 }
 .subheadorg {
   width: 100%;
@@ -67,10 +74,13 @@ export default {
   border-bottom: var(--border);
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
 }
 .itemSub {
   padding: 1rem 2rem;
+}
+.subname {
+  width: 60%;
+  max-width: 70rem;
 }
 .totalstock {
   border-left: var(--border);
@@ -80,5 +90,9 @@ export default {
 
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+.monitorSticky {
+  position: sticky;
+  top: 0;
 }
 </style>

@@ -6,12 +6,12 @@
     <div class="name-avail" ref="textbox">
       <div class="name text" ref="name">{{ name }}</div>
 
-      <div class="quantity smalltext" ref="quant">
+      <div
+        class="quantityC smalltext"
+        ref="quant"
+        :class="quantityColor(quantity) ? 'availY' : 'availN'"
+      >
         {{ quantity }}
-        <span class="availY avail smalltext" v-if="quantity > 0">
-          Available</span
-        >
-        <span class="availN avail smalltext" v-else> Available</span>
       </div>
     </div>
   </div>
@@ -53,7 +53,7 @@
   padding-right: 2.5rem;
 }
 .name,
-.quantity,
+.quantityC,
 .updated {
   padding-left: 1.5rem;
 }
@@ -64,9 +64,7 @@
 
   height: fit-content;
 }
-.quantity {
-  color: var(--darkergray);
-
+.quantityC {
   height: 50%;
 
   min-height: 1.5rem;
@@ -88,10 +86,10 @@
 }
 
 .availY {
-  color: rgb(53, 199, 155);
+  color: rgb(97, 194, 165);
 }
 .availN {
-  color: rgb(255, 43, 106);
+  color: rgb(201, 37, 86);
 }
 
 .avail {
@@ -171,7 +169,7 @@
     padding-right: 1rem;
     margin-bottom: 0;
   }
-  .quantity {
+  .quantityC {
     padding-top: 1rem;
     position: inherit;
     justify-content: left;
@@ -249,6 +247,15 @@ export default {
       this.store.main.push(this.$refs.main);
       this.store.textbox.push(this.$refs.textbox);
       this.store.name.push(this.$refs.name);
+    },
+    quantityColor(num) {
+      if (num > 0) {
+        return true;
+      } else if (num === 0) {
+        return false;
+      } else {
+        console.log("error");
+      }
     },
   },
   mounted() {

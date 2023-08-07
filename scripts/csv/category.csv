@@ -1,19 +1,23 @@
 category_code,category_name
-TLS,Tools
-PT,Paint
-TP,Tape
-WR,Wire
-FA,First Aid
-FAB,Fabric
-PM,Paper Mache
-GL,Glue
-SE,Sewing
-MISC,Miscellaneous
+
 CM,Coloring Materials
-SC,Sculpture
-WD,Wood
 CS,Craft Supplies
-FM,Foam
-PRTM,Printmaking
-PAP,Paper
 DR,Drawing
+FAB,Fabric
+FA,First Aid
+FM,Foam
+GL,Glue
+MISC,Miscellaneous
+PT,Paint
+PAP,Paper
+PM,Paper Mache
+PRTM,Printmaking
+SC,Sculpture
+SE,Sewing
+TP,Tape
+TLS,Tools
+WR,Wire
+WD,Wood
+
+
+
