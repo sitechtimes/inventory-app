@@ -2,7 +2,31 @@
   <div class="longrow">
     <div class="fixedleft">
       <div class="fromnav">
-        <div class="navnavnavnav"></div>
+        <div class="navnavnavnav">
+          <button class="open-menu-btn">
+            <div
+              v-if="store.dismiss === true"
+              class="open-menu-icon-cont"
+              @click="NavMenu"
+            >
+              <font-awesome-icon
+                :icon="['fas', 'bars']"
+                class="open-menu-icon"
+              />
+            </div>
+            <div
+              v-if="store.dismiss === false"
+              class="open-menu-icon-cont"
+              @click="NavMenu"
+            >
+              <font-awesome-icon
+                :icon="['fas', 'xmark']"
+                style="color: #000000"
+                class="open-menu-icon"
+              />
+            </div>
+          </button>
+        </div>
       </div>
 
       <div class="heading sitename">Makerspace Inventory</div>
@@ -19,25 +43,81 @@
 
 <script>
 import Search from "./search.vue";
+import { useItemsStore } from "~/store/ItemsStore";
 export default {
   name: "Header",
   components: { Search },
+  data() {
+    return {
+      store: useItemsStore(),
+    };
+  },
+  methods: {
+    NavMenu() {
+      const appDOM = document.querySelector(".app");
+      const menubtn = document.querySelectorAll(".menu-btn");
+      if (appDOM.classList.contains("selected")) {
+        appDOM.classList.remove("selected");
+        appDOM.classList.add("dismiss");
+        menubtn.forEach((btn) => {
+          btn.classList.remove("stretch");
+          btn.classList.add("shrink");
+        });
+
+        this.store.$patch({ dismiss: true });
+        console.log("dismiss");
+      } else if (appDOM.classList.contains("dismiss")) {
+        appDOM.classList.remove("dismiss");
+        this.store.$patch({ dismiss: false });
+        appDOM.classList.add("selected");
+        menubtn.forEach((btn) => {
+          btn.classList.remove("shrink");
+          btn.classList.add("stretch");
+        });
+        console.log("selected");
+      } else if (
+        !appDOM.classList.contains("dismiss") ||
+        !appDOM.classList.contains("selected")
+      ) {
+        appDOM.classList.add("selected");
+        console.log("selected");
+        menubtn.forEach((btn) => {
+          btn.classList.add("stretch");
+        });
+      }
+    },
+  },
 };
 </script>
 
 <style>
 .navnavnavnav {
-  width: 4rem;
-  height: 4rem;
-  border: 1px solid black;
+  width: 2rem;
+  height: 2rem;
   margin: 1rem;
+  display: flex;
+  justify-content: center;
 }
 .fromnav {
   width: fit-content;
 
   position: fixed;
-  left: 1rem;
+  left: 1.5rem;
 }
+
+.open-menu-btn {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background-color: transparent;
+}
+
+.open-menu-icon {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
 .longrow {
   width: 100vw;
   height: 100%;
@@ -53,17 +133,17 @@ export default {
   align-items: center;
 }
 .fixedleft {
-  width: 35%;
+  width: 30%;
 }
 .searchbar {
-  width: 50%;
+  width: 55%;
   height: 100%;
 }
 
 .sitename {
   position: sticky;
   left: 8rem;
-
+  margin-right: 0.5rem;
   overflow: hidden;
   width: 70%;
   white-space: nowrap;
@@ -74,8 +154,8 @@ export default {
 }
 .notif {
   border: 1px solid black;
-  height: 4rem;
-  width: 4rem;
+  height: 3rem;
+  width: 3rem;
   position: fixed;
   right: 3rem;
 }
@@ -86,13 +166,68 @@ export default {
 }
 @media screen and (max-width: 760px) {
   .sitename {
-    visibility: hidden;
+    visibility: collapse;
+    width: 0;
   }
   .searchbar {
     width: 70%;
   }
   .fixedleft {
-    width: 9rem;
+    width: 7rem;
+  }
+  .notif {
+    right: 2rem;
+  }
+}
+
+/* animations  */
+.selected {
+  animation: slide-in 0.5s forwards;
+}
+
+.dismiss {
+  animation: slide-out 0.5s forwards;
+}
+
+.stretch {
+  animation: stretch 0.5s forwards;
+}
+
+.shrink {
+  animation: shrink 0.5s forwards;
+}
+
+@keyframes slide-in {
+  0% {
+    grid-template-columns: 7rem 1fr;
+  }
+  100% {
+    grid-template-columns: 22rem 1fr;
+  }
+}
+
+@keyframes slide-out {
+  0% {
+    grid-template-columns: 22rem 1fr;
+  }
+  100% {
+    grid-template-columns: 7rem 1fr;
+  }
+}
+@keyframes stretch {
+  0% {
+    width: 5rem;
+  }
+  100% {
+    width: 20rem;
+  }
+}
+@keyframes shrink {
+  0% {
+    width: 20rem;
+  }
+  100% {
+    width: 5rem;
   }
 }
 </style>

@@ -1,153 +1,123 @@
 <template>
   <div>
-    <div class="open-menu-cont">
-      <button class="open-menu-btn">
-        <div
-          v-if="dismiss === true"
-          class="open-menu-icon-cont"
-          @click="NavMenu"
+    <div class="menu">
+      <div class="menu-container">
+        <button
+          class="menu-btn exitbtn shrink catalogbtn activepage"
+          @click="catalog"
         >
-          <font-awesome-icon :icon="['fas', 'bars']" class="open-menu-icon" />
-        </div>
-        <div
-          v-if="dismiss === false"
-          class="open-menu-icon-cont"
-          @click="NavMenu"
-        >
-          <font-awesome-icon
-            :icon="['fas', 'xmark']"
-            style="color: #000000"
-            class="open-menu-icon"
-          />
-        </div>
-      </button>
-      <div class="mobile-menu dismiss">
-        <div class="mobile-user">
-          <div class="user-icon-cont">
+          <div class="icon-holder">
             <font-awesome-icon
-              :icon="['fas', 'user']"
-              class="mobile-user-icon"
+              :icon="['fas', 'boxes-stacked']"
+              class="mobile-icon"
             />
           </div>
-          <div class="mobile-user-info">
-            <h2 class="mobile-user-title">My Account</h2>
-            <h3 class="mobile-username">user1234@gmail.com</h3>
+          <div class="icon-tag heading cat-tag activetag">Items</div>
+          <div class="popup-tag text" v-if="store.dismiss">Items</div>
+        </button>
+
+        <button class="menu-btn exitbtn shrink monitorbtn" @click="monitor">
+          <div class="icon-holder">
+            <font-awesome-icon
+              :icon="['fas', 'hand-holding-hand']"
+              class="mobile-icon"
+            />
           </div>
-        </div>
-        <div class="mobile-menu-container">
-          <button class="mobile-menu-btn">
-            <div>
-              <font-awesome-icon
-                :icon="['fas', 'boxes-stacked']"
-                class="mobile-icon"
-              />
-            </div>
-            <h3 class="mobile-tag">Catalog</h3>
-          </button>
-          <button class="mobile-menu-btn">
-            <div>
-              <font-awesome-icon
-                :icon="['fas', 'hand-holding-hand']"
-                class="mobile-icon"
-              />
-            </div>
-            <h3 class="mobile-tag">Borrowed</h3>
-          </button>
-          <button class="mobile-menu-btn">
-            <div>
-              <font-awesome-icon
-                :icon="['fas', 'circle-exclamation']"
-                class="mobile-icon"
-              />
-            </div>
-            <h3 class="mobile-tag">Supplies Needed</h3>
-          </button>
-        </div>
+          <div class="icon-tag heading mon-tag">Monitor</div>
+          <div class="popup-tag text" v-if="store.dismiss">Monitor</div>
+        </button>
+
+        <button class="menu-btn exitbtn shrink vendorsbtn" @click="vendors">
+          <div class="icon-holder">
+            <font-awesome-icon
+              :icon="['fas', 'circle-exclamation']"
+              class="mobile-icon"
+            />
+          </div>
+          <div class="icon-tag heading ven-tag">Vendors</div>
+          <div class="popup-tag text" v-if="store.dismiss">Vendors</div>
+        </button>
       </div>
     </div>
+
     <!-- <div class="return-box" @click="NavMenu">
     </div> -->
-    <div class="nav-cont">
-      <div>
-        <div class="user">
-          <div class="user-icon-cont">
-            <font-awesome-icon :icon="['fas', 'user']" class="user-icon" />
-          </div>
-          <!-- <div class="user-info">
-            <h2 class="user-title">My Account</h2>
-            <h3 class="username">user1234@gmail.com</h3>
-          </div> -->
-        </div>
-        <div class="menu-container">
-          <button class="menu-btn">
-            <div>
-              <font-awesome-icon
-                :icon="['fas', 'boxes-stacked']"
-                class="catalog-icon"
-              />
-            </div>
-            <!-- <h3 class="tag">CATALOG</h3> -->
-          </button>
-          <button class="menu-btn">
-            <div>
-              <font-awesome-icon
-                :icon="['fas', 'hand-holding-hand']"
-                class="borrowed-icon"
-              />
-            </div>
-            <!-- <h3 class="tag">BORROWED</h3> -->
-          </button>
-          <button class="menu-btn">
-            <div>
-              <font-awesome-icon
-                :icon="['fas', 'circle-exclamation']"
-                class="needed-icon"
-              />
-            </div>
-            <!-- <h3 class="tag">SUPPLIES NEEDED</h3> -->
-          </button>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
 <script>
+import { useItemsStore } from "~/store/ItemsStore";
 export default {
   name: "UserMenu",
   props: {},
   components: {},
   data() {
     return {
-      dismiss: true,
+      store: useItemsStore(),
     };
   },
   methods: {
-    NavMenu() {
-      const MobileMenu = document.querySelector(".mobile-menu");
-      if (MobileMenu.classList.contains("selected")) {
-        MobileMenu.classList.remove("selected");
-        MobileMenu.classList.add("dismiss");
-        this.dismiss = true;
-        console.log("dismiss");
-      } else if (MobileMenu.classList.contains("dismiss")) {
-        MobileMenu.classList.remove("dismiss");
-        this.dismiss = false;
-        MobileMenu.classList.add("selected");
-        console.log("selected");
-      } else if (
-        !MobileMenu.classList.contains("dismiss") ||
-        !MobileMenu.classList.contains("selected")
-      ) {
-        MobileMenu.classList.add("selected");
-        console.log("selected");
-      }
+    catalog() {
+      this.store.clearSearch();
+      this.store.$patch({
+        catalog: true,
+        monitor: false,
+        vendors: false,
+      });
+      document.querySelector(".catalogbtn").classList.add("activepage");
+      document.querySelector(".monitorbtn").classList.remove("activepage");
+      document.querySelector(".vendorsbtn").classList.remove("activepage");
+      document.querySelector(".cat-tag").classList.add("activetag");
+      document.querySelector(".mon-tag").classList.remove("activetag");
+      document.querySelector(".ven-tag").classList.remove("activetag");
+    },
+    monitor() {
+      this.store.clearSearch();
+      this.store.$patch({
+        catalog: false,
+        monitor: true,
+        vendors: false,
+      });
+      document.querySelector(".catalogbtn").classList.remove("activepage");
+
+      document.querySelector(".monitorbtn").classList.add("activepage");
+      document.querySelector(".vendorsbtn").classList.remove("activepage");
+      document.querySelector(".cat-tag").classList.remove("activetag");
+      document.querySelector(".mon-tag").classList.add("activetag");
+      document.querySelector(".ven-tag").classList.remove("activetag");
+      document
+        .querySelector(".fa-hand-holding-hand")
+        .classList.add("activesvg");
+    },
+    vendors() {
+      this.store.clearSearch();
+      this.store.$patch({
+        catalog: false,
+        monitor: false,
+        vendors: true,
+      });
+      document.querySelector(".catalogbtn").classList.remove("activepage");
+
+      document.querySelector(".monitorbtn").classList.remove("activepage");
+      document.querySelector(".vendorsbtn").classList.add("activepage");
+      document.querySelector(".cat-tag").classList.remove("activetag");
+      document.querySelector(".mon-tag").classList.remove("activetag");
+      document.querySelector(".ven-tag").classList.add("activetag");
     },
   },
 };
 </script>
 
 <style scoped>
+.activepage {
+  background-color: var(--lightblue);
+}
+.activepage:hover {
+  background-color: var(--lightblue);
+}
+.activesvg:nth-child(1) {
+  fill: var(--darkblue);
+}
 .nav-cont {
   height: 100vh;
   width: 18rem;
@@ -155,48 +125,68 @@ export default {
   display: flex;
   flex-flow: row;
 }
-.user {
-  width: 6.9rem;
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-evenly;
-  align-items: center;
-  overflow: hidden;
-  margin-top: 1rem;
-}
-.user-icon {
-  width: 3rem;
-  height: 3rem;
-}
 
 .menu-container {
-  margin-top: 1rem;
   width: 100%;
   display: flex;
   flex-flow: column nowrap;
+  align-items: left;
+  margin: 0 1rem;
+  margin-top: 1rem;
 }
 
 .menu-btn {
-  padding: 1rem;
-  width: 6.9rem;
+  padding: 0.3rem;
   border: none;
-  color: white;
+  margin: 0.2rem 0;
   text-decoration: none;
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-evenly;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 8rem 1fr;
   transition: background-color 0.2s linear;
 }
-
-h2,
-h3 {
-  color: black;
-  padding-left: 0.5rem;
-  font-size: 0.6rem;
+.icon-holder {
+  grid-column: 1 / 2;
 }
-.menu-btn:hover {
-  background-color: var(--lightblue);
+.icon-tag {
+  color: var(--black);
+  grid-column: 2 / 3;
+  text-align: left;
+}
+.icon-holder,
+.icon-tag {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+.popup-tag {
+  position: absolute;
+  left: 5.5rem;
+  margin-top: 1rem;
+  z-index: 1000;
+  width: fit-content;
+  clip-path: polygon(
+    10% 0,
+    100% 0%,
+    100% 100%,
+    10% 100%,
+    10% 60%,
+    0 50%,
+    10% 40%
+  );
+  background-color: var(--tpdarkestgray);
+  color: var(--whitebg);
+  padding: 0.5rem 0.75rem 0.5rem 1.5rem;
+  text-align: left;
+  opacity: 0;
+  transform: scale(0);
+  transition: all 0.15s;
+}
+.activetag {
+  color: var(--darkblue);
+}
+.menu-btn:hover > .popup-tag {
+  transform: scale(1);
+  opacity: 1;
 }
 .catalog-icon,
 .borrowed-icon,
@@ -205,221 +195,12 @@ h3 {
   width: 2rem;
   height: 2rem;
 }
-.open-menu-cont {
-  display: none;
-  width: 2rem;
-  height: 2rem;
-  top: 0.7rem;
-  left: 2rem;
-  position: fixed;
-  z-index: 900;
-}
-.open-menu-btn {
-  width: 100%;
-  height: 100%;
-  border: none;
-  background-color: transparent;
-}
-.open-menu-icon-cont {
-  width: 100%;
-  height: 100%;
-}
-.open-menu-icon {
-  display: none;
-}
-.mobile-menu {
-  display: none;
-  flex-direction: column;
-  position: relative;
-  z-index: 10;
-  background-color: white;
-  width: 100vw;
-  height: 100vh;
-  overflow-x: hidden;
-  overflow-y: hidden;
-}
-.mobile-menu-btn,
-.mobile-user {
-  display: grid;
-  grid-template-columns: 4rem 1fr;
-  grid-template-rows: 4rem 1fr;
-  margin-top: 3vh;
-  padding-top: 2vh;
-  padding-bottom: 2vh;
-  width: 100%;
-  height: 8vh;
-  text-decoration: none;
-  background-color: white;
-}
 
-.mobile-user-icon,
 .mobile-icon {
   display: grid;
   color: #c7d6d5;
-  width: 5rem;
-  height: 5rem;
-}
-.mobile-user-icon {
-  color: black;
-}
-.mobile-user-info,
-.mobile-tag {
-  display: grid;
-  color: black;
-  font-size: 4rem;
-}
-.mobile-user {
-  background-color: white;
-  display: grid;
-  flex-flow: row nowrap;
-  align-items: center;
-  margin-top: 0.8vh;
-  padding-top: 2.5vh;
-  height: 10vh;
-  justify-self: center;
-}
-.mobile-user-title,
-.mobile-username {
-  font-size: 2rem;
-  display: flex;
-  flex-flow: column;
-  align-items: center;
-}
-/* animations  */
-.selected {
-  animation: slide-in 0.5s forwards;
-  -webkit-animation: slide-in 0.5s forwards;
-}
-
-.dismiss {
-  animation: slide-out 0.5s forwards;
-  -webkit-animation: slide-out 0.5s forwards;
-}
-@keyframes slide-out {
-  0% {
-    -webkit-transform: translateX(0%);
-    transform: translateX(0%);
-  }
-  100% {
-    -webkit-transform: translateX(-500%);
-    transform: translateX(-500%);
-  }
-}
-@-webkit-keyframes slide-out {
-  0% {
-    -webkit-transform: translateX(0%);
-    transform: translateX(0%);
-  }
-  100% {
-    -webkit-transform: translateX(-500%);
-    transform: translateX(-500%);
-  }
-}
-@keyframes slide-in {
-  0% {
-    -webkit-transform: translateX(-500%);
-    transform: translateX(-500%);
-  }
-  100% {
-    -webkit-transform: translateX(0%);
-    transform: translateX(0%);
-  }
-}
-@-webkit-keyframes slide-in {
-  0% {
-    -webkit-transform: translateX(-500%);
-    transform: translateX(-500%);
-  }
-  100% {
-    -webkit-transform: translateX(0%);
-    transform: translateX(0%);
-  }
-}
-
-/* media query */
-/* media queries max width
-    sm:	 ≥576px
- 	  md:  ≥768px
-    lg:	 ≥992px
-    xl:  ≥1200px
-    xxl: ≥1400px
-*/
-
-/* mobile */
-@media (hover: hover) {
-  .mobile-menu-btn:hover {
-    background-color: var(--lightblue);
-    cursor: pointer;
-  }
-}
-@media screen and (max-width: 1200px) {
-}
-@media screen and (max-width: 576px) {
-  .nav-cont {
-    display: none;
-  }
-  .open-menu-cont {
-    display: block;
-  }
-  .open-menu-icon {
-    height: 200%;
-    width: 200%;
-    display: block;
-  }
-  .mobile-menu {
-    display: flex;
-    margin-top: 140%;
-  }
-  .mobile-icon {
-    height: 4rem;
-    width: 4rem;
-  }
-  .mobile-tag {
-    font-size: 3rem;
-  }
-}
-@media screen and (max-width: 375px) {
-  .nav-cont {
-    display: none;
-  }
-  .open-menu-cont {
-    display: block;
-  }
-  .open-menu-icon {
-    height: 200%;
-    width: 200%;
-    display: block;
-  }
-  .mobile-icon {
-    height: 3.5rem;
-    width: 3.5rem;
-  }
-  .mobile-tag {
-    font-size: 2.5rem;
-  }
-}
-@media screen and (max-width: 320px) {
-  .nav-cont {
-    display: none;
-  }
-  .open-menu-cont {
-    display: block;
-  }
-  .open-menu-icon {
-    height: 200%;
-    width: 200%;
-    display: block;
-  }
-  .mobile-user-icon {
-    height: 4rem;
-    width: 4rem;
-  }
-  .mobile-icon {
-    height: 3rem;
-    width: 3rem;
-  }
-  .mobile-tag {
-    font-size: 2rem;
-  }
+  width: 2.5rem;
+  height: 2.5rem;
+  margin: 0 1rem;
 }
 </style>
