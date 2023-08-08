@@ -2,9 +2,10 @@
 export default defineNuxtConfig({
   ssr: false,
   devtools: { enabled: true },
-  css: ["@fortawesome/fontawesome-svg-core/styles.css", '~/assets/css/main.css'],
+  css: [
+    "@fortawesome/fontawesome-svg-core/styles.css",
+    "~/assets/css/main.css",
+  ],
   pages: true,
-  modules: [
-    '@pinia/nuxt'
-  ]
+  modules: ["@pinia/nuxt"],
 });

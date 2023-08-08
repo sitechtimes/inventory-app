@@ -20,25 +20,15 @@
         <button class="exitbtn heading tab3btn" @click="closeCat">X</button>
       </div>
     </div>
-    <div
-      class="extraInfoPanel"
-      v-if="this.store.vendor === false && this.store.categoryPop === false"
-    >
-      <Extra
-        :img_link="img_link"
-        :name="name"
-        :category="category"
-        :quantity="quantity"
-        :link="link"
-        :vendor="vendor"
-        :date="date"
-      />
+    <div class="extraInfoPanel" v-if="this.store.vendor === false && this.store.categoryPop === false">
+      <Extra :img_link="img_link" :name="name" :category="category" :quantity="quantity" :link="link" :vendor="vendor"
+        :date="date" />
     </div>
     <div class="extraInfoPanel" v-if="this.store.vendor">
-      <VendorInfo />
+      <VendorInfo :vendorName="vendor" />
     </div>
     <div class="extraInfoPanel" v-if="this.store.categoryPop">
-      <CategoryInfo />
+      <CategoryInfo :categoryName="category" />
     </div>
   </div>
 </template>
@@ -52,6 +42,7 @@
   display: flex;
   flex-direction: column;
 }
+
 .tabPop {
   min-height: 5.5rem;
   border-bottom: var(--border);
@@ -68,6 +59,7 @@
   align-items: center;
   min-width: 30%;
 }
+
 .tabtext {
   border: none;
 
@@ -77,6 +69,7 @@
 
   height: 100%;
 }
+
 .extraTab {
   max-width: 80%;
   width: fit-content;
@@ -85,9 +78,11 @@
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+
 .tab1 {
   max-width: 100%;
 }
+
 .tab2,
 .tab3 {
   max-width: 100%;
@@ -96,6 +91,7 @@
 .vendorTab {
   width: fit-content;
 }
+
 .exitbtn {
   color: var(--darkergray);
   transition: all 0.1s linear;
@@ -104,35 +100,43 @@
   width: 5rem;
   background-color: rgba(0, 0, 0, 0);
 }
+
 .exitbtn:hover {
   cursor: pointer;
   color: var(--darkestgray);
   background-color: var(--tpgray);
 }
+
 .exitbtn:active {
   background-color: var(--tpdarkgray);
 }
+
 .extraInfoPanel {
   height: 100%;
   width: 100%;
 }
+
 .active {
   background-color: var(--whitebg);
 }
+
 .inactive {
   background-color: var(--halflightgray);
   color: var(--darkergray);
   transition: all 0.5s;
 }
+
 .inactivebtn {
   opacity: 0;
   background-color: var(--halflightgray);
   transition: all 0.5s;
 }
+
 .inactivebtn:hover {
   opacity: 1;
 }
-.inactive:hover > .inactivebtn {
+
+.inactive:hover>.inactivebtn {
   opacity: 1;
 }
 </style>
@@ -212,6 +216,6 @@ export default {
       }
     },
   },
-  mounted() {},
+  mounted() { },
 };
 </script>

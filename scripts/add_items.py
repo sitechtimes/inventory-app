@@ -65,10 +65,10 @@ def run():
             """ except Exception as e:
             print(f"Error adding item: {e}") """
 
+
         except django.db.utils.IntegrityError:
             pass
     print("Successfully added items from CSV to inventory.")
-
 
 """         try:
             Category.objects.get(category_name=rows["Category"])
@@ -86,15 +86,16 @@ def run():
         try:
             image = rows["Image"] if pd.notnull(rows["Image"]) else None
             item = Item(
-                item_id=rows["Item ID"],
+                item_id=rows[" Item ID"],
                 name=rows["Name"],
                 purchase_link=rows["Purchase Link"],
                 image=image,
                 last_purchased=rows["Date Last Purchased"],
-                backroom_quantity=rows["Backroom_quantity"],
-                makerspace_quantity=rows["Makerspace_quantity"],
+                backroom_quantity=2,
+                makerspace_quantity=2,
                 category=Category.objects.get(category_name=rows["Category"]),
                 vendor=Vendor.objects.get(vendor_name=rows["Vendor"]),
+
                 location=rows["Location"],
                 min_amount=rows["Alert"]
             )
@@ -105,4 +106,5 @@ def run():
     print("Successfully added items from CSV to inventory.")
 
             vendor_name.save() """
+
 

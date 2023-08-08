@@ -6,8 +6,10 @@ class ItemSerializer(serializers.ModelSerializer):
 
     total = serializers.SerializerMethodField()
 
+
     image = serializers.ImageField(required=False)
     url = serializers.URLField(required=False, allow_blank=True)
+
 
     alert = serializers.SerializerMethodField()
 

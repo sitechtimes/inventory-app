@@ -3,6 +3,7 @@
     <CategoryCount />
     <VendorCount />
     <DisplayInfo />
+
     <CreateItemForm />
   </div>
 </template>

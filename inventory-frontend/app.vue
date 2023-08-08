@@ -1,4 +1,5 @@
 <template>
+
   <div class="app dismiss">
     <div id="search" class="heading">
       <Header />
@@ -19,6 +20,7 @@
     </div>
     <div v-if="store.editform">
       <NuxtPage />
+
     </div>
   </div>
 </template>
@@ -58,17 +60,20 @@ export default {
   overflow: hidden;
   transition: all 0.5s linear;
 }
+
 #search {
   grid-column: 1 / 3;
   width: 100%;
   height: 100%;
   border-bottom: var(--border);
 }
+
 #navHolder {
   grid-row: 2 / 3;
   grid-column: 1 / 2;
   border-right: var(--border);
 }
+
 #largeItemHolder {
   grid-row: 2/3;
   grid-column: 2/3;
@@ -79,7 +84,6 @@ export default {
 }
 #mainItems {
   display: flex;
-
   flex-direction: column;
 }
 #itemHeader {

@@ -95,10 +95,6 @@ class ManualEditQuantity(generics.UpdateAPIView):
         else:
             return JsonResponse({'error': 'Invalid input'}, status=400)
 
-# probably works idk
-
-# idk it works
-
 
 class AddItems(viewsets.ModelViewSet):
     parser_classes = (MultiPartParser, FormParser)
@@ -120,9 +116,30 @@ class AddItems(viewsets.ModelViewSet):
 
         return Response(serializer.data, status=201)
 
+# delete item by pk value (id)
+
 
 class deleteItems(generics.DestroyAPIView):
+    queryset = Item.objects.all()
+    serializer_class = ItemSerializer
+
     def delete(self, request, *args, **kwargs):
         self.get_object().delete()
 
         return Response("Item deleted", status=204)
+
+
+class updateMinAmount(generics.UpdateAPIView):
+    queryset = Item.objects.all()
+    serializer_class = ItemSerializer
+
+    def update(self, request, *args, **kwargs):
+        itemMinAmount = self.get_object()
+
+        amount = self.kwargs["amount"]
+
+        itemMinAmount.min_amount = amount
+
+        itemMinAmount.save()
+
+        return Response("Item updated", status=200)
