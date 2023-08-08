@@ -94,7 +94,16 @@ export const useItemsStore = defineStore('items', {
       document.querySelector(tabnumber).classList.remove("inactive");
       document.querySelector(btn).classList.remove("inactivebtn");
     },
+    // clear search bar
+    clearSearch() {
+      this.$patch({
+        search: false,
+        info: false,
+        items: this.returnlist,
+      });
 
+      document.getElementById("searchform").value = "";
+    },
   }
   
 })

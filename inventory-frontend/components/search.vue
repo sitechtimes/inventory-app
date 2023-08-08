@@ -7,7 +7,9 @@
       @keyup="filteredItems(input)"
       placeholder="Search Inventory"
     />
-    <button class="exitbtn heading searchclear" @click="clearSearch">X</button>
+    <button class="exitbtn heading searchclear" @click="store.clearSearch">
+      X
+    </button>
   </div>
 </template>
 
@@ -38,7 +40,7 @@ export default {
       });
       console.log(this.newlist);
 
-      this.store.$patch({ items: this.newlist, search: true, info: false });
+      this.store.$patch({ items: this.newlist, search: true });
       this.empties = 0;
       this.store.items.forEach((item) => {
         if (item[1].length < 1) {
@@ -51,15 +53,6 @@ export default {
       } else {
         this.store.$patch({ empty: false });
       }
-    },
-    clearSearch() {
-      this.store.$patch({
-        search: false,
-        info: false,
-        items: this.store.returnlist,
-      });
-
-      document.getElementById("searchform").value = "";
     },
   },
   mounted() {},

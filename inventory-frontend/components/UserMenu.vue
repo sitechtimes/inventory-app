@@ -58,12 +58,11 @@ export default {
   },
   methods: {
     catalog() {
+      this.store.clearSearch();
       this.store.$patch({
         catalog: true,
         monitor: false,
         vendors: false,
-        search: false,
-        info: false,
       });
       document.querySelector(".catalogbtn").classList.add("activepage");
       document.querySelector(".monitorbtn").classList.remove("activepage");
@@ -73,12 +72,11 @@ export default {
       document.querySelector(".ven-tag").classList.remove("activetag");
     },
     monitor() {
+      this.store.clearSearch();
       this.store.$patch({
         catalog: false,
         monitor: true,
         vendors: false,
-        search: false,
-        info: false,
       });
       document.querySelector(".catalogbtn").classList.remove("activepage");
 
@@ -92,12 +90,11 @@ export default {
         .classList.add("activesvg");
     },
     vendors() {
+      this.store.clearSearch();
       this.store.$patch({
         catalog: false,
         monitor: false,
         vendors: true,
-        search: false,
-        info: false,
       });
       document.querySelector(".catalogbtn").classList.remove("activepage");
 

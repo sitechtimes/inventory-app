@@ -18,7 +18,7 @@
             :name="each[0]"
           ></ItemPerCat>
         </div>
-        <div class="categoryHolder">
+        <div class="categoryHolder" v-else>
           <ItemPerCat
             v-for="each in store.items"
             :key="each.id"
@@ -67,6 +67,9 @@ export default {
 }
 .monitorHolder {
   margin-right: 0;
+}
+.monitorCol {
+  width: 100%;
 }
 .subheadorg {
   width: 100%;

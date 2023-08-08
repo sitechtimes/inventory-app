@@ -110,8 +110,10 @@ export default {
   height: 100%;
   width: 70%;
   min-width: 50rem;
+  max-width: 60rem;
   position: sticky;
   top: 0;
+  right: 0;
   overflow: hidden;
   flex: 1 1 0%;
   border-left: var(--border);
@@ -129,6 +131,7 @@ export default {
     min-width: 80rem;
   }
 }
+
 @media screen and (max-width: 760px) {
   .infoDesc {
     width: auto;
@@ -140,6 +143,7 @@ export default {
     left: 0;
     right: 0;
     border: none;
+    z-index: 2000;
   }
 }
 </style>

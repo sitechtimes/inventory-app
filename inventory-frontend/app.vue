@@ -101,38 +101,9 @@ export default {
   flex: 1 1 0%;
 }
 
-.infoDesc {
-  height: 100%;
-  width: 70%;
-  min-width: 50rem;
-  position: sticky;
-  top: 0;
-  overflow: hidden;
-  flex: 1 1 0%;
-  border-left: var(--border);
-}
 .replacer {
   height: 100%;
   width: 100%;
   overflow-y: scroll;
-}
-@media screen and (min-width: 1600px) {
-  .infoDesc {
-    min-width: 80rem;
-  }
-}
-@media screen and (max-width: 760px) {
-  .infoDesc {
-    width: auto;
-    align-self: flex-start;
-    justify-self: flex-start;
-    position: fixed;
-    margin-top: 5.5rem;
-    margin-left: 7rem;
-    left: 0;
-    right: 0;
-    border: none;
-    z-index: 2000;
-  }
 }
 </style>
