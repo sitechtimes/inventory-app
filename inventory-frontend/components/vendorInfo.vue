@@ -148,7 +148,7 @@ async function fetchData() {
   }
 }
 </script>
-<style>
+<style scoped>
 .popUpPanel {
   height: 100%;
   width: 100%;
@@ -156,10 +156,12 @@ async function fetchData() {
   flex-direction: column;
   align-items: center;
 }
+
 .chart1-cont {
   width: 90%;
   margin-top: 1rem;
 }
+
 .no-show {
   display: none;
 }
