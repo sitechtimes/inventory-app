@@ -3,27 +3,36 @@
     <div class="header">Vendors</div>
     <div class="content">
       <div class="buttons">
-        <button v-for="data in vendor" :key="data" class="vendor-container" @click="showChartfuc(data.itemsVendor)">
+        <button
+          v-for="data in vendor"
+          :key="data"
+          class="vendor-container"
+          @click="showChartfuc(data.itemsVendor)"
+        >
           <h1 class="vendor-name">{{ data.vendor_name }}</h1>
         </button>
       </div>
       <div class="info canvas" v-show="showInfo" id="canvas" ref="canvas">
         <div class="extraInfoPanel">
           <div class="canvas-cont">
-            <div :class="{ 'chart-cont-big': minMax, 'chart-cont-small': !minMax }">
+            <div
+              :class="{ 'chart-cont-big': minMax, 'chart-cont-small': !minMax }"
+            >
               <canvas id="Vendor"></canvas>
             </div>
             <div class="btn-cont">
-              <button v-if="!minMax" @click="fullScreen()" class="maximize-button">
+              <button
+                v-if="!minMax"
+                @click="fullScreen()"
+                class="maximize-button"
+              >
                 <font-awesome-icon :icon="['fas', 'maximize']" />
               </button>
             </div>
 
-
             <button class="minimize-button" v-if="minMax" @click="fullScreen()">
               <font-awesome-icon :icon="['fas', 'minimize']" />
             </button>
-
           </div>
         </div>
       </div>
@@ -39,8 +48,8 @@ let showChart = ref(false);
 let vendor = ref([]);
 let chart = ref();
 let showInfo = ref(false); // Step 1
-let minMax = ref(false)
-let canvas = ref()
+let minMax = ref(false);
+let canvas = ref();
 
 onMounted(() => {
   fetch("http://127.0.0.1:8000/items/vendor/", {
@@ -110,13 +119,13 @@ const chartOptions = ref({
 });
 
 function createChart() {
-  const ctx = document.getElementById('Vendor').getContext('2d');
+  const ctx = document.getElementById("Vendor").getContext("2d");
   const chart1 = new Chart(ctx, {
     type: "bar",
     data: chartData.value,
     options: chartOptions.value,
   });
-  chart = chart1
+  chart = chart1;
 }
 
 function updateChart(tag, quantity) {
@@ -148,7 +157,7 @@ const showChartfuc = (vendorItem) => {
     });
     updateChart(labels, quantity);
   }
-}
+};
 
 const fullScreen = () => {
   if (minMax.value) {
@@ -159,7 +168,6 @@ const fullScreen = () => {
     canvas.value.classList.add("fullScreen");
   }
 };
-
 </script>
 
 <style scoped>
@@ -181,6 +189,7 @@ const fullScreen = () => {
 
 .buttons {
   flex: 1;
+  margin-left: 5rem;
 }
 
 .info {
@@ -209,7 +218,7 @@ const fullScreen = () => {
 }
 
 .vendor-container {
-  border: 1px solid #ccc;
+  border: var(--border);
   padding: 30px 55px 30px 55px;
   margin: 6px;
   width: 24rem;
@@ -290,5 +299,20 @@ const fullScreen = () => {
 
 .chart-cont-small {
   height: 500px;
+}
+@media screen and (max-width: 760px) {
+  .content {
+    flex-direction: column-reverse;
+  }
+  .chart-cont-small {
+    height: fit-content;
+    width: 80%;
+    margin-bottom: 3rem;
+  }
+  .canvas-cont {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
 </style>
