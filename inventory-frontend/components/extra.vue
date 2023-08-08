@@ -123,7 +123,8 @@ export default {
   padding-right: 5rem;
 }
 .extrabtn {
-  width: 20%;
+  min-width: fit-content;
+  width: 30%;
   text-align: left;
 }
 .extrabtn:active {
@@ -142,5 +143,10 @@ export default {
   text-align: left;
   width: 100%;
   font-weight: 400;
+}
+.logPop,
+.detailsPop,
+.imagePop {
+  width: 100%;
 }
 </style>

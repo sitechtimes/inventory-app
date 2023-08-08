@@ -9,7 +9,6 @@
           <font-awesome-icon :icon="['fas', 'maximize']" />
         </button>
       </div>
-
     </div>
 
     <div class="no-show" ref="chart2">
@@ -20,31 +19,29 @@
         <font-awesome-icon :icon="['fas', 'minimize']" />
       </button>
     </div>
-
-
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import { Chart } from 'chart.js/auto';
+import { ref, onMounted } from "vue";
+import { Chart } from "chart.js/auto";
 
-const props = defineProps(["vendorName"])
+const props = defineProps(["vendorName"]);
 
 const isMaximized = ref(false);
-const chart2 = ref()
-let VendorItem = ref([])
-let ItemCount = ref([])
+const chart2 = ref();
+let VendorItem = ref([]);
+let ItemCount = ref([]);
 
 const maximizeChart = () => {
   isMaximized.value = !isMaximized.value;
   if (isMaximized.value) {
-    console.log(chart2.value)
-    chart2.value.classList.remove('no-show')
-    chart2.value.classList.add('fullScreen')
+    console.log(chart2.value);
+    chart2.value.classList.remove("no-show");
+    chart2.value.classList.add("fullScreen");
   } else if (!isMaximized.value) {
-    chart2.value.classList.add('no-show')
-    chart2.value.classList.remove('fullScreen')
+    chart2.value.classList.add("no-show");
+    chart2.value.classList.remove("fullScreen");
   }
 };
 
@@ -52,14 +49,14 @@ const chartData = ref({
   labels: VendorItem.value,
   datasets: [
     {
-      label: 'Total Stock Available',
+      label: "Total Stock Available",
       data: ItemCount.value,
       fill: false,
-      borderColor: 'rgb(75, 192, 192)',
-      backgroundColor: 'rgb(75, 1, 192)',
-      tension: 0.1
-    }
-  ]
+      borderColor: "rgb(75, 192, 192)",
+      backgroundColor: "rgb(75, 1, 192)",
+      tension: 0.1,
+    },
+  ],
 });
 
 const chartOptions = ref({
@@ -67,7 +64,8 @@ const chartOptions = ref({
   scales: {
     y: {
       beginAtZero: true,
-    }, x: {
+    },
+    x: {
       ticks: {
         autoSkip: true,
         maxRotation: 80,
@@ -78,42 +76,41 @@ const chartOptions = ref({
         const labels = axis.chart.data.labels;
         for (let i = 0; i < labels.length; i++) {
           const lbl = labels[i];
-          if (typeof lbl === 'string' && lbl.length > 10) {
+          if (typeof lbl === "string" && lbl.length > 10) {
             labels[i] = lbl.substring(0, 10) + "..."; // cutting
           }
         }
-      }
+      },
     },
   },
   plugins: {
     legend: {
       labels: {
         font: {
-          size: 14
-        }
-      }
-    }
-  }
+          size: 14,
+        },
+      },
+    },
+  },
 });
 
 const createChart = () => {
-  const ctx1 = document.getElementById('myChart1').getContext('2d');
+  const ctx1 = document.getElementById("myChart1").getContext("2d");
 
   const chart1 = new Chart(ctx1, {
-    type: 'bar',
+    type: "bar",
     data: chartData.value,
     options: chartOptions.value,
   });
 
-  const ctx2 = document.getElementById("myChart2").getContext('2d');
+  const ctx2 = document.getElementById("myChart2").getContext("2d");
 
   const chart2 = new Chart(ctx2, {
-    type: 'bar',
+    type: "bar",
     data: chartData.value,
     options: chartOptions.value,
   });
 };
-
 
 onMounted(() => {
   fetchData();
@@ -135,13 +132,13 @@ async function fetchData() {
 
     const data = await response.json();
 
-    const VendorName = props.vendorName
+    const VendorName = props.vendorName;
     data.forEach((vendor) => {
       if (VendorName === vendor.vendor_name) {
         vendor.itemsVendor.forEach((item) => {
-          VendorItem.value.push(item.name)
-          ItemCount.value.push(item.total)
-        })
+          VendorItem.value.push(item.name);
+          ItemCount.value.push(item.total);
+        });
       }
     });
 
@@ -150,7 +147,6 @@ async function fetchData() {
     console.log("Error fetching data:", error);
   }
 }
-
 </script>
 <style>
 .popUpPanel {
@@ -158,8 +154,12 @@ async function fetchData() {
   width: 100%;
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
-
+.chart1-cont {
+  width: 90%;
+  margin-top: 1rem;
+}
 .no-show {
   display: none;
 }
@@ -209,7 +209,6 @@ async function fetchData() {
 
 .maximize-button {
   width: 4rem;
-
 }
 
 .maximize-button:hover,
