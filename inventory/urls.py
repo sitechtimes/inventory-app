@@ -14,6 +14,8 @@ urlpatterns = [
          views.ManualEditQuantity.as_view()),
     path("deleteItem/<int:pk>/",
          views.deleteItems.as_view()),
+    path("updateMinAmount/<int:pk>/<int:amount>/",
+         views.updateMinAmount.as_view()),
     # send Data to these Url as request body
     path("addItems/", views.AddItems.as_view({"post": "create"})),
 ]

@@ -8,7 +8,11 @@
     --darkestgray: rgb(130,130,130);
     --tpgray: rgba(130,130,130,0.08);
     --tpdarkgray: rgba(130,130,130,0.4);
+    --tpdarkestgray:rgba(100,100,100,0.8);
     --black: #000;
+    --svggray:rgb(100,100,100);
+    --lightblue: rgba(30,136,229,0.1);
+    --darkblue: #1e88e5;
     
     --h1: 2.5rem;
     --h2: 2rem;

@@ -94,7 +94,7 @@
 
 .exitbtn {
   color: var(--darkergray);
-  transition: all 0.1s;
+  transition: all 0.1s linear;
   border-radius: 3rem;
   height: 5rem;
   width: 5rem;
@@ -209,7 +209,11 @@ export default {
       this.closeVendor();
       this.closeCat();
       this.swapMain();
-      this.store.resizing();
+      if (this.store.catalog) {
+        this.store.resizing();
+      } else if (this.store.monitor) {
+        document.querySelector(".bigdivM").style.flexDirection = "column";
+      }
     },
   },
   mounted() { },

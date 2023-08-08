@@ -10,14 +10,20 @@ locations = [('MS', 'Makerspace'), ('BR', 'Back Room')]
 
 
 class Category(models.Model):
-    category_name = models.CharField(choices=categories, max_length=100)
+    category_code = models.CharField(
+        choices=categories, max_length=100, default="")
+    category_name = models.CharField(
+        choices=categories, max_length=100, default="")
 
     def __str__(self):
         return self.category_name
 
 
 class Vendor(models.Model):
-    vendor_name = models.CharField(choices=vendors, max_length=100)
+    vendor_code = models.CharField(
+        choices=vendors, max_length=100, default=None)
+    vendor_name = models.CharField(
+        choices=vendors, max_length=100, default=None)
 
 
     def __str__(self):
@@ -25,18 +31,17 @@ class Vendor(models.Model):
 
 
 def upload_to(instance, filename):
-    return 'images/{filename}'.format(filename=filename)
-
-
-"""  min_amount = models.IntegerField(default=0) """
+    count_obj = Item.objects.all().count() + 1
+    return 'images/{count}/{filename}'.format(count=count_obj, filename=filename)
 
 
 class Item(models.Model):
-    item_id = models.CharField(max_length=100, blank=False, default='')
+    item_id = models.CharField(max_length=100, blank=True, default='')
     name = models.CharField(max_length=100, blank=True, default='')
     purchase_link = models.CharField(max_length=1000, blank=True, default='')
-    image = models.CharField(max_length=100)
-    """ image = models.ImageField(upload_to=upload_to, blank=True, null=True) """
+    image_url = models.URLField(blank=True, null=True, default=None)
+    image_file = models.ImageField(
+        upload_to=upload_to, blank=True, null=True, default=None)
     last_purchased = models.DateTimeField(auto_now=True, editable=True)
     backroom_quantity = models.IntegerField(default=0)
     makerspace_quantity = models.IntegerField(default=0)
@@ -45,12 +50,13 @@ class Item(models.Model):
     vendor = models.ForeignKey(
         Vendor, related_name='itemsVendor', on_delete=models.CASCADE)
     location = models.CharField(max_length=50, default='')
+    min_amount = models.IntegerField(default=5)
 
     def __str__(self):
         return self.name
 
     def save(self, *args, **kwargs):
-        count_obj = Item.objects.all().count()+1
+        count_obj = Item.objects.all().count() + 1
         self.id = count_obj
         super(Item, self).save(*args, **kwargs)
 

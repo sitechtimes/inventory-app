@@ -7,7 +7,9 @@
       @keyup="filteredItems(input)"
       placeholder="Search Inventory"
     />
-    <button class="exitbtn heading searchclear" @click="clearSearch">X</button>
+    <button class="exitbtn heading searchclear" @click="store.clearSearch">
+      X
+    </button>
   </div>
 </template>
 
@@ -19,37 +21,38 @@ export default {
   data() {
     return {
       store: useItemsStore(),
-
       newlist: [],
+      empties: 0,
     };
   },
   methods: {
     filteredItems(i) {
-      this.store.returnlist.forEach(
-        (arr) =>
-          (this.newlist = arr.filter((item) =>
+      this.newlist = [];
+      this.store.returnlist.forEach((arr) => {
+        let itemsCategory = Array.from(
+          arr.itemsCategory.filter((item) =>
             item.name.toLowerCase().includes(i.toLowerCase())
-          ))
-      );
+          )
+        );
+        let categories = [arr.category_name, itemsCategory];
 
-      console.log(
-        this.store.items,
-        "items",
-        this.newlist,
-        "newlist",
-        this.store.newlist,
-        "storenewlist"
-      );
-      this.store.$patch({ newlist: this.newlist, search: true, info: false });
+        this.newlist.push(categories);
+      });
+      console.log(this.newlist);
 
-      this.store.sort();
-      this.store.resizing();
-    },
-    clearSearch() {
-      this.store.$patch({ search: false, info: false });
-      this.store.sort();
-      this.store.resizing();
-      document.getElementById("searchform").value = "";
+      this.store.$patch({ items: this.newlist, search: true });
+      this.empties = 0;
+      this.store.items.forEach((item) => {
+        if (item[1].length < 1) {
+          this.empties++;
+          console.log(this.empties);
+        }
+      });
+      if (this.empties >= this.store.items.length) {
+        this.store.$patch({ empty: true });
+      } else {
+        this.store.$patch({ empty: false });
+      }
     },
   },
   mounted() {},

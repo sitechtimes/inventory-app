@@ -24,6 +24,12 @@ button {
 button:hover {
     cursor: pointer;
 }
+svg,
+path {
+  fill: var(--svggray);
+}
+
+
 .heading {
     font-size: var(--h3);
     font-weight: 400;
@@ -46,3 +52,4 @@ button:hover {
     font-size: var(--h5);
     font-family: "Fira Sans", sans-serif;
 }
+
