@@ -20,6 +20,8 @@
           :vendor="result.vendor"
           :link="result.purchase_link"
           :category="result.category"
+          :backroom="result.backroom_quantity"
+          :makerspace="result.makerspace_quantity"
         />
       </div>
       <div class="itemHolder itemHolderM" v-if="store.monitor === true">
@@ -33,6 +35,8 @@
           :vendor="result.vendor"
           :link="result.purchase_link"
           :category="result.category"
+          :backroom="result.backroom_quantity"
+          :makerspace="result.makerspace_quantity"
         />
       </div>
     </div>

@@ -38,6 +38,8 @@
         :link="store.popup.link"
         :vendor="store.popup.vendor"
         :date="store.popup.updated"
+        :backroom_quantity="store.popup.backroom"
+        :makerspace_quantity="store.popup.makerspace"
       />
     </div>
   </div>

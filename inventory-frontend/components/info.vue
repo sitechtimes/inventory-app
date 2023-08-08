@@ -32,6 +32,8 @@
         :link="link"
         :vendor="vendor"
         :date="date"
+        :quantM="makerspace_quantity"
+        :quantB="backroom_quantity"
       />
     </div>
     <div class="extraInfoPanel" v-if="this.store.vendor">
@@ -107,8 +109,8 @@
   color: var(--darkergray);
   transition: all 0.1s linear;
   border-radius: 3rem;
-  height: 5rem;
-  width: 5rem;
+  min-height: 5rem;
+  min-width: 5rem;
   background-color: rgba(0, 0, 0, 0);
 }
 
@@ -150,6 +152,16 @@
 .inactive:hover > .inactivebtn {
   opacity: 1;
 }
+@media screen and (max-width: 760px) {
+  .tab1btn,
+  .tab2btn,
+  .tab3btn {
+    min-height: 3rem;
+    min-width: 3rem;
+    margin-right: 1rem;
+    margin-left: -0.5rem;
+  }
+}
 </style>
 
 <script>
@@ -168,6 +180,8 @@ export default {
     link: String,
     vendor: String,
     date: String,
+    makerspace_quantity: Number,
+    backroom_quantity: Number,
   },
   components: {
     Extra,

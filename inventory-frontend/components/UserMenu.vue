@@ -162,7 +162,7 @@ export default {
   position: absolute;
   left: 5.5rem;
   margin-top: 1rem;
-  z-index: 1000;
+  z-index: 10000;
   width: fit-content;
   clip-path: polygon(
     10% 0,

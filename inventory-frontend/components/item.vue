@@ -197,6 +197,8 @@ export default {
     name_id: String,
     category: String,
     vendor: String,
+    makerspace: Number,
+    backroom: Number,
   },
 
   data() {
@@ -230,15 +232,18 @@ export default {
             link: this.description,
             vendor: this.vendor,
             date: this.updated,
+            makerspace: this.makerspace,
+            backroom: this.backroom,
           },
-        });
-        this.store.$patch({
           info: true,
           vendor: false,
           vendorHeader: false,
           categoryPop: false,
           categoryHeader: false,
         });
+      }
+      if (this.store.dismiss === false) {
+        this.store.NavMenu();
       }
       this.store.resizing();
     },

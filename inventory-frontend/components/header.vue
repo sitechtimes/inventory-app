@@ -7,7 +7,7 @@
             <div
               v-if="store.dismiss === true"
               class="open-menu-icon-cont"
-              @click="NavMenu"
+              @click="store.NavMenu"
             >
               <font-awesome-icon
                 :icon="['fas', 'bars']"
@@ -17,7 +17,7 @@
             <div
               v-if="store.dismiss === false"
               class="open-menu-icon-cont"
-              @click="NavMenu"
+              @click="store.NavMenu"
             >
               <font-awesome-icon
                 :icon="['fas', 'xmark']"
@@ -52,41 +52,7 @@ export default {
       store: useItemsStore(),
     };
   },
-  methods: {
-    NavMenu() {
-      const appDOM = document.querySelector(".app");
-      const menubtn = document.querySelectorAll(".menu-btn");
-      if (appDOM.classList.contains("selected")) {
-        appDOM.classList.remove("selected");
-        appDOM.classList.add("dismiss");
-        menubtn.forEach((btn) => {
-          btn.classList.remove("stretch");
-          btn.classList.add("shrink");
-        });
-
-        this.store.$patch({ dismiss: true });
-        console.log("dismiss");
-      } else if (appDOM.classList.contains("dismiss")) {
-        appDOM.classList.remove("dismiss");
-        this.store.$patch({ dismiss: false });
-        appDOM.classList.add("selected");
-        menubtn.forEach((btn) => {
-          btn.classList.remove("shrink");
-          btn.classList.add("stretch");
-        });
-        console.log("selected");
-      } else if (
-        !appDOM.classList.contains("dismiss") ||
-        !appDOM.classList.contains("selected")
-      ) {
-        appDOM.classList.add("selected");
-        console.log("selected");
-        menubtn.forEach((btn) => {
-          btn.classList.add("stretch");
-        });
-      }
-    },
-  },
+  methods: {},
 };
 </script>
 

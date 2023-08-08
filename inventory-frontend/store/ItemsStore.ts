@@ -102,6 +102,41 @@ export const useItemsStore = defineStore("items", {
 
       document.getElementById("searchform").value = "";
     },
+    //nav menu reshape
+    NavMenu() {
+      const appDOM = document.querySelector(".app");
+      const menubtn = document.querySelectorAll(".menu-btn");
+      if (appDOM.classList.contains("selected")) {
+        appDOM.classList.remove("selected");
+        appDOM.classList.add("dismiss");
+        menubtn.forEach((btn) => {
+          btn.classList.remove("stretch");
+          btn.classList.add("shrink");
+        });
+
+        this.dismiss=true;
+        console.log("dismiss");
+      } else if (appDOM.classList.contains("dismiss")) {
+        appDOM.classList.remove("dismiss");
+       this.dismiss=false;
+       this.info=false;
+        appDOM.classList.add("selected");
+        menubtn.forEach((btn) => {
+          btn.classList.remove("shrink");
+          btn.classList.add("stretch");
+        });
+        console.log("selected");
+      } else if (
+        !appDOM.classList.contains("dismiss") ||
+        !appDOM.classList.contains("selected")
+      ) {
+        appDOM.classList.add("selected");
+        console.log("selected");
+        menubtn.forEach((btn) => {
+          btn.classList.add("stretch");
+        });
+      }
+    },
   }
   
 })

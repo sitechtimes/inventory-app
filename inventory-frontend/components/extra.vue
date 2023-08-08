@@ -6,19 +6,31 @@
     <div class="detailsPop">
       <div class="detailsName poprow">
         <div class="text col1">Name</div>
-        <div class="text col2">{{ name }}</div>
+        <div class="text col2 col2name">{{ name }}</div>
       </div>
 
       <div class="detailsCat poprow">
         <div class="text col1">Category</div>
-        <button class="text col2 extrabtn" @click="categoryInfo">
+        <button class="text col2 extrabtn arrowbtn" @click="categoryInfo">
           {{ category }}
+          <div class="heading rightarrow">&gt;</div>
         </button>
       </div>
       <div class="detailsStock poprow">
         <div class="text col1">Total Stock Available</div>
-        <div class="text col2">
+        <button class="text col2 extrabtn arrowbtn" @click="locationToggle">
           {{ quantity }}
+          <div class="expandbtn heading rightarrow">&gt;</div>
+        </button>
+      </div>
+      <div class="detailsLocation" v-if="location">
+        <div class="poprow">
+          <div class="text col1">Makerspace</div>
+          <div class="text col2">{{ quantM }}</div>
+        </div>
+        <div class="poprow">
+          <div class="text col1">Backroom</div>
+          <div class="text col2">{{ quantB }}</div>
         </div>
       </div>
       <div class="detailsPurchase poprow">
@@ -27,8 +39,9 @@
       </div>
       <div class="detailsVendor poprow">
         <div class="text col1">Vendor</div>
-        <button class="text extrabtn col2" @click="vendorInfo">
+        <button class="text extrabtn col2 arrowbtn" @click="vendorInfo">
           {{ vendor }}
+          <div class="heading rightarrow">&gt;</div>
         </button>
       </div>
       <div class="detailsDate poprow">
@@ -55,10 +68,13 @@ export default {
     link: String,
     vendor: String,
     date: String,
+    quantM: Number,
+    quantB: Number,
   },
   data() {
     return {
       store: useItemsStore(),
+      location: false,
     };
   },
   methods: {
@@ -78,11 +94,46 @@ export default {
       this.store.inactive(".extraTab", ".tab1", ".tab1btn");
       this.store.active(".categoryTab", ".tab3", ".tab3btn");
     },
+    locationToggle() {
+      this.location = !this.location;
+      if (this.location === true) {
+        document.querySelector(".expandbtn").style.transform = "rotate(90deg)";
+      } else {
+        document.querySelector(".expandbtn").style.transform = "none";
+      }
+    },
   },
 };
 </script>
 
 <style>
+.rightarrow {
+  height: 3rem;
+  width: 3rem;
+  margin-left: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--tpgray);
+  border-radius: 2rem;
+  color: var(--darkergray);
+  transition: all 0.2s;
+}
+.rightarrow:hover {
+  background-color: var(--darkgray);
+  color: var(--darkestgray);
+}
+.rightarrow:active,
+.rightarrow:focus {
+  background-color: var(--tpdarkgray);
+}
+.arrowbtn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 100%;
+}
 .popUpPanel {
   height: 100vh;
   width: 100%;
@@ -122,14 +173,13 @@ export default {
   width: 70%;
   padding-right: 5rem;
 }
+
 .extrabtn {
   min-width: fit-content;
-  width: 30%;
+  width: 50%;
   text-align: left;
 }
-.extrabtn:active {
-  box-shadow: 0.2rem 0.2rem 1rem var(--tpdarkgray);
-}
+
 .changelog,
 .logorg {
   padding: 1.5rem;
@@ -148,5 +198,21 @@ export default {
 .detailsPop,
 .imagePop {
   width: 100%;
+}
+.detailsLocation {
+  margin-left: 2rem;
+}
+.detailsPop {
+  min-width: fit-content;
+  width: 90%;
+}
+
+@media screen and (max-width: 760px) {
+  .col2 {
+    padding-right: 0;
+  }
+  .col2name {
+    padding-right: 5rem;
+  }
 }
 </style>

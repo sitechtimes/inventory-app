@@ -39,6 +39,8 @@
         :link="store.popup.link"
         :vendor="store.popup.vendor"
         :date="store.popup.updated"
+        :backroom_quantity="store.popup.backroom"
+        :makerspace_quantity="store.popup.makerspace"
       />
     </div>
   </div>
@@ -134,16 +136,16 @@ export default {
 
 @media screen and (max-width: 760px) {
   .infoDesc {
-    width: auto;
+    min-width: 100vw;
     align-self: flex-start;
-    justify-self: flex-start;
     position: fixed;
     margin-top: 5.5rem;
-    margin-left: 7rem;
     left: 0;
     right: 0;
     border: none;
     z-index: 2000;
+    overflow-y: scroll;
+    margin-bottom: 20rem;
   }
 }
 </style>
