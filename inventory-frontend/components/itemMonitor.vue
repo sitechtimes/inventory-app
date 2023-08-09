@@ -18,6 +18,7 @@ export default {
   props: {
     name: String,
     quantity: Number,
+    minimum: Number,
     image: String,
     vendor: String,
     link: String,

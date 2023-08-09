@@ -26,6 +26,10 @@ export const useItemsStore = defineStore("items", {
     catalog: true,
     monitor: false,
     vendors: false,
+    //notifying minimum
+    alerts: 0,
+    alerted_items: [],
+    viewNotif: false,
   }),
 
   getters: {},
@@ -109,6 +113,7 @@ export const useItemsStore = defineStore("items", {
     },
     //nav menu reshape
     NavMenu() {
+      this.viewNotif =false
       const appDOM = document.querySelector(".app");
       const menubtn = document.querySelectorAll(".menu-btn");
       if (appDOM.classList.contains("selected")) {
@@ -142,6 +147,23 @@ export const useItemsStore = defineStore("items", {
         });
       }
     },
+    //counting alerts
+    countAlerts(){
+      this.returnlist.forEach(list=> {
+        console.log(list)
+        list.itemsCategory.forEach((item)=> {
+          if (item.alert === true) {
+              this.alerts++;
+              this.alerted_items.push({
+                name: item.name,
+                quantity: item.quantity,
+                name_id: item.name_id,
+              });
+            }
+          })
+      })
+      console.log(this.alerts)
+    }
   }
   
 })

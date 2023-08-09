@@ -2,6 +2,7 @@
   <div class="bigdiv">
     <div id="mainItems">
       <div class="itemHeader subheading">Items</div>
+
       <div
         class="errorsearch subheading"
         v-if="store.search === true && store.empty === true"
@@ -15,7 +16,6 @@
             :key="each[0]"
             :list="each[1]"
             :name="each[0]"
-            :min="minimum(each)"
           ></ItemPerCat>
         </div>
         <div class="categoryHolder" v-else>
@@ -24,7 +24,6 @@
             :key="each.id"
             :list="each.itemsCategory"
             :name="each.category_name"
-            :min="minimum(each)"
           ></ItemPerCat>
         </div>
       </div>
@@ -58,18 +57,8 @@ export default {
       store: useItemsStore(),
     };
   },
-  methods: {
-    minimum(list) {
-      if (list.length >= 1) {
-        return true;
-      } else {
-        return false;
-      }
-    },
-  },
-  mounted() {
-    this.store.getItems();
-  },
+  methods: {},
+  mounted() {},
 };
 </script>
 

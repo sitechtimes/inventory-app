@@ -7,8 +7,9 @@
       @keyup="filteredItems(input)"
       placeholder="Search Inventory"
     />
+    <span class="material-symbols-outlined searchicon"> search </span>
     <button class="exitbtn heading searchclear" @click="store.clearSearch">
-      X
+      <span class="material-symbols-outlined"> close </span>
     </button>
   </div>
 </template>
@@ -60,6 +61,10 @@ export default {
 </script>
 
 <style>
+.searchicon {
+  position: absolute;
+  margin-left: 1rem;
+}
 .compsearchbar {
   min-width: 100%;
   position: relative;
@@ -71,7 +76,7 @@ export default {
   border-radius: 1rem;
   border: none;
   font-size: 1.5rem;
-  padding-left: 1.5rem;
+  padding-left: 4.5rem;
 }
 #searchform:focus,
 input:focus {
@@ -98,7 +103,7 @@ input:focus {
 }
 @media screen and (max-width: 760px) {
   .searchclear {
-    right: 0;
+    right: -1.5rem;
   }
 }
 </style>

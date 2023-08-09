@@ -9,7 +9,7 @@
       <div
         class="quantityC smalltext"
         ref="quant"
-        :class="quantityColor(quantity) ? 'availY' : 'availN'"
+        :class="alert ? 'availN' : 'availY'"
       >
         {{ quantity }}
       </div>
@@ -192,7 +192,7 @@ export default {
     quantity: Number,
     description: String,
     updated: String,
-    available: Boolean,
+    alert: Boolean,
     image: String,
     name_id: String,
     category: String,
@@ -212,7 +212,7 @@ export default {
       console.log(this.store.vendor);
       if (this.store.popup.name === this.name) {
         if (this.store.info === false) {
-          this.store.$patch({ info: true });
+          this.store.$patch({ info: true, viewNotif: false });
         } else {
           this.store.$patch({
             info: false,
@@ -240,6 +240,7 @@ export default {
           vendorHeader: false,
           categoryPop: false,
           categoryHeader: false,
+          viewNotif: false,
         });
       }
       if (this.store.dismiss === false) {
@@ -252,15 +253,6 @@ export default {
       this.store.main.push(this.$refs.main);
       this.store.textbox.push(this.$refs.textbox);
       this.store.name.push(this.$refs.name);
-    },
-    quantityColor(num) {
-      if (num > 0) {
-        return true;
-      } else if (num === 0) {
-        return false;
-      } else {
-        console.log("error");
-      }
     },
   },
   mounted() {

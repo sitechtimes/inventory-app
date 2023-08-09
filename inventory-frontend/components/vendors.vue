@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="header">Vendors</div>
+    <div class="header itemHeader subheading">Vendors</div>
     <div class="content">
       <div class="buttons">
         <button
@@ -9,7 +9,7 @@
           class="vendor-container"
           @click="showChartfuc(data.itemsVendor)"
         >
-          <h1 class="vendor-name">{{ data.vendor_name }}</h1>
+          <h1 class="vendor-name subheading">{{ data.vendor_name }}</h1>
         </button>
       </div>
       <div class="info canvas" v-show="showInfo" id="canvas" ref="canvas">
@@ -18,7 +18,10 @@
             <div
               :class="{ 'chart-cont-big': minMax, 'chart-cont-small': !minMax }"
             >
-              <canvas id="Vendor"></canvas>
+              <canvas
+                id="Vendor"
+                style="height: 100%; max-width: 100%"
+              ></canvas>
             </div>
             <div class="btn-cont">
               <button
@@ -43,6 +46,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { Chart } from "chart.js/auto";
+import { useItemsStore } from "~/store/ItemsStore";
 
 let showChart = ref(false);
 let vendor = ref([]);
@@ -50,6 +54,7 @@ let chart = ref();
 let showInfo = ref(false); // Step 1
 let minMax = ref(false);
 let canvas = ref();
+let store = useItemsStore();
 
 onMounted(() => {
   fetch("http://127.0.0.1:8000/items/vendor/", {
@@ -157,6 +162,9 @@ const showChartfuc = (vendorItem) => {
     });
     updateChart(labels, quantity);
   }
+  if (store.dismiss === false) {
+    store.NavMenu();
+  }
 };
 
 const fullScreen = () => {
@@ -174,6 +182,7 @@ const fullScreen = () => {
 .container {
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .header {
@@ -185,6 +194,7 @@ const fullScreen = () => {
 .content {
   display: flex;
   flex-direction: row;
+  padding-top: 3rem;
 }
 
 .buttons {
@@ -222,10 +232,12 @@ const fullScreen = () => {
   padding: 30px 55px 30px 55px;
   margin: 6px;
   width: 24rem;
+  transition: all 0.2s;
+  border-radius: 0.5rem;
 }
 
 .vendor-container:hover {
-  background-color: #d4d4d4;
+  background-color: var(--halflightgray);
   cursor: pointer;
 }
 
@@ -252,6 +264,7 @@ const fullScreen = () => {
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
+  margin: 2rem;
 }
 
 .maximize-button,
@@ -292,7 +305,7 @@ const fullScreen = () => {
 }
 
 .chart-cont-big {
-  height: 800px;
+  height: 40rem;
   display: flex;
   justify-content: center;
 }
@@ -300,19 +313,30 @@ const fullScreen = () => {
 .chart-cont-small {
   height: 500px;
 }
+#Vendor {
+  height: 80rem;
+}
 @media screen and (max-width: 760px) {
   .content {
     flex-direction: column-reverse;
   }
-  .chart-cont-small {
+  .chart-cont-small,
+  .canvas-cont {
     height: fit-content;
-    width: 80%;
+    max-width: 90%;
     margin-bottom: 3rem;
   }
-  .canvas-cont {
+  .canvas-cont,
+  .buttons,
+  .chart-cont-small {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+    width: 100%;
+  }
+  .buttons {
+    margin-left: 0;
   }
 }
 </style>

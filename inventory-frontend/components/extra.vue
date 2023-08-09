@@ -3,6 +3,11 @@
     <div class="imagePop">
       <img class="imagePopView" :src="img_link" />
     </div>
+    <div class="editPop">
+      <button class="editbtn">
+        <span class="material-symbols-outlined editinfo"> edit </span>
+      </button>
+    </div>
     <div class="detailsPop">
       <div class="detailsName poprow">
         <div class="text col1">Name</div>
@@ -13,24 +18,28 @@
         <div class="text col1">Category</div>
         <button class="text col2 extrabtn arrowbtn" @click="categoryInfo">
           {{ category }}
-          <div class="heading rightarrow">&gt;</div>
+          <div class="heading rightarrow">
+            <span class="material-symbols-outlined"> navigate_next </span>
+          </div>
         </button>
       </div>
       <div class="detailsStock poprow">
         <div class="text col1">Total Stock Available</div>
         <button class="text col2 extrabtn arrowbtn" @click="locationToggle">
           {{ quantity }}
-          <div class="expandbtn heading rightarrow">&gt;</div>
+          <div class="expandbtn heading rightarrow">
+            <span class="material-symbols-outlined"> navigate_next </span>
+          </div>
         </button>
       </div>
       <div class="detailsLocation" v-if="location">
         <div class="poprow">
-          <div class="text col1">Makerspace</div>
-          <div class="text col2">{{ quantM }}</div>
+          <div class="text col1" id="location">Makerspace</div>
+          <div class="text col2" id="locationQ">{{ quantM }}</div>
         </div>
         <div class="poprow">
-          <div class="text col1">Backroom</div>
-          <div class="text col2">{{ quantB }}</div>
+          <div class="text col1" id="location">Backroom</div>
+          <div class="text col2" id="locationQ">{{ quantB }}</div>
         </div>
       </div>
       <div class="detailsPurchase poprow">
@@ -41,7 +50,9 @@
         <div class="text col1">Vendor</div>
         <button class="text extrabtn col2 arrowbtn" @click="vendorInfo">
           {{ vendor }}
-          <div class="heading rightarrow">&gt;</div>
+          <div class="heading rightarrow">
+            <span class="material-symbols-outlined"> navigate_next </span>
+          </div>
         </button>
       </div>
       <div class="detailsDate poprow">
@@ -107,10 +118,33 @@ export default {
 </script>
 
 <style>
+.editPop {
+  height: 5rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+.editbtn {
+  height: 4rem;
+  width: 4rem;
+  margin-left: 5rem;
+  border-radius: 3rem;
+
+  background-color: var(--lightblue);
+}
+.editinfo {
+  color: var(--darkblue);
+}
+#location {
+  color: var(--darkergray);
+}
+#locationQ {
+  color: var(--darkestgray);
+}
 .rightarrow {
   height: 3rem;
   width: 3rem;
-  margin-left: 2.5rem;
+  padding-left: 0.1rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -157,7 +191,7 @@ export default {
 .poprow {
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: center;
   margin: 2rem;
   height: fit-content;
   width: 100%;

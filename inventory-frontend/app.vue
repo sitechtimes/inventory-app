@@ -41,7 +41,10 @@ export default {
     };
   },
   methods: {},
-  mounted() {},
+  async mounted() {
+    await this.store.getItems();
+    this.store.countAlerts();
+  },
 };
 </script>
 

@@ -5,19 +5,25 @@
         <button class="extraTab tabtext text" @click="swapMain">
           {{ name }}
         </button>
-        <button class="exitbtn heading tab1btn" @click="exit">X</button>
+        <button class="exitbtn heading tab1btn" @click="exit">
+          <span class="material-symbols-outlined"> close </span>
+        </button>
       </div>
       <div class="tab tab2" v-if="this.store.vendorHeader">
         <button class="vendorTab tabtext text" @click="swapVendor">
           {{ vendor }}
         </button>
-        <button class="exitbtn heading tab2btn" @click="closeVendor">X</button>
+        <button class="exitbtn heading tab2btn" @click="closeVendor">
+          <span class="material-symbols-outlined"> close </span>
+        </button>
       </div>
       <div class="tab tab3" v-if="this.store.categoryHeader">
         <button class="categoryTab tabtext text" @click="swapCat">
           {{ category }}
         </button>
-        <button class="exitbtn heading tab3btn" @click="closeCat">X</button>
+        <button class="exitbtn heading tab3btn" @click="closeCat">
+          <span class="material-symbols-outlined"> close </span>
+        </button>
       </div>
     </div>
     <div
@@ -151,6 +157,15 @@
 
 .inactive:hover > .inactivebtn {
   opacity: 1;
+}
+
+.tab1btn,
+.tab2btn,
+.tab3btn,
+.searchclear {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 @media screen and (max-width: 760px) {
   .tab1btn,

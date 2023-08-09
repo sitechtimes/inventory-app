@@ -1,5 +1,9 @@
 <template>
   <div>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
     <div class="menu">
       <div class="menu-container">
         <button
@@ -7,10 +11,11 @@
           @click="catalog"
         >
           <div class="icon-holder">
-            <font-awesome-icon
-              :icon="['fas', 'boxes-stacked']"
-              class="mobile-icon"
-            />
+            <span
+              class="material-symbols-outlined mobile-icon shelves activetag"
+            >
+              shelves
+            </span>
           </div>
           <div class="icon-tag heading cat-tag activetag">Items</div>
           <div class="popup-tag text" v-if="store.dismiss">Items</div>
@@ -18,10 +23,9 @@
 
         <button class="menu-btn exitbtn shrink monitorbtn" @click="monitor">
           <div class="icon-holder">
-            <font-awesome-icon
-              :icon="['fas', 'hand-holding-hand']"
-              class="mobile-icon"
-            />
+            <span class="material-symbols-outlined mobile-icon monitoring">
+              monitoring
+            </span>
           </div>
           <div class="icon-tag heading mon-tag">Monitor</div>
           <div class="popup-tag text" v-if="store.dismiss">Monitor</div>
@@ -29,10 +33,9 @@
 
         <button class="menu-btn exitbtn shrink vendorsbtn" @click="vendors">
           <div class="icon-holder">
-            <font-awesome-icon
-              :icon="['fas', 'circle-exclamation']"
-              class="mobile-icon"
-            />
+            <span class="material-symbols-outlined mobile-icon shipping">
+              local_shipping
+            </span>
           </div>
           <div class="icon-tag heading ven-tag">Vendors</div>
           <div class="popup-tag text" v-if="store.dismiss">Vendors</div>
@@ -63,6 +66,7 @@ export default {
         catalog: true,
         monitor: false,
         vendors: false,
+        viewNotif: false,
       });
       document.querySelector(".catalogbtn").classList.add("activepage");
       document.querySelector(".monitorbtn").classList.remove("activepage");
@@ -70,6 +74,9 @@ export default {
       document.querySelector(".cat-tag").classList.add("activetag");
       document.querySelector(".mon-tag").classList.remove("activetag");
       document.querySelector(".ven-tag").classList.remove("activetag");
+      document.querySelector(".shelves").classList.add("activetag");
+      document.querySelector(".monitoring").classList.remove("activetag");
+      document.querySelector(".shipping").classList.remove("activetag");
     },
     monitor() {
       this.store.clearSearch();
@@ -77,6 +84,7 @@ export default {
         catalog: false,
         monitor: true,
         vendors: false,
+        viewNotif: false,
       });
       document.querySelector(".catalogbtn").classList.remove("activepage");
 
@@ -85,9 +93,9 @@ export default {
       document.querySelector(".cat-tag").classList.remove("activetag");
       document.querySelector(".mon-tag").classList.add("activetag");
       document.querySelector(".ven-tag").classList.remove("activetag");
-      document
-        .querySelector(".fa-hand-holding-hand")
-        .classList.add("activesvg");
+      document.querySelector(".shelves").classList.remove("activetag");
+      document.querySelector(".monitoring").classList.add("activetag");
+      document.querySelector(".shipping").classList.remove("activetag");
     },
     vendors() {
       this.store.clearSearch();
@@ -95,6 +103,7 @@ export default {
         catalog: false,
         monitor: false,
         vendors: true,
+        viewNotif: false,
       });
       document.querySelector(".catalogbtn").classList.remove("activepage");
 
@@ -103,21 +112,15 @@ export default {
       document.querySelector(".cat-tag").classList.remove("activetag");
       document.querySelector(".mon-tag").classList.remove("activetag");
       document.querySelector(".ven-tag").classList.add("activetag");
+      document.querySelector(".shelves").classList.remove("activetag");
+      document.querySelector(".shipping").classList.add("activetag");
+      document.querySelector(".monitoring").classList.remove("activetag");
     },
   },
 };
 </script>
 
 <style scoped>
-.activepage {
-  background-color: var(--lightblue);
-}
-.activepage:hover {
-  background-color: var(--lightblue);
-}
-.activesvg:nth-child(1) {
-  fill: var(--darkblue);
-}
 .nav-cont {
   height: 100vh;
   width: 18rem;
@@ -181,9 +184,7 @@ export default {
   transform: scale(0);
   transition: all 0.15s;
 }
-.activetag {
-  color: var(--darkblue);
-}
+
 .menu-btn:hover > .popup-tag {
   transform: scale(1);
   opacity: 1;
@@ -198,9 +199,18 @@ export default {
 
 .mobile-icon {
   display: grid;
-  color: #c7d6d5;
+  color: var(--darkestgray);
   width: 2.5rem;
   height: 2.5rem;
   margin: 0 1rem;
+}
+.activepage {
+  background-color: var(--lightblue);
+}
+.activepage:hover {
+  background-color: var(--lightblue);
+}
+.activetag {
+  color: var(--darkblue);
 }
 </style>
