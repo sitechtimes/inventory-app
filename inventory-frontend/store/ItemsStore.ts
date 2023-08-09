@@ -5,7 +5,7 @@ export const useItemsStore = defineStore("items", {
     //for search function filtering
     items: [],
     returnlist: [],
-    empty:false,
+    empty: false,
     search: false,
     //toggle extra info
     popup: { name: null },
@@ -18,32 +18,37 @@ export const useItemsStore = defineStore("items", {
     //for resizing on toggling extra info
     main: [],
     textbox: [],
-    name:[],
-    quant:[],
-    cat:[],
+    name: [],
+    quant: [],
+    cat: [],
     //nav
     dismiss: true,
-    catalog:true,
-    monitor:false,
-    vendors:false,
+    catalog: true,
+    monitor: false,
+    vendors: false,
   }),
 
   getters: {},
 
   actions: {
     //fetch api
-    async getItems(){
-    const response = await fetch('http://127.0.0.1:8000/items/category')
-    const results = await response.json()
-    console.log(results)
-    const newresults = results.sort((a,b) => (a.category_name > b.category_name) ? 1 : ((b.category_name > a.category_name) ? -1 : 0))
-    this.returnlist = newresults
+    async getItems() {
+      const response = await fetch("http://127.0.0.1:8000/items/category/");
+      const results = await response.json();
+      console.log(results);
+      const newresults = results.sort((a, b) =>
+        a.category_name > b.category_name
+          ? 1
+          : b.category_name > a.category_name
+          ? -1
+          : 0
+      );
+      this.returnlist = newresults;
 
-    this.items = newresults
-    return newresults
+      this.items = newresults;
+      return newresults;
     },
-   
-   
+
     //resize individual items when clicked for more information by adding/removing classes
     resizing() {
       if (this.info === true) {
@@ -140,5 +145,4 @@ export const useItemsStore = defineStore("items", {
   }
   
 })
-
 

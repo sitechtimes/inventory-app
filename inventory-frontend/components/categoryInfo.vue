@@ -155,7 +155,7 @@ async function fetchData() {
 
 </script>
 
-<style>
+<style scoped>
 .popUpPanel {
   height: 100%;
   width: 100%;
