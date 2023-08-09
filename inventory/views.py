@@ -1,6 +1,7 @@
 import statistics
-from rest_framework import generics, viewsets
-from django.http import JsonResponse
+from rest_framework import generics, viewsets, mixins
+from rest_framework.views import APIView
+from django.http import JsonResponse, Http404
 from rest_framework.response import Response
 from .models import Item, Category, Vendor
 from .serializer import ItemSerializer, CategorySerializer, VendorSerializer
@@ -122,7 +123,15 @@ class AddItems(viewsets.ModelViewSet):
 
 
 class deleteItems(generics.DestroyAPIView):
+    queryset = Item.objects.all()
+    serializer_class = ItemSerializer
+
     def delete(self, request, *args, **kwargs):
         self.get_object().delete()
 
         return Response("Item deleted", status=204)
+
+
+class editItems(generics.RetrieveUpdateAPIView):
+    queryset = Item.objects.all()
+    serializer_class = ItemSerializer

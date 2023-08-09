@@ -16,5 +16,6 @@ urlpatterns = [
          views.deleteItems.as_view()),
     # send Data to these Url as request body
     path("addItems/", views.AddItems.as_view({"post": "create"})),
+    path("editItem/<int:pk>/", views.editItems.as_view()),
 ]
 urlpatterns = format_suffix_patterns(urlpatterns)
