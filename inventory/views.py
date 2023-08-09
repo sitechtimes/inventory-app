@@ -1,6 +1,7 @@
 import statistics
-from rest_framework import generics, viewsets
-from django.http import JsonResponse
+from rest_framework import generics, viewsets, mixins
+from rest_framework.views import APIView
+from django.http import JsonResponse, Http404
 from rest_framework.response import Response
 from .models import Item, Category, Vendor
 from .serializer import ItemSerializer, CategorySerializer, VendorSerializer
@@ -143,3 +144,8 @@ class updateMinAmount(generics.UpdateAPIView):
         itemMinAmount.save()
 
         return Response("Item updated", status=200)
+
+
+class editItems(generics.RetrieveUpdateAPIView):
+    queryset = Item.objects.all()
+    serializer_class = ItemSerializer
