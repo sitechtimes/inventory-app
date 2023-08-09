@@ -54,6 +54,7 @@ class Item(models.Model):
     def __str__(self):
         return self.name
 
+    #this may conflict with stuff idk
     def delete(self, *args, **kwargs):
         count_obj = Item.objects.all().count() + 1
         self.id = count_obj
