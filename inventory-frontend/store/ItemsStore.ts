@@ -156,7 +156,7 @@ export const useItemsStore = defineStore("items", {
               this.alerts++;
               this.alerted_items.push({
                 name: item.name,
-                quantity: item.quantity,
+                quantity: item.total,
                 name_id: item.name_id,
               });
             }
