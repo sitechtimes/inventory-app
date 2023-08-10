@@ -44,7 +44,7 @@
       </div>
       <div class="detailsPurchase poprow">
         <div class="text col1">Purchase Link</div>
-        <a class="text col2" :href="link">{{ link }}</a>
+        <a class="text col2 col2name purchlink" :href="link">{{ link }}</a>
       </div>
       <div class="detailsVendor poprow">
         <div class="text col1">Vendor</div>
@@ -205,9 +205,18 @@ export default {
 }
 .col2 {
   width: 70%;
+  margin-right: 5rem;
+}
+.col2name {
   padding-right: 5rem;
 }
+.purchlink {
+  width: 30rem;
+  overflow: hidden;
 
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
 .extrabtn {
   min-width: fit-content;
   width: 50%;
@@ -244,9 +253,6 @@ export default {
 @media screen and (max-width: 760px) {
   .col2 {
     padding-right: 0;
-  }
-  .col2name {
-    padding-right: 5rem;
   }
 }
 </style>

@@ -41,7 +41,12 @@ export default {
       });
       console.log(this.newlist);
 
-      this.store.$patch({ items: this.newlist, search: true });
+      this.store.$patch({
+        items: this.newlist,
+        search: true,
+        info: false,
+        editform: false,
+      });
       this.empties = 0;
       this.store.items.forEach((item) => {
         if (item[1].length < 1) {

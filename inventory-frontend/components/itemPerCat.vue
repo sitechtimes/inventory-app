@@ -18,7 +18,7 @@
           :image="result.image_url"
           :updated="result.last_purchased"
           :vendor="result.vendor"
-          :link="result.purchase_link"
+          :purchase_link="result.purchase_link"
           :category="result.category"
           :backroom="result.backroom_quantity"
           :makerspace="result.makerspace_quantity"

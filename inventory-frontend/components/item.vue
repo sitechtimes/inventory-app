@@ -190,7 +190,7 @@ export default {
   props: {
     name: String,
     quantity: Number,
-    description: String,
+    purchase_link: String,
     updated: String,
     alert: Boolean,
     image: String,
@@ -220,6 +220,7 @@ export default {
             vendorHeader: false,
             categoryPop: false,
             categoryHeader: false,
+            editform: false,
           });
         }
       } else {
@@ -229,7 +230,7 @@ export default {
             name: this.name,
             category: this.category,
             quantity: this.quantity,
-            link: this.description,
+            link: this.purchase_link,
             vendor: this.vendor,
             date: this.updated,
             makerspace: this.makerspace,
@@ -241,6 +242,7 @@ export default {
           categoryPop: false,
           categoryHeader: false,
           viewNotif: false,
+          editform: false,
         });
       }
       if (this.store.dismiss === false) {

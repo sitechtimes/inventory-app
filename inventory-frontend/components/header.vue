@@ -43,7 +43,7 @@
       <Search />
     </div>
     <div class="buttonbar">
-      <button class="addItem" @click="addItems">
+      <button class="addItem" @click="store.addItems">
         <span class="material-symbols-outlined add_box" style="font-size: 30px">
           add_box
         </span>
@@ -75,24 +75,6 @@ export default {
     };
   },
   methods: {
-    addItems() {
-      if (this.store.editform === true) {
-        this.store.$patch({
-          editform: false,
-        });
-      } else {
-        this.store.$patch({
-          editform: true,
-          viewNotif: false,
-          info: false,
-          vendor: false,
-          vendorHeader: false,
-          categoryPop: false,
-          categoryHeader: false,
-        });
-        this.store.resizing();
-      }
-    },
     viewNotifications() {
       let inbox = document.querySelector(".notif").classList;
       if (inbox.contains("spin")) {
@@ -125,6 +107,7 @@ export default {
 </script>
 
 <style>
+
 .addItem,
 .notif {
   height: 4rem;
@@ -146,7 +129,7 @@ export default {
 .add_box:hover {
   color: var(--darkblue);
 }
-.addItem:focus,
+
 .addItem:active {
   background-color: var(--lightblue);
 }

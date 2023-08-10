@@ -55,7 +55,7 @@ export const useItemsStore = defineStore("items", {
 
     //resize individual items when clicked for more information by adding/removing classes
     resizing() {
-      if (this.info === true) {
+      if (this.info === true || this.editform === true) {
         this.textbox.forEach((item) => {
           item.classList.add("info-name-avail");
         });
@@ -114,6 +114,7 @@ export const useItemsStore = defineStore("items", {
     //nav menu reshape
     NavMenu() {
       this.viewNotif =false
+      this.editform =false
       const appDOM = document.querySelector(".app");
       const menubtn = document.querySelectorAll(".menu-btn");
       if (appDOM.classList.contains("selected")) {
@@ -163,7 +164,24 @@ export const useItemsStore = defineStore("items", {
           })
       })
       console.log(this.alerts)
-    }
+    },
+    //add item form 
+    addItems() {
+      if (this.editform === true) {
+        this.editform= false
+        
+      } else {
+        this.editform = true
+        this.viewNotif= false,
+        this.info= false,
+        this.  vendor= false,
+          this.  vendorHeader= false,
+          this. categoryPop= false,
+          this.categoryHeader= false
+     
+      }
+      this.resizing();
+    },
   }
   
 })
