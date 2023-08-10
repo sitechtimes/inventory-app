@@ -1,8 +1,7 @@
 <template>
-
   <div class="app dismiss">
     <div id="search" class="heading">
-      <Header />
+      <Header> </Header>
     </div>
     <div id="navHolder">
       <UserMenu />
@@ -20,7 +19,6 @@
     </div>
     <div v-if="store.editform">
       <NuxtPage />
-
     </div>
   </div>
 </template>

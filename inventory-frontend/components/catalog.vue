@@ -107,7 +107,7 @@ export default {
 }
 
 .infoDesc {
-  height: 100%;
+  height: 100vh;
   width: 70%;
   min-width: 50rem;
   max-width: 60rem;

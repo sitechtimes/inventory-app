@@ -20,9 +20,19 @@
         <button class="exitbtn heading tab3btn" @click="closeCat">X</button>
       </div>
     </div>
-    <div class="extraInfoPanel" v-if="this.store.vendor === false && this.store.categoryPop === false">
-      <Extra :img_link="img_link" :name="name" :category="category" :quantity="quantity" :link="link" :vendor="vendor"
-        :date="date" />
+    <div
+      class="extraInfoPanel"
+      v-if="this.store.vendor === false && this.store.categoryPop === false"
+    >
+      <Extra
+        :img_link="img_link"
+        :name="name"
+        :category="category"
+        :quantity="quantity"
+        :link="link"
+        :vendor="vendor"
+        :date="date"
+      />
     </div>
     <div class="extraInfoPanel" v-if="this.store.vendor">
       <VendorInfo :vendorName="vendor" />
@@ -56,6 +66,7 @@
   display: flex;
   justify-content: space-between;
   border-right: var(--border);
+
   align-items: center;
   min-width: 30%;
 }
@@ -136,7 +147,7 @@
   opacity: 1;
 }
 
-.inactive:hover>.inactivebtn {
+.inactive:hover > .inactivebtn {
   opacity: 1;
 }
 </style>
@@ -216,6 +227,6 @@ export default {
       }
     },
   },
-  mounted() { },
+  mounted() {},
 };
 </script>

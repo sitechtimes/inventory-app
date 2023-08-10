@@ -212,6 +212,7 @@ async function fetchData() {
 
 .maximize-button {
   width: 4rem;
+
 }
 
 .maximize-button:hover,
