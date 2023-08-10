@@ -170,7 +170,6 @@ function handleDrop(event) {
 
 function handleFileChange(event) {
   const file = event.target.files[0];
-  console.log(file);
   thisfile.value = file;
   showPreview.value = true;
   if (file) {
@@ -202,7 +201,6 @@ function closeModal() {
 }
 
 async function submitForm() {
-  console.log(thisfile.value);
   const formData = new FormData();
   formData.append("item_id", item_id.value);
   if (thisfile.value) {
@@ -228,7 +226,6 @@ async function submitForm() {
     });
 
     const data = await response.json();
-    console.log(data);
   } catch (error) {
     console.log(error);
   }
