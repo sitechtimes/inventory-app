@@ -227,7 +227,7 @@ async function submitForm() {
 
     const data = await response.json();
   } catch (error) {
-    console.log(error);
+    console.log(error); //need to do error handling
   }
 }
 </script>
