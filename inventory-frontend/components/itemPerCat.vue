@@ -18,8 +18,11 @@
           :image="result.image_url"
           :updated="result.last_purchased"
           :vendor="result.vendor"
-          :link="result.purchase_link"
+          :purchase_link="result.purchase_link"
           :category="result.category"
+          :backroom="result.backroom_quantity"
+          :makerspace="result.makerspace_quantity"
+          :alert="result.alert"
         />
       </div>
       <div class="itemHolder itemHolderM" v-if="store.monitor === true">
@@ -33,6 +36,9 @@
           :vendor="result.vendor"
           :link="result.purchase_link"
           :category="result.category"
+          :backroom="result.backroom_quantity"
+          :makerspace="result.makerspace_quantity"
+          :alert="result.alert"
         />
       </div>
     </div>
@@ -46,7 +52,7 @@ import ItemMonitor from "./itemMonitor.vue";
 
 export default {
   name: "ItemPerCat",
-  props: { list: Array, name: String, min: Boolean },
+  props: { list: Array, name: String },
   components: { Item, ItemMonitor },
   data() {
     return {

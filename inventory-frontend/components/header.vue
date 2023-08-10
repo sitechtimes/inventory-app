@@ -1,5 +1,9 @@
 <template>
   <div class="longrow">
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
     <div class="fixedleft">
       <div class="fromnav">
         <div class="navnavnavnav">
@@ -7,23 +11,26 @@
             <div
               v-if="store.dismiss === true"
               class="open-menu-icon-cont"
-              @click="NavMenu"
+              @click="store.NavMenu"
             >
-              <font-awesome-icon
-                :icon="['fas', 'bars']"
-                class="open-menu-icon"
-              />
+              <span
+                class="material-symbols-outlined open-menu-icon"
+                style="font-size: 30px"
+              >
+                menu
+              </span>
             </div>
             <div
               v-if="store.dismiss === false"
               class="open-menu-icon-cont"
-              @click="NavMenu"
+              @click="store.NavMenu"
             >
-              <font-awesome-icon
-                :icon="['fas', 'xmark']"
-                style="color: #000000"
-                class="open-menu-icon"
-              />
+              <span
+                class="material-symbols-outlined open-menu-icon"
+                style="font-size: 30px"
+              >
+                close
+              </span>
             </div>
           </button>
         </div>
@@ -36,54 +43,63 @@
       <Search />
     </div>
     <div class="buttonbar">
-      <div class="notif"></div>
+      <button class="addItem" @click="store.addItems">
+        <span class="material-symbols-outlined add_box" style="font-size: 30px">
+          add_box
+        </span>
+      </button>
+      <button @click="viewNotifications" class="notif">
+        <span class="material-symbols-outlined inbox" style="font-size: 30px">
+          inbox
+        </span>
+        <div v-if="store.alerts > 0" class="smalltext alertNum"></div>
+      </button>
+
+      <div class="alerts-all" v-if="store.viewNotif">
+        <Alerts />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import Search from "./search.vue";
+import Alerts from "./alerts.vue";
 import { useItemsStore } from "~/store/ItemsStore";
 export default {
   name: "Header",
-  components: { Search },
+  components: { Search, Alerts },
   data() {
     return {
       store: useItemsStore(),
     };
   },
   methods: {
-    NavMenu() {
-      const appDOM = document.querySelector(".app");
-      const menubtn = document.querySelectorAll(".menu-btn");
-      if (appDOM.classList.contains("selected")) {
-        appDOM.classList.remove("selected");
-        appDOM.classList.add("dismiss");
-        menubtn.forEach((btn) => {
-          btn.classList.remove("stretch");
-          btn.classList.add("shrink");
+    viewNotifications() {
+      let inbox = document.querySelector(".notif").classList;
+      if (inbox.contains("spin")) {
+        inbox.remove("spin");
+        inbox.add("spin2");
+      } else if (inbox.contains("spin2")) {
+        inbox.add("spin");
+        inbox.remove("spin2");
+      } else {
+        inbox.add("spin");
+      }
+      if (this.store.viewNotif === true) {
+        this.store.$patch({
+          viewNotif: false,
         });
-
-        this.store.$patch({ dismiss: true });
-        console.log("dismiss");
-      } else if (appDOM.classList.contains("dismiss")) {
-        appDOM.classList.remove("dismiss");
-        this.store.$patch({ dismiss: false });
-        appDOM.classList.add("selected");
-        menubtn.forEach((btn) => {
-          btn.classList.remove("shrink");
-          btn.classList.add("stretch");
+      } else {
+        this.store.$patch({
+          viewNotif: true,
+          info: false,
+          vendor: false,
+          vendorHeader: false,
+          categoryPop: false,
+          categoryHeader: false,
         });
-        console.log("selected");
-      } else if (
-        !appDOM.classList.contains("dismiss") ||
-        !appDOM.classList.contains("selected")
-      ) {
-        appDOM.classList.add("selected");
-        console.log("selected");
-        menubtn.forEach((btn) => {
-          btn.classList.add("stretch");
-        });
+        this.store.resizing();
       }
     },
   },
@@ -91,10 +107,60 @@ export default {
 </script>
 
 <style>
+
+.addItem,
+.notif {
+  height: 4rem;
+  width: 4rem;
+  position: fixed;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.addItem {
+  right: 7rem;
+  border-radius: 2rem;
+}
+.addItem,
+.add_box {
+  transition: all 0.2s;
+}
+.add_box:hover {
+  color: var(--darkblue);
+}
+
+.addItem:active {
+  background-color: var(--lightblue);
+}
+.notif {
+  right: 3rem;
+}
+
+.alerts-all,
+.buttonbar {
+  overflow-y: scroll;
+}
+.material-symbols-outlined {
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 48;
+
+  color: var(--darkestgray);
+}
+.alertNum {
+  position: absolute;
+  background-color: rgb(201, 37, 86);
+  border-radius: 2rem;
+  color: var(--whitebg);
+  height: 1.25rem;
+  width: 1.25rem;
+  right: 0.5rem;
+  top: 0.5rem;
+  border: 2px solid var(--whitebg);
+}
 .navnavnavnav {
-  width: 2rem;
-  height: 2rem;
-  margin: 1rem;
+  width: 3rem;
+  height: 3rem;
+  margin: 0.5rem;
   display: flex;
   justify-content: center;
 }
@@ -152,13 +218,7 @@ export default {
 .buttonbar {
   width: 15%;
 }
-.notif {
-  border: 1px solid black;
-  height: 3rem;
-  width: 3rem;
-  position: fixed;
-  right: 3rem;
-}
+
 @media screen and (max-width: 1450px) {
   .searchform {
     margin-left: 0;
@@ -170,13 +230,16 @@ export default {
     width: 0;
   }
   .searchbar {
-    width: 70%;
+    width: 55%;
   }
   .fixedleft {
     width: 7rem;
   }
   .notif {
     right: 2rem;
+  }
+  .addItem {
+    right: 6rem;
   }
 }
 
@@ -195,6 +258,13 @@ export default {
 
 .shrink {
   animation: shrink 0.5s forwards;
+}
+
+.spin {
+  animation: spin 0.5s forwards;
+}
+.spin2 {
+  animation: spin2 0.5s forwards;
 }
 
 @keyframes slide-in {
@@ -228,6 +298,30 @@ export default {
   }
   100% {
     width: 5rem;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(0);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+@keyframes spin2 {
+  0% {
+    transform: rotate(360deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(0);
+  }
+  100% {
+    transform: rotate(0deg) scale(1);
   }
 }
 </style>

@@ -9,7 +9,7 @@
       <div
         class="quantityC smalltext"
         ref="quant"
-        :class="quantityColor(quantity) ? 'availY' : 'availN'"
+        :class="alert ? 'availN' : 'availY'"
       >
         {{ quantity }}
       </div>
@@ -190,13 +190,15 @@ export default {
   props: {
     name: String,
     quantity: Number,
-    description: String,
+    purchase_link: String,
     updated: String,
-    available: Boolean,
+    alert: Boolean,
     image: String,
     name_id: String,
     category: String,
     vendor: String,
+    makerspace: Number,
+    backroom: Number,
   },
 
   data() {
@@ -210,7 +212,7 @@ export default {
       console.log(this.store.vendor);
       if (this.store.popup.name === this.name) {
         if (this.store.info === false) {
-          this.store.$patch({ info: true });
+          this.store.$patch({ info: true, viewNotif: false });
         } else {
           this.store.$patch({
             info: false,
@@ -218,6 +220,7 @@ export default {
             vendorHeader: false,
             categoryPop: false,
             categoryHeader: false,
+            editform: false,
           });
         }
       } else {
@@ -227,18 +230,23 @@ export default {
             name: this.name,
             category: this.category,
             quantity: this.quantity,
-            link: this.description,
+            link: this.purchase_link,
             vendor: this.vendor,
             date: this.updated,
+            makerspace: this.makerspace,
+            backroom: this.backroom,
           },
-        });
-        this.store.$patch({
           info: true,
           vendor: false,
           vendorHeader: false,
           categoryPop: false,
           categoryHeader: false,
+          viewNotif: false,
+          editform: false,
         });
+      }
+      if (this.store.dismiss === false) {
+        this.store.NavMenu();
       }
       this.store.resizing();
     },
@@ -247,15 +255,6 @@ export default {
       this.store.main.push(this.$refs.main);
       this.store.textbox.push(this.$refs.textbox);
       this.store.name.push(this.$refs.name);
-    },
-    quantityColor(num) {
-      if (num > 0) {
-        return true;
-      } else if (num === 0) {
-        return false;
-      } else {
-        console.log("error");
-      }
     },
   },
   mounted() {

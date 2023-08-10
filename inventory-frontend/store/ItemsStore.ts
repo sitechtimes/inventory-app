@@ -26,6 +26,10 @@ export const useItemsStore = defineStore("items", {
     catalog: true,
     monitor: false,
     vendors: false,
+    //notifying minimum
+    alerts: 0,
+    alerted_items: [],
+    viewNotif: false,
   }),
 
   getters: {},
@@ -51,7 +55,7 @@ export const useItemsStore = defineStore("items", {
 
     //resize individual items when clicked for more information by adding/removing classes
     resizing() {
-      if (this.info === true) {
+      if (this.info === true || this.editform === true) {
         this.textbox.forEach((item) => {
           item.classList.add("info-name-avail");
         });
@@ -107,5 +111,78 @@ export const useItemsStore = defineStore("items", {
 
       document.getElementById("searchform").value = "";
     },
-  },
-});
+    //nav menu reshape
+    NavMenu() {
+      this.viewNotif =false
+      this.editform =false
+      const appDOM = document.querySelector(".app");
+      const menubtn = document.querySelectorAll(".menu-btn");
+      if (appDOM.classList.contains("selected")) {
+        appDOM.classList.remove("selected");
+        appDOM.classList.add("dismiss");
+        menubtn.forEach((btn) => {
+          btn.classList.remove("stretch");
+          btn.classList.add("shrink");
+        });
+
+        this.dismiss=true;
+        console.log("dismiss");
+      } else if (appDOM.classList.contains("dismiss")) {
+        appDOM.classList.remove("dismiss");
+       this.dismiss=false;
+       this.info=false;
+        appDOM.classList.add("selected");
+        menubtn.forEach((btn) => {
+          btn.classList.remove("shrink");
+          btn.classList.add("stretch");
+        });
+        console.log("selected");
+      } else if (
+        !appDOM.classList.contains("dismiss") ||
+        !appDOM.classList.contains("selected")
+      ) {
+        appDOM.classList.add("selected");
+        console.log("selected");
+        menubtn.forEach((btn) => {
+          btn.classList.add("stretch");
+        });
+      }
+    },
+    //counting alerts
+    countAlerts(){
+      this.returnlist.forEach(list=> {
+        console.log(list)
+        list.itemsCategory.forEach((item)=> {
+          if (item.alert === true) {
+              this.alerts++;
+              this.alerted_items.push({
+                name: item.name,
+                quantity: item.total,
+                name_id: item.name_id,
+              });
+            }
+          })
+      })
+      console.log(this.alerts)
+    },
+    //add item form 
+    addItems() {
+      if (this.editform === true) {
+        this.editform= false
+        
+      } else {
+        this.editform = true
+        this.viewNotif= false,
+        this.info= false,
+        this.  vendor= false,
+          this.  vendorHeader= false,
+          this. categoryPop= false,
+          this.categoryHeader= false
+     
+      }
+      this.resizing();
+    },
+  }
+  
+})
+

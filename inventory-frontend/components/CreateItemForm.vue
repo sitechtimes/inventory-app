@@ -1,38 +1,91 @@
 <template>
   <div class="form-container">
+    <button @click="store.addItems">
+      <span class="material-symbols-outlined closeAdd"> close </span>
+    </button>
+
     <form @submit.prevent="submitForm">
       <div class="input-container">
-        <label for="item_id">Item ID</label>
-        <input id="item_id" type="text" ref="item_id" placeholder="Enter Item ID" required />
+        <label class="text" for="item_id">Item ID</label>
+        <input
+          class="text"
+          id="item_id"
+          type="text"
+          ref="item_id"
+          placeholder="Enter Item ID"
+          required
+        />
       </div>
       <div class="input-container">
-        <label for="name">Name of the Item</label>
-        <input id="name" type="text" ref="name" placeholder="Enter the Name of the Item" required />
+        <label class="text" for="name">Name of the Item</label>
+        <input
+          class="text"
+          id="name"
+          type="text"
+          ref="name"
+          placeholder="Enter the Name of the Item"
+          required
+        />
       </div>
       <div class="input-container">
-        <label>Quantity</label>
+        <label class="text">Quantity</label>
         <div class="quantity-inputs">
-          <input id="quantity-makerspace" type="number" ref="makerspace" placeholder="Maker Space Quantity" required />
-          <input id="quantity-backroom" type="number" ref="backroom" placeholder="Back Room Quantity" required />
+          <input
+            class="text"
+            id="quantity-makerspace"
+            type="number"
+            ref="makerspace"
+            placeholder="Maker Space Quantity"
+            required
+          />
+          <input
+            class="text"
+            id="quantity-backroom"
+            type="number"
+            ref="backroom"
+            placeholder="Back Room Quantity"
+            required
+          />
         </div>
       </div>
       <div class="input-container">
-        <label for="min_amount">Minimum amount of Items to display alert</label>
-        <input id="min_amount" type="number" ref="min_amount"
-          placeholder="Enter Minium amount of Items to display Alert" />
+        <label class="text" for="min_amount"
+          >Minimum amount of Items to display alert</label
+        >
+        <input
+          class="text"
+          id="min_amount"
+          type="number"
+          ref="min_amount"
+          placeholder="Enter Minium amount of Items to display Alert"
+        />
       </div>
       <div class="input-container">
-        <label for="location">Location of the Item</label>
-        <input id="location" type="text" ref="location" placeholder="Enter the location of the Item" required />
+        <label class="text" for="location">Location of the Item</label>
+        <input
+          class="text"
+          id="location"
+          type="text"
+          ref="location"
+          placeholder="Enter the location of the Item"
+          required
+        />
       </div>
       <div class="input-container">
-        <label for="purchase_link">Purchase Link</label>
-        <input id="purchase_link" type="text" ref="purchase_link" placeholder="Purhcase Link" required />
+        <label class="text" for="purchase_link">Purchase Link</label>
+        <input
+          class="text"
+          id="purchase_link"
+          type="text"
+          ref="purchase_link"
+          placeholder="Purchase Link"
+          required
+        />
       </div>
       <div class="input-container">
-        <label for="Vendor">Vendor</label>
-        <select id="Vendor" ref="vendor" required>
-          <option disabled value="">Choose a Vendor</option>
+        <label class="text" for="Vendor">Vendor</label>
+        <select class="text" id="Vendor" ref="vendor" required>
+          <option class="text" disabled value="">Choose a Vendor</option>
           <option value="1">ShopDOE</option>
           <option value="2">Amazon</option>
           <option value="3">Blick</option>
@@ -40,37 +93,79 @@
         </select>
       </div>
       <div class="input-container">
-        <label for="Category">Category</label>
-        <select id="Category" ref="category" required>
+        <label class="text" for="Category">Category</label>
+        <select class="text" id="Category" ref="category" required>
           <option disabled value="">Choose a Category</option>
           <option value="1">Tools</option>
           <option value="2">Paint</option>
+          <option value="3">Tape</option>
+          <option value="4">Wire</option>
+          <option value="5">First Aid</option>
+          <option value="6">Fabric</option>
+          <option value="7">Paper Mache</option>
+          <option value="8">Glue</option>
+          <option value="9">Sewing</option>
+          <option value="10">Miscellaneous</option>
+          <option value="11">Coloring Materials</option>
+          <option value="12">Sculpture</option>
+          <option value="13">Wood</option>
+          <option value="14">Craft Supplies</option>
+          <option value="15">Foam</option>
+          <option value="16">Printmaking</option>
+          <option value="17">Paper</option>
+          <option value="18">Drawing</option>
           <!-- Add other options here -->
         </select>
       </div>
       <div class="input-container">
-        <label for="image_url">Image Url</label>
-        <input id="image_url" type="text" ref="image_url" placeholder="Enter Image Url" />
+        <label class="text" for="image_url">Image Url</label>
+        <input
+          class="text"
+          id="image_url"
+          type="text"
+          ref="image_url"
+          placeholder="Enter Image Url"
+        />
       </div>
 
       <!-- image pre view container  -->
-      <div class="upload-container relative flex items-center justify-between w-full">
+      <div
+        class="upload-container relative flex items-center justify-between w-full"
+      >
         <div
           class="drop-area w-full rounded-md border-2 border-dotted border-gray-200 transition-all hover:border-blue-600/30 text-center"
-          @dragover.prevent="handleDragOver" @dragleave="handleDragLeave" @drop.prevent="handleDrop">
-          <label for="file-input" class="block w-full h-full text-gray-500 p-4 text-sm cursor-pointer">
+          @dragover.prevent="handleDragOver"
+          @dragleave="handleDragLeave"
+          @drop.prevent="handleDrop"
+        >
+          <label
+            for="file-input"
+            class="block w-full h-full text-gray-500 p-4 text-sm cursor-pointer"
+          >
             {{ dropAreaText }}
           </label>
-          <input name="file" type="file" id="file-input" accept="image/*" class="hidden" @change="handleFileChange" />
+          <input
+            name="file"
+            type="file"
+            id="file-input"
+            accept="image/*"
+            class="hidden"
+            @change="handleFileChange"
+          />
           <!-- Image upload input -->
           <div class="preview-container" :class="{ hidden: !showPreview }">
-            <div class="preview-image w-36 h-36 bg-cover bg-center rounded-md cursor-pointer"
-              :style="{ backgroundImage: previewImage }" @click="handleImageClick"></div>
+            <div
+              class="preview-image w-36 h-36 bg-cover bg-center rounded-md cursor-pointer"
+              :style="{ backgroundImage: previewImage }"
+              @click="handleImageClick"
+            ></div>
             <span class="file-name my-4 text-sm font-medium" v-if="fileName">{{
               fileName
             }}</span>
-            <p class="close-button cursor-pointer transition-all mb-4 rounded-md px-3 py-1 border text-xs text-red-500 border-red-500 hover:bg-red-500 hover:text-white"
-              @click="handleClose">
+            <p
+              class="close-button cursor-pointer transition-all mb-4 rounded-md px-3 py-1 border text-xs text-red-500 border-red-500 hover:bg-red-500 hover:text-white"
+              @click="handleClose"
+            >
               Delete
             </p>
           </div>
@@ -79,19 +174,31 @@
         <!-- Bigger Image Preview Modal -->
         <div class="modal" v-if="showModal" @click="closeModal">
           <div class="modal-content">
-            <img :src="previewImageModal" alt="Bigger Preview" @click="closeModal" />
+            <img
+              :src="previewImageModal"
+              alt="Bigger Preview"
+              @click="closeModal"
+            />
           </div>
         </div>
       </div>
-      <button class="submit-button" @click="submitForm">Submit</button>
+      <button class="submit-button text" @click="submitForm">Submit</button>
     </form>
   </div>
 </template>
 
+<script>
+export default {
+  name: "CreateItemForm",
+};
+</script>
+
 <script setup>
 import { ref } from "vue";
+import { useItemsStore } from "~/store/ItemsStore";
 
 // State variables
+const store = useItemsStore();
 const dropAreaText = ref("Drop your image here or click to browse");
 const showPreview = ref(false);
 const showModal = ref(false);
@@ -205,9 +312,28 @@ async function submitForm() {
 </script>
 
 <style scoped>
+.closeAdd {
+  position: absolute;
+  right: 0;
+  margin-right: 3rem;
+  margin-top: -1.5rem;
+  display: block;
+  border-radius: 2rem;
+  height: 3rem;
+  width: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.closeAdd:hover {
+  background-color: var(--tpgray);
+}
+.closeAdd:active {
+  background-color: var(--tpdarkgray);
+}
 .submit-button {
-  background-color: #4caf50;
-  color: white;
+  background-color: var(--lightblue);
+  color: var(--darkblue);
   border: none;
   padding: 10px 20px;
   text-align: center;
@@ -220,11 +346,12 @@ async function submitForm() {
 }
 
 .submit-button:hover {
-  background-color: #45a049;
+  background-color: var(--medblue);
 }
 
 .submit-button:active {
-  background-color: #3e8e41;
+  background-color: var(--blue);
+  color: var(--darkerblue);
 }
 
 .modal {
@@ -328,7 +455,6 @@ async function submitForm() {
 }
 
 .form-container {
-  max-width: 650px;
   margin: 0 auto;
   padding: 2rem;
   background-color: #f5f5f5;
@@ -343,10 +469,6 @@ form {
 .input-container {
   display: grid;
   gap: 0.5rem;
-}
-
-label {
-  font-weight: bold;
 }
 
 input,
@@ -366,5 +488,24 @@ select {
 .submit-container {
   display: flex;
   justify-content: center;
+}
+
+option {
+  font-size: var(--h4);
+}
+
+@media screen and (max-width: 760px) {
+  .form-container {
+    min-width: 100vw;
+    align-self: flex-start;
+    position: fixed;
+    height: 100vh;
+    left: 0;
+    right: 0;
+    border: none;
+    z-index: 2000;
+    overflow-y: scroll;
+    margin-bottom: 20rem;
+  }
 }
 </style>

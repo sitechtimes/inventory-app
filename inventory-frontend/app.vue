@@ -16,9 +16,9 @@
       <div class="replacer" v-if="store.vendors === true">
         <Vendors />
       </div>
-    </div>
-    <div v-if="store.editform">
-      <NuxtPage />
+      <div class="replacer" v-if="store.editform">
+        <CreateItemForm />
+      </div>
     </div>
   </div>
 </template>
@@ -31,17 +31,29 @@ import UserMenu from "./components/UserMenu.vue";
 import Search from "./components/search.vue";
 import Monitor from "./components/monitor.vue";
 import Vendors from "./components/vendors.vue";
+import CreateItemForm from "./components/CreateItemForm.vue";
 
 export default {
   name: "app",
-  components: { Search, Catalog, UserMenu, Header, Monitor, Vendors },
+  components: {
+    Search,
+    Catalog,
+    UserMenu,
+    Header,
+    Monitor,
+    Vendors,
+    CreateItemForm,
+  },
   data() {
     return {
       store: useItemsStore(),
     };
   },
   methods: {},
-  mounted() {},
+  async mounted() {
+    await this.store.getItems();
+    this.store.countAlerts();
+  },
 };
 </script>
 

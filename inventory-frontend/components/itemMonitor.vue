@@ -18,11 +18,14 @@ export default {
   props: {
     name: String,
     quantity: Number,
+    minimum: Number,
     image: String,
     vendor: String,
     link: String,
     updated: String,
-    category: String
+    category: String,
+    makerspace: Number,
+    backroom: Number,
   },
   data() {
     return {
@@ -60,6 +63,8 @@ export default {
             link: this.description,
             vendor: this.vendor,
             date: this.updated,
+            makerspace: this.makerspace,
+            backroom: this.backroom,
           },
         });
         this.store.$patch({
@@ -69,6 +74,9 @@ export default {
           categoryPop: false,
           categoryHeader: false,
         });
+      }
+      if (this.store.dismiss === false) {
+        this.store.NavMenu();
       }
       const bigdivM = document.querySelector(".bigdivM");
       if (this.store.info === true) {

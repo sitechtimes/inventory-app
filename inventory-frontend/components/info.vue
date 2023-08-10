@@ -5,19 +5,25 @@
         <button class="extraTab tabtext text" @click="swapMain">
           {{ name }}
         </button>
-        <button class="exitbtn heading tab1btn" @click="exit">X</button>
+        <button class="exitbtn heading tab1btn" @click="exit">
+          <span class="material-symbols-outlined"> close </span>
+        </button>
       </div>
       <div class="tab tab2" v-if="this.store.vendorHeader">
         <button class="vendorTab tabtext text" @click="swapVendor">
           {{ vendor }}
         </button>
-        <button class="exitbtn heading tab2btn" @click="closeVendor">X</button>
+        <button class="exitbtn heading tab2btn" @click="closeVendor">
+          <span class="material-symbols-outlined"> close </span>
+        </button>
       </div>
       <div class="tab tab3" v-if="this.store.categoryHeader">
         <button class="categoryTab tabtext text" @click="swapCat">
           {{ category }}
         </button>
-        <button class="exitbtn heading tab3btn" @click="closeCat">X</button>
+        <button class="exitbtn heading tab3btn" @click="closeCat">
+          <span class="material-symbols-outlined"> close </span>
+        </button>
       </div>
     </div>
     <div
@@ -32,6 +38,8 @@
         :link="link"
         :vendor="vendor"
         :date="date"
+        :quantM="makerspace_quantity"
+        :quantB="backroom_quantity"
       />
     </div>
     <div class="extraInfoPanel" v-if="this.store.vendor">
@@ -107,8 +115,8 @@
   color: var(--darkergray);
   transition: all 0.1s linear;
   border-radius: 3rem;
-  height: 5rem;
-  width: 5rem;
+  min-height: 5rem;
+  min-width: 5rem;
   background-color: rgba(0, 0, 0, 0);
 }
 
@@ -150,6 +158,25 @@
 .inactive:hover > .inactivebtn {
   opacity: 1;
 }
+
+.tab1btn,
+.tab2btn,
+.tab3btn,
+.searchclear {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+@media screen and (max-width: 760px) {
+  .tab1btn,
+  .tab2btn,
+  .tab3btn {
+    min-height: 3rem;
+    min-width: 3rem;
+    margin-right: 1rem;
+    margin-left: -0.5rem;
+  }
+}
 </style>
 
 <script>
@@ -168,6 +195,8 @@ export default {
     link: String,
     vendor: String,
     date: String,
+    makerspace_quantity: Number,
+    backroom_quantity: Number,
   },
   components: {
     Extra,
