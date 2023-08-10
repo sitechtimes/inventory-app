@@ -107,9 +107,9 @@ class AddItems(viewsets.ModelViewSet):
     serializer_class = ItemSerializer
 
     def create(self, request, *args, **kwargs):
-        image_file = request.FILES.get('image')
-        if image_file is None:
-            return Response({'message': 'Image file is required.'}, status=400)
+        # image_file = request.FILES.get('image_file')
+        # if image_file is None:
+        #     return Response({'message': 'Image file is required.'}, status=400)
 
         # Create a new serializer instance with only the image file data
         serializer = self.get_serializer(data=request.data)

@@ -108,7 +108,7 @@ const vendor = ref("");
 const category = ref("");
 const purchase_link = ref("");
 const image_url = ref("");
-let thisfile = "";
+let thisfile = ref();
 
 // Functions
 function handleDragOver(event) {
@@ -142,7 +142,7 @@ function handleDrop(event) {
 function handleFileChange(event) {
   const file = event.target.files[0];
   console.log(file);
-  thisfile = file;
+  thisfile.value = file;
   showPreview.value = true;
   if (file) {
     showPreview.value = true;
@@ -176,7 +176,7 @@ async function submitForm() {
   console.log(thisfile.value);
   const formData = new FormData();
   formData.append("item_id", item_id.value.value);
-  formData.append("image_file", thisfile); // Assuming "previewImageModal" is an input element of type "file"
+  formData.append("image_file", thisfile.value); // Assuming "previewImageModal" is an input element of type "file"
   formData.append("image_url", image_url.value.value);
   formData.append("name", name.value.value);
   formData.append("purchase_link", purchase_link.value.value);
