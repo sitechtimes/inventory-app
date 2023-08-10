@@ -101,7 +101,7 @@ class ManualEditQuantity(generics.UpdateAPIView):
 # idk it works
 
 
-class AddItems(viewsets.ModelViewSet):
+class AddItems(generics.CreateAPIView):
     parser_classes = (MultiPartParser, FormParser)
     queryset = Item.objects.all()
     serializer_class = ItemSerializer

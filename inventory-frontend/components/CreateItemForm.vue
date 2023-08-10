@@ -3,35 +3,36 @@
     <form @submit.prevent="submitForm">
       <div class="input-container">
         <label for="item_id">Item ID</label>
-        <input id="item_id" type="text" ref="item_id" placeholder="Enter Item ID" required />
+        <input id="item_id" type="text" v-model="item_id" placeholder="Enter Item ID" required />
       </div>
       <div class="input-container">
         <label for="name">Name of the Item</label>
-        <input id="name" type="text" ref="name" placeholder="Enter the Name of the Item" required />
+        <input id="name" type="text" v-model="name" placeholder="Enter the Name of the Item" required />
       </div>
       <div class="input-container">
         <label>Quantity</label>
         <div class="quantity-inputs">
-          <input id="quantity-makerspace" type="number" ref="makerspace" placeholder="Maker Space Quantity" required />
-          <input id="quantity-backroom" type="number" ref="backroom" placeholder="Back Room Quantity" required />
+          <input id="quantity-makerspace" type="number" v-model="makerspace" placeholder="Maker Space Quantity"
+            required />
+          <input id="quantity-backroom" type="number" v-model="backroom" placeholder="Back Room Quantity" required />
         </div>
       </div>
       <div class="input-container">
         <label for="min_amount">Minimum amount of Items to display alert</label>
-        <input id="min_amount" type="number" ref="min_amount"
+        <input id="min_amount" type="number" v-model="min_amount"
           placeholder="Enter Minium amount of Items to display Alert" />
       </div>
       <div class="input-container">
         <label for="location">Location of the Item</label>
-        <input id="location" type="text" ref="location" placeholder="Enter the location of the Item" required />
+        <input id="location" type="text" v-model="location" placeholder="Enter the location of the Item" required />
       </div>
       <div class="input-container">
         <label for="purchase_link">Purchase Link</label>
-        <input id="purchase_link" type="text" ref="purchase_link" placeholder="Purhcase Link" required />
+        <input id="purchase_link" type="text" v-model="purchase_link" placeholder="Purhcase Link" required />
       </div>
       <div class="input-container">
         <label for="Vendor">Vendor</label>
-        <select id="Vendor" ref="vendor" required>
+        <select id="Vendor" v-model="vendor" required>
           <option disabled value="">Choose a Vendor</option>
           <option value="1">ShopDOE</option>
           <option value="2">Amazon</option>
@@ -41,7 +42,7 @@
       </div>
       <div class="input-container">
         <label for="Category">Category</label>
-        <select id="Category" ref="category" required>
+        <select id="Category" v-model="category" required>
           <option disabled value="">Choose a Category</option>
           <option value="1">Tools</option>
           <option value="2">Paint</option>
@@ -50,7 +51,7 @@
       </div>
       <div class="input-container">
         <label for="image_url">Image Url</label>
-        <input id="image_url" type="text" ref="image_url" placeholder="Enter Image Url" />
+        <input id="image_url" type="text" v-model="image_url" placeholder="Enter Image Url" />
       </div>
 
       <!-- image pre view container  -->
@@ -175,17 +176,19 @@ function closeModal() {
 async function submitForm() {
   console.log(thisfile.value);
   const formData = new FormData();
-  formData.append("item_id", item_id.value.value);
-  formData.append("image_file", thisfile.value); // Assuming "previewImageModal" is an input element of type "file"
-  formData.append("image_url", image_url.value.value);
-  formData.append("name", name.value.value);
-  formData.append("purchase_link", purchase_link.value.value);
-  formData.append("backroom_quantity", backroom.value.value);
-  formData.append("makerspace_quantity", makerspace.value.value);
-  formData.append("min_amount", min_amount.value.value);
-  formData.append("vendor", vendor.value.value);
-  formData.append("category", category.value.value);
-  formData.append("location", location.value.value);
+  formData.append("item_id", item_id.value);
+  if (thisfile.value) {
+    formData.append("image_file", thisfile.value);
+  }
+  formData.append("image_url", image_url.value);
+  formData.append("name", name.value);
+  formData.append("purchase_link", purchase_link.value);
+  formData.append("backroom_quantity", backroom.value);
+  formData.append("makerspace_quantity", makerspace.value);
+  formData.append("min_amount", min_amount.value);
+  formData.append("vendor", vendor.value);
+  formData.append("category", category.value);
+  formData.append("location", location.value);
 
   try {
     const response = await fetch("http://127.0.0.1:8000/items/addItems/", {
