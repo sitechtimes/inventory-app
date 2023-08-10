@@ -83,7 +83,7 @@
           </div>
         </div>
       </div>
-      <button class="submit-button" @click="submitForm">Submit</button>
+      <button class="submit-button">Submit</button>
     </form>
   </div>
 </template>
