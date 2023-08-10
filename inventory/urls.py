@@ -17,7 +17,7 @@ urlpatterns = [
     path("updateMinAmount/<int:pk>/<int:amount>/",
          views.updateMinAmount.as_view()),
     # send Data to these Url as request body
-    path("addItems/", views.AddItems.as_view({"post": "create"})),
+    path("addItems/", views.AddItems.as_view()),
     path("editItem/<int:pk>/", views.editItems.as_view()),
 ]
 urlpatterns = format_suffix_patterns(urlpatterns)

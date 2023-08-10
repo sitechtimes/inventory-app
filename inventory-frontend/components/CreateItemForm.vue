@@ -6,86 +6,38 @@
 
     <form @submit.prevent="submitForm">
       <div class="input-container">
-        <label class="text" for="item_id">Item ID</label>
-        <input
-          class="text"
-          id="item_id"
-          type="text"
-          ref="item_id"
-          placeholder="Enter Item ID"
-          required
-        />
+        <label for="item_id">Item ID</label>
+        <input id="item_id" type="text" v-model="item_id" placeholder="Enter Item ID" required />
       </div>
       <div class="input-container">
-        <label class="text" for="name">Name of the Item</label>
-        <input
-          class="text"
-          id="name"
-          type="text"
-          ref="name"
-          placeholder="Enter the Name of the Item"
-          required
-        />
+        <label for="name">Name of the Item</label>
+        <input id="name" type="text" v-model="name" placeholder="Enter the Name of the Item" required />
       </div>
       <div class="input-container">
         <label class="text">Quantity</label>
         <div class="quantity-inputs">
-          <input
-            class="text"
-            id="quantity-makerspace"
-            type="number"
-            ref="makerspace"
-            placeholder="Maker Space Quantity"
-            required
-          />
-          <input
-            class="text"
-            id="quantity-backroom"
-            type="number"
-            ref="backroom"
-            placeholder="Back Room Quantity"
-            required
-          />
+          <input id="quantity-makerspace" type="number" v-model="makerspace" placeholder="Maker Space Quantity"
+            required />
+          <input id="quantity-backroom" type="number" v-model="backroom" placeholder="Back Room Quantity" required />
         </div>
       </div>
       <div class="input-container">
-        <label class="text" for="min_amount"
-          >Minimum amount of Items to display alert</label
-        >
-        <input
-          class="text"
-          id="min_amount"
-          type="number"
-          ref="min_amount"
-          placeholder="Enter Minium amount of Items to display Alert"
-        />
+        <label for="min_amount">Minimum amount of Items to display alert</label>
+        <input id="min_amount" type="number" v-model="min_amount"
+          placeholder="Enter Minium amount of Items to display Alert" />
       </div>
       <div class="input-container">
-        <label class="text" for="location">Location of the Item</label>
-        <input
-          class="text"
-          id="location"
-          type="text"
-          ref="location"
-          placeholder="Enter the location of the Item"
-          required
-        />
+        <label for="location">Location of the Item</label>
+        <input id="location" type="text" v-model="location" placeholder="Enter the location of the Item" required />
       </div>
       <div class="input-container">
-        <label class="text" for="purchase_link">Purchase Link</label>
-        <input
-          class="text"
-          id="purchase_link"
-          type="text"
-          ref="purchase_link"
-          placeholder="Purchase Link"
-          required
-        />
+        <label for="purchase_link">Purchase Link</label>
+        <input id="purchase_link" type="text" v-model="purchase_link" placeholder="Purhcase Link" required />
       </div>
       <div class="input-container">
-        <label class="text" for="Vendor">Vendor</label>
-        <select class="text" id="Vendor" ref="vendor" required>
-          <option class="text" disabled value="">Choose a Vendor</option>
+        <label for="Vendor">Vendor</label>
+        <select id="Vendor" v-model="vendor" required>
+          <option disabled value="">Choose a Vendor</option>
           <option value="1">ShopDOE</option>
           <option value="2">Amazon</option>
           <option value="3">Blick</option>
@@ -93,8 +45,8 @@
         </select>
       </div>
       <div class="input-container">
-        <label class="text" for="Category">Category</label>
-        <select class="text" id="Category" ref="category" required>
+        <label for="Category">Category</label>
+        <select id="Category" v-model="category" required>
           <option disabled value="">Choose a Category</option>
           <option value="1">Tools</option>
           <option value="2">Paint</option>
@@ -118,54 +70,28 @@
         </select>
       </div>
       <div class="input-container">
-        <label class="text" for="image_url">Image Url</label>
-        <input
-          class="text"
-          id="image_url"
-          type="text"
-          ref="image_url"
-          placeholder="Enter Image Url"
-        />
+        <label for="image_url">Image Url</label>
+        <input id="image_url" type="text" v-model="image_url" placeholder="Enter Image Url" />
       </div>
 
       <!-- image pre view container  -->
-      <div
-        class="upload-container relative flex items-center justify-between w-full"
-      >
+      <div class="upload-container relative flex items-center justify-between w-full">
         <div
           class="drop-area w-full rounded-md border-2 border-dotted border-gray-200 transition-all hover:border-blue-600/30 text-center"
-          @dragover.prevent="handleDragOver"
-          @dragleave="handleDragLeave"
-          @drop.prevent="handleDrop"
-        >
-          <label
-            for="file-input"
-            class="block w-full h-full text-gray-500 p-4 text-sm cursor-pointer"
-          >
+          @dragover.prevent="handleDragOver" @dragleave="handleDragLeave" @drop.prevent="handleDrop">
+          <label for="file-input" class="block w-full h-full text-gray-500 p-4 text-sm cursor-pointer">
             {{ dropAreaText }}
           </label>
-          <input
-            name="file"
-            type="file"
-            id="file-input"
-            accept="image/*"
-            class="hidden"
-            @change="handleFileChange"
-          />
+          <input name="file" type="file" id="file-input" accept="image/*" class="hidden" @change="handleFileChange" />
           <!-- Image upload input -->
           <div class="preview-container" :class="{ hidden: !showPreview }">
-            <div
-              class="preview-image w-36 h-36 bg-cover bg-center rounded-md cursor-pointer"
-              :style="{ backgroundImage: previewImage }"
-              @click="handleImageClick"
-            ></div>
+            <div class="preview-image w-36 h-36 bg-cover bg-center rounded-md cursor-pointer"
+              :style="{ backgroundImage: previewImage }" @click="handleImageClick"></div>
             <span class="file-name my-4 text-sm font-medium" v-if="fileName">{{
               fileName
             }}</span>
-            <p
-              class="close-button cursor-pointer transition-all mb-4 rounded-md px-3 py-1 border text-xs text-red-500 border-red-500 hover:bg-red-500 hover:text-white"
-              @click="handleClose"
-            >
+            <p class="close-button cursor-pointer transition-all mb-4 rounded-md px-3 py-1 border text-xs text-red-500 border-red-500 hover:bg-red-500 hover:text-white"
+              @click="handleClose">
               Delete
             </p>
           </div>
@@ -174,15 +100,11 @@
         <!-- Bigger Image Preview Modal -->
         <div class="modal" v-if="showModal" @click="closeModal">
           <div class="modal-content">
-            <img
-              :src="previewImageModal"
-              alt="Bigger Preview"
-              @click="closeModal"
-            />
+            <img :src="previewImageModal" alt="Bigger Preview" @click="closeModal" />
           </div>
         </div>
       </div>
-      <button class="submit-button text" @click="submitForm">Submit</button>
+      <button class="submit-button">Submit</button>
     </form>
   </div>
 </template>
@@ -215,7 +137,7 @@ const vendor = ref("");
 const category = ref("");
 const purchase_link = ref("");
 const image_url = ref("");
-let thisfile = "";
+let thisfile = ref();
 
 // Functions
 function handleDragOver(event) {
@@ -249,7 +171,7 @@ function handleDrop(event) {
 function handleFileChange(event) {
   const file = event.target.files[0];
   console.log(file);
-  thisfile = file;
+  thisfile.value = file;
   showPreview.value = true;
   if (file) {
     showPreview.value = true;
@@ -282,17 +204,19 @@ function closeModal() {
 async function submitForm() {
   console.log(thisfile.value);
   const formData = new FormData();
-  formData.append("item_id", item_id.value.value);
-  formData.append("image_file", thisfile); // Assuming "previewImageModal" is an input element of type "file"
-  formData.append("image_url", image_url.value.value);
-  formData.append("name", name.value.value);
-  formData.append("purchase_link", purchase_link.value.value);
-  formData.append("backroom_quantity", backroom.value.value);
-  formData.append("makerspace_quantity", makerspace.value.value);
-  formData.append("min_amount", min_amount.value.value);
-  formData.append("vendor", vendor.value.value);
-  formData.append("category", category.value.value);
-  formData.append("location", location.value.value);
+  formData.append("item_id", item_id.value);
+  if (thisfile.value) {
+    formData.append("image_file", thisfile.value);
+  }
+  formData.append("image_url", image_url.value);
+  formData.append("name", name.value);
+  formData.append("purchase_link", purchase_link.value);
+  formData.append("backroom_quantity", backroom.value);
+  formData.append("makerspace_quantity", makerspace.value);
+  formData.append("min_amount", min_amount.value);
+  formData.append("vendor", vendor.value);
+  formData.append("category", category.value);
+  formData.append("location", location.value);
 
   try {
     const response = await fetch("http://127.0.0.1:8000/items/addItems/", {
@@ -325,12 +249,15 @@ async function submitForm() {
   align-items: center;
   justify-content: center;
 }
+
 .closeAdd:hover {
   background-color: var(--tpgray);
 }
+
 .closeAdd:active {
   background-color: var(--tpdarkgray);
 }
+
 .submit-button {
   background-color: var(--lightblue);
   color: var(--darkblue);
