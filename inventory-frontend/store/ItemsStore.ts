@@ -8,6 +8,7 @@ export const useItemsStore = defineStore("items", {
     empty: false,
     search: false,
     //toggle extra info
+    id: 0,
     popup: { name: null },
     info: false,
     vendor: false,
@@ -113,8 +114,8 @@ export const useItemsStore = defineStore("items", {
     },
     //nav menu reshape
     NavMenu() {
-      this.viewNotif =false
-      this.editform =false
+      this.viewNotif = false;
+      this.editform = false;
       const appDOM = document.querySelector(".app");
       const menubtn = document.querySelectorAll(".menu-btn");
       if (appDOM.classList.contains("selected")) {
@@ -125,12 +126,12 @@ export const useItemsStore = defineStore("items", {
           btn.classList.add("shrink");
         });
 
-        this.dismiss=true;
+        this.dismiss = true;
         console.log("dismiss");
       } else if (appDOM.classList.contains("dismiss")) {
         appDOM.classList.remove("dismiss");
-       this.dismiss=false;
-       this.info=false;
+        this.dismiss = false;
+        this.info = false;
         appDOM.classList.add("selected");
         menubtn.forEach((btn) => {
           btn.classList.remove("shrink");
@@ -149,40 +150,36 @@ export const useItemsStore = defineStore("items", {
       }
     },
     //counting alerts
-    countAlerts(){
-      this.returnlist.forEach(list=> {
-        console.log(list)
-        list.itemsCategory.forEach((item)=> {
+    countAlerts() {
+      this.returnlist.forEach((list) => {
+        console.log(list);
+        list.itemsCategory.forEach((item) => {
           if (item.alert === true) {
-              this.alerts++;
-              this.alerted_items.push({
-                name: item.name,
-                quantity: item.total,
-                name_id: item.name_id,
-              });
-            }
-          })
-      })
-      console.log(this.alerts)
+            this.alerts++;
+            this.alerted_items.push({
+              name: item.name,
+              quantity: item.total,
+              name_id: item.name_id,
+            });
+          }
+        });
+      });
+      console.log(this.alerts);
     },
-    //add item form 
+    //add item form
     addItems() {
       if (this.editform === true) {
-        this.editform= false
-        
+        this.editform = false;
       } else {
-        this.editform = true
-        this.viewNotif= false,
-        this.info= false,
-        this.  vendor= false,
-          this.  vendorHeader= false,
-          this. categoryPop= false,
-          this.categoryHeader= false
-     
+        this.editform = true;
+        (this.viewNotif = false),
+          (this.info = false),
+          (this.vendor = false),
+          (this.vendorHeader = false),
+          (this.categoryPop = false),
+          (this.categoryHeader = false);
       }
       this.resizing();
     },
-  }
-  
-})
-
+  },
+});

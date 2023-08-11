@@ -6,11 +6,7 @@
     <div class="name-avail" ref="textbox">
       <div class="name text" ref="name">{{ name }}</div>
 
-      <div
-        class="quantityC smalltext"
-        ref="quant"
-        :class="alert ? 'availN' : 'availY'"
-      >
+      <div class="quantityC smalltext" ref="quant" :class="alert ? 'availN' : 'availY'">
         {{ quantity }}
       </div>
     </div>
@@ -32,14 +28,17 @@
   border: var(--border);
   transition: all 0.2s;
 }
+
 .itemMain:hover {
   border-color: var(--darkergray);
   box-shadow: 0 0.25rem 5px var(--darkergray);
 }
+
 .mainSize {
   flex-basis: 23%;
   max-width: 23%;
 }
+
 .infoFull {
   flex-basis: 30%;
   max-width: 30%;
@@ -52,6 +51,7 @@
   flex-direction: column;
   padding-right: 2.5rem;
 }
+
 .name,
 .quantityC,
 .updated {
@@ -64,6 +64,7 @@
 
   height: fit-content;
 }
+
 .quantityC {
   height: 50%;
 
@@ -88,6 +89,7 @@
 .availY {
   color: rgb(97, 194, 165);
 }
+
 .availN {
   color: rgb(201, 37, 86);
 }
@@ -106,6 +108,7 @@
 
   overflow: hidden;
 }
+
 .imageView {
   max-height: 80%;
   max-width: 80%;
@@ -117,16 +120,19 @@
     max-width: 30%;
     flex-basis: 30%;
   }
+
   .infoFull {
     max-width: 45%;
     flex-basis: 45%;
   }
 }
+
 @media screen and (max-width: 1100px) {
   .mainSize {
     max-width: 45%;
     flex-basis: 45%;
   }
+
   .infoFull {
     max-width: 100%;
     flex-basis: 100%;
@@ -134,25 +140,30 @@
     margin: 0;
     border-radius: 0;
   }
+
   .infoFull:hover {
     border-color: none;
     box-shadow: none;
     background-color: var(--gray);
   }
+
   .info-name-avail {
     width: 98%;
     justify-content: center;
   }
+
   .info-name {
     padding-right: 1rem;
     margin-bottom: 0;
   }
+
   .info-quantity {
     padding-top: 1rem;
     position: inherit;
     justify-content: left;
   }
 }
+
 @media screen and (max-width: 760px) {
   .mainSize {
     max-width: 100%;
@@ -161,19 +172,23 @@
     margin: 0;
     border-radius: 0;
   }
+
   .name-avail {
     width: 98%;
     justify-content: center;
   }
+
   .name {
     padding-right: 1rem;
     margin-bottom: 0;
   }
+
   .quantityC {
     padding-top: 1rem;
     position: inherit;
     justify-content: left;
   }
+
   .itemMain:hover {
     border-color: none;
     box-shadow: none;
@@ -188,6 +203,7 @@ import { useItemsStore } from "~/store/ItemsStore";
 export default {
   name: "Item",
   props: {
+    id: Number,
     name: String,
     quantity: Number,
     purchase_link: String,
@@ -225,6 +241,7 @@ export default {
         }
       } else {
         this.store.$patch({
+          id: this.id,
           popup: {
             image: this.image,
             name: this.name,
@@ -244,6 +261,7 @@ export default {
           viewNotif: false,
           editform: false,
         });
+        console.log(this.store.id)
       }
       if (this.store.dismiss === false) {
         this.store.NavMenu();
