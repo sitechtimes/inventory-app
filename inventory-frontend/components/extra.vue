@@ -11,7 +11,7 @@
     <div class="detailsPop">
       <div class="detailsName poprow">
         <div class="text col1">Name</div>
-        <div v-if="!editMode" class="text col2 col2name">{{ name }}</div>
+        <div v-if="!editMode" class="text col2 col2name">{{ editname }}</div>
         <div v-if="editMode" class="text col2 col2name">
           <input v-model="editname" />
         </div>
@@ -20,13 +20,13 @@
       <div class="detailsCat poprow">
         <div class="text col1">Category</div>
         <button v-if="!editMode" class="text col2 extrabtn arrowbtn" @click="categoryInfo">
-          {{ category }}
+          {{ listCategoryName[editcategory].name }}
           <div class="heading rightarrow">
             <span class="material-symbols-outlined"> navigate_next </span>
           </div>
         </button>
         <div v-if="editMode" class="text col2 col2name">
-          <select id="Category" v-model="editcategory" required>
+          <select id="Category" v-model="listCategoryName[editcategory].value" required>
             <option disabled value="">Choose a Category</option>
             <option value="1">Tools</option>
             <option value="2">Paint</option>
@@ -53,7 +53,7 @@
       <div class="detailsStock poprow">
         <div class="text col1">Total Stock Available</div>
         <button v-if="!editMode" class="text col2 extrabtn arrowbtn" @click="locationToggle">
-          {{ quantity }}
+          {{ editquantity }}
           <div class="expandbtn heading rightarrow">
             <span class="material-symbols-outlined"> navigate_next </span>
           </div>
@@ -67,29 +67,29 @@
       <div class="detailsLocation" v-if="location">
         <div class="poprow">
           <div class="text col1" id="location">Makerspace</div>
-          <div v-if="!editMode" class="text col2" id="locationQ">{{ quantM }}</div>
+          <div v-if="!editMode" class="text col2" id="locationQ">{{ quantity1 }}</div>
           <input v-if="editMode" v-model="quantity1" type="number">
         </div>
         <div class="poprow">
           <div class="text col1" id="location">Backroom</div>
-          <div v-if="!editMode" class="text col2" id="locationQ">{{ quantB }}</div>
+          <div v-if="!editMode" class="text col2" id="locationQ">{{ quantity2 }}</div>
           <input v-if="editMode" v-model="quantity2" type="number">
         </div>
       </div>
       <div class="detailsPurchase poprow">
         <div class="text col1">Purchase Link</div>
-        <a v-if="!editMode" class="text col2 col2name purchlink" :href="link">{{ link }}</a>
+        <a v-if="!editMode" class="text col2 col2name purchlink" :href="link">{{ editLink }}</a>
         <input v-if="editMode" v-model="editLink" type="text">
       </div>
       <div class="detailsVendor poprow">
         <div class="text col1">Vendor</div>
         <button v-if="!editMode" class="text extrabtn col2 arrowbtn" @click="vendorInfo">
-          {{ vendor }}
+          {{ listVendorsName[editvendor].name }}
           <div class="heading rightarrow">
             <span class="material-symbols-outlined"> navigate_next </span>
           </div>
         </button>
-        <select v-if="editMode" id="Vendor" v-model="editvendor" required>
+        <select v-if="editMode" id="Vendor" v-model="listVendorsName[editvendor].value" required>
           <option disabled value="">Choose a Vendor</option>
           <option value="1">ShopDOE</option>
           <option value="2">Amazon</option>
@@ -99,7 +99,7 @@
       </div>
       <div class="detailsDate poprow">
         <div class="text col1">Date Last Purchased</div>
-        <div v-if="!editMode" class="text col2">{{ date }}</div>
+        <div v-if="!editMode" class="text col2">{{ editDate }}</div>
         <div v-if="editMode"><input v-model="editDate" type="date">
           <button class="addCurrentDate" @click="addCurrentDate()">Add Current Date</button>
         </div>
@@ -153,11 +153,10 @@ export default {
       { value: 18, name: 'Drawing' }
       //add the other categories if their is more
     ];
-    const editcategory = listCategory.findIndex(category => category.
+    const CategoryIndex = listCategory.findIndex(category => category.
       name === categoryToFind);
 
     const vednorTofind = this.vendor
-
     const listVendors = [
       { value: 1, name: 'ShopDOE' },
       { value: 2, name: 'Amazon' },
@@ -165,24 +164,29 @@ export default {
       { value: 4, name: 'Home Depot' },
       // ... add other vendors here
     ];
-
-    const editVendor = listVendors.findIndex(vendor => vendor.
+    const VendorIndex = listVendors.findIndex(vendor => vendor.
       name === vednorTofind);
+
     return {
       store: useItemsStore(),
       location: false,
       editMode: false,
       editname: this.name,
-      editcategory: editcategory + 1,
+      editcategory: CategoryIndex + 1,
+      listCategoryName: listCategory,
       editquantity: this.quantity,
       quantity1: this.quantM,
       quantity2: this.quantB,
       editLink: this.link,
-      editvendor: editVendor + 1,
+      editvendor: VendorIndex + 1,
+      listVendorsName: listVendors,
       editDate: this.date,
     };
   },
   methods: {
+    calculateTotalQuantity() {
+      return this.quantity1 + this.quantity2;
+    },
     vendorInfo() {
       this.store.$patch({ vendor: true, vendorHeader: true });
       this.store.inactive(".extraTab", ".tab1", ".tab1btn");
@@ -238,7 +242,8 @@ export default {
         });
 
         const data = await response.json();
-
+        this.store.edit = true
+        console.log(this.store.edit)
         console.log(data)
         this.editMode = false
       } catch (error) {
@@ -247,7 +252,7 @@ export default {
     },
   },
   computed: {
-    editquantity: {
+    editquantityNew: {
       get() {
         return this.editMode ? this.editquantity : this.calculateTotalQuantity();
       },
@@ -271,7 +276,54 @@ export default {
         this.editquantity = this.quantity1 + newValue;
       }
     },
+    $props: {
+      handler() {
+        const listCategory = [
+          { value: 1, name: 'Tools' },
+          { value: 2, name: 'Paint' },
+          { value: 3, name: 'Tape' },
+          { value: 4, name: 'Wire' },
+          { value: 5, name: 'First Aid' },
+          { value: 6, name: 'Fabric' },
+          { value: 7, name: 'Paper Mache' },
+          { value: 8, name: 'Glue' },
+          { value: 9, name: 'Sewing' },
+          { value: 10, name: 'Miscellaneous' },
+          { value: 11, name: 'Coloring Materials' },
+          { value: 12, name: 'Sculpture' },
+          { value: 13, name: 'Wood' },
+          { value: 14, name: 'Craft Supplies' },
+          { value: 15, name: 'Foam' },
+          { value: 16, name: 'Printmaking' },
+          { value: 17, name: 'Paper' },
+          { value: 18, name: 'Drawing' }
+          //add the other categories if their is more
+        ];
+        const listVendors = [
+          { value: 1, name: 'ShopDOE' },
+          { value: 2, name: 'Amazon' },
+          { value: 3, name: 'Blick' },
+          { value: 4, name: 'Home Depot' },
+          // ... add other vendors here
+        ];
+        this.editname = this.name,
+          this.editcategory = listCategory.findIndex(category => category.name === this.category),
+          this.editquantity = this.quantity,
+          this.quantity1 = this.quantM,
+          this.quantity2 = this.quantB,
+          this.editLink = this.link,
+          this.editvendor = listVendors.findIndex(vendor => vendor.
+            name === this.vendor),
+          this.editDate = this.date
+      },
+      deep: true,
+      immediate: true,
+    }
   },
+  mounted() {
+    console.log(this.category)
+    console.log(this.editcategory)
+  }
 };
 </script>
 
