@@ -20,13 +20,13 @@
       <div class="detailsCat poprow">
         <div class="text col1">Category</div>
         <button v-if="!editMode" class="text col2 extrabtn arrowbtn" @click="categoryInfo">
-          {{ listCategoryName[editcategory].name }}
+          {{ listCategoryName[editcategory - 1].name }}
           <div class="heading rightarrow">
             <span class="material-symbols-outlined"> navigate_next </span>
           </div>
         </button>
         <div v-if="editMode" class="text col2 col2name">
-          <select id="Category" v-model="listCategoryName[editcategory].value" required>
+          <select id="Category" v-model="editcategory" required>
             <option disabled value="">Choose a Category</option>
             <option value="1">Tools</option>
             <option value="2">Paint</option>
@@ -84,12 +84,12 @@
       <div class="detailsVendor poprow">
         <div class="text col1">Vendor</div>
         <button v-if="!editMode" class="text extrabtn col2 arrowbtn" @click="vendorInfo">
-          {{ listVendorsName[editvendor].name }}
+          {{ listVendorsName[editvendor - 1].name }}
           <div class="heading rightarrow">
             <span class="material-symbols-outlined"> navigate_next </span>
           </div>
         </button>
-        <select v-if="editMode" id="Vendor" v-model="listVendorsName[editvendor].value" required>
+        <select v-if="editMode" id="Vendor" v-model="editvendor" required>
           <option disabled value="">Choose a Vendor</option>
           <option value="1">ShopDOE</option>
           <option value="2">Amazon</option>
@@ -154,7 +154,7 @@ export default {
       //add the other categories if their is more
     ];
     const CategoryIndex = listCategory.findIndex(category => category.
-      name === categoryToFind);
+      name === categoryToFind) + 1;
 
     const vednorTofind = this.vendor
     const listVendors = [
@@ -165,7 +165,7 @@ export default {
       // ... add other vendors here
     ];
     const VendorIndex = listVendors.findIndex(vendor => vendor.
-      name === vednorTofind);
+      name === vednorTofind) + 1;
 
     return {
       store: useItemsStore(),
@@ -217,7 +217,7 @@ export default {
       }
     },
     addCurrentDate() {
-      const currentDate = new Date().toISOString().substr(0, 10);
+      const currentDate = new Date().toISOString().slice(0, 10);
       this.editDate = currentDate;
     },
     async saveChanges() {
@@ -307,13 +307,13 @@ export default {
           // ... add other vendors here
         ];
         this.editname = this.name,
-          this.editcategory = listCategory.findIndex(category => category.name === this.category),
+          this.editcategory = listCategory.findIndex(category => category.name === this.category) + 1,
           this.editquantity = this.quantity,
           this.quantity1 = this.quantM,
           this.quantity2 = this.quantB,
           this.editLink = this.link,
           this.editvendor = listVendors.findIndex(vendor => vendor.
-            name === this.vendor),
+            name === this.vendor) + 1,
           this.editDate = this.date
       },
       deep: true,
@@ -323,6 +323,7 @@ export default {
   mounted() {
     console.log(this.category)
     console.log(this.editcategory)
+    console.log(this.vendor, this.editvendor)
   }
 };
 </script>
