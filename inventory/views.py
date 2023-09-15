@@ -1,6 +1,7 @@
 import statistics
-from rest_framework import generics, viewsets
-from django.http import JsonResponse
+from rest_framework import generics, viewsets, mixins
+from rest_framework.views import APIView
+from django.http import JsonResponse, Http404
 from rest_framework.response import Response
 from .models import Item, Category, Vendor
 from .serializer import ItemSerializer, CategorySerializer, VendorSerializer
@@ -96,25 +97,25 @@ class ManualEditQuantity(generics.UpdateAPIView):
             return JsonResponse({'error': 'Invalid input'}, status=400)
 
 
-class AddItems(viewsets.ModelViewSet):
+class AddItems(generics.CreateAPIView):
     parser_classes = (MultiPartParser, FormParser)
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
 
-    def create(self, request, *args, **kwargs):
-        image_file = request.FILES.get('image')
-        if image_file is None:
-            return Response({'message': 'Image file is required.'}, status=400)
+    # def create(self, request, *args, **kwargs):
+    #     # image_file = request.FILES.get('image_file')
+    #     # if image_file is None:
+    #     #     return Response({'message': 'Image file is required.'}, status=400)
 
-        # Create a new serializer instance with only the image file data
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
+    #     # Create a new serializer instance with only the image file data
+    #     serializer = self.get_serializer(data=request.data)
+    #     serializer.is_valid(raise_exception=True)
 
-        # Save the image file separately, perform_create method can be used
-        # to handle further creation logic if needed
-        self.perform_create(serializer)
+    #     # Save the image file separately, perform_create method can be used
+    #     # to handle further creation logic if needed
+    #     self.perform_create(serializer)
 
-        return Response(serializer.data, status=201)
+    #     return Response(serializer.data, status=201)
 
 # delete item by pk value (id)
 
@@ -143,3 +144,8 @@ class updateMinAmount(generics.UpdateAPIView):
         itemMinAmount.save()
 
         return Response("Item updated", status=200)
+
+
+class editItems(generics.RetrieveUpdateAPIView):
+    queryset = Item.objects.all()
+    serializer_class = ItemSerializer
