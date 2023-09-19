@@ -4,7 +4,7 @@
       <span class="material-symbols-outlined closeAdd"> close </span>
     </button>
 
-    <form @submit.prevent="submitForm">
+    <form @submit.prevent="submitForm" @submit="store.addItems reload()">
       <div class="input-container">
         <label for="item_id">Item ID</label>
         <input id="item_id" type="text" v-model="item_id" placeholder="Enter Item ID" required />
@@ -118,6 +118,7 @@ export default {
 <script setup>
 import { ref } from "vue";
 import { useItemsStore } from "~/store/ItemsStore";
+import popupNoti from "./popupNoti.vue";
 
 // State variables
 const store = useItemsStore();

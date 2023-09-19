@@ -1,4 +1,5 @@
 <template>
+  <div><popupNoti/></div>
   <div class="app dismiss">
     <div id="search" class="heading">
       <Header> </Header>
@@ -32,6 +33,7 @@ import Search from "./components/search.vue";
 import Monitor from "./components/monitor.vue";
 import Vendors from "./components/vendors.vue";
 import CreateItemForm from "./components/CreateItemForm.vue";
+import popupNoti from "./components/popupNoti.vue";
 
 export default {
   name: "app",
