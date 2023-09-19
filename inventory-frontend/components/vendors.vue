@@ -258,6 +258,7 @@ const fullScreen = () => {
   margin: 0;
   z-index: 9999;
   background-color: white;
+
 }
 
 .canvas-cont {
@@ -285,7 +286,7 @@ const fullScreen = () => {
 }
 
 .maximize-button {
-  width: 4rem;
+  width: 8rem;
 }
 
 .maximize-button:hover,
@@ -304,8 +305,8 @@ const fullScreen = () => {
   padding: 5px;
 }
 
-.chart-cont-big {
-  height: 40rem;
+.chart-cont-big { 
+  height: 50rem;
   display: flex;
   justify-content: center;
 }
@@ -335,7 +336,19 @@ const fullScreen = () => {
     flex-direction: column;
     width: 100%;
   }
-  .buttons {
+  .chart-cont-big {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .minimize-button {  
+   position:relative;
+   right: 0% ;
+   left: 0% ;
+
+  }
+    .buttons {
     margin-left: 0;
   }
 }
