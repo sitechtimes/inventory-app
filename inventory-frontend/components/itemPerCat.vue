@@ -4,7 +4,7 @@
       <div class="subheading catHead" :class="store.monitor && 'monitorCatHead'" ref="cat" v-if="list.length > 0">
         {{ name }}
       </div>
-      <div class="itemHolder" v-if="store.catalog === true">
+      <div class="itemHolder" v-if="store.catalog === true" :key="componentKey">
         <Item v-for="result in list" :key="result.id" :id="result.id" :name="result.name" :quantity="result.total"
           :image="result.image_url" :updated="result.last_purchased" :vendor="result.vendor"
           :purchase_link="result.purchase_link" :category="result.category" :backroom="result.backroom_quantity"
@@ -24,8 +24,14 @@
 import Item from "./item.vue";
 import { useItemsStore } from "~/store/ItemsStore";
 import ItemMonitor from "./itemMonitor.vue";
+import { ref } from 'vue';
 
 export default {
+  data() {
+    return {
+      componentKey: 0,
+    };
+  },
   name: "ItemPerCat",
   props: { list: Array, name: String },
   components: { Item, ItemMonitor },
@@ -34,7 +40,11 @@ export default {
       store: useItemsStore(),
     };
   },
-  methods: {},
+  methods: {
+    forceRerender() {
+      this.componentKey += 1;
+    }
+  },
   mounted() {
     this.store.cat.push(this.$refs.cat);
   },

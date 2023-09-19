@@ -168,6 +168,7 @@ export const useItemsStore = defineStore("items", {
     },
     //add item form
     addItems() {
+      console.log('pp')
       if (this.editform === true) {
         this.editform = false;
       } else {

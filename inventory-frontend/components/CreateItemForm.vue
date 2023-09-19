@@ -4,7 +4,7 @@
       <span class="material-symbols-outlined closeAdd"> close </span>
     </button>
 
-    <form @submit.prevent="submitForm" @submit="store.addItems reload()">
+    <form @submit.prevent="submitForm" @submit="store.addItems">
       <div class="input-container">
         <label for="item_id">Item ID</label>
         <input id="item_id" type="text" v-model="item_id" placeholder="Enter Item ID" required />
