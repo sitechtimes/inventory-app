@@ -323,8 +323,8 @@ const fullScreen = () => {
   }
   .chart-cont-small,
   .canvas-cont {
-    height: fit-content;
-    max-width: 90%;
+    height: max-content;
+    max-width: 95%;
     margin-bottom: 3rem;
   }
   .canvas-cont,
@@ -351,5 +351,12 @@ const fullScreen = () => {
     .buttons {
     margin-left: 0;
   }
+}
+
+@media screen and (max-width: 375px)  {
+  .chart-cont {
+   height: max-content;
+  }
+  
 }
 </style>
