@@ -55,7 +55,7 @@ export default {
   left: 50%;
   transform: translate(-50%, 0);
   z-index: 501;
-  animation: fadeAnimation 2s;
+  animation: fadeAnimation 3s;
   animation-iteration-count: 1;
   width: 50vw;
   height: auto;

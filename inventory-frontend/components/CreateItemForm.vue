@@ -277,6 +277,9 @@ async function submitForm() {
   showNotification.value = true;
   notiItemName.value = name.value;
   notiItemAmt.value = makerspace.value;
+  setTimeout(() => {
+    showNotification.value = false;
+  }, 3000);
   const formData = new FormData();
   formData.append("item_id", item_id.value);
   if (thisfile.value) {
