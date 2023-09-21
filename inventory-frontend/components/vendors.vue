@@ -258,6 +258,7 @@ const fullScreen = () => {
   margin: 0;
   z-index: 9999;
   background-color: white;
+  overflow: auto;
 
 }
 
@@ -317,13 +318,19 @@ const fullScreen = () => {
 #Vendor {
   height: 80rem;
 }
+@media screen and (max-width: 820px) {
+  #Vendor {
+  height: 30rem !important;
+  width: 30rem !important;
+}
+}
+
 @media screen and (max-width: 760px) {
   .content {
     flex-direction: column-reverse;
   }
   .chart-cont-small,
   .canvas-cont {
-    height: max-content;
     max-width: 95%;
     margin-bottom: 3rem;
   }
@@ -353,10 +360,17 @@ const fullScreen = () => {
   }
 }
 
-@media screen and (max-width: 375px)  {
-  .chart-cont {
-   height: max-content;
+@media screen and (max-width: 375px)  { 
+  .chart-cont-small {
+   width: 90%;
   }
-  
+
+  .chart-cont-big {
+    width: 95%;
+  }
+  #Vendor {
+    height: 338px !important;
+    width: 338px !important;
+  }
 }
 </style>
