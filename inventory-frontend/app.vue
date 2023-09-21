@@ -1,5 +1,7 @@
 <template>
-  <div><popupNoti/></div>
+  <div id="notification">
+    <popupNoti />
+  </div>
   <div class="app dismiss">
     <div id="search" class="heading">
       <Header> </Header>
@@ -51,7 +53,6 @@ export default {
       store: useItemsStore(),
     };
   },
-  methods: {},
   async mounted() {
     await this.store.getItems();
     this.store.countAlerts();

@@ -7,32 +7,71 @@
     <form @submit.prevent="submitForm" @submit="store.addItems">
       <div class="input-container">
         <label for="item_id">Item ID</label>
-        <input id="item_id" type="text" v-model="item_id" placeholder="Enter Item ID" required />
+        <input
+          id="item_id"
+          type="text"
+          v-model="item_id"
+          placeholder="Enter Item ID"
+          required
+        />
       </div>
       <div class="input-container">
         <label for="name">Name of the Item</label>
-        <input id="name" type="text" v-model="name" placeholder="Enter the Name of the Item" required />
+        <input
+          id="name"
+          type="text"
+          v-model="name"
+          placeholder="Enter the Name of the Item"
+          required
+        />
       </div>
       <div class="input-container">
         <label class="text">Quantity</label>
         <div class="quantity-inputs">
-          <input id="quantity-makerspace" type="number" v-model="makerspace" placeholder="Maker Space Quantity"
-            required />
-          <input id="quantity-backroom" type="number" v-model="backroom" placeholder="Back Room Quantity" required />
+          <input
+            id="quantity-makerspace"
+            type="number"
+            v-model="makerspace"
+            placeholder="Maker Space Quantity"
+            required
+          />
+          <input
+            id="quantity-backroom"
+            type="number"
+            v-model="backroom"
+            placeholder="Back Room Quantity"
+            required
+          />
         </div>
       </div>
       <div class="input-container">
         <label for="min_amount">Minimum amount of Items to display alert</label>
-        <input id="min_amount" type="number" v-model="min_amount"
-          placeholder="Enter Minium amount of Items to display Alert" />
+        <input
+          id="min_amount"
+          type="number"
+          v-model="min_amount"
+          placeholder="Enter Minium amount of Items to display Alert"
+        />
       </div>
       <div class="input-container">
         <label for="location">Location of the Item</label>
-        <input id="location" type="text" v-model="location" placeholder="Enter the location of the Item" required />
+        <input
+          id="location"
+          type="text"
+          v-model="location"
+          placeholder="Enter the location of the Item"
+          required
+        />
       </div>
       <div class="input-container">
         <label for="purchase_link">Purchase Link</label>
-        <input id="purchase_link" type="text" v-model="purchase_link" placeholder="Purhcase Link" required />
+        <input
+          id="purchase_link"
+          type="text"
+          v-model="purchase_link"
+          placeholder="Purhcase Link"
+          required
+        />
       </div>
       <div class="input-container">
         <label for="Vendor">Vendor</label>
@@ -71,27 +110,52 @@
       </div>
       <div class="input-container">
         <label for="image_url">Image Url</label>
-        <input id="image_url" type="text" v-model="image_url" placeholder="Enter Image Url" />
+        <input
+          id="image_url"
+          type="text"
+          v-model="image_url"
+          placeholder="Enter Image Url"
+        />
       </div>
 
       <!-- image pre view container  -->
-      <div class="upload-container relative flex items-center justify-between w-full">
+      <div
+        class="upload-container relative flex items-center justify-between w-full"
+      >
         <div
           class="drop-area w-full rounded-md border-2 border-dotted border-gray-200 transition-all hover:border-blue-600/30 text-center"
-          @dragover.prevent="handleDragOver" @dragleave="handleDragLeave" @drop.prevent="handleDrop">
-          <label for="file-input" class="block w-full h-full text-gray-500 p-4 text-sm cursor-pointer">
+          @dragover.prevent="handleDragOver"
+          @dragleave="handleDragLeave"
+          @drop.prevent="handleDrop"
+        >
+          <label
+            for="file-input"
+            class="block w-full h-full text-gray-500 p-4 text-sm cursor-pointer"
+          >
             {{ dropAreaText }}
           </label>
-          <input name="file" type="file" id="file-input" accept="image/*" class="hidden" @change="handleFileChange" />
+          <input
+            name="file"
+            type="file"
+            id="file-input"
+            accept="image/*"
+            class="hidden"
+            @change="handleFileChange"
+          />
           <!-- Image upload input -->
           <div class="preview-container" :class="{ hidden: !showPreview }">
-            <div class="preview-image w-36 h-36 bg-cover bg-center rounded-md cursor-pointer"
-              :style="{ backgroundImage: previewImage }" @click="handleImageClick"></div>
+            <div
+              class="preview-image w-36 h-36 bg-cover bg-center rounded-md cursor-pointer"
+              :style="{ backgroundImage: previewImage }"
+              @click="handleImageClick"
+            ></div>
             <span class="file-name my-4 text-sm font-medium" v-if="fileName">{{
               fileName
             }}</span>
-            <p class="close-button cursor-pointer transition-all mb-4 rounded-md px-3 py-1 border text-xs text-red-500 border-red-500 hover:bg-red-500 hover:text-white"
-              @click="handleClose">
+            <p
+              class="close-button cursor-pointer transition-all mb-4 rounded-md px-3 py-1 border text-xs text-red-500 border-red-500 hover:bg-red-500 hover:text-white"
+              @click="handleClose"
+            >
               Delete
             </p>
           </div>
@@ -100,7 +164,11 @@
         <!-- Bigger Image Preview Modal -->
         <div class="modal" v-if="showModal" @click="closeModal">
           <div class="modal-content">
-            <img :src="previewImageModal" alt="Bigger Preview" @click="closeModal" />
+            <img
+              :src="previewImageModal"
+              alt="Bigger Preview"
+              @click="closeModal"
+            />
           </div>
         </div>
       </div>
@@ -118,7 +186,11 @@ export default {
 <script setup>
 import { ref } from "vue";
 import { useItemsStore } from "~/store/ItemsStore";
-import popupNoti from "./popupNoti.vue";
+import {
+  showNotification,
+  notiItemName,
+  notiItemAmt,
+} from "../assets/globalVar.js";
 
 // State variables
 const store = useItemsStore();
@@ -202,6 +274,9 @@ function closeModal() {
 }
 
 async function submitForm() {
+  showNotification.value = true;
+  notiItemName.value = name.value;
+  notiItemAmt.value = makerspace.value;
   const formData = new FormData();
   formData.append("item_id", item_id.value);
   if (thisfile.value) {
@@ -228,7 +303,7 @@ async function submitForm() {
 
     const data = await response.json();
 
-    console.log(data)
+    console.log(data);
   } catch (error) {
     console.log(error);
   }
