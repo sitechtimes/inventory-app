@@ -1,6 +1,8 @@
 import { defineStore } from "pinia";
-
+import { showNotification } from "assets/globalVar";
+import { watch } from 'vue'
 export const useItemsStore = defineStore("items", {
+
   state: () => ({
     //for search function filtering
     items: [],
@@ -32,15 +34,15 @@ export const useItemsStore = defineStore("items", {
     alerted_items: [],
     viewNotif: false,
   }),
-
   getters: {},
-
+  
   actions: {
     //fetch api
     async getItems() {
       const response = await fetch("http://127.0.0.1:8000/items/category/");
       const results = await response.json();
       console.log(results);
+      console.log(showNotification.value)
       const newresults = results.sort((a, b) =>
         a.category_name > b.category_name
           ? 1
@@ -49,11 +51,9 @@ export const useItemsStore = defineStore("items", {
           : 0
       );
       this.returnlist = newresults;
-
       this.items = newresults;
       return newresults;
-    },
-
+    },   
     //resize individual items when clicked for more information by adding/removing classes
     resizing() {
       if (this.info === true || this.editform === true) {
