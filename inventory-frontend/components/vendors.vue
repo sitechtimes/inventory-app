@@ -316,12 +316,20 @@ const fullScreen = () => {
   height: 500px;
 }
 #Vendor {
-  height: 80rem;
+  height: 100rem;
 }
+
+@media screen and ( max-width: 912px ) {
+  #Vendor {
+    height: 50rem !important;
+    width: 55rem !important;
+  }
+}
+
 @media screen and (max-width: 820px) {
   #Vendor {
-  height: 30rem !important;
-  width: 30rem !important;
+  height: 50rem !important;
+  width: 50rem !important;
 }
 }
 
@@ -349,6 +357,11 @@ const fullScreen = () => {
     align-items: center;
   }
 
+  #Vendor {
+    height: 50rem !important;
+    width: 338px !important;
+  }
+
   .minimize-button {  
    position:relative;
    right: 0% ;
@@ -369,8 +382,15 @@ const fullScreen = () => {
     width: 95%;
   }
   #Vendor {
-    height: 338px !important;
-    width: 338px !important;
+    height: 30rem !important;
+    width: 35rem !important;
+  }
+}
+
+@media screen and (max-width: 280px)  { 
+  #Vendor {
+    height: 250px !important;
+    width: 15rem !important;
   }
 }
 </style>
