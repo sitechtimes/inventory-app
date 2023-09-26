@@ -110,7 +110,8 @@
     </div>
     <div class="logPop">
       <div class="subheading changelog">Inventory Change Log</div>
-      <button class="text logorg">DateTime</button>
+      <button class="text logorg">DateTime ↓</button>
+      <p>:3</p>
     </div>
   </div>
 </template>
