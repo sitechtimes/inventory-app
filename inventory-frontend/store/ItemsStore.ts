@@ -1,6 +1,5 @@
 import { defineStore } from "pinia";
 import { showNotification } from "assets/globalVar";
-import { watch } from 'vue'
 export const useItemsStore = defineStore("items", {
 
   state: () => ({
