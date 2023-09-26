@@ -78,10 +78,8 @@ export default {
   .catHead {
     border-top: var(--border);
     border-bottom: var(--border);
-  }
-
-  .itemHolder {
     background-color: var(--whitebg);
+    
   }
 }
 </style>
