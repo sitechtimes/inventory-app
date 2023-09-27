@@ -8,6 +8,24 @@ vendors = [('DOE', 'ShopDOE'), ('AMZ', 'Amazon'),
            ('BLICK', 'Blick'), ('HD', 'Home Depot')]
 locations = [('MS', 'Makerspace'), ('BR', 'Back Room')]
 
+class Log(models.Model):
+    item_id = models.CharField(max_length=100, blank=True, default='')
+    name = models.CharField(max_length=100, blank=True, default='')
+    purchase_link = models.CharField(max_length=1000, blank=True, default='')
+    image_url = models.URLField(blank=True, null=True, default=None)
+    image_file = models.ImageField(
+        upload_to=upload_to, blank=True, null=True, default=None)
+    last_purchased = models.DateTimeField(auto_now=True, editable=True)
+    backroom_quantity = models.IntegerField(default=0)
+    makerspace_quantity = models.IntegerField(default=0)
+    category = models.ForeignKey(
+        Category, related_name='itemsCategory', on_delete=models.CASCADE)
+    vendor = models.ForeignKey(
+        Vendor, related_name='itemsVendor', on_delete=models.CASCADE)
+    location = models.CharField(max_length=50, default='')
+    min_amount = models.IntegerField(default=5)
+    pub_date = models.DateField()
+    
 
 class Category(models.Model):
     category_code = models.CharField(
