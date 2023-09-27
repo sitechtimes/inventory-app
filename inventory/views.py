@@ -2,12 +2,17 @@ import statistics
 from rest_framework import generics, viewsets, mixins
 from rest_framework.views import APIView
 from django.http import JsonResponse, Http404
+from django.shortcuts import render
 from rest_framework.response import Response
-from .models import Item, Category, Vendor
+from .models import Item, Category, Vendor, Article
 from .serializer import ItemSerializer, CategorySerializer, VendorSerializer
 import datetime
 from rest_framework.parsers import MultiPartParser, FormParser
 
+def year_archive(request, year):
+    a_list = Article.objects.filter(pub_date__year=year)
+    context = {"year": year, "article_list": a_list}
+    return render(request, "news/year_archive.html", context)
 
 class CategoryView(generics.ListAPIView):
     queryset = Category.objects.all()

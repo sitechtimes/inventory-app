@@ -19,5 +19,9 @@ urlpatterns = [
     # send Data to these Url as request body
     path("addItems/", views.AddItems.as_view()),
     path("editItems/<int:pk>/", views.editItems.as_view()),
+
+    path("articles/<int:year>/", views.year_archive),
+    path("articles/<int:year>/<int:month>/", views.month_archive),
+    path("articles/<int:year>/<int:month>/<int:pk>/", views.article_detail),
 ]
 urlpatterns = format_suffix_patterns(urlpatterns)
