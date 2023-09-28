@@ -391,6 +391,7 @@ export default {
 .popUpPanel {
   height: 100vh;
   width: 100%;
+  overflow: auto;
   display: flex;
   flex-direction: column;
 }
@@ -429,7 +430,6 @@ export default {
 
 .col2 {
   width: 70%;
-  margin-right: 5rem;
 }
 
 .col2name {
@@ -439,7 +439,6 @@ export default {
 .purchlink {
   width: 30rem;
   overflow: hidden;
-
   white-space: nowrap;
   text-overflow: ellipsis;
 }
@@ -525,5 +524,11 @@ select {
     width: 100%;
     /* Full width on smaller screens */
   }
+}
+
+@media  screen and (max-width:375px) {
+    .purchlink {
+      width: 20rem;
+    }
 }
 </style>

@@ -230,4 +230,10 @@ async function fetchData() {
   justify-content: flex-end;
   padding: 5px;
 }
+
+@media screen and (max-width: 375px) {
+  .minimize-button {
+    height: 100vh;
+  }
+}
 </style>
