@@ -38,7 +38,7 @@ export const useItemsStore = defineStore("items", {
   actions: {
     //fetch api
     async getItems() {
-      const response = await fetch("http://127.0.0.1:8000/items/category/");
+      const response = await fetch(`http://${location.hostname}:8000/items/category/`);
       const results = await response.json();
       console.log(results);
       const newresults = results.sort((a, b) =>
