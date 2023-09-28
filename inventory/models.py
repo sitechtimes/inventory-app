@@ -8,6 +8,7 @@ vendors = [('DOE', 'ShopDOE'), ('AMZ', 'Amazon'),
            ('BLICK', 'Blick'), ('HD', 'Home Depot')]
 locations = [('MS', 'Makerspace'), ('BR', 'Back Room')]
 
+
 class Category(models.Model):
     category_code = models.CharField(
         choices=categories, max_length=100, default="")
@@ -60,4 +61,14 @@ class Item(models.Model):
         self.id = count_obj
         super(Item, self).save(*args, **kwargs)
 
+class Log(models.Model):
+    item_name = models.CharField(max_length=30)
+    category = models.ForeignKey(
+        Category, related_name='itemsCategory', on_delete=models.CASCADE)
+    purchase_link = models.CharField(max_length=1000, blank=True, default='')
+    backroom_quantity = models.IntegerField(default=0)
+    makerspace_quantity = models.IntegerField(default=0)
+    vendor = models.ForeignKey(
+        Vendor, related_name='itemsVendor', on_delete=models.CASCADE)
+    last_purchased = models.DateTimeField(auto_now=True, editable=True)
 # image = models.CharField(max_length=1000, blank=True, default='')

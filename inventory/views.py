@@ -3,8 +3,8 @@ from rest_framework import generics, viewsets, mixins
 from rest_framework.views import APIView
 from django.http import JsonResponse, Http404
 from rest_framework.response import Response
-from .models import Item, Category, Vendor
-from .serializer import ItemSerializer, CategorySerializer, VendorSerializer
+from .models import Item, Category, Vendor, Log
+from .serializer import ItemSerializer, CategorySerializer, VendorSerializer, LogSerializer
 import datetime
 from rest_framework.parsers import MultiPartParser, FormParser
 
