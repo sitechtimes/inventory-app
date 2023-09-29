@@ -6,7 +6,7 @@
 
     <form @submit.prevent="submitForm" @submit="store.addItems">
       <div class="input-container">
-        <label class="text" for="item_id">Item ID</label>
+        <label for="item_id">Item ID</label>
         <input
           id="item_id"
           type="text"
@@ -16,7 +16,7 @@
         />
       </div>
       <div class="input-container">
-        <label class="text" for="name">Name of the Item</label>
+        <label for="name">Name of the Item</label>
         <input
           id="name"
           type="text"
@@ -45,9 +45,7 @@
         </div>
       </div>
       <div class="input-container">
-        <label class="text" for="min_amount"
-          >Minimum amount of Items to display alert</label
-        >
+        <label for="min_amount">Minimum amount of Items to display alert</label>
         <input
           id="min_amount"
           type="number"
@@ -56,7 +54,7 @@
         />
       </div>
       <div class="input-container">
-        <label class="text" for="location">Location of the Item</label>
+        <label for="location">Location of the Item</label>
         <input
           id="location"
           type="text"
@@ -66,7 +64,7 @@
         />
       </div>
       <div class="input-container">
-        <label class="text" for="purchase_link">Purchase Link</label>
+        <label for="purchase_link">Purchase Link</label>
         <input
           id="purchase_link"
           type="text"
@@ -76,7 +74,7 @@
         />
       </div>
       <div class="input-container">
-        <label class="text" for="Vendor">Vendor</label>
+        <label for="Vendor">Vendor</label>
         <select id="Vendor" v-model="vendor" required>
           <option disabled value="">Choose a Vendor</option>
           <option value="1">ShopDOE</option>
@@ -86,7 +84,7 @@
         </select>
       </div>
       <div class="input-container">
-        <label class="text" for="Category">Category</label>
+        <label for="Category">Category</label>
         <select id="Category" v-model="category" required>
           <option disabled value="">Choose a Category</option>
           <option value="1">Tools</option>
@@ -111,7 +109,7 @@
         </select>
       </div>
       <div class="input-container">
-        <label class="text" for="image_url">Image Url</label>
+        <label for="image_url">Image Url</label>
         <input
           id="image_url"
           type="text"
