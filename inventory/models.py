@@ -1,4 +1,5 @@
 from django.db import models
+
 categories = [('TLS', 'Tools'), ('PT', 'Paint'), ('TP', 'Tape'), ('WR', 'Wire'), ('FA', 'First Aid'), ('FAB', 'Fabric'), ('PM', 'Paper Mache'), ('GL', 'Glue'), ('SE', 'Sewing'), ('MISC',
                                                                                                                                                                                    'Miscellaneous'), ('CM', 'Coloring Materials'), ('SC', 'Sculpture'), ('WD', 'Wood'), ('CS', 'Craft Supplies'), ('FM', 'Foam'), ('PRTM', 'Printmaking'), ('PAP', 'Paper'), ('DR', 'Drawing')]
 
@@ -6,6 +7,7 @@ categories = [('TLS', 'Tools'), ('PT', 'Paint'), ('TP', 'Tape'), ('WR', 'Wire'),
 vendors = [('DOE', 'ShopDOE'), ('AMZ', 'Amazon'),
            ('BLICK', 'Blick'), ('HD', 'Home Depot')]
 locations = [('MS', 'Makerspace'), ('BR', 'Back Room')]
+
 
 class Category(models.Model):
     category_code = models.CharField(
@@ -60,15 +62,13 @@ class Item(models.Model):
         super(Item, self).save(*args, **kwargs)
 
 class Log(models.Model):
-    log_id = models.CharField(max_length=100, blank=True, default='')
-    name = models.CharField(max_length=100, blank=True, default='')
-    category = models.CharField(max_length=50, choices=categories, default='TLS')
+    item_name = models.CharField(max_length=30)
+    category = models.ForeignKey(
+        Category, related_name='itemsCategory', on_delete=models.CASCADE)
+    purchase_link = models.CharField(max_length=1000, blank=True, default='')
     backroom_quantity = models.IntegerField(default=0)
     makerspace_quantity = models.IntegerField(default=0)
-    purchase_link = models.CharField(max_length=1000, blank=True, default='')
-    vendor = models.CharField(max_length=50, choices=vendors, default='DOE')
-    pub_date = models.CharField(max_length=100, blank=True, default='00/00/0000')
-    
-    def __str__(self):
-        return self.name
+    vendor = models.ForeignKey(
+        Vendor, related_name='itemsVendor', on_delete=models.CASCADE)
+    last_purchased = models.DateTimeField(auto_now=True, editable=True)
 # image = models.CharField(max_length=1000, blank=True, default='')
