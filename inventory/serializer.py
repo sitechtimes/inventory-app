@@ -1,6 +1,10 @@
 from rest_framework import serializers
-from .models import Item, Category, Vendor
+from .models import Item, Category, Vendor, Log
 
+class LogSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Log
+        fields = ['log_id', 'name', 'backroom_quantity', 'makerspace_quantity', 'purchase_link', 'pub_date', 'category', 'vendor']
 
 class ItemSerializer(serializers.ModelSerializer):
 
@@ -62,3 +66,4 @@ class VendorSerializer(serializers.ModelSerializer):
     def get_count(self, obj):
         count = Item.objects.filter(vendor=obj).count()
         return count
+    

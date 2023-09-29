@@ -8,9 +8,14 @@ from .serializer import ItemSerializer, CategorySerializer, VendorSerializer, Lo
 import datetime
 from rest_framework.parsers import MultiPartParser, FormParser
 
+
 class CategoryView(generics.ListAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+
+class LogView(generics.ListAPIView):
+    queryset = Log.objects.all()
+    serializer_class = LogSerializer
 
 
 class VendorView(generics.ListAPIView):
@@ -50,6 +55,10 @@ class UpdateLastPurchase(generics.UpdateAPIView):
 class getItems(generics.RetrieveAPIView):
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
+
+class getLogs(generics.RetrieveAPIView):
+    queryset = Log.objects.all()
+    serializer_class = LogSerializer
 
 
 class moveItems(generics.UpdateAPIView):

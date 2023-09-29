@@ -4,6 +4,7 @@ from inventory import views
 
 urlpatterns = [
     path("category/", views.CategoryView.as_view()),
+    path("log/", views.LogView.as_view()),
     path("vendor/", views.VendorView.as_view()),
     path("category/<str:category_name>/", views.sortByCategory.as_view()),
     path("vendor/<str:vendor_name>/", views.sortByVendor.as_view()),
