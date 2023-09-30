@@ -8,9 +8,11 @@ from .serializer import ItemSerializer, CategorySerializer, VendorSerializer, Lo
 import datetime
 from rest_framework.parsers import MultiPartParser, FormParser
 
+
 class LogView(generics.ListAPIView):
     queryset = Log.objects.all()
     serializer_class = LogSerializer
+
 
 class getLogs(generics.RetrieveAPIView):
     queryset = Log.objects.all()

@@ -48,7 +48,7 @@ export const useItemsStore = defineStore("items", {
         this.logs = results
       } catch (error) {
         // TypeError: Failed to fetch
-        console.log('There was an error :C', error);
+        console.log('There was an error', error);
       }
 
     },
