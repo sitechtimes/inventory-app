@@ -38,6 +38,16 @@ export const useItemsStore = defineStore("items", {
 
   actions: {
     //fetch api
+
+    async getLogs(){
+      console.log("LOG")
+      const response = await fetch("http://127.0.0.1:8000/items/log/");
+      const results = await response.json();
+      console.log(results);
+      this.logs = results
+
+    },
+
     async getItems() {
       const response = await fetch("http://127.0.0.1:8000/items/category/");
       const results = await response.json();
@@ -55,14 +65,6 @@ export const useItemsStore = defineStore("items", {
       return newresults;
     },
 
-    async getLogs(){
-      console.log("LOGS")
-      const response = await fetch("http://127.0.0.1:8000/items/log/");
-      const results = await response.json();
-      console.log(results);
-      this.logs = results
-
-    },
 
     //resize individual items when clicked for more information by adding/removing classes
     resizing() {

@@ -1,4 +1,3 @@
-+
 <template>
   <div id="logCon">
     <div v-for="each in store.logs" :key="each.id">
