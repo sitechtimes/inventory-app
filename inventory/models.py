@@ -61,6 +61,7 @@ class Item(models.Model):
         self.id = count_obj
         super(Item, self).save(*args, **kwargs)
 
+# IM CRYING
 class Log(models.Model):
     item_name = models.CharField(max_length=30)
     category = models.ForeignKey(
