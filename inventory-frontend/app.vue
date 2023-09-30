@@ -52,6 +52,7 @@ export default {
   methods: {},
   async mounted() {
     await this.store.getItems();
+    await this.store.getLogs();
     this.store.countAlerts();
   },
 };

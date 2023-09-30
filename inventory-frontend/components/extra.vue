@@ -19,7 +19,11 @@
 
       <div class="detailsCat poprow">
         <div class="text col1">Category</div>
-        <button v-if="!editMode" class="text col2 extrabtn arrowbtn" @click="categoryInfo">
+        <button
+          v-if="!editMode"
+          class="text col2 extrabtn arrowbtn"
+          @click="categoryInfo"
+        >
           {{ listCategoryName[editcategory - 1].name }}
           <div class="heading rightarrow">
             <span class="material-symbols-outlined"> navigate_next </span>
@@ -52,13 +56,22 @@
       </div>
       <div class="detailsStock poprow">
         <div class="text col1">Total Stock Available</div>
-        <button v-if="!editMode" class="text col2 extrabtn arrowbtn" @click="locationToggle">
+        <button
+          v-if="!editMode"
+          class="text col2 extrabtn arrowbtn"
+          @click="locationToggle"
+        >
           {{ editquantity }}
           <div class="expandbtn heading rightarrow">
             <span class="material-symbols-outlined"> navigate_next </span>
           </div>
         </button>
-        <button v-if="editMode" class="text col2 extrabtn arrowbtn" @click="locationToggle">{{ this.editquantity }}
+        <button
+          v-if="editMode"
+          class="text col2 extrabtn arrowbtn"
+          @click="locationToggle"
+        >
+          {{ this.editquantity }}
           <div class="expandbtn heading rightarrow">
             <span class="material-symbols-outlined"> navigate_next </span>
           </div>
@@ -67,23 +80,33 @@
       <div class="detailsLocation" v-if="location">
         <div class="poprow">
           <div class="text col1" id="location">Makerspace</div>
-          <div v-if="!editMode" class="text col2" id="locationQ">{{ quantity1 }}</div>
-          <input v-if="editMode" v-model="quantity1" type="number">
+          <div v-if="!editMode" class="text col2" id="locationQ">
+            {{ quantity1 }}
+          </div>
+          <input v-if="editMode" v-model="quantity1" type="number" />
         </div>
         <div class="poprow">
           <div class="text col1" id="location">Backroom</div>
-          <div v-if="!editMode" class="text col2" id="locationQ">{{ quantity2 }}</div>
-          <input v-if="editMode" v-model="quantity2" type="number">
+          <div v-if="!editMode" class="text col2" id="locationQ">
+            {{ quantity2 }}
+          </div>
+          <input v-if="editMode" v-model="quantity2" type="number" />
         </div>
       </div>
       <div class="detailsPurchase poprow">
         <div class="text col1">Purchase Link</div>
-        <a v-if="!editMode" class="text col2 col2name purchlink" :href="link">{{ editLink }}</a>
-        <input v-if="editMode" v-model="editLink" type="text">
+        <a v-if="!editMode" class="text col2 col2name purchlink" :href="link">{{
+          editLink
+        }}</a>
+        <input v-if="editMode" v-model="editLink" type="text" />
       </div>
       <div class="detailsVendor poprow">
         <div class="text col1">Vendor</div>
-        <button v-if="!editMode" class="text extrabtn col2 arrowbtn" @click="vendorInfo">
+        <button
+          v-if="!editMode"
+          class="text extrabtn col2 arrowbtn"
+          @click="vendorInfo"
+        >
           {{ listVendorsName[editvendor - 1].name }}
           <div class="heading rightarrow">
             <span class="material-symbols-outlined"> navigate_next </span>
@@ -100,12 +123,17 @@
       <div class="detailsDate poprow">
         <div class="text col1">Date Last Purchased</div>
         <div v-if="!editMode" class="text col2">{{ editDate }}</div>
-        <div v-if="editMode"><input v-model="editDate" type="date">
-          <button class="addCurrentDate" @click="addCurrentDate()">Add Current Date</button>
+        <div v-if="editMode">
+          <input v-model="editDate" type="date" />
+          <button class="addCurrentDate" @click="addCurrentDate()">
+            Add Current Date
+          </button>
         </div>
       </div>
       <div>
-        <button class="save" v-if="editMode" @click="saveChanges">Save Changes</button>
+        <button class="save" v-if="editMode" @click="saveChanges">
+          Save Changes
+        </button>
       </div>
     </div>
     <div class="logPop">
@@ -132,41 +160,42 @@ export default {
     quantB: Number,
   },
   data() {
-    const categoryToFind = this.category
+    const categoryToFind = this.category;
     const listCategory = [
-      { value: 1, name: 'Tools' },
-      { value: 2, name: 'Paint' },
-      { value: 3, name: 'Tape' },
-      { value: 4, name: 'Wire' },
-      { value: 5, name: 'First Aid' },
-      { value: 6, name: 'Fabric' },
-      { value: 7, name: 'Paper Mache' },
-      { value: 8, name: 'Glue' },
-      { value: 9, name: 'Sewing' },
-      { value: 10, name: 'Miscellaneous' },
-      { value: 11, name: 'Coloring Materials' },
-      { value: 12, name: 'Sculpture' },
-      { value: 13, name: 'Wood' },
-      { value: 14, name: 'Craft Supplies' },
-      { value: 15, name: 'Foam' },
-      { value: 16, name: 'Printmaking' },
-      { value: 17, name: 'Paper' },
-      { value: 18, name: 'Drawing' }
+      { value: 1, name: "Tools" },
+      { value: 2, name: "Paint" },
+      { value: 3, name: "Tape" },
+      { value: 4, name: "Wire" },
+      { value: 5, name: "First Aid" },
+      { value: 6, name: "Fabric" },
+      { value: 7, name: "Paper Mache" },
+      { value: 8, name: "Glue" },
+      { value: 9, name: "Sewing" },
+      { value: 10, name: "Miscellaneous" },
+      { value: 11, name: "Coloring Materials" },
+      { value: 12, name: "Sculpture" },
+      { value: 13, name: "Wood" },
+      { value: 14, name: "Craft Supplies" },
+      { value: 15, name: "Foam" },
+      { value: 16, name: "Printmaking" },
+      { value: 17, name: "Paper" },
+      { value: 18, name: "Drawing" },
       //add the other categories if their is more
     ];
-    const CategoryIndex = listCategory.findIndex(category => category.
-      name === categoryToFind) + 1;
+    const CategoryIndex =
+      listCategory.findIndex((category) => category.name === categoryToFind) +
+      1;
 
-    const vednorTofind = this.vendor
+    const vednorTofind = this.vendor;
     const listVendors = [
-      { value: 1, name: 'ShopDOE' },
-      { value: 2, name: 'Amazon' },
-      { value: 3, name: 'Blick' },
-      { value: 4, name: 'Home Depot' },
+      { value: 1, name: "ShopDOE" },
+      { value: 2, name: "Amazon" },
+      { value: 3, name: "Blick" },
+      { value: 4, name: "Home Depot" },
       // ... add other vendors here
     ];
-    const VendorIndex = listVendors.findIndex(vendor => vendor.
-      name === vednorTofind) + 1;
+    const VendorIndex =
+      listVendors.findIndex((vendor) => vendor.name === vednorTofind) + 1;
 
     return {
       store: useItemsStore(),
@@ -214,7 +243,7 @@ export default {
     },
     editToggle() {
       if (!this.editMode) {
-        this.editMode = true
+        this.editMode = true;
       }
     },
     addCurrentDate() {
@@ -233,20 +262,23 @@ export default {
       formData.append("last_purchased", this.editDate);
 
       try {
-        console.log(this.store.id)
-        const response = await fetch(`http://127.0.0.1:8000/items/editItems/${this.store.id}/`, {
-          method: "PUT",
-          mode: "cors",
-          cache: "no-cache",
-          credentials: "same-origin",
-          body: formData,
-        });
+        console.log(this.store.id);
+        const response = await fetch(
+          `http://127.0.0.1:8000/items/editItems/${this.store.id}/`,
+          {
+            method: "PUT",
+            mode: "cors",
+            cache: "no-cache",
+            credentials: "same-origin",
+            body: formData,
+          }
+        );
 
         const data = await response.json();
-        this.store.edit = true
-        console.log(this.store.edit)
-        console.log(data)
-        this.editMode = false
+        this.store.edit = true;
+        console.log(this.store.edit);
+        console.log(data);
+        this.editMode = false;
       } catch (error) {
         console.log(error);
       }
@@ -255,7 +287,9 @@ export default {
   computed: {
     editquantityNew: {
       get() {
-        return this.editMode ? this.editquantity : this.calculateTotalQuantity();
+        return this.editMode
+          ? this.editquantity
+          : this.calculateTotalQuantity();
       },
       set(newValue) {
         if (this.editMode) {
@@ -280,52 +314,55 @@ export default {
     $props: {
       handler() {
         const listCategory = [
-          { value: 1, name: 'Tools' },
-          { value: 2, name: 'Paint' },
-          { value: 3, name: 'Tape' },
-          { value: 4, name: 'Wire' },
-          { value: 5, name: 'First Aid' },
-          { value: 6, name: 'Fabric' },
-          { value: 7, name: 'Paper Mache' },
-          { value: 8, name: 'Glue' },
-          { value: 9, name: 'Sewing' },
-          { value: 10, name: 'Miscellaneous' },
-          { value: 11, name: 'Coloring Materials' },
-          { value: 12, name: 'Sculpture' },
-          { value: 13, name: 'Wood' },
-          { value: 14, name: 'Craft Supplies' },
-          { value: 15, name: 'Foam' },
-          { value: 16, name: 'Printmaking' },
-          { value: 17, name: 'Paper' },
-          { value: 18, name: 'Drawing' }
+          { value: 1, name: "Tools" },
+          { value: 2, name: "Paint" },
+          { value: 3, name: "Tape" },
+          { value: 4, name: "Wire" },
+          { value: 5, name: "First Aid" },
+          { value: 6, name: "Fabric" },
+          { value: 7, name: "Paper Mache" },
+          { value: 8, name: "Glue" },
+          { value: 9, name: "Sewing" },
+          { value: 10, name: "Miscellaneous" },
+          { value: 11, name: "Coloring Materials" },
+          { value: 12, name: "Sculpture" },
+          { value: 13, name: "Wood" },
+          { value: 14, name: "Craft Supplies" },
+          { value: 15, name: "Foam" },
+          { value: 16, name: "Printmaking" },
+          { value: 17, name: "Paper" },
+          { value: 18, name: "Drawing" },
           //add the other categories if their is more
         ];
         const listVendors = [
-          { value: 1, name: 'ShopDOE' },
-          { value: 2, name: 'Amazon' },
-          { value: 3, name: 'Blick' },
-          { value: 4, name: 'Home Depot' },
+          { value: 1, name: "ShopDOE" },
+          { value: 2, name: "Amazon" },
+          { value: 3, name: "Blick" },
+          { value: 4, name: "Home Depot" },
           // ... add other vendors here
         ];
-        this.editname = this.name,
-          this.editcategory = listCategory.findIndex(category => category.name === this.category) + 1,
-          this.editquantity = this.quantity,
-          this.quantity1 = this.quantM,
-          this.quantity2 = this.quantB,
-          this.editLink = this.link,
-          this.editvendor = listVendors.findIndex(vendor => vendor.
-            name === this.vendor) + 1,
-          this.editDate = this.date
+        (this.editname = this.name),
+          (this.editcategory =
+            listCategory.findIndex(
+              (category) => category.name === this.category
+            ) + 1),
+          (this.editquantity = this.quantity),
+          (this.quantity1 = this.quantM),
+          (this.quantity2 = this.quantB),
+          (this.editLink = this.link),
+          (this.editvendor =
+            listVendors.findIndex((vendor) => vendor.name === this.vendor) + 1),
+          (this.editDate = this.date);
       },
       deep: true,
       immediate: true,
-    }
+    },
   },
   mounted() {
-    console.log(this.category)
-    console.log(this.editcategory)
-    console.log(this.vendor, this.editvendor)
-  }
+    console.log(this.category);
+    console.log(this.editcategory);
+    console.log(this.vendor, this.editvendor);
+  },
 };
 </script>
 
@@ -490,18 +527,17 @@ export default {
 
 input,
 select {
-  font-size: clamp(.5rem, 1rem + 10vw, 1.5rem);
+  font-size: clamp(0.5rem, 1rem + 10vw, 1.5rem);
 }
 
 .addCurrentDate {
   max-width: 15rem;
-  font-size: clamp(.5rem, 1rem + 10vw, 1.5rem);
+  font-size: clamp(0.5rem, 1rem + 10vw, 1.5rem);
   padding: 1rem;
   margin-left: 10px;
   background-color: rgb(217, 217, 243);
   border-radius: 2rem;
 }
-
 
 .save {
   background-color: var(--darkblue);
@@ -514,7 +550,7 @@ select {
   margin: 2rem auto;
   /* Center horizontally */
   display: block;
-  font-size: clamp(.5rem, 1rem + 10vw, 1.5rem);
+  font-size: clamp(0.5rem, 1rem + 10vw, 1.5rem);
 }
 
 .save:hover {

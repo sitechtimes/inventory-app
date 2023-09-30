@@ -60,4 +60,14 @@ class Item(models.Model):
         self.id = count_obj
         super(Item, self).save(*args, **kwargs)
 
+class Log(models.Model):
+    log_id = models.CharField(max_length=100, blank=True, default='')
+    name = models.CharField(max_length=100, blank=True, default='')
+    category = models.CharField(max_length=50, choices=categories, default='TLS')
+    purchase_link = models.CharField(max_length=1000, blank=True, default='')
+    vendor = models.CharField(max_length=50, choices=vendors, default='DOE')
+    pub_date = models.CharField(max_length=100, blank=True, default='00/00/0000')
+    
+    def __str__(self):
+        return self.name
 # image = models.CharField(max_length=1000, blank=True, default='')

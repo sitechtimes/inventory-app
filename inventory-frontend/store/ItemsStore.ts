@@ -3,6 +3,7 @@ import { defineStore } from "pinia";
 export const useItemsStore = defineStore("items", {
   state: () => ({
     //for search function filtering
+    logs: [],
     items: [],
     returnlist: [],
     empty: false,
@@ -52,6 +53,15 @@ export const useItemsStore = defineStore("items", {
 
       this.items = newresults;
       return newresults;
+    },
+
+    async getLogs(){
+      console.log("LOGS")
+      const response = await fetch("http://127.0.0.1:8000/items/log/");
+      const results = await response.json();
+      console.log(results);
+      this.logs = results
+
     },
 
     //resize individual items when clicked for more information by adding/removing classes
