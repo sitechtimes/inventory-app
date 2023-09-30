@@ -70,4 +70,4 @@ class Log(models.Model):
     
     def __str__(self):
         return self.name
-# image = models.CharField(max_length=1000, blank=True, default='')
+# image = models.CharField(max_length=1000, blank=True, default='')...
