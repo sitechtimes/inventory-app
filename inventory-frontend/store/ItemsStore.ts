@@ -40,11 +40,16 @@ export const useItemsStore = defineStore("items", {
     //fetch api
 
     async getLogs(){
-      console.log("LOG")
-      const response = await fetch("http://127.0.0.1:8000/items/log/");
-      const results = await response.json();
-      console.log(results);
-      this.logs = results
+      try {
+        console.log("LOGS")
+        const response = await fetch("http://127.0.0.1:8000/items/log/");
+        const results = await response.json();
+        console.log(results);
+        this.logs = results
+      } catch (error) {
+        // TypeError: Failed to fetch
+        console.log('There was an error :C', error);
+      }
 
     },
 
