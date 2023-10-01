@@ -138,8 +138,12 @@
     </div>
     <div class="logPop">
       <div class="subheading changelog">Inventory Change Log</div>
-      <button class="text logorg">DateTime ↓</button>
-      <InvLog />
+      <button @click="changeobd" class="text logorg">
+        DateTime {{ ascending ? "↓" : "↑" }}
+      </button>
+      <div id="logs">
+        <InvLog />
+      </div>
     </div>
   </div>
 </template>
@@ -162,24 +166,24 @@ export default {
   data() {
     const categoryToFind = this.category;
     const listCategory = [
-      { value: 1, name: "Tools" },
-      { value: 2, name: "Paint" },
-      { value: 3, name: "Tape" },
-      { value: 4, name: "Wire" },
-      { value: 5, name: "First Aid" },
-      { value: 6, name: "Fabric" },
-      { value: 7, name: "Paper Mache" },
-      { value: 8, name: "Glue" },
-      { value: 9, name: "Sewing" },
-      { value: 10, name: "Miscellaneous" },
-      { value: 11, name: "Coloring Materials" },
-      { value: 12, name: "Sculpture" },
-      { value: 13, name: "Wood" },
-      { value: 14, name: "Craft Supplies" },
-      { value: 15, name: "Foam" },
-      { value: 16, name: "Printmaking" },
-      { value: 17, name: "Paper" },
-      { value: 18, name: "Drawing" },
+      { value: 1, name: "Tools", shtName: "TLS" },
+      { value: 2, name: "Paint", shtName: "PT" },
+      { value: 3, name: "Tape", shtName: "TP" },
+      { value: 4, name: "Wire", shtName: "WR" },
+      { value: 5, name: "First Aid", shtName: "FA" },
+      { value: 6, name: "Fabric", shtName: "FAB" },
+      { value: 7, name: "Paper Mache", shtName: "PM" },
+      { value: 8, name: "Glue", shtName: "GL" },
+      { value: 9, name: "Sewing", shtName: "SE" },
+      { value: 10, name: "Miscellaneous", shtName: "MISC" },
+      { value: 11, name: "Coloring Materials", shtName: "CM" },
+      { value: 12, name: "Sculpture", shtName: "SC" },
+      { value: 13, name: "Wood", shtName: "WD" },
+      { value: 14, name: "Craft Supplies", shtName: "CS" },
+      { value: 15, name: "Foam", shtName: "FM" },
+      { value: 16, name: "Printmaking", shtName: "PRTM" },
+      { value: 17, name: "Paper", shtName: "PAP" },
+      { value: 18, name: "Drawing", shtName: "DR" },
       //add the other categories if their is more
     ];
     const CategoryIndex =
@@ -188,10 +192,10 @@ export default {
 
     const vednorTofind = this.vendor;
     const listVendors = [
-      { value: 1, name: "ShopDOE" },
-      { value: 2, name: "Amazon" },
-      { value: 3, name: "Blick" },
-      { value: 4, name: "Home Depot" },
+      { value: 1, name: "ShopDOE", shtName: "DOE" },
+      { value: 2, name: "Amazon", shtName: "AMZ" },
+      { value: 3, name: "Blick", shtName: "BLICK" },
+      { value: 4, name: "Home Depot", shtName: "HD" },
       // ... add other vendors here
     ];
     const VendorIndex =
@@ -199,6 +203,7 @@ export default {
 
     return {
       store: useItemsStore(),
+      ascending: true,
       location: false,
       editMode: false,
       editname: this.name,
@@ -214,6 +219,58 @@ export default {
     };
   },
   methods: {
+    changeobd() {
+      this.ascending = !this.ascending; // Toggle the state
+      this.store.logs.reverse();
+    },
+    getCookie(name) {
+      var value = "; " + document.cookie;
+      var parts = value.split("; " + name + "=");
+      if (parts.length == 2) return parts.pop().split(";").shift();
+    },
+    saveLogs() {
+      let newCategory = "";
+      let newVendor = "";
+      console.log("saving", this.editcategory);
+      this.listCategoryName.forEach((element) => {
+        if (parseInt(this.editcategory) === element.value) {
+          console.log(element.name);
+          newCategory = element.shtName;
+        }
+      });
+      this.listVendorsName.forEach((element) => {
+        if (parseInt(this.editvendor) === element.value) {
+          console.log(element.name);
+          newVendor = element.shtName;
+        }
+      });
+      console.log("Category:", newCategory);
+      console.log("Vendor:", newVendor);
+      let logData = {
+        name: this.editname,
+        category: newCategory,
+        backroom_quantity: parseInt(this.editquantity),
+        makerspace_quantity: parseInt(this.editquantity),
+        vendor: newVendor,
+        purchase_link: this.editLink,
+        pub_date: this.editDate,
+        // Add other properties as needed
+      };
+
+      fetch("http://127.0.0.1:8000/items/addLog/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": this.getCookie("csrftoken"),
+        },
+        body: JSON.stringify(logData),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((error) => console.error("Error:", error));
+    },
     calculateTotalQuantity() {
       return this.quantity1 + this.quantity2;
     },
@@ -251,6 +308,8 @@ export default {
       this.editDate = currentDate;
     },
     async saveChanges() {
+      this.saveLogs();
+      console.log("name:", this.editname);
       const formData = new FormData();
       formData.append("name", this.editname);
       formData.append("category", this.editcategory);
@@ -258,8 +317,12 @@ export default {
       formData.append("makerspace_quantity", this.quantity1);
       formData.append("backroom_quantity", this.quantity2);
       formData.append("purchase_link", this.editLink);
+      console.log("vendor", this.editvendor);
       formData.append("vendor", this.editvendor);
+      console.log("vendor", this.editvendor);
       formData.append("last_purchased", this.editDate);
+      this.store.getLogs(this.editname);
+      this.store.getLogs(this.editname);
 
       try {
         console.log(this.store.id);
@@ -284,6 +347,7 @@ export default {
       }
     },
   },
+
   computed: {
     editquantityNew: {
       get() {
@@ -367,6 +431,10 @@ export default {
 </script>
 
 <style>
+#logs {
+  height: 9vw;
+  overflow-y: auto;
+}
 .editPop {
   height: 5rem;
   width: 100%;

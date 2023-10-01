@@ -62,7 +62,6 @@ class Item(models.Model):
 
 
 class Log(models.Model):
-    log_id = models.CharField(max_length=100, blank=True, default='')
     name = models.CharField(max_length=100, blank=True, default='')
     category = models.CharField(
         max_length=50, choices=categories, default='TLS')

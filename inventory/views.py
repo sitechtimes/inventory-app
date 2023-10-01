@@ -7,6 +7,7 @@ from .models import Item, Category, Vendor, Log
 from .serializer import ItemSerializer, CategorySerializer, VendorSerializer, LogSerializer
 import datetime
 from rest_framework.parsers import MultiPartParser, FormParser
+import json
 
 
 class LogView(generics.ListAPIView):
@@ -127,6 +128,15 @@ class AddItems(generics.CreateAPIView):
 
     #     return Response(serializer.data, status=201)
 
+
+class AddLog(generics.CreateAPIView):
+    def post(self, request, *args, **kwargs):
+        data = json.loads(request.body)
+        serializer = LogSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data, status=201)
+        return JsonResponse(serializer.errors, status=400)
 # delete item by pk value (id)
 
 

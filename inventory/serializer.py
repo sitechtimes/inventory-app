@@ -1,10 +1,12 @@
 from rest_framework import serializers
 from .models import Item, Category, Vendor, Log
 
+
 class LogSerializer(serializers.ModelSerializer):
     class Meta:
         model = Log
-        fields = ['log_id', 'name', 'backroom_quantity', 'makerspace_quantity', 'purchase_link', 'pub_date', 'category', 'vendor']
+        fields = ['name', 'backroom_quantity', 'makerspace_quantity',
+                  'purchase_link', 'pub_date', 'category', 'vendor']
 
 
 class ItemSerializer(serializers.ModelSerializer):

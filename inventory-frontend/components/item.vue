@@ -6,7 +6,11 @@
     <div class="name-avail" ref="textbox">
       <div class="name text" ref="name">{{ name }}</div>
 
-      <div class="quantityC smalltext" ref="quant" :class="alert ? 'availN' : 'availY'">
+      <div
+        class="quantityC smalltext"
+        ref="quant"
+        :class="alert ? 'availN' : 'availY'"
+      >
         {{ quantity }}
       </div>
     </div>
@@ -224,6 +228,7 @@ export default {
   },
   methods: {
     clicked() {
+      this.store.getLogs(this.name);
       console.log("clicked");
       console.log(this.store.vendor);
       if (this.store.popup.name === this.name) {
@@ -261,7 +266,7 @@ export default {
           viewNotif: false,
           editform: false,
         });
-        console.log(this.store.id)
+        console.log(this.store.id);
       }
       if (this.store.dismiss === false) {
         this.store.NavMenu();

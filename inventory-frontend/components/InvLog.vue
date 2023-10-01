@@ -32,6 +32,7 @@ export default {
   margin-top: 1vw;
 }
 #log {
+  margin-top: 1vw;
   font-size: 1vw;
 }
 </style>

@@ -39,13 +39,16 @@ export const useItemsStore = defineStore("items", {
   actions: {
     //fetch api
 
-    async getLogs(){
+    async getLogs(itemname){
       try {
         console.log("LOGS")
         const response = await fetch("http://127.0.0.1:8000/items/log/");
         const results = await response.json();
         console.log(results);
-        this.logs = results
+        this.logs = results.filter(el => el.name === itemname);
+        this.logs.sort((a, b) => a.pub_date.localeCompare(b.pub_date));
+        this.logs = this.logs.reverse()
+        console.log(this.logs)
       } catch (error) {
         // TypeError: Failed to fetch
         console.log('There was an error', error);
