@@ -15,10 +15,9 @@
       <div class="chart2-cont">
         <canvas id="myChart2"></canvas>
       </div>
-      <div class="mini-button-container">
-        <button class="minimize-button" @click="maximizeChart()"> </button>
+        <button class="minimize-button" @click="maximizeChart()"> 
         <font-awesome-icon :icon="['fas', 'minimize']" />
-      </div>
+      </button>
     </div>
   </div>
 </template>
@@ -192,6 +191,11 @@ async function fetchData() {
   justify-content: center;
 }
 
+#myChart2{
+  height: 75rem !important;
+  width: 80% !important;
+}
+
 .maximize-button,
 .minimize-button {
   background-color: #3498db;
@@ -229,6 +233,4 @@ async function fetchData() {
   padding: 5px;
 }
 
-@media screen and (max-width: 375px) {
-}
 </style>
