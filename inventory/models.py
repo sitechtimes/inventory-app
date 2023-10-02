@@ -25,7 +25,6 @@ class Vendor(models.Model):
     vendor_name = models.CharField(
         choices=vendors, max_length=100, default=None)
 
-
     def __str__(self):
         return self.vendor_name
 
@@ -55,10 +54,24 @@ class Item(models.Model):
     def __str__(self):
         return self.name
 
-    #this may conflict with stuff idk
+    # this may conflict with stuff idk
     def delete(self, *args, **kwargs):
         count_obj = Item.objects.all().count() + 1
         self.id = count_obj
         super(Item, self).save(*args, **kwargs)
 
-# image = models.CharField(max_length=1000, blank=True, default='')
+
+class Log(models.Model):
+    name = models.CharField(max_length=100, blank=True, default='')
+    category = models.CharField(
+        max_length=50, choices=categories, default='TLS')
+    purchase_link = models.CharField(max_length=1000, blank=True, default='')
+    backroom_quantity = models.IntegerField(default=0)
+    makerspace_quantity = models.IntegerField(default=0)
+    vendor = models.CharField(max_length=50, choices=vendors, default='DOE')
+    pub_date = models.CharField(
+        max_length=100, blank=True, default='00/00/0000')
+
+    def __str__(self):
+        return self.name
+# image = models.CharField(max_length=1000, blank=True, default='')...
