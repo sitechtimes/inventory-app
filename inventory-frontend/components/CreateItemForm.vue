@@ -312,6 +312,8 @@ async function submitForm() {
   } catch (error) {
     console.log(error, "why");
   }
+
+  store.getItems();
 }
 </script>
 
