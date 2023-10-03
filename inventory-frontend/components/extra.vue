@@ -391,7 +391,7 @@ export default {
 .popUpPanel {
   height: 100vh;
   width: 100%;
-  overflow: auto;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
 }

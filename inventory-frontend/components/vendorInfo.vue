@@ -177,6 +177,7 @@ async function fetchData() {
   margin: 0;
   z-index: 9999;
   background-color: white;
+  overflow: auto;
 }
 
 #myChart {
@@ -231,6 +232,20 @@ async function fetchData() {
   display: flex;
   justify-content: flex-end;
   padding: 5px;
+}
+
+@media screen and (max-width: 667px) {
+  #myChart2 {
+    height: auto !important;
+  }
+  
+}
+
+@media screen and (max-width: 375px)   { 
+#myChart2 {
+  height: 30rem !important;
+  width: 80% !important;
+}
 }
 
 </style>
