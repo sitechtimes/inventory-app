@@ -358,7 +358,6 @@ const fullScreen = () => {
   }
 
   #Vendor {
-    height: 50rem !important;
     width: 338px !important;
   }
 
@@ -382,9 +381,9 @@ const fullScreen = () => {
     width: 95%;
   }
   #Vendor {
-    height: 25rem !important;
-    width: 30rem !important;
+    width: 28rem !important;
   }
+  
 }
 
 @media screen and (max-width: 280px)  { 
