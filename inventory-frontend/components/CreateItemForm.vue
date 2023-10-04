@@ -32,7 +32,7 @@
             id="quantity-makerspace"
             type="number"
             v-model="makerspace"
-            placeholder="Maker Space Quantity"
+            placeholder="Makerspace Quantity"
             required
           />
           <input
@@ -71,7 +71,7 @@
           id="purchase_link"
           type="text"
           v-model="purchase_link"
-          placeholder="Purhcase Link"
+          placeholder="Purchase Link"
           required
         />
       </div>
@@ -174,7 +174,7 @@
           </div>
         </div>
       </div>
-      <button class="submit-button">Submit</button>
+      <button class="submit-button text">Submit</button>
     </form>
   </div>
 </template>
@@ -313,7 +313,16 @@ async function submitForm() {
     console.log(error, "why");
   }
 
-  store.getItems();
+  const response = await fetch("http://127.0.0.1:8000/items/category/");
+  const new_items = await response.json();
+  const newresults = new_items.sort((a, b) =>
+    a.category_name > b.category_name
+      ? 1
+      : b.category_name > a.category_name
+      ? -1
+      : 0
+  );
+  store.$patch({ items: newresults });
 }
 </script>
 

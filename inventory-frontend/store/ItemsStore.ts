@@ -6,6 +6,7 @@ export const useItemsStore = defineStore("items", {
     //for search function filtering
     items: [],
     returnlist: [],
+    pulledinfo: {},
     empty: false,
     search: false,
     //toggle extra info
@@ -39,10 +40,10 @@ export const useItemsStore = defineStore("items", {
     //fetch api
     async getItems() {
       const response = await fetch("http://127.0.0.1:8000/items/category/");
-      const results = await response.json();
-      console.log(results);
+      this.pulledinfo = await response.json();
+      console.log(this.pulledinfo);
       console.log(showNotification.value)
-      const newresults = results.sort((a, b) =>
+      const newresults = this.pulledinfo.sort((a, b) =>
         a.category_name > b.category_name
           ? 1
           : b.category_name > a.category_name
