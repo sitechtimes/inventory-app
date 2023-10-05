@@ -328,8 +328,14 @@ const fullScreen = () => {
 
 @media screen and (max-width: 820px) {
   #Vendor {
-  height: 50rem !important;
+  height: 60rem !important;
   width: 50rem !important;
+}
+.maximize-button {
+  margin-top: 100px;
+}
+.minimize-button {
+  margin-top: 100px;
 }
 }
 
@@ -372,6 +378,13 @@ const fullScreen = () => {
   }
 }
 
+@media screen and (max-width: 414px)  { 
+  .canvas-cont {
+    margin-top: 100px;
+  }
+  
+}
+
 @media screen and (max-width: 375px)  { 
   .chart-cont-small {
    width: 90%;
@@ -381,6 +394,7 @@ const fullScreen = () => {
     width: 95%;
   }
   #Vendor {
+    height: 50rem !important;
     width: 28rem !important;
   }
   

@@ -14,13 +14,12 @@
     <div class="no-show" ref="chart2">
       <div class="chart2-cont">
         <canvas id="myChart2"></canvas>
-      </div>
-      <div class="btn-cont-mini">
         <button class="minimize-button" @click="maximizeChart()"> 
         <font-awesome-icon :icon="['fas', 'minimize']" />
       </button>
+      </div>
     </div>
-    </div>
+  
   </div>
 </template>
 
@@ -192,6 +191,8 @@ async function fetchData() {
 .chart2-cont {
   display: flex;
   justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 #myChart2{
@@ -242,7 +243,7 @@ async function fetchData() {
   }
 }
 
-@media screen and (max-width: 820px) {
+@media only screen and (max-width: 820px) {
   #myChart2 {
   height: 50rem !important;
   width: 50rem !important;
@@ -253,16 +254,19 @@ async function fetchData() {
 @media screen and (max-width: 667px) {
   #myChart2 {
     height: 50rem !important;
-    width: 34rem !important;
-  }
-  .btn-cont-mini{
-   display: flex;
-  justify-content: flex-end;
-  padding: 5px;
+    width: 80% !important;
   }
   
 }
 
+
+@media screen and (max-width: 390px) {
+  #myChart2 {
+    height: 40rem !important;
+    width: 35rem !important;
+  }
+  
+}
 @media screen and (max-width: 375px)   { 
 
 #myChart1 {
@@ -271,8 +275,8 @@ async function fetchData() {
 }
 
 #myChart2 {
-  height: 35rem !important;
-    width: 35rem !important;
+  height: 30rem !important;
+  width: 35rem !important;
 }
 }
 
