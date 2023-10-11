@@ -402,8 +402,8 @@ const fullScreen = () => {
 
 @media screen and (max-width: 280px)  { 
   #Vendor {
-    height: 250px !important;
-    width: 15rem !important;
+    height: 40rem !important;
+    width: 18rem !important;
   }
 }
 </style>

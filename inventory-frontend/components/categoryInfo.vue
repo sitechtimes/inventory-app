@@ -188,9 +188,10 @@ async function fetchData() {
 }
 
 .chart2-cont {
-  height: 800px;
   display: flex;
   justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .maximize-button,
@@ -230,5 +231,72 @@ async function fetchData() {
   justify-content: flex-end;
   padding: 5px;
 }
+
+@media screen and ( max-width: 912px ) {
+  #myChart2 {
+    margin-top: 25%;
+    height: 80rem !important;
+    width: 80rem !important;
+  }
+}
+
+@media only screen and (max-width: 820px) {
+  #myChart2 {
+  height: 70rem !important;
+  width: 75rem !important;
+}
+}
+
+
+@media screen and (max-width: 667px) {
+  #myChart2 {
+    height: 50rem !important;
+    width: 80% !important;
+  }
+  
+}
+
+
+@media screen and (max-width: 414px) {
+  #myChart2 {
+    height: 38rem !important;
+    width: 38rem !important;
+  }
+  
+}
+@media screen and (max-width: 375px)   { 
+
+#myChart1 {
+  height: 20rem !important;
+  width: 35rem !important;
+}
+
+#myChart2 {
+  height: 30rem !important;
+  width: 35rem !important;
+}
+}
+
+@media screen and (max-width: 360px)   { 
+
+#myChart1 {
+  width: 34rem !important;
+}
+}
+
+@media screen and (max-width: 280px)   { 
+
+#myChart1 {
+  width: 25rem !important;
+  height: 20rem !important;
+}
+
+#myChart2 {
+  width: 30rem !important;
+  height: 25rem !important;
+}
+}
+
+
 
 </style>
