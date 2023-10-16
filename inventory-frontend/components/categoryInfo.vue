@@ -209,6 +209,7 @@ async function fetchData() {
   position: relative;
   left: 50%;
   width: 8rem;
+  margin-top: 10px;
 }
 
 .maximize-button {
@@ -230,6 +231,27 @@ async function fetchData() {
   display: flex;
   justify-content: flex-end;
   padding: 5px;
+}
+
+
+@media  screen and (orientation: landscape) {
+
+  #myChart1 {
+    height: 25rem !important;
+  }
+ .maximize-button {
+  position: absolute;
+  bottom: 100px;
+ }
+
+ .popUpPanel {
+  overflow: auto;
+ }
+
+ .fullScreen {
+  overflow:auto;
+ }
+ 
 }
 
 @media screen and ( max-width: 912px ) {
@@ -292,11 +314,17 @@ async function fetchData() {
 }
 
 #myChart2 {
-  width: 30rem !important;
+  width: 25rem !important;
   height: 25rem !important;
 }
+.minimize-button {
+    position: relative;
+    left: 40%;
+    width: 8rem;
+
 }
 
+}
 
 
 </style>

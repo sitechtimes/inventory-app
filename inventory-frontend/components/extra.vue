@@ -391,7 +391,7 @@ export default {
 .popUpPanel {
   height: 100vh;
   width: 100%;
-  overflow: hidden;
+  overflow: auto;
   display: flex;
   flex-direction: column;
 }
@@ -477,7 +477,6 @@ export default {
 
 .detailsPop {
   min-width: fit-content;
-  width: 90%;
 }
 
 @media screen and (max-width: 760px) {
