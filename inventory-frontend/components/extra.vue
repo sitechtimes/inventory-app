@@ -391,7 +391,6 @@ export default {
 .popUpPanel {
   height: 100vh;
   width: 100%;
-  overflow: auto;
   display: flex;
   flex-direction: column;
 }
@@ -457,6 +456,7 @@ export default {
 
 .changelog {
   border-top: var(--border);
+  background-color: white;
 }
 
 .logorg {
@@ -477,6 +477,7 @@ export default {
 
 .detailsPop {
   min-width: fit-content;
+  background-color: white;
 }
 
 @media screen and (max-width: 760px) {

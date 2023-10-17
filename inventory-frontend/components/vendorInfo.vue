@@ -235,6 +235,31 @@ async function fetchData() {
   padding: 5px;
 }
 
+
+@media  screen and (orientation: landscape)  {
+.fullScreen{
+  overflow: auto;
+}
+
+}
+
+@media  screen and (orientation: landscape) and (max-height: 375px) {
+
+  #myChart1 {
+    height: 25rem !important;
+  }
+ .maximize-button {
+  position: relative;
+  bottom: 50px;
+  flex-direction: row;
+ }
+
+ .popUpPanel {
+  overflow: auto;
+ }
+ 
+}
+
 @media screen and ( max-width: 912px ) {
   #myChart2 {
     margin-top: 25%;

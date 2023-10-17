@@ -315,9 +315,6 @@ const fullScreen = () => {
 .chart-cont-small {
   height: 500px;
 }
-#Vendor {
-  height: 100rem;
-}
 
 @media screen and ( max-width: 912px ) {
   #Vendor {

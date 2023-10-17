@@ -234,22 +234,26 @@ async function fetchData() {
 }
 
 
-@media  screen and (orientation: landscape) {
+@media  screen and (orientation: landscape)  {
+.fullScreen{
+  overflow: auto;
+}
+
+}
+
+@media  screen and (orientation: landscape) and (max-height: 375px) {
 
   #myChart1 {
     height: 25rem !important;
   }
  .maximize-button {
-  position: absolute;
-  bottom: 100px;
+  position: relative;
+  bottom: 50px;
+  flex-direction: row;
  }
 
  .popUpPanel {
   overflow: auto;
- }
-
- .fullScreen {
-  overflow:auto;
  }
  
 }
