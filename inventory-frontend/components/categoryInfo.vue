@@ -194,6 +194,13 @@ async function fetchData() {
   flex-direction: column;
 }
 
+
+#myChart2{
+  height: 75rem !important;
+  width: 80% !important;
+}
+
+
 .maximize-button,
 .minimize-button {
   background-color: #3498db;
@@ -207,7 +214,7 @@ async function fetchData() {
 
 .minimize-button {
   position: relative;
-  left: 50%;
+  left: 45%;
   width: 8rem;
   margin-top: 10px;
 }
@@ -239,12 +246,20 @@ async function fetchData() {
   overflow: auto;
 }
 
+.minimize-button {
+  margin-bottom: 10px;
 }
 
-@media  screen and (orientation: landscape) and (max-height: 375px) {
+}
+
+@media  screen and (orientation: landscape) and (max-height: 400px) {
 
   #myChart1 {
     height: 25rem !important;
+  }
+  
+  .minimize-button {
+    left: 45%;
   }
  .maximize-button {
   position: relative;

@@ -240,13 +240,25 @@ async function fetchData() {
 .fullScreen{
   overflow: auto;
 }
+@media  screen and (orientation: landscape)  {
+.fullScreen{
+  overflow: auto;
+}
+
+.minimize-button {
+  margin-bottom: 10px;
+}
 
 }
 
-@media  screen and (orientation: landscape) and (max-height: 375px) {
+@media  screen and (orientation: landscape) and (max-height: 400px) {
 
   #myChart1 {
     height: 25rem !important;
+  }
+  
+  .minimize-button {
+    left: 45%;
   }
  .maximize-button {
   position: relative;
@@ -258,7 +270,7 @@ async function fetchData() {
   overflow: auto;
  }
  
-}
+}}
 
 @media screen and ( max-width: 912px ) {
   #myChart2 {

@@ -393,6 +393,7 @@ export default {
   width: 100%;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
 }
 
 .imagePop {
@@ -476,14 +477,7 @@ export default {
 }
 
 .detailsPop {
-  min-width: fit-content;
   background-color: white;
-}
-
-@media screen and (max-width: 760px) {
-  .col2 {
-    padding-right: 0;
-  }
 }
 
 input,
@@ -530,5 +524,19 @@ select {
     .purchlink {
       width: 20rem;
     }
+}
+
+@media  screen and (max-width: 280px) {
+ .popUpPanel {
+  overflow-x: scroll;
+ }
+  .col2 {
+    padding-right: 0;
+  }
+  .extrabtn {
+    min-width: min-content;
+    width: 50%;
+    text-align: left;
+}
 }
 </style>
