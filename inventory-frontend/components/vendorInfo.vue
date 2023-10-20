@@ -196,8 +196,8 @@ async function fetchData() {
 }
 
 #myChart2{
-  height: 75rem !important;
-  width: 80% !important;
+  height: 70rem !important;
+  width: 90% !important;  
 }
 
 .maximize-button,
@@ -240,10 +240,6 @@ async function fetchData() {
 .fullScreen{
   overflow: auto;
 }
-@media  screen and (orientation: landscape)  {
-.fullScreen{
-  overflow: auto;
-}
 
 .minimize-button {
   margin-bottom: 10px;
@@ -255,6 +251,7 @@ async function fetchData() {
 
   #myChart1 {
     height: 25rem !important;
+    width: 40rem !important;
   }
   
   .minimize-button {
@@ -262,7 +259,7 @@ async function fetchData() {
   }
  .maximize-button {
   position: relative;
-  bottom: 50px;
+  bottom: 60px;
   flex-direction: row;
  }
 
@@ -270,22 +267,26 @@ async function fetchData() {
   overflow: auto;
  }
  
-}}
+}
+
+@media only screen and (orientation: landscape) and (max-height: 375px) {
+
+#myChart1 {
+  width: 50rem !important;
+}
+
+#myChart2 {
+  height: 50rem !important;
+}
+
+}
 
 @media screen and ( max-width: 912px ) {
   #myChart2 {
     margin-top: 25%;
-    height: 80rem !important;
-    width: 80rem !important;
   }
 }
 
-@media only screen and (max-width: 820px) {
-  #myChart2 {
-  height: 70rem !important;
-  width: 75rem !important;
-}
-}
 
 
 @media screen and (max-width: 667px) {
