@@ -312,10 +312,6 @@ const fullScreen = () => {
   justify-content: center;
 }
 
-.chart-cont-small {
-  height: 500px;
-}
-
 @media screen and ( max-width: 912px ) {
   #Vendor {
     height: 45rem !important;
@@ -327,12 +323,6 @@ const fullScreen = () => {
   #Vendor {
   height: 60rem !important;
   width: 50rem !important;
-}
-.maximize-button {
-  margin-top: 100px;
-}
-.minimize-button {
-  margin-top: 100px;
 }
 }
 
@@ -379,23 +369,13 @@ const fullScreen = () => {
   .canvas-cont {
     margin-top: 100px;
   }
-  
-}
-
-@media screen and (max-width: 375px)  { 
-  .chart-cont-small {
-   width: 90%;
-  }
-
-  .chart-cont-big {
-    width: 95%;
-  }
   #Vendor {
-    height: 50rem !important;
-    width: 28rem !important;
+    height: 20rem !important;
+    width: 35rem !important;
   }
   
 }
+
 
 @media screen and (max-width: 280px)  { 
   #Vendor {

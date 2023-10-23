@@ -252,11 +252,11 @@ async function fetchData() {
 
 }
 
-@media  screen and (orientation: landscape) and (max-height: 400px) {
+@media  screen and (orientation: landscape) and (max-height: 540px) {
 
   #myChart1 {
     height: 25rem !important;
-    width: 40rem !important;
+    width: 80% !important;
   }
   
   .minimize-button {
@@ -275,11 +275,7 @@ async function fetchData() {
 }
 
 
-@media only screen and (orientation: landscape) and (max-height: 375px) {
-
-#myChart1 {
-  width: 50rem !important;
-}
+@media only screen and (orientation: landscape)  {
 
 #myChart2 {
   height: 50rem !important;
