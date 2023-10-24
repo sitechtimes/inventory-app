@@ -247,6 +247,11 @@ const fullScreen = () => {
   margin: 0;
 }
 
+#Vendor {
+height: 60rem !important;
+width: 90rem !important;
+}
+
 .fullScreen {
   display: block;
   position: fixed;
@@ -259,7 +264,6 @@ const fullScreen = () => {
   z-index: 9999;
   background-color: white;
   overflow: auto;
-
 }
 
 .canvas-cont {
@@ -282,8 +286,9 @@ const fullScreen = () => {
 
 .minimize-button {
   position: relative;
-  left: 50%;
+  left: 45%;
   width: 8rem;
+  margin-top: 100px;
 }
 
 .maximize-button {
@@ -312,6 +317,26 @@ const fullScreen = () => {
   justify-content: center;
 }
 
+@media only screen and (orientation: landscape){
+  .minimize-button {
+    left: 45%;
+    margin-bottom: 10vh;
+  }
+  
+}
+
+@media only screen and (orientation: landscape) and (max-height: 768px)
+{
+  
+  #Vendor {
+    height: 55rem !important;
+    width: 80rem !important;
+  }
+  .minimize-button {
+    margin-top: 10vh;
+  }
+}
+
 @media screen and ( max-width: 912px ) {
   #Vendor {
     height: 45rem !important;
@@ -323,6 +348,10 @@ const fullScreen = () => {
   #Vendor {
   height: 60rem !important;
   width: 50rem !important;
+}
+.minimize-button {
+  margin-top: 100px;
+  left: 45%;
 }
 }
 
@@ -351,7 +380,7 @@ const fullScreen = () => {
   }
 
   #Vendor {
-    width: 338px !important;
+    margin-top: 100px;
   }
 
   .minimize-button {  
@@ -363,6 +392,13 @@ const fullScreen = () => {
     .buttons {
     margin-left: 0;
   }
+}
+
+@media  only screen and (max-width: 540px) {
+ #Vendor {
+  width: 50rem !important;
+ }
+  
 }
 
 @media screen and (max-width: 414px)  { 
