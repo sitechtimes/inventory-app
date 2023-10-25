@@ -274,19 +274,12 @@ async function fetchData() {
  
 }
 
-
-@media only screen and (orientation: landscape)  {
+@media only screen and (orientation: landscape) and (max-height: 375px) {
 
 #myChart2 {
   height: 50rem !important;
 }
 
-}
-
-@media screen and ( max-width: 912px ) {
-  #myChart2 {
-    margin-top: 25%;
-  }
 }
 
 

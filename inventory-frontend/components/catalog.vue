@@ -132,6 +132,7 @@ export default {
     right: 0;
     border: none;
     z-index: 2000;
+    overflow-x: hidden;
     overflow-y: scroll;
     margin-bottom: 20rem;
   }

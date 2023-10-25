@@ -333,6 +333,12 @@ async function fetchData() {
   width: 30rem !important;
   height: 25rem !important;
 }
+.minimize-button {
+    position: relative;
+    left: 40%;
+    width: 8rem;
+
+}
 }
 
 

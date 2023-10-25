@@ -464,6 +464,7 @@ export default {
   text-align: left;
   width: 100%;
   font-weight: 400;
+  margin-bottom: 50px;
 }
 
 .logPop,
