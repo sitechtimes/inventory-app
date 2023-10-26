@@ -47,7 +47,6 @@
   height: auto;
   display: flex;
   flex-direction: column;
-  padding-right: 2.5rem;
 }
 
 .name,
@@ -137,8 +136,7 @@
   .infoFull {
     max-width: 100%;
     flex-basis: 100%;
-    border: none;
-    margin: 0;
+    margin-top: 2px;
     border-radius: 0;
   }
 
@@ -181,6 +179,8 @@
   .name {
     padding-right: 1rem;
     margin-bottom: 0;
+    font-size: 11px;
+    overflow: hidden;
   }
 
   .quantityC {
@@ -193,6 +193,12 @@
     border-color: none;
     box-shadow: none;
     background-color: var(--gray);
+  }
+}
+
+@media  screen and (max-width: 375px) {
+  .name {
+    font-size: 10px;
   }
 }
 </style>
