@@ -4,9 +4,9 @@
       <span class="material-symbols-outlined closeAdd"> close </span>
     </button>
 
-    <form @submit.prevent="submitForm">
+    <form @submit.prevent="submitForm" @submit="store.addItems">
       <div class="input-container">
-        <label for="item_id">Item ID</label>
+        <label class="text" for="item_id">Item ID</label>
         <input
           id="item_id"
           type="text"
@@ -16,7 +16,7 @@
         />
       </div>
       <div class="input-container">
-        <label for="name">Name of the Item</label>
+        <label class="text" for="name">Name of the Item</label>
         <input
           id="name"
           type="text"
@@ -32,7 +32,7 @@
             id="quantity-makerspace"
             type="number"
             v-model="makerspace"
-            placeholder="Maker Space Quantity"
+            placeholder="Makerspace Quantity"
             required
           />
           <input
@@ -45,7 +45,9 @@
         </div>
       </div>
       <div class="input-container">
-        <label for="min_amount">Minimum amount of Items to display alert</label>
+        <label class="text" for="min_amount"
+          >Minimum amount of Items to display alert</label
+        >
         <input
           id="min_amount"
           type="number"
@@ -54,7 +56,7 @@
         />
       </div>
       <div class="input-container">
-        <label for="location">Location of the Item</label>
+        <label class="text" for="location">Location of the Item</label>
         <input
           id="location"
           type="text"
@@ -64,17 +66,17 @@
         />
       </div>
       <div class="input-container">
-        <label for="purchase_link">Purchase Link</label>
+        <label class="text" for="purchase_link">Purchase Link</label>
         <input
           id="purchase_link"
           type="text"
           v-model="purchase_link"
-          placeholder="Purhcase Link"
+          placeholder="Purchase Link"
           required
         />
       </div>
       <div class="input-container">
-        <label for="Vendor">Vendor</label>
+        <label class="text" for="Vendor">Vendor</label>
         <select id="Vendor" v-model="vendor" required>
           <option disabled value="">Choose a Vendor</option>
           <option value="1">ShopDOE</option>
@@ -84,7 +86,7 @@
         </select>
       </div>
       <div class="input-container">
-        <label for="Category">Category</label>
+        <label class="text" for="Category">Category</label>
         <select id="Category" v-model="category" required>
           <option disabled value="">Choose a Category</option>
           <option value="1">Tools</option>
@@ -109,7 +111,7 @@
         </select>
       </div>
       <div class="input-container">
-        <label for="image_url">Image Url</label>
+        <label class="text" for="image_url">Image Url</label>
         <input
           id="image_url"
           type="text"
@@ -172,7 +174,7 @@
           </div>
         </div>
       </div>
-      <button class="submit-button">Submit</button>
+      <button class="submit-button text">Submit</button>
     </form>
   </div>
 </template>
@@ -186,6 +188,11 @@ export default {
 <script setup>
 import { ref } from "vue";
 import { useItemsStore } from "~/store/ItemsStore";
+import {
+  showNotification,
+  notiItemName,
+  notiItemAmt,
+} from "../assets/globalVar.js";
 
 // State variables
 const store = useItemsStore();
@@ -269,6 +276,12 @@ function closeModal() {
 }
 
 async function submitForm() {
+  showNotification.value = true;
+  notiItemName.value = name.value;
+  notiItemAmt.value = makerspace.value + backroom.value;
+  setTimeout(() => {
+    showNotification.value = false;
+  }, 3000);
   const formData = new FormData();
   formData.append("item_id", item_id.value);
   if (thisfile.value) {
@@ -283,7 +296,7 @@ async function submitForm() {
   formData.append("vendor", vendor.value);
   formData.append("category", category.value);
   formData.append("location", location.value);
-
+  console.log("ugjag");
   try {
     const response = await fetch("http://127.0.0.1:8000/items/addItems/", {
       method: "POST",
@@ -297,8 +310,19 @@ async function submitForm() {
 
     console.log(data);
   } catch (error) {
-    console.log(error);
+    console.log(error, "why");
   }
+
+  const response = await fetch("http://127.0.0.1:8000/items/category/");
+  const new_items = await response.json();
+  const newresults = new_items.sort((a, b) =>
+    a.category_name > b.category_name
+      ? 1
+      : b.category_name > a.category_name
+      ? -1
+      : 0
+  );
+  store.$patch({ items: newresults });
 }
 </script>
 

@@ -50,6 +50,7 @@
 import Item from "./item.vue";
 import { useItemsStore } from "~/store/ItemsStore";
 import ItemMonitor from "./itemMonitor.vue";
+import { ref } from "vue";
 
 export default {
   name: "ItemPerCat",
@@ -60,7 +61,6 @@ export default {
       store: useItemsStore(),
     };
   },
-  methods: {},
   mounted() {
     this.store.cat.push(this.$refs.cat);
   },
