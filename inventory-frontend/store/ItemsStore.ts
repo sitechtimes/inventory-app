@@ -1,10 +1,13 @@
 import { defineStore } from "pinia";
-
+import { showNotification } from "assets/globalVar";
 export const useItemsStore = defineStore("items", {
+
   state: () => ({
     //for search function filtering
+    logs: [],
     items: [],
     returnlist: [],
+    pulledinfo: {},
     empty: false,
     search: false,
     //toggle extra info
@@ -32,16 +35,36 @@ export const useItemsStore = defineStore("items", {
     alerted_items: [],
     viewNotif: false,
   }),
-
   getters: {},
-
+  
   actions: {
     //fetch api
+
+    async getLogs(itemname){
+      try {
+        console.log("LOGS")
+        const response = await fetch("http://127.0.0.1:8000/items/log/");
+        const results = await response.json();
+        console.log(results);
+        this.logs = results.filter(el => el.name === itemname);
+        this.logs.sort((a, b) => a.pub_date.localeCompare(b.pub_date));
+        this.logs = this.logs.reverse()
+        console.log(this.logs)
+      } catch (error) {
+        // TypeError: Failed to fetch
+        console.log('There was an error', error);
+      }
+
+    },
+
     async getItems() {
-      const response = await fetch(`http://${location.hostname}:8000/items/category/`);
-      const results = await response.json();
-      console.log(results);
-      const newresults = results.sort((a, b) =>
+
+      const response = await fetch("http://127.0.0.1:8000/items/category/");
+      this.pulledinfo = await response.json();
+      console.log(this.pulledinfo);
+      console.log(showNotification.value)
+      const newresults = this.pulledinfo.sort((a, b) =>
+
         a.category_name > b.category_name
           ? 1
           : b.category_name > a.category_name
@@ -49,11 +72,9 @@ export const useItemsStore = defineStore("items", {
           : 0
       );
       this.returnlist = newresults;
-
       this.items = newresults;
       return newresults;
-    },
-
+    },   
     //resize individual items when clicked for more information by adding/removing classes
     resizing() {
       if (this.info === true || this.editform === true) {
@@ -168,6 +189,7 @@ export const useItemsStore = defineStore("items", {
     },
     //add item form
     addItems() {
+      console.log('pp')
       if (this.editform === true) {
         this.editform = false;
       } else {
