@@ -9,9 +9,8 @@ export default defineNuxtConfig({
   pages: true,
   modules: ["@pinia/nuxt"],
   runtimeConfig: {
-    apiSecret: '123',
-    public: {
-      apibase: ''
-    }
+      baseurl: 'localhost',
+      port: '8000',
+      protocol: "http"
   }
 });

@@ -116,10 +116,10 @@ const createChart = () => {
 onMounted(() => {
   fetchData();
 });
-
+const config = useRuntimeConfig()
 async function fetchData() {
   try {
-    const response = await fetch("http://127.0.0.1:8000/items/vendor/", {
+    const response = await fetch(`${config.protocol}://${config.baseurl}:${config.port}/items/vendor/`, {
       method: "GET",
       mode: "cors",
       cache: "no-cache",

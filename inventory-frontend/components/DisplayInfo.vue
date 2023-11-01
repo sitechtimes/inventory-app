@@ -38,7 +38,8 @@
 <script setup>
 let item = ref({});
 function displayItem(itemId) {
-  fetch(`http://127.0.0.1:8000/items/CurrentItem/${itemId}/`, {
+  const config = useRuntimeConfig()
+  fetch(`${config.protocol}://${config.baseurl}:${config.port}/CurrentItem/${itemId}/`, {
     method: "GET",
     mode: "cors",
     cache: "no-cache",
@@ -54,6 +55,9 @@ function displayItem(itemId) {
       item.value = data;
     });
 }
+
+
+
 </script>
 
 <style scoped>

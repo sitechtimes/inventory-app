@@ -233,7 +233,8 @@ export default {
 
       try {
         console.log(this.store.id)
-        const response = await fetch(`http://127.0.0.1:8000/items/editItems/${this.store.id}/`, {
+        const config = useRuntimeConfig()
+        const response = await fetch(`${config.protocol}://${config.baseurl}:${config.port}/items/editItems/${this.store.id}/`, {
           method: "PUT",
           mode: "cors",
           cache: "no-cache",

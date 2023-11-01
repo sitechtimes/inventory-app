@@ -55,9 +55,9 @@ let showInfo = ref(false); // Step 1
 let minMax = ref(false);
 let canvas = ref();
 let store = useItemsStore();
-
+const config = useRuntimeConfig()
 onMounted(() => {
-  fetch("http://127.0.0.1:8000/items/vendor/", {
+  fetch(`${config.protocol}://${config.baseurl}:${config.port}/items/vendor/`, {
     method: "GET",
     mode: "cors",
     cache: "no-cache",
