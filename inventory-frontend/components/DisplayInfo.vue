@@ -39,7 +39,7 @@
 let item = ref({});
 function displayItem(itemId) {
   const config = useRuntimeConfig()
-  fetch(`${config.protocol}://${config.baseurl}:${config.port}/CurrentItem/${itemId}/`, {
+  fetch(`${config.public.protocol}://${config.public.baseurl}:${config.public.port}/CurrentItem/${itemId}/`, {
     method: "GET",
     mode: "cors",
     cache: "no-cache",

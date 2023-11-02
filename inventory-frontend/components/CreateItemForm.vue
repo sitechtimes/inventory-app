@@ -299,7 +299,7 @@ async function submitForm() {
   console.log("ugjag");
   try {
     const config = useRuntimeConfig()
-    const response = await fetch(`${config.protocol}://${config.baseurl}:${config.port}/items/addItems/`, {
+    const response = await fetch(`${config.public.protocol}://${config.public.baseurl}:${config.public.port}/items/addItems/`, {
       method: "POST",
       mode: "cors",
       cache: "no-cache",

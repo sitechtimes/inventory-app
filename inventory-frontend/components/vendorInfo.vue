@@ -119,7 +119,7 @@ onMounted(() => {
 const config = useRuntimeConfig()
 async function fetchData() {
   try {
-    const response = await fetch(`${config.protocol}://${config.baseurl}:${config.port}/items/vendor/`, {
+    const response = await fetch(`${config.public.protocol}://${config.public.baseurl}:${config.public.port}/items/vendor/`, {
       method: "GET",
       mode: "cors",
       cache: "no-cache",
