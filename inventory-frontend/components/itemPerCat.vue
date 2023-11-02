@@ -72,7 +72,8 @@ export default {
   display: flex;
   height: fit-content;
   width: 100%;
-
+  overflow-x: hidden;
+  overflow-y: hidden;
   flex-direction: row;
   flex-wrap: wrap;
   align-items: stretch;
@@ -104,10 +105,8 @@ export default {
   .catHead {
     border-top: var(--border);
     border-bottom: var(--border);
-  }
-
-  .itemHolder {
     background-color: var(--whitebg);
+    
   }
 }
 </style>

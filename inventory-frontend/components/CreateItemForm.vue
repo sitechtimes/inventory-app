@@ -298,7 +298,8 @@ async function submitForm() {
   formData.append("location", location.value);
   console.log("ugjag");
   try {
-    const response = await fetch("http://127.0.0.1:8000/items/addItems/", {
+    const config = useRuntimeConfig()
+    const response = await fetch(`${config.protocol}://${config.baseurl}:${config.port}/items/addItems/`, {
       method: "POST",
       mode: "cors",
       cache: "no-cache",
