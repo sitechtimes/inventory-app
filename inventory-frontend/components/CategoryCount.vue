@@ -11,10 +11,8 @@
 
 <script setup>
 let category = ref([]);
-const config = useRuntimeConfig()
-
 onMounted(() => {
-  fetch(`${config.protocol}://${config.baseurl}:${config.port}/items/category/`, {
+  fetch("http://127.0.0.1:8000/items/category/", {
     method: "GET",
     mode: "cors",
     cache: "no-cache",
