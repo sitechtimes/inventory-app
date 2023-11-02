@@ -19,9 +19,7 @@
 
 <style>
 .itemMain {
-  min-height: 9rem;
-  height: fit-content;
-
+  min-height: 14rem;
   background-color: var(--whitebg);
   display: flex;
   flex-direction: row;
@@ -53,7 +51,6 @@
   height: auto;
   display: flex;
   flex-direction: column;
-  padding-right: 2.5rem;
 }
 
 .name,
@@ -114,8 +111,10 @@
 }
 
 .imageView {
-  max-height: 80%;
-  max-width: 80%;
+  display: block;
+  max-height: 90%;
+  max-width: 90%;
+  margin-top: auto;
   object-fit: scale-down;
 }
 
@@ -134,14 +133,14 @@
 @media screen and (max-width: 1100px) {
   .mainSize {
     max-width: 45%;
+    height: 105px;
     flex-basis: 45%;
   }
 
   .infoFull {
     max-width: 100%;
     flex-basis: 100%;
-    border: none;
-    margin: 0;
+    margin-top: 2px;
     border-radius: 0;
   }
 
@@ -172,8 +171,7 @@
   .mainSize {
     max-width: 100%;
     flex-basis: 100%;
-    border: none;
-    margin: 0;
+    margin-top: 2px;
     border-radius: 0;
   }
 
@@ -185,6 +183,8 @@
   .name {
     padding-right: 1rem;
     margin-bottom: 0;
+    font-size: 11px;
+    overflow: hidden;
   }
 
   .quantityC {
@@ -197,6 +197,12 @@
     border-color: none;
     box-shadow: none;
     background-color: var(--gray);
+  }
+}
+
+@media  screen and (max-width: 375px) {
+  .name {
+    font-size: 10px;
   }
 }
 </style>

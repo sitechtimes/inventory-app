@@ -324,4 +324,12 @@ export default {
     transform: rotate(0deg) scale(1);
   }
 }
+
+
+@media screen and (max-width: 280px) {
+  .selected {
+    width: 100% !important;
+  }
+  
+}
 </style>

@@ -105,7 +105,6 @@ export default {
   position: sticky;
   top: 0;
   right: 0;
-  overflow: hidden;
   flex: 1 1 0%;
   border-left: var(--border);
   z-index: 2000;
@@ -133,6 +132,7 @@ export default {
     right: 0;
     border: none;
     z-index: 2000;
+    overflow-x: hidden;
     overflow-y: scroll;
     margin-bottom: 20rem;
   }

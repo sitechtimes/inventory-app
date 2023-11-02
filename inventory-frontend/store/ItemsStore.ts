@@ -58,13 +58,11 @@ export const useItemsStore = defineStore("items", {
     },
 
     async getItems() {
-
-      const response = await fetch("http://127.0.0.1:8000/items/category/");
-      this.pulledinfo = await response.json();
-      console.log(this.pulledinfo);
-      console.log(showNotification.value)
-      const newresults = this.pulledinfo.sort((a, b) =>
-
+      const config = useRuntimeConfig()
+      const response = await fetch(`${config.protocol}://${config.baseurl}:${config.port}/items/category/`);
+      const results = await response.json();
+      console.log(results);
+      const newresults = results.sort((a, b) =>
         a.category_name > b.category_name
           ? 1
           : b.category_name > a.category_name

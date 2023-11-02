@@ -8,4 +8,9 @@ export default defineNuxtConfig({
   ],
   pages: true,
   modules: ["@pinia/nuxt"],
+  runtimeConfig: {
+      baseurl: 'localhost',
+      port: '8000',
+      protocol: "http"
+  }
 });
