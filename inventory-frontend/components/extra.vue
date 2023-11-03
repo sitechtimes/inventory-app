@@ -256,8 +256,8 @@ export default {
         pub_date: this.editDate,
         // Add other properties as needed
       };
-
-      fetch("http://127.0.0.1:8000/items/addLog/", {
+      const config = useRuntimeConfig()
+      fetch(`${config.public.protocol}://${config.public.baseurl}:${config.public.port}/items/addLog/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

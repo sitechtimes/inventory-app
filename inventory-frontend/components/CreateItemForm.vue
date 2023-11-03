@@ -315,7 +315,8 @@ async function submitForm() {
     console.log(error); 
   }
 
-  const response = await fetch("http://127.0.0.1:8000/items/category/");
+  const config = useRuntimeConfig()
+  const response = await fetch(`${config.public.protocol}://${config.public.baseurl}:${config.public.port}/items/category/`);
   const new_items = await response.json();
   const newresults = new_items.sort((a, b) =>
     a.category_name > b.category_name
