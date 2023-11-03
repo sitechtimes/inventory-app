@@ -43,6 +43,7 @@ export const useItemsStore = defineStore("items", {
     async getLogs(itemname){
       try {
         console.log("LOGS")
+        const config = useRuntimeConfig()
         const response = await fetch(`${config.public.protocol}://${config.public.baseurl}:${config.public.port}/items/log/`);
         const results = await response.json();
         console.log(results);
