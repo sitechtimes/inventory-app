@@ -8,6 +8,7 @@ export default defineNuxtConfig({
   ],
   pages: true,
   modules: ["@pinia/nuxt"],
+
   runtimeConfig: {
     public:{
       baseurl: 'localhost',
@@ -15,4 +16,5 @@ export default defineNuxtConfig({
       protocol: "http"
     }
   }
+
 });

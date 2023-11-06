@@ -59,11 +59,13 @@ export const useItemsStore = defineStore("items", {
     },
 
     async getItems() {
+
       const config = useRuntimeConfig()
       const response = await fetch(`${config.public.protocol}://${config.public.baseurl}:${config.public.port}/items/category/`);
       const results = await response.json();
       console.log(results);
       const newresults = results.sort((a, b) =>
+
         a.category_name > b.category_name
           ? 1
           : b.category_name > a.category_name

@@ -50,8 +50,10 @@ onMounted(() => {
 });
 
 function item() {
+
   const config = useRuntimeConfig()
   $fetch(`${config.public.protocol}://${config.public.baseurl}:${config.public.port}/items/items/CurrentItem/${props.id}/`, {
+
     method: "GET",
     mode: "cors",
     cache: "no-cache",
@@ -68,11 +70,13 @@ function item() {
     })
     .catch((error) => console.log(error));
 }
-const config = useRuntimeConfig()
+
 function toBackRoom() {
   room.value = "";
   haveSupplies.value = false;
+
   $fetch(`${config.public.protocol}://${config.public.baseurl}:${config.public.port}/items/updateQuantity/${props.id}/makerspace/`, {
+
     method: "PUT",
     mode: "cors",
     cache: "no-cache",
@@ -96,10 +100,11 @@ function toBackRoom() {
 }
 
 function toMakerspace() {
-  const config = useRuntimeConfig()
   room.value = "";
   haveSupplies.value = false;
+
   $fetch(`${config.public.protocol}://${config.public.baseurl}:${config.public.port}/items/updateQuantity/${props.id}/backroom/`, {
+
     method: "PUT",
     mode: "cors",
     cache: "no-cache",
@@ -123,10 +128,11 @@ function toMakerspace() {
 }
 
 function manualEdit() {
-  const config = useRuntimeConfig()
   if (Makerspace.value > 0 && Backroom.value > 0) {
     fetch(
+
       `${config.public.protocol}://${config.public.baseurl}:${config.public.port}/items/updateQuantity/manual/${props.id}/${Makerspace.value}/${Backroom.value}/`,
+
       {
         method: "PUT",
         mode: "cors",

@@ -32,9 +32,10 @@
 
 <script setup>
 let category = ref([]);
-const config = useRuntimeConfig()
 onMounted(() => {
+
   fetch(`${config.public.protocol}://${config.public.baseurl}:${config.public.port}/items/category/`, {
+
     method: "GET",
     mode: "cors",
     cache: "no-cache",

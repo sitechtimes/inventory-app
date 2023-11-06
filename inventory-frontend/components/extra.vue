@@ -325,6 +325,7 @@ export default {
       this.store.getLogs(this.editname);
 
       try {
+
         console.log(this.store.id)
         const config = useRuntimeConfig()
         const response = await fetch(`${config.public.protocol}://${config.public.baseurl}:${config.public.port}/items/editItems/${this.store.id}/`, {
@@ -335,6 +336,7 @@ export default {
           body: formData,
         });
 
+
         const data = await response.json();
         this.store.edit = true;
         console.log(this.store.edit);
@@ -343,6 +345,17 @@ export default {
       } catch (error) {
         console.log(error);
       }
+
+      const response = await fetch("http://127.0.0.1:8000/items/category/");
+      const new_items = await response.json();
+      const newresults = new_items.sort((a, b) =>
+        a.category_name > b.category_name
+          ? 1
+          : b.category_name > a.category_name
+          ? -1
+          : 0
+      );
+      store.$patch({ items: newresults });
     },
   },
 
@@ -497,7 +510,6 @@ export default {
   width: 100%;
   display: flex;
   flex-direction: column;
-  overflow-x: hidden;
 }
 
 .imagePop {
@@ -534,6 +546,7 @@ export default {
 
 .col2 {
   width: 70%;
+  margin-right: 5rem;
 }
 
 .col2name {
@@ -543,6 +556,7 @@ export default {
 .purchlink {
   width: 30rem;
   overflow: hidden;
+
   white-space: nowrap;
   text-overflow: ellipsis;
 }
@@ -561,14 +575,12 @@ export default {
 
 .changelog {
   border-top: var(--border);
-  background-color: white;
 }
 
 .logorg {
   text-align: left;
   width: 100%;
   font-weight: 400;
-  margin-bottom: 50px;
 }
 
 .logPop,
@@ -582,7 +594,14 @@ export default {
 }
 
 .detailsPop {
-  background-color: white;
+  min-width: fit-content;
+  width: 90%;
+}
+
+@media screen and (max-width: 760px) {
+  .col2 {
+    padding-right: 0;
+  }
 }
 
 input,
@@ -622,25 +641,5 @@ select {
     width: 100%;
     /* Full width on smaller screens */
   }
-}
-
-@media  screen and (max-width:375px) {
-    .purchlink {
-      width: 20rem;
-    }
-}
-
-@media  screen and (max-width: 280px) {
- .popUpPanel {
-  overflow-x: scroll;
- }
-  .col2 {
-    padding-right: 0;
-  }
-  .extrabtn {
-    min-width: min-content;
-    width: 50%;
-    text-align: left;
-}
 }
 </style>
