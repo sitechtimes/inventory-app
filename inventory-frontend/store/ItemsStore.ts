@@ -63,14 +63,22 @@ export const useItemsStore = defineStore("items", {
       this.pulledinfo = await response.json();
       console.log(this.pulledinfo);
       console.log(showNotification.value)
-      const newresults = this.pulledinfo.sort((a, b) =>
-
-        a.category_name > b.category_name
+     
+      const results = this.pulledinfo.forEach((cat)=> {
+        cat.itemsCategory.sort((a, b) =>
+        a.name > b.name
           ? 1
-          : b.category_name > a.category_name
+          : b.name > a.name
           ? -1
-          : 0
-      );
+          : 0)
+      })
+      const newresults = results.sort((a, b) =>
+      a.category_name > b.category_name
+        ? 1
+        : b.category_name > a.category_name
+        ? -1
+        : 0
+    );
       this.returnlist = newresults;
       this.items = newresults;
       return newresults;
