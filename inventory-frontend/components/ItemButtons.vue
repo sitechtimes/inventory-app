@@ -33,7 +33,9 @@
 <script setup>
 let category = ref([]);
 onMounted(() => {
-  fetch("http://127.0.0.1:8000/items/category/", {
+
+  fetch(`${config.public.protocol}://${config.public.baseurl}:${config.public.port}/items/category/`, {
+
     method: "GET",
     mode: "cors",
     cache: "no-cache",

@@ -256,8 +256,8 @@ export default {
         pub_date: this.editDate,
         // Add other properties as needed
       };
-
-      fetch("http://127.0.0.1:8000/items/addLog/", {
+      const config = useRuntimeConfig()
+      fetch(`${config.public.protocol}://${config.public.baseurl}:${config.public.port}/items/addLog/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -325,17 +325,17 @@ export default {
       this.store.getLogs(this.editname);
 
       try {
-        console.log(this.store.id);
-        const response = await fetch(
-          `http://127.0.0.1:8000/items/editItems/${this.store.id}/`,
-          {
-            method: "PUT",
-            mode: "cors",
-            cache: "no-cache",
-            credentials: "same-origin",
-            body: formData,
-          }
-        );
+
+        console.log(this.store.id)
+        const config = useRuntimeConfig()
+        const response = await fetch(`${config.public.protocol}://${config.public.baseurl}:${config.public.port}/items/editItems/${this.store.id}/`, {
+          method: "PUT",
+          mode: "cors",
+          cache: "no-cache",
+          credentials: "same-origin",
+          body: formData,
+        });
+
 
         const data = await response.json();
         this.store.edit = true;

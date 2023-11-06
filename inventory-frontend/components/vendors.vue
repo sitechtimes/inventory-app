@@ -57,7 +57,9 @@ let canvas = ref();
 let store = useItemsStore();
 
 onMounted(() => {
-  fetch("http://127.0.0.1:8000/items/vendor/", {
+
+  fetch(`${config.public.protocol}://${config.public.baseurl}:${config.public.port}/items/vendor/`, {
+
     method: "GET",
     mode: "cors",
     cache: "no-cache",

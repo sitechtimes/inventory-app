@@ -43,7 +43,8 @@ export const useItemsStore = defineStore("items", {
     async getLogs(itemname){
       try {
         console.log("LOGS")
-        const response = await fetch("http://127.0.0.1:8000/items/log/");
+        const config = useRuntimeConfig()
+        const response = await fetch(`${config.public.protocol}://${config.public.baseurl}:${config.public.port}/items/log/`);
         const results = await response.json();
         console.log(results);
         this.logs = results.filter(el => el.name === itemname);
@@ -59,11 +60,11 @@ export const useItemsStore = defineStore("items", {
 
     async getItems() {
 
-      const response = await fetch("http://127.0.0.1:8000/items/category/");
-      this.pulledinfo = await response.json();
-      console.log(this.pulledinfo);
-      console.log(showNotification.value)
-      const newresults = this.pulledinfo.sort((a, b) =>
+      const config = useRuntimeConfig()
+      const response = await fetch(`${config.public.protocol}://${config.public.baseurl}:${config.public.port}/items/category/`);
+      const results = await response.json();
+      console.log(results);
+      const newresults = results.sort((a, b) =>
 
         a.category_name > b.category_name
           ? 1
