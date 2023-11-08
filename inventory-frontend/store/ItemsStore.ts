@@ -6,6 +6,7 @@ export const useItemsStore = defineStore("items", {
     //for search function filtering
     logs: [],
     items: [],
+    results1: [],
     returnlist: [],
     pulledinfo: {},
     empty: false,
@@ -64,15 +65,18 @@ export const useItemsStore = defineStore("items", {
       console.log(this.pulledinfo);
       console.log(showNotification.value)
      
-      const results = this.pulledinfo.forEach((cat)=> {
-        cat.itemsCategory.sort((a, b) =>
+    
+      this.pulledinfo.forEach((cat)=> {
+       cat.itemsCategory.sort((a, b) =>
         a.name > b.name
           ? 1
           : b.name > a.name
           ? -1
           : 0)
+          this.results1.push(cat)  
       })
-      const newresults = results.sort((a, b) =>
+   
+      const newresults = this.results1.sort((a, b) =>
       a.category_name > b.category_name
         ? 1
         : b.category_name > a.category_name
@@ -80,8 +84,10 @@ export const useItemsStore = defineStore("items", {
         : 0
     );
       this.returnlist = newresults;
+      console.log(this.returnlist)
       this.items = newresults;
       return newresults;
+     
     },   
     //resize individual items when clicked for more information by adding/removing classes
     resizing() {
