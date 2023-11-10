@@ -74,7 +74,7 @@ function item() {
 function toBackRoom() {
   room.value = "";
   haveSupplies.value = false;
-
+  const config = useRuntimeConfig()
   $fetch(`${config.public.protocol}://${config.public.baseurl}:${config.public.port}/items/updateQuantity/${props.id}/makerspace/`, {
 
     method: "PUT",
@@ -102,7 +102,7 @@ function toBackRoom() {
 function toMakerspace() {
   room.value = "";
   haveSupplies.value = false;
-
+  const config = useRuntimeConfig()
   $fetch(`${config.public.protocol}://${config.public.baseurl}:${config.public.port}/items/updateQuantity/${props.id}/backroom/`, {
 
     method: "PUT",
@@ -129,8 +129,8 @@ function toMakerspace() {
 
 function manualEdit() {
   if (Makerspace.value > 0 && Backroom.value > 0) {
+    const config = useRuntimeConfig()
     fetch(
-
       `${config.public.protocol}://${config.public.baseurl}:${config.public.port}/items/updateQuantity/manual/${props.id}/${Makerspace.value}/${Backroom.value}/`,
 
       {

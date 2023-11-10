@@ -57,7 +57,7 @@ let canvas = ref();
 let store = useItemsStore();
 
 onMounted(() => {
-
+  const config = useRuntimeConfig()
   fetch(`${config.public.protocol}://${config.public.baseurl}:${config.public.port}/items/vendor/`, {
 
     method: "GET",
