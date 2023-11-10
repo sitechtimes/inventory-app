@@ -118,7 +118,7 @@ onMounted(() => {
 
 async function fetchData() {
   try {
-
+    const config = useRuntimeConfig()
     const response = await fetch(`${config.public.protocol}://${config.public.baseurl}:${config.public.port}/items/vendor/`, {
 
       method: "GET",
