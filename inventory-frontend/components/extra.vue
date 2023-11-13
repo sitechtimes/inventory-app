@@ -256,15 +256,18 @@ export default {
         pub_date: this.editDate,
         // Add other properties as needed
       };
-      const config = useRuntimeConfig()
-      fetch(`${config.public.protocol}://${config.public.baseurl}:${config.public.port}/items/addLog/`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-CSRFToken": this.getCookie("csrftoken"),
-        },
-        body: JSON.stringify(logData),
-      })
+      const config = useRuntimeConfig();
+      fetch(
+        `${config.public.protocol}://${config.public.baseurl}:${config.public.port}/items/addLog/`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": this.getCookie("csrftoken"),
+          },
+          body: JSON.stringify(logData),
+        }
+      )
         .then((response) => response.json())
         .then((data) => {
           console.log(data);
@@ -325,17 +328,18 @@ export default {
       this.store.getLogs(this.editname);
 
       try {
-
-        console.log(this.store.id)
-        const config = useRuntimeConfig()
-        const response = await fetch(`${config.public.protocol}://${config.public.baseurl}:${config.public.port}/items/editItems/${this.store.id}/`, {
-          method: "PUT",
-          mode: "cors",
-          cache: "no-cache",
-          credentials: "same-origin",
-          body: formData,
-        });
-
+        console.log(this.store.id);
+        const config = useRuntimeConfig();
+        const response = await fetch(
+          `${config.public.protocol}://${config.public.baseurl}:${config.public.port}/items/editItems/${this.store.id}/`,
+          {
+            method: "PUT",
+            mode: "cors",
+            cache: "no-cache",
+            credentials: "same-origin",
+            body: formData,
+          }
+        );
 
         const data = await response.json();
         this.store.edit = true;
@@ -345,8 +349,10 @@ export default {
       } catch (error) {
         console.log(error);
       }
-      const config = useRuntimeConfig()
-      const response = await fetch(`${config.public.protocol}://${config.public.baseurl}:${config.public.port}/items/category/`);
+      const config = useRuntimeConfig();
+      const response = await fetch(
+        `${config.public.protocol}://${config.public.baseurl}:${config.public.port}/items/category/`
+      );
       const new_items = await response.json();
       const newresults = new_items.sort((a, b) =>
         a.category_name > b.category_name
@@ -640,6 +646,28 @@ select {
   .save {
     width: 100%;
     /* Full width on smaller screens */
+  }
+  .col2 {
+    padding-right: 0;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .purchlink {
+    width: 20rem;
+  }
+}
+@media screen and (max-width: 280px) {
+  .popUpPanel {
+    overflow-x: scroll;
+  }
+  .col2 {
+    padding-right: 0;
+  }
+  .extrabtn {
+    min-width: min-content;
+    width: 50%;
+    text-align: left;
   }
 }
 </style>

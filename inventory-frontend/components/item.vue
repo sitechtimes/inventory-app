@@ -199,6 +199,12 @@
     background-color: var(--gray);
   }
 }
+
+@media screen and (max-width: 375px) {
+  .name {
+    font-size: 10px;
+  }
+}
 </style>
 
 <script>

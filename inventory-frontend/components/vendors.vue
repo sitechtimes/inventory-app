@@ -57,19 +57,21 @@ let canvas = ref();
 let store = useItemsStore();
 
 onMounted(() => {
-  const config = useRuntimeConfig()
-  fetch(`${config.public.protocol}://${config.public.baseurl}:${config.public.port}/items/vendor/`, {
-
-    method: "GET",
-    mode: "cors",
-    cache: "no-cache",
-    credentials: "same-origin",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    redirect: "follow",
-    referrerPolicy: "no-referrer",
-  })
+  const config = useRuntimeConfig();
+  fetch(
+    `${config.public.protocol}://${config.public.baseurl}:${config.public.port}/items/vendor/`,
+    {
+      method: "GET",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      redirect: "follow",
+      referrerPolicy: "no-referrer",
+    }
+  )
     .then((response) => response.json())
     .then((data) => {
       vendor.value = data;
@@ -339,6 +341,62 @@ const fullScreen = () => {
   }
   .buttons {
     margin-left: 0;
+  }
+}
+
+@media only screen and (orientation: landscape) {
+  .minimize-button {
+    left: 45%;
+    margin-bottom: 10vh;
+  }
+}
+@media only screen and (orientation: landscape) and (max-height: 768px) {
+  #Vendor {
+    height: 55rem !important;
+    width: 80rem !important;
+  }
+  .minimize-button {
+    margin-top: 10vh;
+  }
+}
+@media screen and (max-width: 912px) {
+  #Vendor {
+    height: 45rem !important;
+    width: 60rem !important;
+  }
+}
+@media screen and (max-width: 820px) {
+  #Vendor {
+    height: 60rem !important;
+    width: 50rem !important;
+  }
+  .minimize-button {
+    margin-top: 100px;
+    left: 45%;
+  }
+  .chart-cont-small {
+    height: 500px;
+  }
+}
+
+@media only screen and (max-width: 540px) {
+  #Vendor {
+    width: 50rem !important;
+  }
+}
+@media screen and (max-width: 414px) {
+  .canvas-cont {
+    margin-top: 100px;
+  }
+  #Vendor {
+    height: 20rem !important;
+    width: 35rem !important;
+  }
+}
+@media screen and (max-width: 280px) {
+  #Vendor {
+    height: 40rem !important;
+    width: 18rem !important;
   }
 }
 </style>

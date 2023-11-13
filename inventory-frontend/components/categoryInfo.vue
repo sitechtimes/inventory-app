@@ -9,7 +9,6 @@
           <font-awesome-icon :icon="['fas', 'maximize']" />
         </button>
       </div>
-
     </div>
 
     <div class="no-show" ref="chart2">
@@ -20,47 +19,43 @@
         <font-awesome-icon :icon="['fas', 'minimize']" />
       </button>
     </div>
-
-
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import { Chart } from 'chart.js/auto';
+import { ref, onMounted } from "vue";
+import { Chart } from "chart.js/auto";
 
-const props = defineProps(["categoryName"])
-
-
+const props = defineProps(["categoryName"]);
 
 const isMaximized = ref(false);
-const chart2 = ref()
-let CategoryItem = ref([])
-let ItemCount = ref([])
+const chart2 = ref();
+let CategoryItem = ref([]);
+let ItemCount = ref([]);
 
 const maximizeChart = () => {
   isMaximized.value = !isMaximized.value;
   if (isMaximized.value) {
-    console.log(chart2.value)
-    chart2.value.classList.remove('no-show')
-    chart2.value.classList.add('fullScreen')
+    console.log(chart2.value);
+    chart2.value.classList.remove("no-show");
+    chart2.value.classList.add("fullScreen");
   } else if (!isMaximized.value) {
-    chart2.value.classList.add('no-show')
-    chart2.value.classList.remove('fullScreen')
+    chart2.value.classList.add("no-show");
+    chart2.value.classList.remove("fullScreen");
   }
 };
 const chartData = ref({
   labels: CategoryItem.value,
   datasets: [
     {
-      label: 'Total Stock Available',
+      label: "Total Stock Available",
       data: ItemCount.value,
       fill: false,
-      borderColor: 'rgb(75, 192, 192)',
-      backgroundColor: 'rgb(75, 1, 192)',
-      tension: 0.1
-    }
-  ]
+      borderColor: "rgb(75, 192, 192)",
+      backgroundColor: "rgb(75, 1, 192)",
+      tension: 0.1,
+    },
+  ],
 });
 
 const chartOptions = ref({
@@ -68,7 +63,8 @@ const chartOptions = ref({
   scales: {
     y: {
       beginAtZero: true,
-    }, x: {
+    },
+    x: {
       ticks: {
         autoSkip: true,
         maxRotation: 80,
@@ -79,38 +75,37 @@ const chartOptions = ref({
         const labels = axis.chart.data.labels;
         for (let i = 0; i < labels.length; i++) {
           const lbl = labels[i];
-          if (typeof lbl === 'string' && lbl.length > 10) {
+          if (typeof lbl === "string" && lbl.length > 10) {
             labels[i] = lbl.substring(0, 10) + "..."; // cutting
           }
         }
-      }
+      },
     },
   },
   plugins: {
     legend: {
       labels: {
         font: {
-          size: 14
-        }
-      }
-    }
-  }
+          size: 14,
+        },
+      },
+    },
+  },
 });
 
-
 const createChart = () => {
-  const ctx1 = document.getElementById('myChart1').getContext('2d');
+  const ctx1 = document.getElementById("myChart1").getContext("2d");
 
   const chart1 = new Chart(ctx1, {
-    type: 'bar',
+    type: "bar",
     data: chartData.value,
     options: chartOptions.value,
   });
 
-  const ctx2 = document.getElementById("myChart2").getContext('2d');
+  const ctx2 = document.getElementById("myChart2").getContext("2d");
 
   const chart2 = new Chart(ctx2, {
-    type: 'bar',
+    type: "bar",
     data: chartData.value,
     options: chartOptions.value,
   });
@@ -122,30 +117,32 @@ onMounted(() => {
 
 async function fetchData() {
   try {
-    const config = useRuntimeConfig()
-    const response = await fetch(`${config.public.protocol}://${config.public.baseurl}:${config.public.port}/items/category/`, {
-
-      method: "GET",
-      mode: "cors",
-      cache: "no-cache",
-      credentials: "same-origin",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      redirect: "follow",
-      referrerPolicy: "no-referrer",
-    });
+    const config = useRuntimeConfig();
+    const response = await fetch(
+      `${config.public.protocol}://${config.public.baseurl}:${config.public.port}/items/category/`,
+      {
+        method: "GET",
+        mode: "cors",
+        cache: "no-cache",
+        credentials: "same-origin",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        redirect: "follow",
+        referrerPolicy: "no-referrer",
+      }
+    );
 
     const data = await response.json();
 
-    const CategoryName = props.categoryName
+    const CategoryName = props.categoryName;
     data.forEach((category) => {
-      console.log(category)
+      console.log(category);
       if (CategoryName === category.category_name) {
         category.itemsCategory.forEach((item) => {
-          CategoryItem.value.push(item.name)
-          ItemCount.value.push(item.total)
-        })
+          CategoryItem.value.push(item.name);
+          ItemCount.value.push(item.total);
+        });
       }
     });
 
@@ -154,7 +151,6 @@ async function fetchData() {
     console.log("Error fetching data:", error);
   }
 }
-
 </script>
 
 <style scoped>
@@ -214,7 +210,6 @@ async function fetchData() {
 
 .maximize-button {
   width: 4rem;
-
 }
 
 .maximize-button:hover,
@@ -231,5 +226,86 @@ async function fetchData() {
   display: flex;
   justify-content: flex-end;
   padding: 5px;
+}
+
+@media screen and (orientation: landscape) {
+  .fullScreen {
+    overflow: auto;
+  }
+  .minimize-button {
+    margin-bottom: 10px;
+  }
+}
+@media screen and (orientation: landscape) and (max-height: 540px) {
+  #myChart1 {
+    height: 25rem !important;
+    width: 80% !important;
+  }
+
+  .minimize-button {
+    left: 45%;
+  }
+  .maximize-button {
+    position: relative;
+    bottom: 60px;
+    flex-direction: row;
+  }
+  .popUpPanel {
+    overflow: auto;
+  }
+}
+
+@media only screen and (orientation: landscape) and (max-height: 375px) {
+  #myChart2 {
+    height: 50rem !important;
+  }
+}
+@media screen and (max-width: 912px) {
+  #myChart2 {
+    margin-top: 25%;
+  }
+}
+@media screen and (max-width: 667px) {
+  #myChart2 {
+    height: 50rem !important;
+    width: 80% !important;
+  }
+}
+@media screen and (max-width: 414px) {
+  #myChart2 {
+    height: 38rem !important;
+    width: 38rem !important;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  #myChart1 {
+    height: 20rem !important;
+    width: 35rem !important;
+  }
+  #myChart2 {
+    height: 30rem !important;
+    width: 35rem !important;
+  }
+}
+@media screen and (max-width: 360px) {
+  #myChart1 {
+    width: 34rem !important;
+  }
+}
+@media screen and (max-width: 280px) {
+  #myChart1 {
+    width: 25rem !important;
+    height: 20rem !important;
+  }
+  #myChart2 {
+    width: 25rem !important;
+    height: 25rem !important;
+  }
+  .minimize-button {
+    position: relative;
+    left: 40%;
+    width: 8rem;
+  }
 }
 </style>
