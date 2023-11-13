@@ -298,10 +298,8 @@ async function submitForm() {
   formData.append("location", location.value);
   console.log("ugjag");
   try {
-
     const config = useRuntimeConfig()
     const response = await fetch(`${config.public.protocol}://${config.public.baseurl}:${config.public.port}/items/addItems/`, {
-
       method: "POST",
       mode: "cors",
       cache: "no-cache",

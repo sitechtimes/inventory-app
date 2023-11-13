@@ -11,10 +11,10 @@
 
 <script setup>
 let vendor = ref([]);
+const config = useRuntimeConfig()
 onMounted(() => {
   const config = useRuntimeConfig()
   fetch(`${config.public.protocol}://${config.public.baseurl}:${config.public.port}items/vendor/`, {
-
     method: "GET",
     mode: "cors",
     cache: "no-cache",

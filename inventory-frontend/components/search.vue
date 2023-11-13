@@ -31,10 +31,8 @@ export default {
       this.newlist = [];
       this.store.returnlist.forEach((arr) => {
         let itemsCategory = Array.from(
-          arr.itemsCategory.filter(
-            (item) =>
-              item.name.toLowerCase().includes(i.toLowerCase()) ||
-              item.item_id.toLowerCase().includes(i.toLowerCase())
+          arr.itemsCategory.filter((item) =>
+            item.name.toLowerCase().includes(i.toLowerCase())
           )
         );
         let categories = [arr.category_name, itemsCategory];
