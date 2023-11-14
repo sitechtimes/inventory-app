@@ -40,6 +40,7 @@
         :date="store.popup.updated"
         :backroom_quantity="store.popup.backroom"
         :makerspace_quantity="store.popup.makerspace"
+        :min_amount="store.popup.min_amount"
       />
     </div>
   </div>

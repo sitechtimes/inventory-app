@@ -40,6 +40,7 @@
         :date="date"
         :quantM="makerspace_quantity"
         :quantB="backroom_quantity"
+        :alertMin="min_amount"
       />
     </div>
     <div class="extraInfoPanel" v-if="this.store.vendor">
@@ -197,6 +198,7 @@ export default {
     date: String,
     makerspace_quantity: Number,
     backroom_quantity: Number,
+    min_amount: Number,
   },
   components: {
     Extra,

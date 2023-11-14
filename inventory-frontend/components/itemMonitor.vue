@@ -26,6 +26,7 @@ export default {
     category: String,
     makerspace: Number,
     backroom: Number,
+    min_amount: Number,
   },
   data() {
     return {
@@ -65,6 +66,7 @@ export default {
             date: this.updated,
             makerspace: this.makerspace,
             backroom: this.backroom,
+            min_amount: this.min_amount,
           },
         });
         this.store.$patch({

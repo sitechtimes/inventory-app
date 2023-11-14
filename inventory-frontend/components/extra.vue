@@ -93,6 +93,11 @@
           <input v-if="editMode" v-model="quantity2" type="number" />
         </div>
       </div>
+      <div class="detailsAlert poprow">
+        <div class="text col1">Low Stock Alert Qt.</div>
+        <a v-if="!editMode" class="text col2 col2name">{{ editAlertMin }}</a>
+        <input v-if="editMode" v-model="editAlertMin" type="text" />
+      </div>
       <div class="detailsPurchase poprow">
         <div class="text col1">Purchase Link</div>
         <a v-if="!editMode" class="text col2 col2name purchlink" :href="link">{{
@@ -162,6 +167,7 @@ export default {
     date: String,
     quantM: Number,
     quantB: Number,
+    alertMin: Number,
   },
   data() {
     const categoryToFind = this.category;
@@ -216,6 +222,7 @@ export default {
       editvendor: VendorIndex + 1,
       listVendorsName: listVendors,
       editDate: this.date,
+      editAlertMin: this.alertMin,
     };
   },
   methods: {
@@ -545,7 +552,6 @@ export default {
 }
 
 .col2 {
-  width: 70%;
   margin-right: 5rem;
 }
 

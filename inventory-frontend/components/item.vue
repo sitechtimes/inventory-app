@@ -219,6 +219,7 @@ export default {
     vendor: String,
     makerspace: Number,
     backroom: Number,
+    min_amount: Number,
   },
 
   data() {
@@ -257,6 +258,7 @@ export default {
             date: this.updated,
             makerspace: this.makerspace,
             backroom: this.backroom,
+            min_amount: this.min_amount,
           },
           info: true,
           vendor: false,

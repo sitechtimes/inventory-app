@@ -24,6 +24,7 @@
           :backroom="result.backroom_quantity"
           :makerspace="result.makerspace_quantity"
           :alert="result.alert"
+          :min_amount="result.min_amount"
         />
       </div>
       <div class="itemHolder itemHolderM" v-if="store.monitor === true">
@@ -40,6 +41,7 @@
           :backroom="result.backroom_quantity"
           :makerspace="result.makerspace_quantity"
           :alert="result.alert"
+          :min_amount="result.min_amount"
         />
       </div>
     </div>
