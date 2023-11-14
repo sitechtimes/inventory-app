@@ -516,6 +516,7 @@ export default {
   width: 100%;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
 }
 
 .imagePop {
@@ -552,7 +553,6 @@ export default {
 
 .col2 {
   width: 70%;
-  margin-right: 5rem;
 }
 
 .col2name {
@@ -562,7 +562,6 @@ export default {
 .purchlink {
   width: 30rem;
   overflow: hidden;
-
   white-space: nowrap;
   text-overflow: ellipsis;
 }
@@ -581,12 +580,14 @@ export default {
 
 .changelog {
   border-top: var(--border);
+  background-color: white;
 }
 
 .logorg {
   text-align: left;
   width: 100%;
   font-weight: 400;
+  margin-bottom: 50px;
 }
 
 .logPop,
@@ -600,14 +601,7 @@ export default {
 }
 
 .detailsPop {
-  min-width: fit-content;
-  width: 90%;
-}
-
-@media screen and (max-width: 760px) {
-  .col2 {
-    padding-right: 0;
-  }
+  background-color: white;
 }
 
 input,
@@ -647,20 +641,18 @@ select {
     width: 100%;
     /* Full width on smaller screens */
   }
-  .col2 {
-    padding-right: 0;
-  }
 }
 
-@media screen and (max-width: 375px) {
-  .purchlink {
-    width: 20rem;
-  }
+@media  screen and (max-width:375px) {
+    .purchlink {
+      width: 20rem;
+    }
 }
-@media screen and (max-width: 280px) {
-  .popUpPanel {
-    overflow-x: scroll;
-  }
+
+@media  screen and (max-width: 280px) {
+ .popUpPanel {
+  overflow-x: scroll;
+ }
   .col2 {
     padding-right: 0;
   }
@@ -668,6 +660,6 @@ select {
     min-width: min-content;
     width: 50%;
     text-align: left;
-  }
+}
 }
 </style>

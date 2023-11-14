@@ -215,9 +215,11 @@ async function fetchData() {
 }
 
 .minimize-button {
+  position: relative;
+  left: 45%;
   width: 8rem;
+  margin-top: 10px;
 }
-
 .maximize-button {
   width: 4rem;
 }
