@@ -7,7 +7,7 @@ categories = [('TLS', 'Tools'), ('PT', 'Paint'), ('TP', 'Tape'), ('WR', 'Wire'),
 vendors = [('DOE', 'ShopDOE'), ('AMZ', 'Amazon'),
            ('BLICK', 'Blick'), ('HD', 'Home Depot')]
 locations = [('MS', 'Makerspace'), ('BR', 'Back Room')]
-
+stockUnits = [('BX', 'Box'), ('EA', 'Each'), ('ST', 'Set'), ('PK', 'Pack/100'), ('DZ', 'Dozen')]
 
 class Category(models.Model):
     category_code = models.CharField(
@@ -28,6 +28,15 @@ class Vendor(models.Model):
     def __str__(self):
         return self.vendor_name
 
+class Unit(models.Model):
+    unit_code = models.CharField(
+        choices=stockUnits, max_length=100, default=None)
+    unit_name = models.CharField(
+        choices=stockUnits, max_length=100, default=None)
+
+    def __str__(self):
+        return self.unit_name
+
 
 def upload_to(instance, filename):
     count_obj = Item.objects.all().count() + 1
@@ -44,6 +53,8 @@ class Item(models.Model):
     last_purchased = models.DateTimeField(auto_now=True, editable=True)
     backroom_quantity = models.IntegerField(default=0)
     makerspace_quantity = models.IntegerField(default=0)
+    unit = models.ForeignKey(
+        Unit, related_name='itemsUnit', on_delete=models.CASCADE)
     category = models.ForeignKey(
         Category, related_name='itemsCategory', on_delete=models.CASCADE)
     vendor = models.ForeignKey(
