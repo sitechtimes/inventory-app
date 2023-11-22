@@ -3,8 +3,8 @@ from rest_framework import generics, viewsets, mixins
 from rest_framework.views import APIView
 from django.http import JsonResponse, Http404
 from rest_framework.response import Response
-from .models import Item, Category, Vendor, Log
-from .serializer import ItemSerializer, CategorySerializer, VendorSerializer, LogSerializer
+from .models import Item, Category, Vendor, Log, Unit
+from .serializer import ItemSerializer, CategorySerializer, VendorSerializer, LogSerializer,UnitSerializer
 import datetime
 from rest_framework.parsers import MultiPartParser, FormParser
 import json
@@ -29,6 +29,9 @@ class VendorView(generics.ListAPIView):
     queryset = Vendor.objects.all()
     serializer_class = VendorSerializer
 
+class UnitView(generics.ListAPIView):
+    queryset = Unit.objects.all()
+    serializer_class = UnitSerializer
 
 class sortByCategory(generics.ListAPIView):
     serializer_class = CategorySerializer
@@ -39,12 +42,21 @@ class sortByCategory(generics.ListAPIView):
         return queryset
 
 
+
 class sortByVendor(generics.ListAPIView):
     serializer_class = VendorSerializer
 
     def get_queryset(self):
         vendor_name = self.kwargs["vendor_name"]
         queryset = Vendor.objects.filter(vendor_name=vendor_name)
+        return queryset
+
+class sortByUnit(generics.ListAPIView):
+    serializer_class = UnitSerializer
+
+    def get_queryset(self):
+        unit_name = self.kwargs["unit_name"]
+        queryset = Unit.objects.filter(unit_name=unit_name)
         return queryset
 
 

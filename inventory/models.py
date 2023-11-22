@@ -54,7 +54,7 @@ class Item(models.Model):
     backroom_quantity = models.IntegerField(default=0)
     makerspace_quantity = models.IntegerField(default=0)
     unit = models.ForeignKey(
-        Unit, related_name='itemsUnit', on_delete=models.CASCADE)
+        Unit, related_name='itemsUnit', on_delete=models.CASCADE, default=None)
     category = models.ForeignKey(
         Category, related_name='itemsCategory', on_delete=models.CASCADE)
     vendor = models.ForeignKey(

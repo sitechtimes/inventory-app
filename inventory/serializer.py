@@ -1,12 +1,12 @@
 from rest_framework import serializers
-from .models import Item, Category, Vendor, Log
+from .models import Item, Category, Vendor, Log, Unit
 
 
 class LogSerializer(serializers.ModelSerializer):
     class Meta:
         model = Log
         fields = ['name', 'backroom_quantity', 'makerspace_quantity',
-                  'purchase_link', 'pub_date', 'category', 'vendor']
+                  'purchase_link', 'pub_date', 'category', 'vendor', 'unit']
 
 
 class ItemSerializer(serializers.ModelSerializer):
@@ -26,6 +26,7 @@ class ItemSerializer(serializers.ModelSerializer):
         rep = super(ItemSerializer, self).to_representation(instance)
         rep['category'] = instance.category.category_name
         rep['vendor'] = instance.vendor.vendor_name
+        rep['unit'] = instance.unit.unit_name
         return rep
 
     def get_total(self, obj):
@@ -68,4 +69,16 @@ class VendorSerializer(serializers.ModelSerializer):
 
     def get_count(self, obj):
         count = Item.objects.filter(vendor=obj).count()
+        return count
+
+class UnitSerializer(serializers.ModelSerializer):
+    itemsUnit = ItemSerializer(many=True)
+    count = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Unit
+        fields = ('unit_name', 'unit_code', 'itemsUnit', 'count')
+
+    def get_count(self, obj):
+        count = Item.objects.filter(unit=obj).count()
         return count
