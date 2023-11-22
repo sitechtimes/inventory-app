@@ -12,7 +12,7 @@
 <script setup>
 let category = ref([]);
 onMounted(() => {
-
+ const config = useRuntimeConfig()
   fetch(`${config.public.protocol}://${config.public.baseurl}:${config.public.port}/items/category/`, {
 
     method: "GET",

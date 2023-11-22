@@ -57,19 +57,21 @@ let canvas = ref();
 let store = useItemsStore();
 
 onMounted(() => {
-
-  fetch(`${config.public.protocol}://${config.public.baseurl}:${config.public.port}/items/vendor/`, {
-
-    method: "GET",
-    mode: "cors",
-    cache: "no-cache",
-    credentials: "same-origin",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    redirect: "follow",
-    referrerPolicy: "no-referrer",
-  })
+  const config = useRuntimeConfig();
+  fetch(
+    `${config.public.protocol}://${config.public.baseurl}:${config.public.port}/items/vendor/`,
+    {
+      method: "GET",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      redirect: "follow",
+      referrerPolicy: "no-referrer",
+    }
+  )
     .then((response) => response.json())
     .then((data) => {
       vendor.value = data;
@@ -249,6 +251,11 @@ const fullScreen = () => {
   margin: 0;
 }
 
+#Vendor {
+height: 60rem !important;
+width: 90rem !important;
+}
+
 .fullScreen {
   display: block;
   position: fixed;
@@ -260,6 +267,7 @@ const fullScreen = () => {
   margin: 0;
   z-index: 9999;
   background-color: white;
+  overflow: auto;
 }
 
 .canvas-cont {
@@ -282,12 +290,13 @@ const fullScreen = () => {
 
 .minimize-button {
   position: relative;
-  left: 50%;
+  left: 45%;
   width: 8rem;
+  margin-top: 100px;
 }
 
 .maximize-button {
-  width: 4rem;
+  width: 8rem;
 }
 
 .maximize-button:hover,
@@ -306,26 +315,57 @@ const fullScreen = () => {
   padding: 5px;
 }
 
-.chart-cont-big {
-  height: 40rem;
+.chart-cont-big { 
+  height: 50rem;
   display: flex;
   justify-content: center;
 }
 
-.chart-cont-small {
-  height: 500px;
+@media only screen and (orientation: landscape){
+  .minimize-button {
+    left: 45%;
+    margin-bottom: 10vh;
+  }
+  
 }
-#Vendor {
-  height: 80rem;
+
+@media only screen and (orientation: landscape) and (max-height: 768px)
+{
+  
+  #Vendor {
+    height: 55rem !important;
+    width: 80rem !important;
+  }
+  .minimize-button {
+    margin-top: 10vh;
+  }
 }
+
+@media screen and ( max-width: 912px ) {
+  #Vendor {
+    height: 45rem !important;
+    width: 60rem !important;
+  }
+}
+
+@media screen and (max-width: 820px) {
+  #Vendor {
+  height: 60rem !important;
+  width: 50rem !important;
+}
+.minimize-button {
+  margin-top: 100px;
+  left: 45%;
+}
+}
+
 @media screen and (max-width: 760px) {
   .content {
     flex-direction: column-reverse;
   }
   .chart-cont-small,
   .canvas-cont {
-    height: fit-content;
-    max-width: 90%;
+    max-width: 95%;
     margin-bottom: 3rem;
   }
   .canvas-cont,
@@ -337,8 +377,50 @@ const fullScreen = () => {
     flex-direction: column;
     width: 100%;
   }
-  .buttons {
+  .chart-cont-big {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #Vendor {
+    margin-top: 100px;
+  }
+
+  .minimize-button {  
+   position:relative;
+   right: 0% ;
+   left: 0% ;
+
+  }
+    .buttons {
     margin-left: 0;
+  }
+}
+
+@media  only screen and (max-width: 540px) {
+ #Vendor {
+  width: 50rem !important;
+ }
+  
+}
+
+@media screen and (max-width: 414px)  { 
+  .canvas-cont {
+    margin-top: 100px;
+  }
+  #Vendor {
+    height: 20rem !important;
+    width: 35rem !important;
+  }
+  
+}
+
+
+@media screen and (max-width: 280px)  { 
+  #Vendor {
+    height: 40rem !important;
+    width: 18rem !important;
   }
 }
 </style>
