@@ -4,14 +4,14 @@
       <img class="imageView" :src="image" :alt="name_id" />
     </div>
     <div class="name-avail" ref="textbox">
-      <div class="name text" ref="name">{{ name }}</div>
+      <div class="name subheading" ref="name">{{ name }}</div>
 
       <div
-        class="quantityC smalltext"
+        class="quantityC text"
         ref="quant"
         :class="alert ? 'availN' : 'availY'"
       >
-        {{ quantity }}
+        Quantity: {{ quantity }}
       </div>
     </div>
   </div>
@@ -61,7 +61,7 @@
 
 .name {
   padding-top: 1.2rem;
-  margin-bottom: 3.5rem;
+  margin-bottom: 1.5rem;
 
   height: fit-content;
 }
@@ -76,7 +76,7 @@
   justify-content: space-evenly;
 
   position: absolute;
-  bottom: 0;
+  bottom: 20%;
   height: fit-content;
   padding-top: 0.5rem;
   padding-bottom: 0.4rem;
@@ -200,7 +200,7 @@
   }
 }
 
-@media  screen and (max-width: 375px) {
+@media screen and (max-width: 375px) {
   .name {
     font-size: 10px;
   }
