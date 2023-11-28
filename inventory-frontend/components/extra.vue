@@ -84,6 +84,7 @@
             {{ quantity1 }}
           </div>
           <input v-if="editMode" v-model="quantity1" type="number" />
+          <input v-if="editMode" v-model="editquan" type="text" />
         </div>
         <div class="poprow">
           <div class="text col1" id="location">Backroom</div>
@@ -212,6 +213,7 @@ export default {
       editquantity: this.quantity,
       quantity1: this.quantM,
       quantity2: this.quantB,
+      editquan: this.edit,
       editLink: this.link,
       editvendor: VendorIndex + 1,
       listVendorsName: listVendors,
@@ -256,24 +258,29 @@ export default {
         pub_date: this.editDate,
         // Add other properties as needed
       };
-      const config = useRuntimeConfig()
-      fetch(`${config.public.protocol}://${config.public.baseurl}:${config.public.port}/items/addLog/`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-CSRFToken": this.getCookie("csrftoken"),
-        },
-        body: JSON.stringify(logData),
-      })
+      const config = useRuntimeConfig();
+      fetch(
+        `${config.public.protocol}://${config.public.baseurl}:${config.public.port}/items/addLog/`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": this.getCookie("csrftoken"),
+          },
+          body: JSON.stringify(logData),
+        }
+      )
         .then((response) => response.json())
         .then((data) => {
           console.log(data);
         })
         .catch((error) => console.error("Error:", error));
     },
+    calculateQuan1() {},
     calculateTotalQuantity() {
       return this.quantity1 + this.quantity2;
     },
+
     vendorInfo() {
       this.store.$patch({ vendor: true, vendorHeader: true });
       this.store.inactive(".extraTab", ".tab1", ".tab1btn");
@@ -325,17 +332,18 @@ export default {
       this.store.getLogs(this.editname);
 
       try {
-
-        console.log(this.store.id)
-        const config = useRuntimeConfig()
-        const response = await fetch(`${config.public.protocol}://${config.public.baseurl}:${config.public.port}/items/editItems/${this.store.id}/`, {
-          method: "PUT",
-          mode: "cors",
-          cache: "no-cache",
-          credentials: "same-origin",
-          body: formData,
-        });
-
+        console.log(this.store.id);
+        const config = useRuntimeConfig();
+        const response = await fetch(
+          `${config.public.protocol}://${config.public.baseurl}:${config.public.port}/items/editItems/${this.store.id}/`,
+          {
+            method: "PUT",
+            mode: "cors",
+            cache: "no-cache",
+            credentials: "same-origin",
+            body: formData,
+          }
+        );
 
         const data = await response.json();
         this.store.edit = true;
@@ -345,8 +353,10 @@ export default {
       } catch (error) {
         console.log(error);
       }
-      const config = useRuntimeConfig()
-      const response = await fetch(`${config.public.protocol}://${config.public.baseurl}:${config.public.port}/items/category/`);
+      const config = useRuntimeConfig();
+      const response = await fetch(
+        `${config.public.protocol}://${config.public.baseurl}:${config.public.port}/items/category/`
+      );
       const new_items = await response.json();
       const newresults = new_items.sort((a, b) =>
         a.category_name > b.category_name
