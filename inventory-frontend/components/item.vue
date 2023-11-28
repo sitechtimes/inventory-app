@@ -62,8 +62,12 @@
 .name {
   padding-top: 1.2rem;
   margin-bottom: 1.5rem;
-
-  height: fit-content;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  height: 45%;
 }
 
 .quantityC {
@@ -184,7 +188,7 @@
     padding-right: 1rem;
     margin-bottom: 0;
     font-size: 11px;
-    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .quantityC {
