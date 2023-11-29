@@ -19,7 +19,7 @@
 
 <style>
 .itemMain {
-  min-height: 14rem;
+  min-height: 12rem;
   background-color: var(--whitebg);
   display: flex;
   flex-direction: row;
@@ -61,13 +61,15 @@
 
 .name {
   padding-top: 1.2rem;
+  margin-top: 1rem;
   margin-bottom: 1.5rem;
+  margin-right: 1rem;
   text-overflow: ellipsis;
   overflow: hidden;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
-  height: 45%;
+  height: 50%;
 }
 
 .quantityC {
@@ -76,11 +78,11 @@
   min-height: 1.5rem;
   display: flex;
   flex-direction: row;
-  margin-bottom: 0.75rem;
+  margin-bottom: 2rem;
   justify-content: space-evenly;
 
   position: absolute;
-  bottom: 20%;
+  bottom: 0%;
   height: fit-content;
   padding-top: 0.5rem;
   padding-bottom: 0.4rem;
