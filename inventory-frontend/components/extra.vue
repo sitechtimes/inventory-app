@@ -83,8 +83,18 @@
           <div v-if="!editMode" class="text col2" id="locationQ">
             {{ quantity1 }}
           </div>
-          <input v-if="editMode" v-model="quantity1" type="number" />
-          <input v-if="editMode" v-model="editquan" type="text" />
+          <input
+            v-if="editMode"
+            v-model="quantity1"
+            type="number"
+            @input="handleInput"
+          />
+          <input
+            v-if="editMode"
+            v-model="input"
+            type="text"
+            @input="handleInput"
+          />
         </div>
         <div class="poprow">
           <div class="text col1" id="location">Backroom</div>
@@ -163,6 +173,7 @@ export default {
     date: String,
     quantM: Number,
     quantB: Number,
+    input1: Number,
   },
   data() {
     const categoryToFind = this.category;
@@ -213,7 +224,7 @@ export default {
       editquantity: this.quantity,
       quantity1: this.quantM,
       quantity2: this.quantB,
-      editquan: this.edit,
+      input: this.input1,
       editLink: this.link,
       editvendor: VendorIndex + 1,
       listVendorsName: listVendors,
@@ -276,7 +287,18 @@ export default {
         })
         .catch((error) => console.error("Error:", error));
     },
-    calculateQuan1() {},
+    handleInput: function () {
+      if (this.input.startsWith("+") || this.input.startsWith("-")) {
+        let num = parseInt(this.input.substr(1));
+        if (this.edit.startsWith("+")) {
+          this.result = this.quantity1 + num;
+        } else {
+          this.result = this.quantity1 - num;
+        }
+      } else {
+        this.quantity1 = parseInt(this.input) || 0;
+      }
+    },
     calculateTotalQuantity() {
       return this.quantity1 + this.quantity2;
     },
@@ -433,7 +455,7 @@ export default {
             ) + 1),
           (this.editquantity = this.quantity),
           (this.quantity1 = this.quantM),
-          (this.quantity2 = this.quantB),
+          (this.quantity2 = this.input1),
           (this.editLink = this.link),
           (this.editvendor =
             listVendors.findIndex((vendor) => vendor.name === this.vendor) + 1),
