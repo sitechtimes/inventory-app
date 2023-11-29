@@ -296,7 +296,6 @@ async function submitForm() {
   formData.append("vendor", vendor.value);
   formData.append("category", category.value);
   formData.append("location", location.value);
-  console.log("ugjag");
   try {
 
     const config = useRuntimeConfig()

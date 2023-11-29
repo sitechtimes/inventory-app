@@ -312,8 +312,15 @@ export default {
     },
     async saveChanges() {
       this.saveLogs();
+      let today = new Date();
+let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+let dateTime = date+' '+time;
+ 
+console.log(dateTime)
       console.log("name:", this.editname);
       const formData = new FormData();
+      formData.append('dateTime', dateTime);
       formData.append("name", this.editname);
       formData.append("category", this.editcategory);
       formData.append("image_url", this.img_link);

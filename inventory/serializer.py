@@ -5,7 +5,7 @@ from .models import Item, Category, Vendor, Log
 class LogSerializer(serializers.ModelSerializer):
     class Meta:
         model = Log
-        fields = ['name', 'backroom_quantity', 'makerspace_quantity',
+        fields = ['name', 'dateTime', 'backroom_quantity', 'makerspace_quantity',
                   'purchase_link', 'pub_date', 'category', 'vendor']
 
 

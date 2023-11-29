@@ -2,10 +2,7 @@
   <div id="logCon">
     <div v-for="each in store.logs" :key="each.id">
       <p id="log">
-        {{ each.pub_date }} {{ each.name }} {{ each.category }}
-        {{ each.backroom_quantity }} {{ each.makerspace_quantity }}
-        {{ each.purchase_link }}
-        {{ each.vendor }}
+        {{ each.pub_date }}
       </p>
     </div>
   </div>
