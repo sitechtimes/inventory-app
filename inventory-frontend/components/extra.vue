@@ -89,12 +89,7 @@
             type="number"
             @input="handleInput"
           />
-          <input
-            v-if="editMode"
-            v-model="input"
-            type="text"
-            @input="handleInput"
-          />
+          <input v-if="editMode" v-model="input" type="text" />
         </div>
         <div class="poprow">
           <div class="text col1" id="location">Backroom</div>
@@ -287,16 +282,14 @@ export default {
         })
         .catch((error) => console.error("Error:", error));
     },
-    handleInput: function () {
-      if (this.input.startsWith("+") || this.input.startsWith("-")) {
-        let num = parseInt(this.input.substr(1));
-        if (this.edit.startsWith("+")) {
-          this.result = this.quantity1 + num;
-        } else {
-          this.result = this.quantity1 - num;
-        }
+    handleInput: function (event) {
+      const num = event.target.value;
+      if (this.input.startsWith("+")) {
+        this.quantity1 = num + this.parsedInput;
+      } else if (this.input.startsWith("-")) {
+        this.quantity1 = num - this.parsedInput;
       } else {
-        this.quantity1 = parseInt(this.input) || 0;
+        this.quantity1 = num;
       }
     },
     calculateTotalQuantity() {
@@ -463,6 +456,10 @@ export default {
       },
       deep: true,
       immediate: true,
+    },
+    parsedInput: function () {
+      const parsed = parseInt(this.input);
+      return isNaN(parsed) ? 0 : parsed;
     },
   },
   mounted() {
