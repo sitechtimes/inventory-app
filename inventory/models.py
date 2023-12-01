@@ -63,6 +63,7 @@ class Item(models.Model):
 
 class Log(models.Model):
     name = models.CharField(max_length=100, blank=True, default='')
+    dateTime = models.CharField(max_length=100, blank=True, default='')
     category = models.CharField(
         max_length=50, choices=categories, default='TLS')
     purchase_link = models.CharField(max_length=1000, blank=True, default='')
