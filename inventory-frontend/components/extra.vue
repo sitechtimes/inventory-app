@@ -89,7 +89,10 @@
             type="number"
             @input="handleInput"
           />
-          <input v-if="editMode" v-model="input" type="text" />
+          <input v-if="editMode" v-model="input" type="text" class="input" />
+          <button v-if="editMode" @click="updateInput" class="updateBtn">
+            Update Input
+          </button>
         </div>
         <div class="poprow">
           <div class="text col1" id="location">Backroom</div>
@@ -282,15 +285,29 @@ export default {
         })
         .catch((error) => console.error("Error:", error));
     },
-    handleInput: function (event) {
-      const num = event.target.value;
-      if (this.input.startsWith("+")) {
-        this.quantity1 = num + this.parsedInput;
-      } else if (this.input.startsWith("-")) {
-        this.quantity1 = num - this.parsedInput;
-      } else {
-        this.quantity1 = num;
+    handleInput() {
+      const number = parseInt(this.input);
+      if (isNaN(number)) {
+        alert("Please enter a valid number.");
+        return;
       }
+      if (this.input.startsWith("+")) {
+        this.quantity1 += number;
+      } else if (this.input.startsWith("-")) {
+        this.quantity1 -= number;
+      } else {
+        alert("Please enter a number with a + or - sign.");
+      }
+      this.input = "";
+    },
+    updateInput() {
+      const number = parseInt(this.input);
+      if (isNaN(number)) {
+        alert("Please enter a valid number.");
+        return;
+      }
+      this.quantity1 = number;
+      this.input = "";
     },
     calculateTotalQuantity() {
       return this.quantity1 + this.quantity2;
@@ -457,10 +474,6 @@ export default {
       deep: true,
       immediate: true,
     },
-    parsedInput: function () {
-      const parsed = parseInt(this.input);
-      return isNaN(parsed) ? 0 : parsed;
-    },
   },
   mounted() {
     console.log(this.category);
@@ -610,6 +623,15 @@ export default {
   text-align: left;
   width: 100%;
   font-weight: 400;
+}
+
+.input {
+  width: 10%;
+}
+
+.updateBtn {
+  width: 10px;
+  height: 10px;
 }
 
 .logPop,
