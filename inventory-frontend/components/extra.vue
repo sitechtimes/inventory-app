@@ -91,7 +91,7 @@
           />
           <input v-if="editMode" v-model="input" type="text" class="input" />
           <button v-if="editMode" @click="updateInput" class="updateBtn">
-            Update Input
+            Update
           </button>
         </div>
         <div class="poprow">
@@ -476,6 +476,11 @@ export default {
     },
   },
   mounted() {
+    if (this.quantity2) {
+    } else {
+      this.quantity2 = 0;
+    }
+    console.log(this.quantity2);
     console.log(this.category);
     console.log(this.editcategory);
     console.log(this.vendor, this.editvendor);
@@ -627,11 +632,17 @@ export default {
 
 .input {
   width: 10%;
+  margin-left: 10px;
 }
 
 .updateBtn {
-  width: 10px;
-  height: 10px;
+  width: 55px;
+  height: 23px;
+  background-color: white;
+  color: black;
+  font-size: 13px;
+  margin-left: 10px;
+  border: solid black 1px;
 }
 
 .logPop,
