@@ -362,6 +362,8 @@ export default {
       formData.append("last_purchased", this.editDate);
       this.store.getLogs(this.editname);
       this.store.getLogs(this.editname);
+      console.log("this is a");
+      console.log(this.quantity2);
 
       try {
         console.log(this.store.id);
