@@ -76,6 +76,7 @@ class Log(models.Model):
     vendor = models.CharField(max_length=50, choices=vendors, default='DOE')
     pub_date = models.CharField(
         max_length=100, blank=True, default='00/00/0000')
+    change = models.CharField(max_length=2000, blank=False, default='')
 
     def __str__(self):
         return self.name
