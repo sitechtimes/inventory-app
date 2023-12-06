@@ -1,4 +1,6 @@
 from django.db import models
+from django.utils import timezone
+import datetime
 
 categories = [('TLS', 'Tools'), ('PT', 'Paint'), ('TP', 'Tape'), ('WR', 'Wire'), ('FA', 'First Aid'), ('FAB', 'Fabric'), ('PM', 'Paper Mache'), ('GL', 'Glue'), ('SE', 'Sewing'), ('MISC',
                                                                                                                                                                                    'Miscellaneous'), ('CM', 'Coloring Materials'), ('SC', 'Sculpture'), ('WD', 'Wood'), ('CS', 'Craft Supplies'), ('FM', 'Foam'), ('PRTM', 'Printmaking'), ('PAP', 'Paper'), ('DR', 'Drawing')]
@@ -8,7 +10,9 @@ vendors = [('DOE', 'ShopDOE'), ('AMZ', 'Amazon'),
            ('BLICK', 'Blick'), ('HD', 'Home Depot')]
 locations = [('MS', 'Makerspace'), ('BR', 'Back Room')]
 
-
+class AutoDateTimeField(models.DateTimeField):
+    def pre_save(self, model_instance, add):
+        return timezone.now()
 class Category(models.Model):
     category_code = models.CharField(
         choices=categories, max_length=100, default="")
@@ -63,7 +67,7 @@ class Item(models.Model):
 
 class Log(models.Model):
     name = models.CharField(max_length=100, blank=True, default='')
-    dateTime = models.DateTimeField(auto_now_add=True)
+    dateTime = models.DateTimeField(default=timezone.now)
     category = models.CharField(
         max_length=50, choices=categories, default='TLS')
     purchase_link = models.CharField(max_length=1000, blank=True, default='')
