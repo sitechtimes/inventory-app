@@ -20,7 +20,7 @@
             >
               <canvas
                 id="Vendor"
-                style="height: 100%; max-width: 100%"
+                style="height: 100%; max-width: fit-content"
               ></canvas>
             </div>
             <div class="btn-cont">
@@ -252,8 +252,8 @@ const fullScreen = () => {
 }
 
 #Vendor {
-height: 60rem !important;
-width: 90rem !important;
+  height: 60rem !important;
+  width: fit-content !important;
 }
 
 .fullScreen {
@@ -315,48 +315,45 @@ width: 90rem !important;
   padding: 5px;
 }
 
-.chart-cont-big { 
+.chart-cont-big {
   height: 50rem;
   display: flex;
   justify-content: center;
 }
 
-@media only screen and (orientation: landscape){
+@media only screen and (orientation: landscape) {
   .minimize-button {
     left: 45%;
     margin-bottom: 10vh;
   }
-  
 }
 
-@media only screen and (orientation: landscape) and (max-height: 768px)
-{
-  
+@media only screen and (orientation: landscape) and (max-height: 768px) {
   #Vendor {
     height: 55rem !important;
-    width: 80rem !important;
+    width: fit-content !important;
   }
   .minimize-button {
     margin-top: 10vh;
   }
 }
 
-@media screen and ( max-width: 912px ) {
+@media screen and (max-width: 912px) {
   #Vendor {
     height: 45rem !important;
-    width: 60rem !important;
+    width: fit-content !important;
   }
 }
 
 @media screen and (max-width: 820px) {
   #Vendor {
-  height: 60rem !important;
-  width: 50rem !important;
-}
-.minimize-button {
-  margin-top: 100px;
-  left: 45%;
-}
+    height: 60rem !important;
+    width: fit-content !important;
+  }
+  .minimize-button {
+    margin-top: 100px;
+    left: 45%;
+  }
 }
 
 @media screen and (max-width: 760px) {
@@ -387,40 +384,36 @@ width: 90rem !important;
     margin-top: 100px;
   }
 
-  .minimize-button {  
-   position:relative;
-   right: 0% ;
-   left: 0% ;
-
+  .minimize-button {
+    position: relative;
+    right: 0%;
+    left: 0%;
   }
-    .buttons {
+  .buttons {
     margin-left: 0;
   }
 }
 
-@media  only screen and (max-width: 540px) {
- #Vendor {
-  width: 50rem !important;
- }
-  
+@media only screen and (max-width: 540px) {
+  #Vendor {
+    width: fit-content !important;
+  }
 }
 
-@media screen and (max-width: 414px)  { 
+@media screen and (max-width: 414px) {
   .canvas-cont {
     margin-top: 100px;
   }
   #Vendor {
     height: 20rem !important;
-    width: 35rem !important;
+    width: fit-content !important;
   }
-  
 }
 
-
-@media screen and (max-width: 280px)  { 
+@media screen and (max-width: 280px) {
   #Vendor {
     height: 40rem !important;
-    width: 18rem !important;
+    width: fit-content !important;
   }
 }
 </style>
