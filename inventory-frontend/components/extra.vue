@@ -399,7 +399,7 @@ export default {
           ? -1
           : 0
       );
-      store.$patch({ items: newresults });
+      this.store.$patch({ items: newresults });
     },
   },
 
@@ -478,9 +478,10 @@ export default {
     },
   },
   mounted() {
-    if (this.quantity2) {
-    } else {
+    if (this.quantity2 == undefined) {
       this.quantity2 = 0;
+    } else {
+      this.quantity2 = this.quantity2;
     }
     console.log(this.quantity2);
     console.log(this.category);
