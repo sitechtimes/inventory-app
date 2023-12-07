@@ -97,7 +97,7 @@
         <div class="poprow">
           <div class="text col1" id="location">Backroom</div>
           <div v-if="!editMode" class="text col2" id="locationQ">
-            {{ quantity2 }}
+            {{ this.quantity2 }}
           </div>
           <input v-if="editMode" v-model="quantity2" type="number" />
         </div>
@@ -287,10 +287,6 @@ export default {
     },
     handleInput() {
       const number = parseInt(this.input);
-      if (isNaN(number)) {
-        alert("Please enter a valid number.");
-        return;
-      }
       if (this.input.startsWith("+")) {
         this.quantity1 += number;
       } else if (this.input.startsWith("-")) {
@@ -302,10 +298,6 @@ export default {
     },
     updateInput() {
       const number = parseInt(this.input);
-      if (isNaN(number)) {
-        alert("Please enter a valid number.");
-        return;
-      }
       this.quantity1 = number;
       this.input = "";
     },
@@ -364,6 +356,8 @@ export default {
       this.store.getLogs(this.editname);
       console.log("this is a");
       console.log(this.quantity2);
+      console.log("this is a");
+      console.log(this.quantity1);
 
       try {
         console.log(this.store.id);
@@ -478,11 +472,6 @@ export default {
     },
   },
   mounted() {
-    if (this.quantity2 == undefined) {
-      this.quantity2 = 0;
-    } else {
-      this.quantity2 = this.quantity2;
-    }
     console.log(this.quantity2);
     console.log(this.category);
     console.log(this.editcategory);
