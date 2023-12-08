@@ -97,9 +97,9 @@
         <div class="poprow">
           <div class="text col1" id="location">Backroom</div>
           <div v-if="!editMode" class="text col2" id="locationQ">
-            {{ this.quantity2 }}
+            {{ quantity2 }}
           </div>
-          <input v-if="editMode" v-model="quantity2" type="number" />
+          <input v-if="editMode" v-model="this.quantity2" type="number" />
         </div>
       </div>
       <div class="detailsPurchase poprow">
@@ -301,9 +301,6 @@ export default {
       this.quantity1 = number;
       this.input = "";
     },
-    calculateTotalQuantity() {
-      return this.quantity1 + this.quantity2;
-    },
 
     vendorInfo() {
       this.store.$patch({ vendor: true, vendorHeader: true });
@@ -339,6 +336,8 @@ export default {
       this.editDate = currentDate;
     },
     async saveChanges() {
+      console.log(this.quantB);
+      console.log(this.quantity2);
       this.saveLogs();
       console.log("name:", this.editname);
       const formData = new FormData();
@@ -355,9 +354,7 @@ export default {
       this.store.getLogs(this.editname);
       this.store.getLogs(this.editname);
       console.log("this is a");
-      console.log(this.quantity2);
-      console.log("this is a");
-      console.log(this.quantity1);
+      console.log(this.quantB);
 
       try {
         console.log(this.store.id);
@@ -472,7 +469,6 @@ export default {
     },
   },
   mounted() {
-    console.log(this.quantity2);
     console.log(this.category);
     console.log(this.editcategory);
     console.log(this.vendor, this.editvendor);
