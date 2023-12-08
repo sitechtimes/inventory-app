@@ -20,7 +20,7 @@
             >
               <canvas
                 id="Vendor"
-                style="height: 100%; max-width: fit-content"
+                style="height: 100%; max-width: 80rem !important"
               ></canvas>
             </div>
             <div class="btn-cont">
@@ -94,6 +94,7 @@ const chartData = ref({
 
 const chartOptions = ref({
   responsive: true,
+  maintainAspectRatio: false,
   scales: {
     y: {
       beginAtZero: true,
