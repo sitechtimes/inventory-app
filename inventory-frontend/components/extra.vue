@@ -209,7 +209,8 @@ export default {
       editname: this.name,
       editcategory: CategoryIndex + 1,
       listCategoryName: listCategory,
-      editquantity: this.quantity,
+      editquantityM: this.quantity,
+      editquantityB: this.quantity,
       quantity1: this.quantM,
       quantity2: this.quantB,
       editLink: this.link,
@@ -249,8 +250,8 @@ export default {
       let logData = {
         name: this.editname,
         category: newCategory,
-        backroom_quantity: parseInt(this.editquantity),
-        makerspace_quantity: parseInt(this.editquantity),
+        backroom_quantity: parseInt(this.editquantityB),
+        makerspace_quantity: parseInt(this.editquantityM),
         vendor: newVendor,
         purchase_link: this.editLink,
         pub_date: this.editDate,
@@ -384,12 +385,12 @@ export default {
   watch: {
     quantity1(newValue) {
       if (this.editMode) {
-        this.editquantity = newValue + this.quantity2;
+        this.editquantityB = newValue + this.quantity2;
       }
     },
     quantity2(newValue) {
       if (this.editMode) {
-        this.editquantity = this.quantity1 + newValue;
+        this.editquantityM = this.quantity1 + newValue;
       }
     },
     $props: {
