@@ -287,12 +287,20 @@ export default {
     },
     updateInput() {
       const number = parseInt(this.input);
-      this.quantity1 += number;
+      if (this.input.match(/^[+-]?\d+$/)) {
+        this.quantity1 += number;
+      } else {
+        alert("Please enter a number with a + or - sign.");
+      }
       this.input = "";
     },
     updateInput2() {
       const number = parseInt(this.input2);
-      this.quantity2 += number;
+      if (this.input2.match(/^[+-]?\d+$/)) {
+        this.quantity2 += number;
+      } else {
+        alert("Please enter a number with a + or - sign.");
+      }
       this.input2 = "";
     },
 
