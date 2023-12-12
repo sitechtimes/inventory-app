@@ -18,10 +18,7 @@
             <div
               :class="{ 'chart-cont-big': minMax, 'chart-cont-small': !minMax }"
             >
-              <canvas
-                id="Vendor"
-                style="height: 100%; max-width: 80rem !important"
-              ></canvas>
+              <canvas id="Vendor"></canvas>
             </div>
             <div class="btn-cont">
               <button
@@ -179,6 +176,8 @@ const fullScreen = () => {
   } else if (!minMax.value) {
     minMax.value = true;
     canvas.value.classList.add("fullScreen");
+    //canvas.value.style.width = "100%";
+    //canvas.value.style.height = "100%";
   }
 };
 </script>
@@ -253,8 +252,9 @@ const fullScreen = () => {
 }
 
 #Vendor {
-  height: 60rem !important;
-  width: fit-content !important;
+  padding: 2vw;
+  height: 100%;
+  max-width: fit-content !important;
 }
 
 .fullScreen {
@@ -276,6 +276,8 @@ const fullScreen = () => {
   flex-flow: column nowrap;
   justify-content: center;
   margin: 2rem;
+  flex-grow: 1;
+  min-height: 0;
 }
 
 .maximize-button,

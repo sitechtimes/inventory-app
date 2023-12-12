@@ -61,6 +61,7 @@ const chartData = ref({
 
 const chartOptions = ref({
   responsive: true,
+  maintaianAspectRatio: false,
   scales: {
     y: {
       beginAtZero: true,
