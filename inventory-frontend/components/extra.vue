@@ -95,6 +95,10 @@
             {{ quantity2 }}
           </div>
           <input v-if="editMode" v-model="this.quantity2" type="number" />
+          <input v-if="editMode" v-model="input2" type="text" class="input" />
+          <button v-if="editMode" @click="updateInput2" class="updateBtn">
+            Update
+          </button>
         </div>
       </div>
       <div class="detailsPurchase poprow">
@@ -283,14 +287,13 @@ export default {
     },
     updateInput() {
       const number = parseInt(this.input);
-      if (this.input.startsWith("+")) {
-        this.quantity1 += number;
-      } else if (this.input.startsWith("-")) {
-        this.quantity1 -= number;
-      } else {
-        alert("Please enter a number with a + or - sign.");
-      }
+      this.quantity1 += number;
       this.input = "";
+    },
+    updateInput2() {
+      const number = parseInt(this.input2);
+      this.quantity2 += number;
+      this.input2 = "";
     },
 
     vendorInfo() {
@@ -327,8 +330,6 @@ export default {
       this.editDate = currentDate;
     },
     async saveChanges() {
-      console.log(this.quantB);
-      console.log(this.quantity2);
       this.saveLogs();
       console.log("name:", this.editname);
       const formData = new FormData();
@@ -344,8 +345,6 @@ export default {
       formData.append("last_purchased", this.editDate);
       this.store.getLogs(this.editname);
       this.store.getLogs(this.editname);
-      console.log("this is a");
-      console.log(this.quantB);
 
       try {
         console.log(this.store.id);
