@@ -84,13 +84,21 @@
             {{ quantity1 }}
           </div>
           <input v-if="editMode" v-model="quantity1" type="number" />
+          <input v-if="editMode" v-model="input" type="text" class="input" />
+          <button v-if="editMode" @click="updateInput" class="updateBtn">
+            Update
+          </button>
         </div>
         <div class="poprow">
           <div class="text col1" id="location">Backroom</div>
           <div v-if="!editMode" class="text col2" id="locationQ">
             {{ quantity2 }}
           </div>
-          <input v-if="editMode" v-model="quantity2" type="number" />
+          <input v-if="editMode" v-model="this.quantity2" type="number" />
+          <input v-if="editMode" v-model="input2" type="text" class="input" />
+          <button v-if="editMode" @click="updateInput2" class="updateBtn">
+            Update
+          </button>
         </div>
       </div>
       <div class="detailsPurchase poprow">
@@ -288,6 +296,25 @@ findchange(){
     calculateTotalQuantity() {
       return this.quantity1 + this.quantity2;
     },
+    updateInput() {
+      const number = parseInt(this.input);
+      if (this.input.match(/^[+-]?\d+$/)) {
+        this.quantity1 += number;
+      } else {
+        alert("Please enter a number with a + or - sign.");
+      }
+      this.input = "";
+    },
+    updateInput2() {
+      const number = parseInt(this.input2);
+      if (this.input2.match(/^[+-]?\d+$/)) {
+        this.quantity2 += number;
+      } else {
+        alert("Please enter a number with a + or - sign.");
+      }
+      this.input2 = "";
+    },
+
     vendorInfo() {
       this.store.$patch({ vendor: true, vendorHeader: true });
       this.store.inactive(".extraTab", ".tab1", ".tab1btn");
@@ -373,7 +400,7 @@ findchange(){
           ? -1
           : 0
       );
-      store.$patch({ items: newresults });
+      this.store.$patch({ items: newresults });
     },
   },
 
@@ -600,6 +627,21 @@ findchange(){
   width: 100%;
   font-weight: 400;
   margin-bottom: 50px;
+}
+
+.input {
+  width: 10%;
+  margin-left: 10px;
+}
+
+.updateBtn {
+  width: 55px;
+  height: 23px;
+  background-color: white;
+  color: black;
+  font-size: 13px;
+  margin-left: 10px;
+  border: solid black 1px;
 }
 
 .logPop,
