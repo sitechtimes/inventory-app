@@ -268,8 +268,8 @@ findchange(){
       let logData = {
         name: this.editname,
         category: newCategory,
-        backroom_quantity: parseInt(this.editquantityB),
-        makerspace_quantity: parseInt(this.editquantityM),
+        backroom_quantity: parseInt(this.quantity2),
+        makerspace_quantity: parseInt(this.quantity1),
         vendor: newVendor,
         purchase_link: this.editLink,
         pub_date: this.editDate,
