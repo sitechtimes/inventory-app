@@ -287,7 +287,7 @@ export default {
     },
     updateInput() {
       const number = parseInt(this.input);
-      if (this.input.match(/^[+-]?\d+$/)) {
+      if (this.input.match(/^[+-]?\d+$/) || this.input == "") {
         this.quantity1 += number;
       } else {
         alert("Please enter a number with a + or - sign.");
@@ -296,7 +296,7 @@ export default {
     },
     updateInput2() {
       const number = parseInt(this.input2);
-      if (this.input2.match(/^[+-]?\d+$/)) {
+      if (this.input2.match(/^[+-]?\d+$/) || this.input2 == "") {
         this.quantity2 += number;
       } else {
         alert("Please enter a number with a + or - sign.");
