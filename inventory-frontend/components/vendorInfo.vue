@@ -118,19 +118,21 @@ onMounted(() => {
 
 async function fetchData() {
   try {
-    const config = useRuntimeConfig()
-    const response = await fetch(`${config.public.protocol}://${config.public.baseurl}:${config.public.port}/items/vendor/`, {
-
-      method: "GET",
-      mode: "cors",
-      cache: "no-cache",
-      credentials: "same-origin",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      redirect: "follow",
-      referrerPolicy: "no-referrer",
-    });
+    const config = useRuntimeConfig();
+    const response = await fetch(
+      `${config.public.protocol}://${config.public.baseurl}:${config.public.port}/items/vendor/`,
+      {
+        method: "GET",
+        mode: "cors",
+        cache: "no-cache",
+        credentials: "same-origin",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        redirect: "follow",
+        referrerPolicy: "no-referrer",
+      }
+    );
 
     const data = await response.json();
 
@@ -179,6 +181,7 @@ async function fetchData() {
   margin: 0;
   z-index: 9999;
   background-color: white;
+  overflow: auto;
 }
 
 #myChart {
@@ -189,9 +192,15 @@ async function fetchData() {
 }
 
 .chart2-cont {
-  height: 800px;
   display: flex;
   justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#myChart2{
+  height: 70rem !important;
+  width: 90% !important;  
 }
 
 .maximize-button,
@@ -207,10 +216,10 @@ async function fetchData() {
 
 .minimize-button {
   position: relative;
-  left: 50%;
+  left: 45%;
   width: 8rem;
+  margin-top: 10px;
 }
-
 .maximize-button {
   width: 4rem;
 }
@@ -229,5 +238,111 @@ async function fetchData() {
   display: flex;
   justify-content: flex-end;
   padding: 5px;
+}
+
+
+@media  screen and (orientation: landscape)  {
+.fullScreen{
+  overflow: auto;
+}
+
+.minimize-button {
+  margin-bottom: 10px;
+}
+
+}
+
+@media  screen and (orientation: landscape) and (max-height: 540px) {
+
+  #myChart1 {
+    height: 25rem !important;
+    width: 80% !important;
+  }
+  
+  .minimize-button {
+    left: 45%;
+  }
+ .maximize-button {
+  position: relative;
+  bottom: 60px;
+  flex-direction: row;
+ }
+
+ .popUpPanel {
+  overflow: auto;
+
+ }
+ 
+}
+
+@media only screen and (orientation: landscape) and (max-height: 375px) {
+
+#myChart2 {
+  height: 50rem !important;
+}
+
+}
+
+@media screen and ( max-width: 912px ) {
+  #myChart2 {
+    margin-top: 25%;
+  }
+}
+
+
+
+@media screen and (max-width: 667px) {
+  #myChart2 {
+    height: 80% !important;
+    width: 80% !important;
+  }
+  
+}
+
+
+@media screen and (max-width: 414px) {
+  #myChart2 {
+    height: 38rem !important;
+    width: 38rem !important;
+  }
+  
+}
+@media screen and (max-width: 375px)   { 
+
+#myChart1 {
+  height: 20rem !important;
+  width: 35rem !important;
+}
+
+#myChart2 {
+  height: 30rem !important;
+  width: 35rem !important;
+}
+}
+
+@media screen and (max-width: 360px)   { 
+
+#myChart1 {
+  width: 34rem !important;
+}
+}
+
+@media screen and (max-width: 280px)   { 
+
+#myChart1 {
+  width: 25rem !important;
+  height: 20rem !important;
+}
+
+#myChart2 {
+  width: 30rem !important;
+  height: 25rem !important;
+}
+.minimize-button {
+    position: relative;
+    left: 40%;
+    width: 8rem;
+
+}
 }
 </style>

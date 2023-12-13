@@ -217,16 +217,27 @@ export default {
       editname: this.name,
       editcategory: CategoryIndex + 1,
       listCategoryName: listCategory,
-      editquantity: this.quantity,
+      editquantityM: this.quantM,
+      editquantityB: this.quantB,
       quantity1: this.quantM,
       quantity2: this.quantB,
       editLink: this.link,
       editvendor: VendorIndex + 1,
       listVendorsName: listVendors,
       editDate: this.date,
+      changes: '',
     };
   },
   methods: {
+findchange(){
+  if(this.quantity1 != this.editquantityM ){
+    this.changes = this.changes + this.editquantityM
+  }
+  if(this.quantity2 != this.editquantityB){
+    this.changes = this.changes + this.editquantityB
+  }
+  console.log(this.changes)
+},  
     changeobd() {
       this.ascending = !this.ascending; // Toggle the state
       this.store.logs.reverse();
@@ -257,8 +268,8 @@ export default {
       let logData = {
         name: this.editname,
         category: newCategory,
-        backroom_quantity: parseInt(this.editquantity),
-        makerspace_quantity: parseInt(this.editquantity),
+        backroom_quantity: parseInt(this.editquantityB),
+        makerspace_quantity: parseInt(this.editquantityM),
         vendor: newVendor,
         purchase_link: this.editLink,
         pub_date: this.editDate,
@@ -338,6 +349,7 @@ export default {
       this.editDate = currentDate;
     },
     async saveChanges() {
+      this.findchange()
       this.saveLogs();
       console.log("name:", this.editname);
       const formData = new FormData();
@@ -411,12 +423,12 @@ export default {
   watch: {
     quantity1(newValue) {
       if (this.editMode) {
-        this.editquantity = newValue + this.quantity2;
+        this.editquantityB = newValue + this.quantity2;
       }
     },
     quantity2(newValue) {
       if (this.editMode) {
-        this.editquantity = this.quantity1 + newValue;
+        this.editquantityM = this.quantity1 + newValue;
       }
     },
     $props: {
@@ -543,6 +555,7 @@ export default {
   width: 100%;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
 }
 
 .imagePop {
@@ -579,7 +592,6 @@ export default {
 
 .col2 {
   width: 70%;
-  margin-right: 5rem;
 }
 
 .col2name {
@@ -589,7 +601,6 @@ export default {
 .purchlink {
   width: 30rem;
   overflow: hidden;
-
   white-space: nowrap;
   text-overflow: ellipsis;
 }
@@ -608,12 +619,14 @@ export default {
 
 .changelog {
   border-top: var(--border);
+  background-color: white;
 }
 
 .logorg {
   text-align: left;
   width: 100%;
   font-weight: 400;
+  margin-bottom: 50px;
 }
 
 .input {
@@ -642,14 +655,7 @@ export default {
 }
 
 .detailsPop {
-  min-width: fit-content;
-  width: 90%;
-}
-
-@media screen and (max-width: 760px) {
-  .col2 {
-    padding-right: 0;
-  }
+  background-color: white;
 }
 
 input,
@@ -689,5 +695,25 @@ select {
     width: 100%;
     /* Full width on smaller screens */
   }
+}
+
+@media  screen and (max-width:375px) {
+    .purchlink {
+      width: 20rem;
+    }
+}
+
+@media  screen and (max-width: 280px) {
+ .popUpPanel {
+  overflow-x: scroll;
+ }
+  .col2 {
+    padding-right: 0;
+  }
+  .extrabtn {
+    min-width: min-content;
+    width: 50%;
+    text-align: left;
+}
 }
 </style>
