@@ -209,17 +209,27 @@ export default {
       editname: this.name,
       editcategory: CategoryIndex + 1,
       listCategoryName: listCategory,
-      editquantityM: this.quantity,
-      editquantityB: this.quantity,
+      editquantityM: this.quantM,
+      editquantityB: this.quantB,
       quantity1: this.quantM,
       quantity2: this.quantB,
       editLink: this.link,
       editvendor: VendorIndex + 1,
       listVendorsName: listVendors,
       editDate: this.date,
+      changes: '',
     };
   },
   methods: {
+findchange(){
+  if(this.quantity1 != this.editquantityM ){
+    this.changes = this.changes + this.editquantityM
+  }
+  if(this.quantity2 != this.editquantityB){
+    this.changes = this.changes + this.editquantityB
+  }
+  console.log(this.changes)
+},  
     changeobd() {
       this.ascending = !this.ascending; // Toggle the state
       this.store.logs.reverse();
@@ -312,6 +322,7 @@ export default {
       this.editDate = currentDate;
     },
     async saveChanges() {
+      this.findchange()
       this.saveLogs();
       console.log("name:", this.editname);
       const formData = new FormData();
