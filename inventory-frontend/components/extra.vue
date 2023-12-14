@@ -217,8 +217,7 @@ export default {
       editname: this.name,
       editcategory: CategoryIndex + 1,
       listCategoryName: listCategory,
-      editquantityM: this.quantM,
-      editquantityB: this.quantB,
+      editquantity: this.quantity,
       quantity1: this.quantM,
       quantity2: this.quantB,
       editLink: this.link,
@@ -230,12 +229,23 @@ export default {
   },
   methods: {
 findchange(){
-  console.log('editquantM' + this.editquantityM)
-  if(this.quantity1 != this.editquantityM ){
-    this.changes = this.changes + this.editquantityM
+  if(this.editname != this.name){
+    this.changes = this.changes+ "Name:" + this.editname + " "
   }
-  if(this.quantity2 != this.editquantityB){
-    this.changes = this.changes + this.editquantityB
+  if(this.editcategory != (this.category+1)){
+    this.changes = this.changes+ "Category:" + this.listCategoryName[this.editcategory-1].name + " "
+  }
+  if(this.quantity1 != this.quantM ){
+    this.changes = this.changes+ "Makerspace Quantity:" + this.quantity1 + " "
+  }
+  if(this.quantity2 != this.quantB){
+    this.changes = this.changes+ "Backroom Quantity:" + this.quantity2 + " "
+  }
+  if(this.editLink != this.link){
+    this.changes = this.changes+ "Purchase Link:" + this.editLink + " "
+  }
+  if(this.editvendor != (this.vendor+1)){
+    this.changes = this.changes+ "Vendor:" + this.listVendorsName[this.editvendor-1].name + " "
   }
   console.log(this.changes)
 },  
@@ -274,6 +284,7 @@ findchange(){
         vendor: newVendor,
         purchase_link: this.editLink,
         pub_date: this.editDate,
+        change: this.changes
         // Add other properties as needed
       };
       const config = useRuntimeConfig();
@@ -424,12 +435,12 @@ findchange(){
   watch: {
     quantity1(newValue) {
       if (this.editMode) {
-        this.editquantityB = newValue + this.quantity2;
+        this.editquantity = newValue + this.quantity2;
       }
     },
     quantity2(newValue) {
       if (this.editMode) {
-        this.editquantityM = this.quantity1 + newValue;
+        this.editquantity = this.quantity1 + newValue;
       }
     },
     $props: {
