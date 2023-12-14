@@ -230,6 +230,7 @@ export default {
   },
   methods: {
 findchange(){
+  console.log('editquantM' + this.editquantityM)
   if(this.quantity1 != this.editquantityM ){
     this.changes = this.changes + this.editquantityM
   }
