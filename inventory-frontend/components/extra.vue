@@ -225,19 +225,19 @@ export default {
       editvendor: VendorIndex + 1,
       listVendorsName: listVendors,
       editDate: this.date,
-      changes: '',
+      changes: "",
     };
   },
   methods: {
-findchange(){
-  if(this.quantity1 != this.editquantityM ){
-    this.changes = this.changes + this.editquantityM
-  }
-  if(this.quantity2 != this.editquantityB){
-    this.changes = this.changes + this.editquantityB
-  }
-  console.log(this.changes)
-},  
+    findchange() {
+      if (this.quantity1 != this.editquantityM) {
+        this.changes = this.changes + this.editquantityM;
+      }
+      if (this.quantity2 != this.editquantityB) {
+        this.changes = this.changes + this.editquantityB;
+      }
+      console.log(this.changes);
+    },
     changeobd() {
       this.ascending = !this.ascending; // Toggle the state
       this.store.logs.reverse();
@@ -293,9 +293,6 @@ findchange(){
         })
         .catch((error) => console.error("Error:", error));
     },
-    calculateTotalQuantity() {
-      return this.quantity1 + this.quantity2;
-    },
     updateInput() {
       const number = parseInt(this.input);
       if (this.input.match(/^[+-]?\d+$/) || this.input == "") {
@@ -313,6 +310,9 @@ findchange(){
         alert("Please enter a number with a + or - sign.");
       }
       this.input2 = "";
+    },
+    calculateTotalQuantity() {
+      return this.quantity1 + this.quantity2;
     },
 
     vendorInfo() {
@@ -349,7 +349,7 @@ findchange(){
       this.editDate = currentDate;
     },
     async saveChanges() {
-      this.findchange()
+      this.findchange();
       this.saveLogs();
       console.log("name:", this.editname);
       const formData = new FormData();
@@ -697,16 +697,16 @@ select {
   }
 }
 
-@media  screen and (max-width:375px) {
-    .purchlink {
-      width: 20rem;
-    }
+@media screen and (max-width: 375px) {
+  .purchlink {
+    width: 20rem;
+  }
 }
 
-@media  screen and (max-width: 280px) {
- .popUpPanel {
-  overflow-x: scroll;
- }
+@media screen and (max-width: 280px) {
+  .popUpPanel {
+    overflow-x: scroll;
+  }
   .col2 {
     padding-right: 0;
   }
@@ -714,6 +714,6 @@ select {
     min-width: min-content;
     width: 50%;
     text-align: left;
-}
+  }
 }
 </style>
