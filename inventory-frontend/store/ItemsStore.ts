@@ -52,7 +52,7 @@ export const useItemsStore = defineStore("items", {
         this.logs = this.logs.reverse()
         console.log(this.logs)
       } catch (error) {
-        // TypeError: Failed to fetch
+        // TypeError: Failed to fetch ubgiiuhguygivuyig
         console.log('There was an error', error);
       }
 

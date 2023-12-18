@@ -2,10 +2,7 @@
   <div id="logCon">
     <div v-for="each in store.logs" :key="each.id">
       <p id="log">
-        {{ each.pub_date }} {{ each.name }} {{ each.category }}
-        {{ each.backroom_quantity }} {{ each.makerspace_quantity }}
-        {{ each.purchase_link }}
-        {{ each.vendor }}
+        {{ formatDateTime(each.dateTime) }}
       </p>
     </div>
   </div>
@@ -13,17 +10,24 @@
 <script>
 import { useItemsStore } from "~/store/ItemsStore";
 export default {
-  name: "InvLog",
-  props: { list: Array, name: String },
-  data() {
+ name: "InvLog",
+ props: { list: Array, name: String },
+ data() {
     return {
       store: useItemsStore(),
     };
-  },
-  methods: {},
-  mounted() {
+ },
+ methods: {
+ formatDateTime(dateTime) {
+    if (!dateTime) return '';
+    let [date, time] = dateTime.split('T');
+    let newTime = time.split('.')[0];
+    return `${date} ${newTime.replace('.', ':')}`;
+ },
+},
+ mounted() {
     this.store.cat.push(this.$refs.cat);
-  },
+ },
 };
 </script>
 <style>
