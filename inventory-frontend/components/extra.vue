@@ -300,6 +300,9 @@ export default {
       const number = parseInt(this.input);
       if (this.input.match(/^[+-]?\d+$/) || this.input == "") {
         this.quantity1 += number;
+        if (this.quantity1 < 0) {
+          this.quantity1 = 0;
+        }
       } else {
         alert("Please enter a number with a + or - sign.");
       }
@@ -309,6 +312,9 @@ export default {
       const number = parseInt(this.input2);
       if (this.input2.match(/^[+-]?\d+$/) || this.input2 == "") {
         this.quantity2 += number;
+        if (this.quantity2 < 0) {
+          this.quantity2 = 0;
+        }
       } else {
         alert("Please enter a number with a + or - sign.");
       }
@@ -426,12 +432,14 @@ export default {
   watch: {
     quantity1(newValue) {
       if (this.editMode) {
-        this.editquantityB = newValue + this.quantity2;
+        this.editquantity = newValue + this.quantity2;
+        // this.editquantityB = newValue + this.quantity2;
       }
     },
     quantity2(newValue) {
       if (this.editMode) {
-        this.editquantityM = this.quantity1 + newValue;
+        this.editquantity = this.quantity1 + newValue;
+        // this.editquantityM = this.quantity1 + newValue;
       }
     },
     $props: {
