@@ -84,13 +84,21 @@
             {{ quantity1 }}
           </div>
           <input v-if="editMode" v-model="quantity1" type="number" />
+          <input v-if="editMode" v-model="input" type="text" class="input" />
+          <button v-if="editMode" @click="updateInput" class="updateBtn">
+            Update
+          </button>
         </div>
         <div class="poprow">
           <div class="text col1" id="location">Backroom</div>
           <div v-if="!editMode" class="text col2" id="locationQ">
             {{ quantity2 }}
           </div>
-          <input v-if="editMode" v-model="quantity2" type="number" />
+          <input v-if="editMode" v-model="this.quantity2" type="number" />
+          <input v-if="editMode" v-model="input2" type="text" class="input" />
+          <button v-if="editMode" @click="updateInput2" class="updateBtn">
+            Update
+          </button>
         </div>
       </div>
       <div class="detailsPurchase poprow">
@@ -216,9 +224,31 @@ export default {
       editvendor: VendorIndex + 1,
       listVendorsName: listVendors,
       editDate: this.date,
+      changes: '',
     };
   },
   methods: {
+findchange(){
+  if(this.editname != this.name){
+    this.changes = this.changes+ "Name: " + this.editname + " "
+  }
+  if(this.listCategoryName[this.editcategory-1].name != (this.category)){
+    this.changes = this.changes+ ", " +"Category: " + this.listCategoryName[this.editcategory-1].name
+  }
+  if(this.quantity1 != this.quantM ){
+    this.changes = this.changes+ ", " +"Makerspace Quantity: " + this.quantity1
+  }
+  if(this.quantity2 != this.quantB){
+    this.changes = this.changes+ ", " +"Backroom Quantity: " + this.quantity2
+  }
+  if(this.editLink != this.link){
+    this.changes = this.changes+ ", " +"Purchase Link: " + this.editLink 
+  }
+  if(this.listVendorsName[this.editvendor-1].name != (this.vendor)){
+    this.changes = this.changes+ ", " + "Vendor: " + this.listVendorsName[this.editvendor-1].name 
+  }
+  console.log(this.changes)
+},  
     changeobd() {
       this.ascending = !this.ascending; // Toggle the state
       this.store.logs.reverse();
@@ -249,11 +279,12 @@ export default {
       let logData = {
         name: this.editname,
         category: newCategory,
-        backroom_quantity: parseInt(this.editquantity),
-        makerspace_quantity: parseInt(this.editquantity),
+        backroom_quantity: parseInt(this.quantity2),
+        makerspace_quantity: parseInt(this.quantity1),
         vendor: newVendor,
         purchase_link: this.editLink,
         pub_date: this.editDate,
+        change: this.changes
         // Add other properties as needed
       };
       const config = useRuntimeConfig();
@@ -277,6 +308,25 @@ export default {
     calculateTotalQuantity() {
       return this.quantity1 + this.quantity2;
     },
+    updateInput() {
+      const number = parseInt(this.input);
+      if (this.input.match(/^[+-]?\d+$/)) {
+        this.quantity1 += number;
+      } else {
+        alert("Please enter a number with a + or - sign.");
+      }
+      this.input = "";
+    },
+    updateInput2() {
+      const number = parseInt(this.input2);
+      if (this.input2.match(/^[+-]?\d+$/)) {
+        this.quantity2 += number;
+      } else {
+        alert("Please enter a number with a + or - sign.");
+      }
+      this.input2 = "";
+    },
+
     vendorInfo() {
       this.store.$patch({ vendor: true, vendorHeader: true });
       this.store.inactive(".extraTab", ".tab1", ".tab1btn");
@@ -311,6 +361,7 @@ export default {
       this.editDate = currentDate;
     },
     async saveChanges() {
+      this.findchange()
       this.saveLogs();
       console.log("name:", this.editname);
       const formData = new FormData();
@@ -361,7 +412,7 @@ export default {
           ? -1
           : 0
       );
-      store.$patch({ items: newresults });
+      this.store.$patch({ items: newresults });
     },
   },
 
@@ -588,6 +639,21 @@ export default {
   width: 100%;
   font-weight: 400;
   margin-bottom: 50px;
+}
+
+.input {
+  width: 10%;
+  margin-left: 10px;
+}
+
+.updateBtn {
+  width: 55px;
+  height: 23px;
+  background-color: white;
+  color: black;
+  font-size: 13px;
+  margin-left: 10px;
+  border: solid black 1px;
 }
 
 .logPop,
