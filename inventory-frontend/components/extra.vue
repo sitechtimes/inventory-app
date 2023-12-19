@@ -230,22 +230,22 @@ export default {
   methods: {
 findchange(){
   if(this.editname != this.name){
-    this.changes = this.changes+ "Name:" + this.editname + " "
+    this.changes = this.changes+ "Name: " + this.editname + " "
   }
-  if(this.editcategory != (this.category+1)){
-    this.changes = this.changes+ "Category:" + this.listCategoryName[this.editcategory-1].name + " "
+  if(this.listCategoryName[this.editcategory-1].name != (this.category)){
+    this.changes = this.changes+ ", " +"Category: " + this.listCategoryName[this.editcategory-1].name
   }
   if(this.quantity1 != this.quantM ){
-    this.changes = this.changes+ "Makerspace Quantity:" + this.quantity1 + " "
+    this.changes = this.changes+ ", " +"Makerspace Quantity: " + this.quantity1
   }
   if(this.quantity2 != this.quantB){
-    this.changes = this.changes+ "Backroom Quantity:" + this.quantity2 + " "
+    this.changes = this.changes+ ", " +"Backroom Quantity: " + this.quantity2
   }
   if(this.editLink != this.link){
-    this.changes = this.changes+ "Purchase Link:" + this.editLink + " "
+    this.changes = this.changes+ ", " +"Purchase Link: " + this.editLink 
   }
-  if(this.editvendor != (this.vendor+1)){
-    this.changes = this.changes+ "Vendor:" + this.listVendorsName[this.editvendor-1].name + " "
+  if(this.listVendorsName[this.editvendor-1].name != (this.vendor)){
+    this.changes = this.changes+ ", " + "Vendor: " + this.listVendorsName[this.editvendor-1].name 
   }
   console.log(this.changes)
 },  
