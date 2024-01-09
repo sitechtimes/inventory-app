@@ -84,13 +84,21 @@
             {{ quantity1 }}
           </div>
           <input v-if="editMode" v-model="quantity1" type="number" />
+          <input v-if="editMode" v-model="input" type="text" class="input" />
+          <button v-if="editMode" @click="updateInput" class="updateBtn">
+            Update
+          </button>
         </div>
         <div class="poprow">
           <div class="text col1" id="location">Backroom</div>
           <div v-if="!editMode" class="text col2" id="locationQ">
             {{ quantity2 }}
           </div>
-          <input v-if="editMode" v-model="quantity2" type="number" />
+          <input v-if="editMode" v-model="this.quantity2" type="number" />
+          <input v-if="editMode" v-model="input2" type="text" class="input" />
+          <button v-if="editMode" @click="updateInput2" class="updateBtn">
+            Update
+          </button>
         </div>
       </div>
       <div class="detailsPurchase poprow">
@@ -210,15 +218,27 @@ export default {
       editcategory: CategoryIndex + 1,
       listCategoryName: listCategory,
       editquantity: this.quantity,
+      // editquantityM: this.quantM,
+      // editquantityB: this.quantB,
       quantity1: this.quantM,
       quantity2: this.quantB,
       editLink: this.link,
       editvendor: VendorIndex + 1,
       listVendorsName: listVendors,
       editDate: this.date,
+      changes: "",
     };
   },
   methods: {
+    findchange() {
+      if (this.quantity1 != this.editquantityM) {
+        this.changes = this.changes + this.editquantityM;
+      }
+      if (this.quantity2 != this.editquantityB) {
+        this.changes = this.changes + this.editquantityB;
+      }
+      console.log(this.changes);
+    },
     changeobd() {
       this.ascending = !this.ascending; // Toggle the state
       this.store.logs.reverse();
@@ -251,6 +271,8 @@ export default {
         category: newCategory,
         backroom_quantity: parseInt(this.editquantity),
         makerspace_quantity: parseInt(this.editquantity),
+        // backroom_quantity: parseInt(this.quantity2),
+        // makerspace_quantity: parseInt(this.quantity1),
         vendor: newVendor,
         purchase_link: this.editLink,
         pub_date: this.editDate,
@@ -274,9 +296,34 @@ export default {
         })
         .catch((error) => console.error("Error:", error));
     },
+    updateInput() {
+      const number = parseInt(this.input);
+      if (this.input.match(/^[+-]?\d+$/) || this.input == "") {
+        this.quantity1 += number;
+        if (this.quantity1 < 0) {
+          this.quantity1 = 0;
+        }
+      } else {
+        alert("Please enter a number with a + or - sign.");
+      }
+      this.input = "";
+    },
+    updateInput2() {
+      const number = parseInt(this.input2);
+      if (this.input2.match(/^[+-]?\d+$/) || this.input2 == "") {
+        this.quantity2 += number;
+        if (this.quantity2 < 0) {
+          this.quantity2 = 0;
+        }
+      } else {
+        alert("Please enter a number with a + or - sign.");
+      }
+      this.input2 = "";
+    },
     calculateTotalQuantity() {
       return this.quantity1 + this.quantity2;
     },
+
     vendorInfo() {
       this.store.$patch({ vendor: true, vendorHeader: true });
       this.store.inactive(".extraTab", ".tab1", ".tab1btn");
@@ -311,6 +358,7 @@ export default {
       this.editDate = currentDate;
     },
     async saveChanges() {
+      this.findchange();
       this.saveLogs();
       console.log("name:", this.editname);
       const formData = new FormData();
@@ -361,7 +409,7 @@ export default {
           ? -1
           : 0
       );
-      store.$patch({ items: newresults });
+      this.store.$patch({ items: newresults });
     },
   },
 
@@ -385,11 +433,13 @@ export default {
     quantity1(newValue) {
       if (this.editMode) {
         this.editquantity = newValue + this.quantity2;
+        // this.editquantityB = newValue + this.quantity2;
       }
     },
     quantity2(newValue) {
       if (this.editMode) {
         this.editquantity = this.quantity1 + newValue;
+        // this.editquantityM = this.quantity1 + newValue;
       }
     },
     $props: {
@@ -590,6 +640,21 @@ export default {
   margin-bottom: 50px;
 }
 
+.input {
+  width: 10%;
+  margin-left: 10px;
+}
+
+.updateBtn {
+  width: 55px;
+  height: 23px;
+  background-color: white;
+  color: black;
+  font-size: 13px;
+  margin-left: 10px;
+  border: solid black 1px;
+}
+
 .logPop,
 .detailsPop,
 .imagePop {
@@ -643,16 +708,16 @@ select {
   }
 }
 
-@media  screen and (max-width:375px) {
-    .purchlink {
-      width: 20rem;
-    }
+@media screen and (max-width: 375px) {
+  .purchlink {
+    width: 20rem;
+  }
 }
 
-@media  screen and (max-width: 280px) {
- .popUpPanel {
-  overflow-x: scroll;
- }
+@media screen and (max-width: 280px) {
+  .popUpPanel {
+    overflow-x: scroll;
+  }
   .col2 {
     padding-right: 0;
   }
@@ -660,6 +725,6 @@ select {
     min-width: min-content;
     width: 50%;
     text-align: left;
-}
+  }
 }
 </style>
