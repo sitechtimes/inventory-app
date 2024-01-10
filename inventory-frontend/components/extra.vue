@@ -224,10 +224,11 @@ export default {
       editvendor: VendorIndex + 1,
       listVendorsName: listVendors,
       editDate: this.date,
-      changes: '',
+      changes: "",
     };
   },
   methods: {
+
 findchange(){
   if(this.editname != this.name){
     this.changes = this.changes+ "Name: " + this.editname + " "
@@ -279,8 +280,10 @@ findchange(){
       let logData = {
         name: this.editname,
         category: newCategory,
-        backroom_quantity: parseInt(this.quantity2),
-        makerspace_quantity: parseInt(this.quantity1),
+        backroom_quantity: parseInt(this.editquantity),
+        makerspace_quantity: parseInt(this.editquantity),
+        // backroom_quantity: parseInt(this.quantity2),
+        // makerspace_quantity: parseInt(this.quantity1),
         vendor: newVendor,
         purchase_link: this.editLink,
         pub_date: this.editDate,
@@ -305,13 +308,13 @@ findchange(){
         })
         .catch((error) => console.error("Error:", error));
     },
-    calculateTotalQuantity() {
-      return this.quantity1 + this.quantity2;
-    },
     updateInput() {
       const number = parseInt(this.input);
-      if (this.input.match(/^[+-]?\d+$/)) {
+      if (this.input.match(/^[+-]?\d+$/) || this.input == "") {
         this.quantity1 += number;
+        if (this.quantity1 < 0) {
+          this.quantity1 = 0;
+        }
       } else {
         alert("Please enter a number with a + or - sign.");
       }
@@ -319,12 +322,18 @@ findchange(){
     },
     updateInput2() {
       const number = parseInt(this.input2);
-      if (this.input2.match(/^[+-]?\d+$/)) {
+      if (this.input2.match(/^[+-]?\d+$/) || this.input2 == "") {
         this.quantity2 += number;
+        if (this.quantity2 < 0) {
+          this.quantity2 = 0;
+        }
       } else {
         alert("Please enter a number with a + or - sign.");
       }
       this.input2 = "";
+    },
+    calculateTotalQuantity() {
+      return this.quantity1 + this.quantity2;
     },
 
     vendorInfo() {
@@ -361,7 +370,7 @@ findchange(){
       this.editDate = currentDate;
     },
     async saveChanges() {
-      this.findchange()
+      this.findchange();
       this.saveLogs();
       console.log("name:", this.editname);
       const formData = new FormData();
@@ -436,11 +445,13 @@ findchange(){
     quantity1(newValue) {
       if (this.editMode) {
         this.editquantity = newValue + this.quantity2;
+
       }
     },
     quantity2(newValue) {
       if (this.editMode) {
         this.editquantity = this.quantity1 + newValue;
+
       }
     },
     $props: {
@@ -709,16 +720,16 @@ select {
   }
 }
 
-@media  screen and (max-width:375px) {
-    .purchlink {
-      width: 20rem;
-    }
+@media screen and (max-width: 375px) {
+  .purchlink {
+    width: 20rem;
+  }
 }
 
-@media  screen and (max-width: 280px) {
- .popUpPanel {
-  overflow-x: scroll;
- }
+@media screen and (max-width: 280px) {
+  .popUpPanel {
+    overflow-x: scroll;
+  }
   .col2 {
     padding-right: 0;
   }
@@ -726,6 +737,6 @@ select {
     min-width: min-content;
     width: 50%;
     text-align: left;
-}
+  }
 }
 </style>

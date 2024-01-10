@@ -18,10 +18,7 @@
             <div
               :class="{ 'chart-cont-big': minMax, 'chart-cont-small': !minMax }"
             >
-              <canvas
-                id="Vendor"
-                style="height: 100%; max-width: 100%"
-              ></canvas>
+              <canvas id="Vendor"></canvas>
             </div>
             <div class="btn-cont">
               <button
@@ -94,6 +91,7 @@ const chartData = ref({
 
 const chartOptions = ref({
   responsive: true,
+  maintainAspectRatio: false,
   scales: {
     y: {
       beginAtZero: true,
@@ -178,6 +176,8 @@ const fullScreen = () => {
   } else if (!minMax.value) {
     minMax.value = true;
     canvas.value.classList.add("fullScreen");
+    //canvas.value.style.width = "100%";
+    //canvas.value.style.height = "100%";
   }
 };
 </script>
@@ -189,11 +189,13 @@ const fullScreen = () => {
   overflow: hidden;
 }
 
+
 .header {
   text-align: center;
   font-size: 24px;
   padding: 20px;
 }
+
 
 .content {
   display: flex;
@@ -201,35 +203,42 @@ const fullScreen = () => {
   padding-top: 3rem;
 }
 
+
 .buttons {
   flex: 1;
   margin-left: 5rem;
 }
 
+
 .info {
   flex: 1;
 }
+
 
 .bigdiv {
   display: flex;
   flex-flow: column nowrap;
 }
 
+
 .other-stuff {
   display: flex;
   flex-flow: row nowrap;
 }
+
 
 .chart-cont {
   height: 70rem;
   width: 70rem;
 }
 
+
 .vendors {
   display: flex;
   max-width: 60%;
   flex-flow: row wrap;
 }
+
 
 .vendor-container {
   border: var(--border);
@@ -240,10 +249,12 @@ const fullScreen = () => {
   border-radius: 0.5rem;
 }
 
+
 .vendor-container:hover {
   background-color: var(--halflightgray);
   cursor: pointer;
 }
+
 
 .vendor-name {
   color: #333;
@@ -251,10 +262,12 @@ const fullScreen = () => {
   margin: 0;
 }
 
+
 #Vendor {
 height: 60rem !important;
 width: 90rem !important;
 }
+
 
 .fullScreen {
   display: block;
@@ -270,12 +283,14 @@ width: 90rem !important;
   overflow: auto;
 }
 
+
 .canvas-cont {
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
   margin: 2rem;
 }
+
 
 .maximize-button,
 .minimize-button {
@@ -288,6 +303,7 @@ width: 90rem !important;
   cursor: pointer;
 }
 
+
 .minimize-button {
   position: relative;
   left: 45%;
@@ -295,19 +311,23 @@ width: 90rem !important;
   margin-top: 100px;
 }
 
+
 .maximize-button {
   width: 8rem;
 }
+
 
 .maximize-button:hover,
 .minimize-button:hover {
   background-color: #2980b9;
 }
 
+
 .maximize-button:active,
 .minimize-button:active {
   background-color: #1f639e;
 }
+
 
 .btn-cont {
   display: flex;
@@ -315,23 +335,26 @@ width: 90rem !important;
   padding: 5px;
 }
 
-.chart-cont-big { 
+
+.chart-cont-big {
   height: 50rem;
   display: flex;
   justify-content: center;
 }
+
 
 @media only screen and (orientation: landscape){
   .minimize-button {
     left: 45%;
     margin-bottom: 10vh;
   }
-  
+ 
 }
+
 
 @media only screen and (orientation: landscape) and (max-height: 768px)
 {
-  
+ 
   #Vendor {
     height: 55rem !important;
     width: 80rem !important;
@@ -341,12 +364,14 @@ width: 90rem !important;
   }
 }
 
+
 @media screen and ( max-width: 912px ) {
   #Vendor {
     height: 45rem !important;
     width: 60rem !important;
   }
 }
+
 
 @media screen and (max-width: 820px) {
   #Vendor {
@@ -358,6 +383,7 @@ width: 90rem !important;
   left: 45%;
 }
 }
+
 
 @media screen and (max-width: 760px) {
   .content {
@@ -383,14 +409,17 @@ width: 90rem !important;
     align-items: center;
   }
 
+
   #Vendor {
     margin-top: 100px;
   }
+
 
   .minimize-button {  
    position:relative;
    right: 0% ;
    left: 0% ;
+
 
   }
     .buttons {
@@ -398,14 +427,16 @@ width: 90rem !important;
   }
 }
 
+
 @media  only screen and (max-width: 540px) {
  #Vendor {
   width: 50rem !important;
  }
-  
+ 
 }
 
-@media screen and (max-width: 414px)  { 
+
+@media screen and (max-width: 414px)  {
   .canvas-cont {
     margin-top: 100px;
   }
@@ -413,14 +444,17 @@ width: 90rem !important;
     height: 20rem !important;
     width: 35rem !important;
   }
-  
+ 
 }
 
 
-@media screen and (max-width: 280px)  { 
+
+
+@media screen and (max-width: 280px)  {
   #Vendor {
     height: 40rem !important;
     width: 18rem !important;
   }
 }
+
 </style>

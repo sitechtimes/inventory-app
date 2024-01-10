@@ -4,14 +4,14 @@
       <img class="imageView" :src="image" :alt="name_id" />
     </div>
     <div class="name-avail" ref="textbox">
-      <div class="name text" ref="name">{{ name }}</div>
+      <div class="name subheading" ref="name">{{ name }}</div>
 
       <div
-        class="quantityC smalltext"
+        class="quantityC text"
         ref="quant"
         :class="alert ? 'availN' : 'availY'"
       >
-        {{ quantity }}
+        Quantity: {{ quantity }}
       </div>
     </div>
   </div>
@@ -19,7 +19,7 @@
 
 <style>
 .itemMain {
-  min-height: 14rem;
+  min-height: 12rem;
   background-color: var(--whitebg);
   display: flex;
   flex-direction: row;
@@ -61,9 +61,15 @@
 
 .name {
   padding-top: 1.2rem;
-  margin-bottom: 3.5rem;
-
-  height: fit-content;
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+  margin-right: 1rem;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  height: 50%;
 }
 
 .quantityC {
@@ -72,11 +78,11 @@
   min-height: 1.5rem;
   display: flex;
   flex-direction: row;
-  margin-bottom: 0.75rem;
+  margin-bottom: 2rem;
   justify-content: space-evenly;
 
   position: absolute;
-  bottom: 0;
+  bottom: 0%;
   height: fit-content;
   padding-top: 0.5rem;
   padding-bottom: 0.4rem;
@@ -184,7 +190,7 @@
     padding-right: 1rem;
     margin-bottom: 0;
     font-size: 11px;
-    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .quantityC {
@@ -200,7 +206,7 @@
   }
 }
 
-@media  screen and (max-width: 375px) {
+@media screen and (max-width: 375px) {
   .name {
     font-size: 10px;
   }

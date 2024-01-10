@@ -61,6 +61,7 @@ const chartData = ref({
 
 const chartOptions = ref({
   responsive: true,
+  maintaianAspectRatio: false,
   scales: {
     y: {
       beginAtZero: true,
@@ -68,8 +69,8 @@ const chartOptions = ref({
     x: {
       ticks: {
         autoSkip: true,
-        maxRotation: 80,
-        minRotation: 80,
+        maxRotation: 0,
+        minRotation: 0,
         fontSize: 16,
       },
       beforeUpdate(axis) {
@@ -161,14 +162,17 @@ async function fetchData() {
   align-items: center;
 }
 
+
 .chart1-cont {
   width: 90%;
   margin-top: 1rem;
 }
 
+
 .no-show {
   display: none;
 }
+
 
 .fullScreen {
   display: block;
@@ -184,12 +188,14 @@ async function fetchData() {
   overflow: auto;
 }
 
+
 #myChart {
   position: relative;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
 
 .chart2-cont {
   display: flex;
@@ -198,10 +204,12 @@ async function fetchData() {
   flex-direction: column;
 }
 
+
 #myChart2{
   height: 70rem !important;
   width: 90% !important;  
 }
+
 
 .maximize-button,
 .minimize-button {
@@ -214,25 +222,28 @@ async function fetchData() {
   cursor: pointer;
 }
 
+
 .minimize-button {
-  position: relative;
-  left: 45%;
   width: 8rem;
-  margin-top: 10px;
 }
+
+
 .maximize-button {
   width: 4rem;
 }
+
 
 .maximize-button:hover,
 .minimize-button:hover {
   background-color: #2980b9;
 }
 
+
 .maximize-button:active,
 .minimize-button:active {
   background-color: #1f639e;
 }
+
 
 .btn-cont {
   display: flex;
@@ -241,24 +252,30 @@ async function fetchData() {
 }
 
 
+
+
 @media  screen and (orientation: landscape)  {
 .fullScreen{
   overflow: auto;
 }
 
+
 .minimize-button {
   margin-bottom: 10px;
 }
 
+
 }
 
+
 @media  screen and (orientation: landscape) and (max-height: 540px) {
+
 
   #myChart1 {
     height: 25rem !important;
     width: 80% !important;
   }
-  
+ 
   .minimize-button {
     left: 45%;
   }
@@ -268,20 +285,26 @@ async function fetchData() {
   flex-direction: row;
  }
 
+
  .popUpPanel {
   overflow: auto;
+
 
  }
  
 }
 
+
 @media only screen and (orientation: landscape) and (max-height: 375px) {
+
 
 #myChart2 {
   height: 50rem !important;
 }
 
+
 }
+
 
 @media screen and ( max-width: 912px ) {
   #myChart2 {
@@ -291,13 +314,18 @@ async function fetchData() {
 
 
 
+
+
+
 @media screen and (max-width: 667px) {
   #myChart2 {
     height: 80% !important;
     width: 80% !important;
   }
-  
+ 
 }
+
+
 
 
 @media screen and (max-width: 414px) {
@@ -305,14 +333,16 @@ async function fetchData() {
     height: 38rem !important;
     width: 38rem !important;
   }
-  
+ 
 }
-@media screen and (max-width: 375px)   { 
+@media screen and (max-width: 375px)   {
+
 
 #myChart1 {
   height: 20rem !important;
   width: 35rem !important;
 }
+
 
 #myChart2 {
   height: 30rem !important;
@@ -320,19 +350,24 @@ async function fetchData() {
 }
 }
 
-@media screen and (max-width: 360px)   { 
+
+@media screen and (max-width: 360px)   {
+
 
 #myChart1 {
   width: 34rem !important;
 }
 }
 
-@media screen and (max-width: 280px)   { 
+
+@media screen and (max-width: 280px)   {
+
 
 #myChart1 {
   width: 25rem !important;
   height: 20rem !important;
 }
+
 
 #myChart2 {
   width: 30rem !important;
@@ -343,6 +378,10 @@ async function fetchData() {
     left: 40%;
     width: 8rem;
 
+
 }
 }
+
+
+
 </style>
