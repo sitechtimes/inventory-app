@@ -62,6 +62,7 @@ export default {
 </script>
 
 <style>
+
 .app {
   height: 100%;
   width: 100%;
@@ -124,4 +125,8 @@ export default {
   width: 100%;
   overflow-y: scroll;
 }
+.replacer::-webkit-scrollbar {
+            position: absolute;
+            left: 0; /* Position the scrollbar on the left of the element */
+         }
 </style>

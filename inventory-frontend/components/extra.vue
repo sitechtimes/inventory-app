@@ -500,7 +500,6 @@ export default {
 <style>
 #logs {
   height: 9vw;
-  overflow-y: auto;
 }
 .editPop {
   height: 5rem;
