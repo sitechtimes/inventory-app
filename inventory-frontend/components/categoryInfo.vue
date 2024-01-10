@@ -237,7 +237,7 @@ async function fetchData() {
 
 @media screen and (orientation: landscape) {
   .fullScreen {
-    /* overflow: auto; */
+    overflow: auto;
   }
 
   .minimize-button {
