@@ -218,8 +218,6 @@ export default {
       editcategory: CategoryIndex + 1,
       listCategoryName: listCategory,
       editquantity: this.quantity,
-      // editquantityM: this.quantM,
-      // editquantityB: this.quantB,
       quantity1: this.quantM,
       quantity2: this.quantB,
       editLink: this.link,
@@ -230,15 +228,28 @@ export default {
     };
   },
   methods: {
-    findchange() {
-      if (this.quantity1 != this.editquantityM) {
-        this.changes = this.changes + this.editquantityM;
-      }
-      if (this.quantity2 != this.editquantityB) {
-        this.changes = this.changes + this.editquantityB;
-      }
-      console.log(this.changes);
-    },
+
+findchange(){
+  if(this.editname != this.name){
+    this.changes = this.changes+ "Name: " + this.editname + " "
+  }
+  if(this.listCategoryName[this.editcategory-1].name != (this.category)){
+    this.changes = this.changes+ ", " +"Category: " + this.listCategoryName[this.editcategory-1].name
+  }
+  if(this.quantity1 != this.quantM ){
+    this.changes = this.changes+ ", " +"Makerspace Quantity: " + this.quantity1
+  }
+  if(this.quantity2 != this.quantB){
+    this.changes = this.changes+ ", " +"Backroom Quantity: " + this.quantity2
+  }
+  if(this.editLink != this.link){
+    this.changes = this.changes+ ", " +"Purchase Link: " + this.editLink 
+  }
+  if(this.listVendorsName[this.editvendor-1].name != (this.vendor)){
+    this.changes = this.changes+ ", " + "Vendor: " + this.listVendorsName[this.editvendor-1].name 
+  }
+  console.log(this.changes)
+},  
     changeobd() {
       this.ascending = !this.ascending; // Toggle the state
       this.store.logs.reverse();
@@ -276,6 +287,7 @@ export default {
         vendor: newVendor,
         purchase_link: this.editLink,
         pub_date: this.editDate,
+        change: this.changes
         // Add other properties as needed
       };
       const config = useRuntimeConfig();
@@ -433,13 +445,13 @@ export default {
     quantity1(newValue) {
       if (this.editMode) {
         this.editquantity = newValue + this.quantity2;
-        // this.editquantityB = newValue + this.quantity2;
+
       }
     },
     quantity2(newValue) {
       if (this.editMode) {
         this.editquantity = this.quantity1 + newValue;
-        // this.editquantityM = this.quantity1 + newValue;
+
       }
     },
     $props: {
