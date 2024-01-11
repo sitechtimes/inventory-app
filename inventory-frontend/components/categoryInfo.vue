@@ -25,7 +25,8 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { Chart } from "chart.js/auto";
-
+import { getRelativePosition } from "chart.js/helpers";
+//import { chownSync } from "fs";
 const props = defineProps(["categoryName"]);
 
 const isMaximized = ref(false);
@@ -60,6 +61,15 @@ const chartData = ref({
 
 const chartOptions = ref({
   responsive: true,
+  events: ["click", "mousemove"],
+  onClick: (e) => {
+    const canvasPosition = getRelativePosition(e, chart2);
+
+    // Substitute the appropriate scale IDs
+    const dataX = chart2.scales.x.getValueForPixel(canvasPosition.x);
+    const dataY = chart2.scales.y.getValueForPixel(canvasPosition.y);
+    console.log(dataX);
+  },
   scales: {
     y: {
       beginAtZero: true,
@@ -186,6 +196,7 @@ async function fetchData() {
 }
 
 .chart2-cont {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -193,8 +204,10 @@ async function fetchData() {
 }
 
 #myChart2 {
+  position: relative;
   height: 65rem !important;
   width: fit-content !important;
+  padding: 2vw;
 }
 
 .maximize-button,
@@ -237,7 +250,7 @@ async function fetchData() {
 
 @media screen and (orientation: landscape) {
   .fullScreen {
-    /* overflow: auto; */
+    overflow: auto;
   }
 
   .minimize-button {
@@ -247,6 +260,7 @@ async function fetchData() {
 
 @media screen and (orientation: landscape) and (max-height: 540px) {
   #myChart1 {
+    position: relative;
     height: 25rem !important;
     width: 80% !important;
   }
@@ -292,6 +306,7 @@ async function fetchData() {
 }
 @media screen and (max-width: 375px) {
   #myChart1 {
+    position: relative;
     height: 20rem !important;
     width: 35rem !important;
   }
@@ -310,6 +325,7 @@ async function fetchData() {
 
 @media screen and (max-width: 280px) {
   #myChart1 {
+    position: relative;
     width: 25rem !important;
     height: 20rem !important;
   }

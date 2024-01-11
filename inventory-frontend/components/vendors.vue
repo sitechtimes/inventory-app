@@ -14,25 +14,31 @@
       </div>
       <div class="info canvas" v-show="showInfo" id="canvas" ref="canvas">
         <div class="extraInfoPanel">
-          <div class="canvas-cont">
-            <div
-              :class="{ 'chart-cont-big': minMax, 'chart-cont-small': !minMax }"
-            >
-              <canvas id="Vendor"></canvas>
+          <div class="chart1-cont" ref="chart1">
+            <div>
+              <canvas id="cont1"></canvas>
             </div>
-            <div class="btn-cont">
+            <div class="btn-cont1">
               <button
                 v-if="!minMax"
-                @click="fullScreen()"
+                @click="maximizeChart()"
                 class="maximize-button"
               >
                 <font-awesome-icon :icon="['fas', 'maximize']" />
               </button>
             </div>
-
-            <button class="minimize-button" v-if="minMax" @click="fullScreen()">
-              <font-awesome-icon :icon="['fas', 'minimize']" />
-            </button>
+          </div>
+          <div class="no-show" ref="chart2">
+            <div>
+              <canvas id="cont2"></canvas>
+              <button
+                class="minimize-button"
+                v-if="minMax"
+                @click="maximizeChart()"
+              >
+                <font-awesome-icon :icon="['fas', 'minimize']" />
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -47,7 +53,8 @@ import { useItemsStore } from "~/store/ItemsStore";
 
 let showChart = ref(false);
 let vendor = ref([]);
-let chart = ref();
+let chart1 = ref();
+let chart2 = ref();
 let showInfo = ref(false); // Step 1
 let minMax = ref(false);
 let canvas = ref();
@@ -126,19 +133,30 @@ const chartOptions = ref({
 });
 
 function createChart() {
-  const ctx = document.getElementById("Vendor").getContext("2d");
-  const chart1 = new Chart(ctx, {
+  const ctx1 = document.getElementById("cont1").getContext("2d");
+  const chart1 = new Chart(ctx1, {
     type: "bar",
     data: chartData.value,
     options: chartOptions.value,
   });
-  chart = chart1;
+  chart1 = chart1;
+
+  const ctx2 = document.getElementById("cont2").getContext("2d");
+  const chart2 = new Chart(ctx2, {
+    type: "bar",
+    data: chartData.value,
+    options: chartOptions.value,
+  });
+  chart2 = chart2;
 }
 
 function updateChart(tag, quantity) {
-  chart.data.labels = tag;
-  chart.data.datasets[0].data = quantity;
-  chart.update();
+  chart1.data.labels = tag;
+  chart1.data.datasets[0].data = quantity;
+  chart1.update();
+  chart2.data.labels = tag;
+  chart2.data.datasets[0].data = quantity;
+  chart2.update();
 }
 
 const showChartfuc = (vendorItem) => {
@@ -169,20 +187,36 @@ const showChartfuc = (vendorItem) => {
   }
 };
 
-const fullScreen = () => {
-  if (minMax.value) {
-    minMax.value = false;
-    canvas.value.classList.remove("fullScreen");
-  } else if (!minMax.value) {
-    minMax.value = true;
-    canvas.value.classList.add("fullScreen");
-    //canvas.value.style.width = "100%";
-    //canvas.value.style.height = "100%";
+const maximizeChart = () => {
+  isMaximized.value = !isMaximized.value;
+  if (isMaximized.value) {
+    console.log(chart2.value);
+    chart2.value.classList.remove("no-show");
+    chart2.value.classList.add("fullScreen");
+  } else if (!isMaximized.value) {
+    chart2.value.classList.add("no-show");
+    chart2.value.classList.remove("fullScreen");
   }
 };
 </script>
 
 <style scoped>
+.fullScreen {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0;
+  margin: 0;
+  z-index: 9999;
+  background-color: white;
+  overflow: auto;
+}
+.no-show {
+  display: none;
+}
 .container {
   display: flex;
   flex-direction: column;
@@ -256,21 +290,6 @@ const fullScreen = () => {
   height: 100%;
   max-width: fit-content !important;
 }
-
-.fullScreen {
-  display: block;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  padding: 0;
-  margin: 0;
-  z-index: 9999;
-  background-color: white;
-  overflow: auto;
-}
-
 .canvas-cont {
   display: flex;
   flex-flow: column nowrap;
