@@ -112,21 +112,20 @@ export default {
 #itemHolderAll {
   grid-column: 2 / 3;
   grid-row: 3 / 4;
-  overflow-y: hidden;
   justify-content: center;
   padding-bottom: 8rem;
   height: 100%;
   width: 100%;
   flex: 1 1 0%;
+  
 }
 
 .replacer {
   height: 100%;
   width: 100%;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
-.replacer::-webkit-scrollbar {
-            position: absolute;
-            left: 0; /* Position the scrollbar on the left of the element */
-         }
+::-webkit-scrollbar {
+    display: none;
+}
 </style>
