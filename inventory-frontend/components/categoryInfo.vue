@@ -53,7 +53,7 @@ const chartData = ref({
       data: ItemCount.value,
       fill: false,
       borderColor: "rgb(75, 192, 192)",
-      backgroundColor: "rgb(75, 1, 192)",
+      backgroundColor: "rgb(32, 116, 180)",
       tension: 0.1,
     },
   ],

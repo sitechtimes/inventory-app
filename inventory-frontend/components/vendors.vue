@@ -16,26 +16,18 @@
         <div class="extraInfoPanel">
           <div class="chart1-cont" ref="chart1">
             <div>
-              <canvas id="cont1"></canvas>
+              <canvas class="canvas1" id="cont1"></canvas>
             </div>
             <div class="btn-cont1">
-              <button
-                v-if="!minMax"
-                @click="maximizeChart()"
-                class="maximize-button"
-              >
+              <button @click="maximizeChart()" class="maximize-button">
                 <font-awesome-icon :icon="['fas', 'maximize']" />
               </button>
             </div>
           </div>
           <div class="no-show" ref="chart2">
             <div>
-              <canvas id="cont2"></canvas>
-              <button
-                class="minimize-button"
-                v-if="minMax"
-                @click="maximizeChart()"
-              >
+              <canvas class="canvas2" id="cont2"></canvas>
+              <button class="minimize-button" @click="maximizeChart()">
                 <font-awesome-icon :icon="['fas', 'minimize']" />
               </button>
             </div>
@@ -53,12 +45,12 @@ import { useItemsStore } from "~/store/ItemsStore";
 
 let showChart = ref(false);
 let vendor = ref([]);
-let chart1 = ref();
-let chart2 = ref();
+let chart1 = ref(null);
+let chart2 = ref(null);
 let showInfo = ref(false); // Step 1
-let minMax = ref(false);
 let canvas = ref();
 let store = useItemsStore();
+let isMaximized = ref(false);
 
 onMounted(() => {
   const config = useRuntimeConfig();
@@ -90,7 +82,7 @@ const chartData = ref({
       data: [],
       fill: false,
       borderColor: "rgb(75, 192, 192)",
-      backgroundColor: "rgb(75, 1, 192)",
+      backgroundColor: "rgb(32, 116, 180)",
       tension: 0.1,
     },
   ],
@@ -134,56 +126,47 @@ const chartOptions = ref({
 
 function createChart() {
   const ctx1 = document.getElementById("cont1").getContext("2d");
-  const chart1 = new Chart(ctx1, {
+  const tempchart1 = new Chart(ctx1, {
     type: "bar",
     data: chartData.value,
     options: chartOptions.value,
   });
-  chart1 = chart1;
 
   const ctx2 = document.getElementById("cont2").getContext("2d");
-  const chart2 = new Chart(ctx2, {
+  const tempchart2 = new Chart(ctx2, {
     type: "bar",
     data: chartData.value,
     options: chartOptions.value,
   });
-  chart2 = chart2;
+
+  chart1.value = tempchart1;
+  chart2.value = tempchart2;
 }
 
 function updateChart(tag, quantity) {
-  chart1.data.labels = tag;
-  chart1.data.datasets[0].data = quantity;
-  chart1.update();
-  chart2.data.labels = tag;
-  chart2.data.datasets[0].data = quantity;
-  chart2.update();
+  chart1.value.data.labels = tag;
+  chart1.value.data.datasets[0].data = quantity;
+  chart2.value.data.labels = tag;
+  chart2.value.data.datasets[0].data = quantity;
+  chart1.value.update();
+  chart2.value.update();
 }
 
 const showChartfuc = (vendorItem) => {
   showInfo.value = true; // Step 3
-
-  if (!showChart.value) {
-    showChart.value = true;
-
-    let labels = [];
-    let quantity = [];
-    vendorItem.forEach((item) => {
-      labels.push(item.name);
-      quantity.push(item.total);
-    });
+  showChart.value = true;
+  if (!Chart.getChart("cont1")) {
     createChart();
-    updateChart(labels, quantity);
-  } else if (showChart.value) {
-    let labels = [];
-    let quantity = [];
-    vendorItem.forEach((item) => {
-      labels.push(item.name);
-      quantity.push(item.total);
-    });
-    updateChart(labels, quantity);
   }
+  let labels = [];
+  let quantity = [];
+  vendorItem.forEach((item) => {
+    labels.push(item.name);
+    quantity.push(item.total);
+  });
+  updateChart(labels, quantity);
   if (store.dismiss === false) {
-    store.NavMenu();
+    //store.NavMenu();
   }
 };
 
@@ -201,6 +184,10 @@ const maximizeChart = () => {
 </script>
 
 <style scoped>
+.canvas2 {
+  height: 100vh;
+  width: fit-content;
+}
 .fullScreen {
   display: block;
   position: fixed;
@@ -213,6 +200,13 @@ const maximizeChart = () => {
   z-index: 9999;
   background-color: white;
   overflow: auto;
+  height: 100vh !important;
+}
+
+.canvas2 {
+  height: 100vh !important;
+  width: fit-content;
+  position: relative;
 }
 .no-show {
   display: none;
@@ -254,15 +248,9 @@ const maximizeChart = () => {
   flex-flow: row nowrap;
 }
 
-.chart-cont {
-  height: 70rem;
-  width: 70rem;
-}
-
-.vendors {
-  display: flex;
-  max-width: 60%;
-  flex-flow: row wrap;
+.canvas1 {
+  height: 50rem !important;
+  width: 50rem !important;
 }
 
 .vendor-container {
