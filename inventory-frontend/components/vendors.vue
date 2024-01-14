@@ -126,14 +126,14 @@ const chartOptions = ref({
 
 function createChart() {
   const ctx1 = document.getElementById("cont1").getContext("2d");
-  const tempchart1 = new Chart(ctx1, {
+  let tempchart1 = new Chart(ctx1, {
     type: "bar",
     data: chartData.value,
     options: chartOptions.value,
   });
 
   const ctx2 = document.getElementById("cont2").getContext("2d");
-  const tempchart2 = new Chart(ctx2, {
+  let tempchart2 = new Chart(ctx2, {
     type: "bar",
     data: chartData.value,
     options: chartOptions.value,
@@ -141,32 +141,49 @@ function createChart() {
 
   chart1.value = tempchart1;
   chart2.value = tempchart2;
+  console.log(chart1.value.data);
+  console.log(chart1.value);
+  console.log(Chart.getChart("cont1"));
 }
 
 function updateChart(tag, quantity) {
+  if (chart1.value.data !== undefined && chart2.value.data !== undefined) {
+    console.log("yay charts updated?");
+  } else {
+    console.log(chart1.value.data);
+    console.log(tag, quantity);
+    console.log("uh oh");
+  }
+  console.log(chart1.value);
   chart1.value.data.labels = tag;
   chart1.value.data.datasets[0].data = quantity;
   chart2.value.data.labels = tag;
   chart2.value.data.datasets[0].data = quantity;
   chart1.value.update();
   chart2.value.update();
+  console.trace();
 }
 
 const showChartfuc = (vendorItem) => {
+  console.log(vendorItem);
   showInfo.value = true; // Step 3
   showChart.value = true;
   if (!Chart.getChart("cont1")) {
     createChart();
   }
+  console.log(chart1.value, chart1.value.data, chart2.value, chart2.value.data);
   let labels = [];
   let quantity = [];
   vendorItem.forEach((item) => {
     labels.push(item.name);
     quantity.push(item.total);
   });
+  console.log(chart1.value);
+  console.log(Chart.getChart("cont1"));
   updateChart(labels, quantity);
+  console.trace();
   if (store.dismiss === false) {
-    //store.NavMenu();
+    store.NavMenu();
   }
 };
 
