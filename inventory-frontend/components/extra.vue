@@ -512,7 +512,6 @@ findchange(){
 <style>
 #logs {
   height: 9vw;
-  overflow-y: auto;
 }
 .editPop {
   height: 5rem;
@@ -649,7 +648,7 @@ findchange(){
   text-align: left;
   width: 100%;
   font-weight: 400;
-  margin-bottom: 50px;
+  /* margin-bottom: 50px; */
 }
 
 .input {
