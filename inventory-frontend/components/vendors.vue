@@ -141,27 +141,15 @@ function createChart() {
 
   chart1.value = tempchart1;
   chart2.value = tempchart2;
-  console.log(chart1.value.data);
-  console.log(chart1.value);
-  console.log(Chart.getChart("cont1"));
 }
 
 function updateChart(tag, quantity) {
-  if (chart1.value.data !== undefined && chart2.value.data !== undefined) {
-    console.log("yay charts updated?");
-  } else {
-    console.log(chart1.value.data);
-    console.log(tag, quantity);
-    console.log("uh oh");
-  }
-  console.log(chart1.value);
-  chart1.value.data.labels = tag;
-  chart1.value.data.datasets[0].data = quantity;
-  chart2.value.data.labels = tag;
-  chart2.value.data.datasets[0].data = quantity;
-  chart1.value.update();
-  chart2.value.update();
-  console.trace();
+  Chart.getChart("cont1").data.labels = tag;
+  Chart.getChart("cont1").data.datasets[0].data = quantity;
+  Chart.getChart("cont2").data.labels = tag;
+  Chart.getChart("cont2").data.datasets[0].data = quantity;
+  Chart.getChart("cont1").update();
+  Chart.getChart("cont2").update();
 }
 
 const showChartfuc = (vendorItem) => {
@@ -171,17 +159,13 @@ const showChartfuc = (vendorItem) => {
   if (!Chart.getChart("cont1")) {
     createChart();
   }
-  console.log(chart1.value, chart1.value.data, chart2.value, chart2.value.data);
   let labels = [];
   let quantity = [];
   vendorItem.forEach((item) => {
     labels.push(item.name);
     quantity.push(item.total);
   });
-  console.log(chart1.value);
-  console.log(Chart.getChart("cont1"));
   updateChart(labels, quantity);
-  console.trace();
   if (store.dismiss === false) {
     store.NavMenu();
   }
@@ -267,7 +251,7 @@ const maximizeChart = () => {
 
 .canvas1 {
   height: 50rem !important;
-  width: 50rem !important;
+  width: 60rem !important;
 }
 
 .vendor-container {
