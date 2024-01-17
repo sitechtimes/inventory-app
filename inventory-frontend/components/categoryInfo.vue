@@ -297,8 +297,7 @@ async function fetchData() {
   }
 
   #myChart2 {
-    height: 30rem !important;
-    width: fit-content !important;
+    height: 30rem !important; 
   }
 }
 

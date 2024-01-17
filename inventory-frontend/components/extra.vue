@@ -50,6 +50,9 @@
             <option value="16">Printmaking</option>
             <option value="17">Paper</option>
             <option value="18">Drawing</option>
+            <option value="19">Resin Printer</option>
+            <option value="20">3D Printer</option>
+            <option value="21">Stained Glass</option>
             <!-- Add other options here -->
           </select>
         </div>
@@ -192,6 +195,9 @@ export default {
       { value: 16, name: "Printmaking", shtName: "PRTM" },
       { value: 17, name: "Paper", shtName: "PAP" },
       { value: 18, name: "Drawing", shtName: "DR" },
+      { value: 19, name: "Resin Printer", shtName: "RES"},
+      { value: 20, name: "3D Printer", shtName: "3D"},
+      { value: 21, name: "Stained Glass", shtName:"STGL"}
       //add the other categories if their is more
     ];
     const CategoryIndex =
@@ -475,6 +481,9 @@ findchange(){
           { value: 16, name: "Printmaking" },
           { value: 17, name: "Paper" },
           { value: 18, name: "Drawing" },
+          { value: 19, name: "Resin Printer"},
+          { value: 20, name: "3D Printer"},
+          { value: 21, name: "Stained Glass"}
           //add the other categories if their is more
         ];
         const listVendors = [
