@@ -129,6 +129,12 @@
           <option value="2">Amazon</option>
           <option value="3">Blick</option>
           <option value="4">Home Depot</option>
+          <option value="5">Form Labs</option>
+          <option value="7">Hobby Lobby</option>
+          <option value="8">Fastenal</option>
+          <option value="9">Glass Crafters</option>
+          <option value="10">Michaels</option>
+          <option value="11">Adorama</option>
         </select>
       </div>
       <div class="detailsDate poprow">
@@ -210,6 +216,13 @@ export default {
       { value: 2, name: "Amazon", shtName: "AMZ" },
       { value: 3, name: "Blick", shtName: "BLICK" },
       { value: 4, name: "Home Depot", shtName: "HD" },
+      { value: 5, name: "Form Labs", shtName: "FL" },
+      { value: 6, name: "Bambu Lab", shtName: "BL" },
+      { value: 7, name: "Hobby Lobby", shtName: "HL" },
+      { value: 8, name: "Fastenal", shtName: "FAST" },
+      { value: 9, name: "Glass Crafters", shtName: "GLCRFT" },
+      { value: 10, name: "Michaels", shtName: "MIC" },
+      { value: 11, name: "Adorama", shtName: "ADO" },
       // ... add other vendors here
     ];
     const VendorIndex =
@@ -491,6 +504,13 @@ findchange(){
           { value: 2, name: "Amazon" },
           { value: 3, name: "Blick" },
           { value: 4, name: "Home Depot" },
+          { value: 5, name: "Form Labs" },
+          { value: 6, name: "Bambu Lab" },
+          { value: 7, name: "Hobby Lobby" },
+          { value: 8, name: "Fastenal" },
+          { value: 9, name: "Glass Crafters" },
+          { value: 10, name: "Michaels" },
+          { value: 11, name: "Adorama" },
           // ... add other vendors here
         ];
         (this.editname = this.name),

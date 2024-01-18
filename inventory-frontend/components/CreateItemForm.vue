@@ -83,6 +83,12 @@
           <option value="2">Amazon</option>
           <option value="3">Blick</option>
           <option value="4">Home Depot</option>
+          <option value="5">Form Labs</option>
+          <option value="7">Hobby Lobby</option>
+          <option value="8">Fastenal</option>
+          <option value="9">Glass Crafters</option>
+          <option value="10">Michaels</option>
+          <option value="11">Adorama</option>
         </select>
       </div>
       <div class="input-container">
