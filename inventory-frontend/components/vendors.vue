@@ -153,7 +153,15 @@ function createChart() {
   let tempchart2 = new Chart(ctx2, {
     type: "bar",
     data: chartData.value,
-    options: chartOptions.value,
+    options: {
+      ...chartOptions.value,
+      onClick: (e) => {
+        let smallChart = Chart.getChart("cont2");
+        const canvasPosition = getRelativePosition(e, smallChart); // cant seem to get the chart still.
+        const dataX = smallChart.scales.x.getValueForPixel(canvasPosition.x); //gets the x value of the mouseclick
+        console.log(dataX);
+      },
+    },
   });
 
   chart1.value = tempchart1;
@@ -202,6 +210,10 @@ const maximizeChart = () => {
 </script>
 
 <style scoped>
+.canvas2 {
+  height: 100vh;
+  width: fit-content;
+}
 .fullScreen {
   display: block;
   position: fixed;
@@ -251,14 +263,51 @@ const maximizeChart = () => {
 .info {
   flex: 1;
 }
+.bigdiv {
+  display: flex;
+  flex-flow: column nowrap;
+}
 .other-stuff {
   display: flex;
   flex-flow: row nowrap;
+}
+
+.canvas1 {
+  height: 50rem !important;
+  width: 60rem !important;
+}
+
+.vendor-container {
+  border: var(--border);
+  padding: 30px 55px 30px 55px;
+  margin: 6px;
+  width: 24rem;
+  transition: all 0.2s;
+  border-radius: 0.5rem;
+}
+
+.vendor-container:hover {
+  background-color: var(--halflightgray);
+  cursor: pointer;
 }
 .vendor-name {
   color: #333;
   font-size: 20px;
   margin: 0;
+}
+
+#Vendor {
+  padding: 2vw;
+  height: 100%;
+  max-width: fit-content !important;
+}
+.canvas-cont {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  margin: 2rem;
+  flex-grow: 1;
+  min-height: 0;
 }
 
 .maximize-button,
@@ -297,5 +346,107 @@ const maximizeChart = () => {
   display: flex;
   justify-content: flex-end;
   padding: 5px;
+}
+
+.chart-cont-big {
+  height: 50rem;
+  display: flex;
+  justify-content: center;
+}
+
+@media only screen and (orientation: landscape) {
+  .minimize-button {
+    left: 45%;
+    margin-bottom: 10vh;
+  }
+}
+
+@media only screen and (orientation: landscape) and (max-height: 768px) {
+  #Vendor {
+    height: 55rem !important;
+    width: fit-content !important;
+  }
+  .minimize-button {
+    margin-top: 10vh;
+  }
+}
+
+@media screen and (max-width: 912px) {
+  #Vendor {
+    height: 45rem !important;
+    width: fit-content !important;
+  }
+}
+
+@media screen and (max-width: 820px) {
+  #Vendor {
+    height: 60rem !important;
+    width: fit-content !important;
+  }
+  .minimize-button {
+    margin-top: 100px;
+    left: 45%;
+  }
+}
+
+@media screen and (max-width: 760px) {
+  .content {
+    flex-direction: column-reverse;
+  }
+  .chart-cont-small,
+  .canvas-cont {
+    max-width: 95%;
+    margin-bottom: 3rem;
+  }
+  .canvas-cont,
+  .buttons,
+  .chart-cont-small {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+  }
+  .chart-cont-big {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #Vendor {
+    margin-top: 100px;
+  }
+
+  .minimize-button {
+    position: relative;
+    right: 0%;
+    left: 0%;
+  }
+  .buttons {
+    margin-left: 0;
+  }
+}
+
+@media only screen and (max-width: 540px) {
+  #Vendor {
+    width: fit-content !important;
+  }
+}
+
+@media screen and (max-width: 414px) {
+  .canvas-cont {
+    margin-top: 100px;
+  }
+  #Vendor {
+    height: 20rem !important;
+    width: fit-content !important;
+  }
+}
+
+@media screen and (max-width: 280px) {
+  #Vendor {
+    height: 40rem !important;
+    width: fit-content !important;
+  }
 }
 </style>
