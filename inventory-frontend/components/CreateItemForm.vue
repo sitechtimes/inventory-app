@@ -107,6 +107,9 @@
           <option value="16">Printmaking</option>
           <option value="17">Paper</option>
           <option value="18">Drawing</option>
+          <option value="19">Resin Printer</option>
+          <option value="20">3D Printer</option>
+          <option value="21">Stained Glass</option>
           <!-- Add other options here -->
         </select>
       </div>
@@ -328,6 +331,7 @@ async function submitForm() {
       : 0
   );
   store.$patch({ items: newresults });
+ 
 }
 </script>
 
