@@ -2,7 +2,6 @@
   <div class="bigdiv">
     <div id="mainItems">
       <div class="itemHeader subheading">Items</div>
-
       <div
         class="errorsearch subheading"
         v-if="store.search === true && store.empty === true"
@@ -70,11 +69,14 @@ export default {
 
   background-color: var(--lightgray);
   min-width: 100%;
+  
+  
 }
 #mainItems {
   display: flex;
   flex-direction: column;
   width: 100%;
+  
 }
 .itemHeader {
   min-height: 5.5rem;
@@ -99,6 +101,7 @@ export default {
 }
 
 .infoDesc {
+  overflow-y: auto;
   height: 100vh;
   width: 70%;
   min-width: 50rem;
@@ -106,7 +109,6 @@ export default {
   position: sticky;
   top: 0;
   right: 0;
-  overflow: hidden;
   flex: 1 1 0%;
   border-left: var(--border);
   z-index: 2000;

@@ -4,14 +4,14 @@
       <img class="imageView" :src="image" :alt="name_id" />
     </div>
     <div class="name-avail" ref="textbox">
-      <div class="name text" ref="name">{{ name }}</div>
+      <div class="name subheading" ref="name">{{ name }}</div>
 
       <div
-        class="quantityC smalltext"
+        class="quantityC text"
         ref="quant"
         :class="alert ? 'availN' : 'availY'"
       >
-        {{ quantity }}
+        Quantity: {{ quantity }}
       </div>
     </div>
   </div>
@@ -19,9 +19,7 @@
 
 <style>
 .itemMain {
-  min-height: 9rem;
-  height: fit-content;
-
+  min-height: 12rem;
   background-color: var(--whitebg);
   display: flex;
   flex-direction: row;
@@ -53,7 +51,6 @@
   height: auto;
   display: flex;
   flex-direction: column;
-  padding-right: 2.5rem;
 }
 
 .name,
@@ -64,9 +61,15 @@
 
 .name {
   padding-top: 1.2rem;
-  margin-bottom: 3.5rem;
-
-  height: fit-content;
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+  margin-right: 1rem;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  height: 50%;
 }
 
 .quantityC {
@@ -75,11 +78,11 @@
   min-height: 1.5rem;
   display: flex;
   flex-direction: row;
-  margin-bottom: 0.75rem;
+  margin-bottom: 2rem;
   justify-content: space-evenly;
 
   position: absolute;
-  bottom: 0;
+  bottom: 0%;
   height: fit-content;
   padding-top: 0.5rem;
   padding-bottom: 0.4rem;
@@ -114,8 +117,10 @@
 }
 
 .imageView {
-  max-height: 80%;
-  max-width: 80%;
+  display: block;
+  max-height: 90%;
+  max-width: 90%;
+  margin-top: auto;
   object-fit: scale-down;
 }
 
@@ -134,14 +139,14 @@
 @media screen and (max-width: 1100px) {
   .mainSize {
     max-width: 45%;
+    height: 105px;
     flex-basis: 45%;
   }
 
   .infoFull {
     max-width: 100%;
     flex-basis: 100%;
-    border: none;
-    margin: 0;
+    margin-top: 2px;
     border-radius: 0;
   }
 
@@ -172,8 +177,7 @@
   .mainSize {
     max-width: 100%;
     flex-basis: 100%;
-    border: none;
-    margin: 0;
+    margin-top: 2px;
     border-radius: 0;
   }
 
@@ -185,6 +189,8 @@
   .name {
     padding-right: 1rem;
     margin-bottom: 0;
+    font-size: 11px;
+    text-overflow: ellipsis;
   }
 
   .quantityC {
@@ -197,6 +203,12 @@
     border-color: none;
     box-shadow: none;
     background-color: var(--gray);
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .name {
+    font-size: 10px;
   }
 }
 </style>

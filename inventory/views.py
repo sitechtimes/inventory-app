@@ -10,6 +10,7 @@ from rest_framework.parsers import MultiPartParser, FormParser
 import json
 
 
+
 class LogView(generics.ListAPIView):
     queryset = Log.objects.all()
     serializer_class = LogSerializer

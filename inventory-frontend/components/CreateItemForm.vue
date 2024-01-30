@@ -83,6 +83,12 @@
           <option value="2">Amazon</option>
           <option value="3">Blick</option>
           <option value="4">Home Depot</option>
+          <option value="5">Form Labs</option>
+          <option value="7">Hobby Lobby</option>
+          <option value="8">Fastenal</option>
+          <option value="9">Glass Crafters</option>
+          <option value="10">Michaels</option>
+          <option value="11">Adorama</option>
         </select>
       </div>
       <div class="input-container">
@@ -107,6 +113,9 @@
           <option value="16">Printmaking</option>
           <option value="17">Paper</option>
           <option value="18">Drawing</option>
+          <option value="19">Resin Printer</option>
+          <option value="20">3D Printer</option>
+          <option value="21">Stained Glass</option>
           <!-- Add other options here -->
         </select>
       </div>
@@ -298,7 +307,10 @@ async function submitForm() {
   formData.append("location", location.value);
   console.log("ugjag");
   try {
-    const response = await fetch("http://127.0.0.1:8000/items/addItems/", {
+
+    const config = useRuntimeConfig()
+    const response = await fetch(`${config.public.protocol}://${config.public.baseurl}:${config.public.port}/items/addItems/`, {
+
       method: "POST",
       mode: "cors",
       cache: "no-cache",
@@ -314,7 +326,8 @@ async function submitForm() {
     console.log(error); 
   }
 
-  const response = await fetch("http://127.0.0.1:8000/items/category/");
+  const config = useRuntimeConfig()
+  const response = await fetch(`${config.public.protocol}://${config.public.baseurl}:${config.public.port}/items/category/`);
   const new_items = await response.json();
   const newresults = new_items.sort((a, b) =>
     a.category_name > b.category_name
@@ -324,6 +337,7 @@ async function submitForm() {
       : 0
   );
   store.$patch({ items: newresults });
+ 
 }
 </script>
 

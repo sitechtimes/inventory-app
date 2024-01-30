@@ -6,7 +6,7 @@ class LogSerializer(serializers.ModelSerializer):
     class Meta:
         model = Log
         fields = ['name', 'backroom_quantity', 'makerspace_quantity',
-                  'purchase_link', 'pub_date', 'category', 'vendor', 'unit']
+                  'purchase_link', 'pub_date', 'category', 'vendor', 'unit', 'dateTime', 'change']
 
 
 class ItemSerializer(serializers.ModelSerializer):
