@@ -7,7 +7,7 @@
           v-for="data in vendor"
           :key="data"
           class="vendor-container"
-          @click="showChartfuc(data.itemsVendor)"
+          @click="showChartfuc(data.itemsVendor, data.vendor_name)"
         >
           <h1 class="vendor-name subheading">{{ data.vendor_name }}</h1>
         </button>
@@ -35,11 +35,25 @@
         </div>
       </div>
     </div>
+
+    <div v-if="hi">
+      <Info
+        :img_link="object.image_url"
+        :name="object.name"
+        :category="object.category"
+        :quantity="object.makerspace_quantity + object.backroom_quantity"
+        :link="object.purchase_link"
+        :vendor="object.vendor"
+        :date="object.last_purchased"
+        :backroom_quantity="object.backroom_quantity"
+        :makerspace_quantity="object.makerspace_quantity"
+      />
+    </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, nextTick } from "vue";
 import { Chart } from "chart.js/auto";
 import { useItemsStore } from "~/store/ItemsStore";
 import { getRelativePosition } from "chart.js/helpers";
@@ -52,6 +66,9 @@ let showInfo = ref(false); // Step 1
 let canvas = ref();
 let store = useItemsStore();
 let isMaximized = ref(false);
+let seller = ref();
+let object = ref(null);
+let hi = ref(false);
 
 onMounted(() => {
   const config = useRuntimeConfig();
@@ -123,14 +140,6 @@ const chartOptions = ref({
       },
     },
   },
-  /*   onClick: (e) => {
-    let smallChart = chart1.value;
-    console.log(smallChart);
-    console.log(Chart.helpers.getRelativePosition(e));
-    const canvasPosition = Chart.helpers.getRelativePosition(e, smallChart); // cant seem to get the chart still.
-    const dataX = smallChart.value.scales.x.getValueForPixel(canvasPosition.x); //gets the x value of the mouseclick
-    console.log(dataX);
-  }, */
 });
 
 function createChart() {
@@ -142,9 +151,19 @@ function createChart() {
       ...chartOptions.value,
       onClick: (e) => {
         let smallChart = Chart.getChart("cont1");
-        const canvasPosition = getRelativePosition(e, smallChart); // cant seem to get the chart still.
-        const dataX = smallChart.scales.x.getValueForPixel(canvasPosition.x); //gets the x value of the mouseclick
-        console.log(dataX);
+        const canvasPosition = getRelativePosition(e, smallChart);
+        const dataX = smallChart.scales.x.getValueForPixel(canvasPosition.x);
+        const bar = Chart.getChart("cont1").data.labels[dataX];
+        console.log(vendor.value);
+        console.log(seller);
+        const vendor_array = vendor.value.find(
+          (object) => object.vendor_name == seller
+        ).itemsVendor;
+        const item = vendor_array[dataX];
+        console.log(bar);
+        console.log(vendor_array[dataX]);
+        object.value = item;
+        hi.value = true;
       },
     },
   });
@@ -157,9 +176,22 @@ function createChart() {
       ...chartOptions.value,
       onClick: (e) => {
         let smallChart = Chart.getChart("cont2");
-        const canvasPosition = getRelativePosition(e, smallChart); // cant seem to get the chart still.
-        const dataX = smallChart.scales.x.getValueForPixel(canvasPosition.x); //gets the x value of the mouseclick
-        console.log(dataX);
+        const canvasPosition = getRelativePosition(e, smallChart);
+        const dataX = smallChart.scales.x.getValueForPixel(canvasPosition.x);
+        const bar = Chart.getChart("cont2").data.labels[dataX];
+        console.log(vendor.value);
+        console.log(seller);
+        const vendor_array = vendor.value.find(
+          (object) => object.vendor_name == seller
+        ).itemsVendor;
+        const item = vendor_array[dataX];
+        console.log(bar);
+        console.log(vendor_array[dataX]);
+        object = item;
+        nextTick(() => {
+          hi.value = true;
+          infoKey += 1;
+        });
       },
     },
   });
@@ -177,8 +209,10 @@ function updateChart(tag, quantity) {
   Chart.getChart("cont2").update();
 }
 
-const showChartfuc = (vendorItem) => {
+const showChartfuc = (vendorItem, vendor) => {
   console.log(vendorItem);
+  console.log(vendor);
+  seller = vendor;
   showInfo.value = true; // Step 3
   showChart.value = true;
   if (!Chart.getChart("cont1")) {
