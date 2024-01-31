@@ -18,10 +18,7 @@
             <div
               :class="{ 'chart-cont-big': minMax, 'chart-cont-small': !minMax }"
             >
-              <canvas
-                id="Vendor"
-                style="height: 100%; max-width: 100%"
-              ></canvas>
+              <canvas id="Vendor"></canvas>
             </div>
             <div class="btn-cont">
               <button
@@ -57,19 +54,21 @@ let canvas = ref();
 let store = useItemsStore();
 
 onMounted(() => {
-  const config = useRuntimeConfig()
-  fetch(`${config.public.protocol}://${config.public.baseurl}:${config.public.port}/items/vendor/`, {
-
-    method: "GET",
-    mode: "cors",
-    cache: "no-cache",
-    credentials: "same-origin",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    redirect: "follow",
-    referrerPolicy: "no-referrer",
-  })
+  const config = useRuntimeConfig();
+  fetch(
+    `${config.public.protocol}://${config.public.baseurl}:${config.public.port}/items/vendor/`,
+    {
+      method: "GET",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      redirect: "follow",
+      referrerPolicy: "no-referrer",
+    }
+  )
     .then((response) => response.json())
     .then((data) => {
       vendor.value = data;
@@ -92,6 +91,7 @@ const chartData = ref({
 
 const chartOptions = ref({
   responsive: true,
+  maintainAspectRatio: false,
   scales: {
     y: {
       beginAtZero: true,
@@ -176,6 +176,8 @@ const fullScreen = () => {
   } else if (!minMax.value) {
     minMax.value = true;
     canvas.value.classList.add("fullScreen");
+    //canvas.value.style.width = "100%";
+    //canvas.value.style.height = "100%";
   }
 };
 </script>
@@ -187,11 +189,13 @@ const fullScreen = () => {
   overflow: hidden;
 }
 
+
 .header {
   text-align: center;
   font-size: 24px;
   padding: 20px;
 }
+
 
 .content {
   display: flex;
@@ -199,35 +203,42 @@ const fullScreen = () => {
   padding-top: 3rem;
 }
 
+
 .buttons {
   flex: 1;
   margin-left: 5rem;
 }
 
+
 .info {
   flex: 1;
 }
+
 
 .bigdiv {
   display: flex;
   flex-flow: column nowrap;
 }
 
+
 .other-stuff {
   display: flex;
   flex-flow: row nowrap;
 }
+
 
 .chart-cont {
   height: 70rem;
   width: 70rem;
 }
 
+
 .vendors {
   display: flex;
   max-width: 60%;
   flex-flow: row wrap;
 }
+
 
 .vendor-container {
   border: var(--border);
@@ -238,16 +249,25 @@ const fullScreen = () => {
   border-radius: 0.5rem;
 }
 
+
 .vendor-container:hover {
   background-color: var(--halflightgray);
   cursor: pointer;
 }
+
 
 .vendor-name {
   color: #333;
   font-size: 20px;
   margin: 0;
 }
+
+
+#Vendor {
+height: 60rem !important;
+width: 90rem !important;
+}
+
 
 .fullScreen {
   display: block;
@@ -260,7 +280,9 @@ const fullScreen = () => {
   margin: 0;
   z-index: 9999;
   background-color: white;
+  overflow: auto;
 }
+
 
 .canvas-cont {
   display: flex;
@@ -268,6 +290,7 @@ const fullScreen = () => {
   justify-content: center;
   margin: 2rem;
 }
+
 
 .maximize-button,
 .minimize-button {
@@ -280,25 +303,31 @@ const fullScreen = () => {
   cursor: pointer;
 }
 
+
 .minimize-button {
   position: relative;
-  left: 50%;
+  left: 45%;
+  width: 8rem;
+  margin-top: 100px;
+}
+
+
+.maximize-button {
   width: 8rem;
 }
 
-.maximize-button {
-  width: 4rem;
-}
 
 .maximize-button:hover,
 .minimize-button:hover {
   background-color: #2980b9;
 }
 
+
 .maximize-button:active,
 .minimize-button:active {
   background-color: #1f639e;
 }
+
 
 .btn-cont {
   display: flex;
@@ -306,26 +335,63 @@ const fullScreen = () => {
   padding: 5px;
 }
 
+
 .chart-cont-big {
-  height: 40rem;
+  height: 50rem;
   display: flex;
   justify-content: center;
 }
 
-.chart-cont-small {
-  height: 500px;
+
+@media only screen and (orientation: landscape){
+  .minimize-button {
+    left: 45%;
+    margin-bottom: 10vh;
+  }
+ 
 }
-#Vendor {
-  height: 80rem;
+
+
+@media only screen and (orientation: landscape) and (max-height: 768px)
+{
+ 
+  #Vendor {
+    height: 55rem !important;
+    width: 80rem !important;
+  }
+  .minimize-button {
+    margin-top: 10vh;
+  }
 }
+
+
+@media screen and ( max-width: 912px ) {
+  #Vendor {
+    height: 45rem !important;
+    width: 60rem !important;
+  }
+}
+
+
+@media screen and (max-width: 820px) {
+  #Vendor {
+  height: 60rem !important;
+  width: 50rem !important;
+}
+.minimize-button {
+  margin-top: 100px;
+  left: 45%;
+}
+}
+
+
 @media screen and (max-width: 760px) {
   .content {
     flex-direction: column-reverse;
   }
   .chart-cont-small,
   .canvas-cont {
-    height: fit-content;
-    max-width: 90%;
+    max-width: 95%;
     margin-bottom: 3rem;
   }
   .canvas-cont,
@@ -337,8 +403,58 @@ const fullScreen = () => {
     flex-direction: column;
     width: 100%;
   }
-  .buttons {
+  .chart-cont-big {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+
+  #Vendor {
+    margin-top: 100px;
+  }
+
+
+  .minimize-button {  
+   position:relative;
+   right: 0% ;
+   left: 0% ;
+
+
+  }
+    .buttons {
     margin-left: 0;
   }
 }
+
+
+@media  only screen and (max-width: 540px) {
+ #Vendor {
+  width: 50rem !important;
+ }
+ 
+}
+
+
+@media screen and (max-width: 414px)  {
+  .canvas-cont {
+    margin-top: 100px;
+  }
+  #Vendor {
+    height: 20rem !important;
+    width: 35rem !important;
+  }
+ 
+}
+
+
+
+
+@media screen and (max-width: 280px)  {
+  #Vendor {
+    height: 40rem !important;
+    width: 18rem !important;
+  }
+}
+
 </style>

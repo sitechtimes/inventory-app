@@ -50,6 +50,9 @@
             <option value="16">Printmaking</option>
             <option value="17">Paper</option>
             <option value="18">Drawing</option>
+            <option value="19">Resin Printer</option>
+            <option value="20">3D Printer</option>
+            <option value="21">Stained Glass</option>
             <!-- Add other options here -->
           </select>
         </div>
@@ -84,13 +87,21 @@
             {{ quantity1 }}
           </div>
           <input v-if="editMode" v-model="quantity1" type="number" />
+          <input v-if="editMode" v-model="input" type="text" class="input" />
+          <button v-if="editMode" @click="updateInput" class="updateBtn">
+            Update
+          </button>
         </div>
         <div class="poprow">
           <div class="text col1" id="location">Backroom</div>
           <div v-if="!editMode" class="text col2" id="locationQ">
             {{ quantity2 }}
           </div>
-          <input v-if="editMode" v-model="quantity2" type="number" />
+          <input v-if="editMode" v-model="this.quantity2" type="number" />
+          <input v-if="editMode" v-model="input2" type="text" class="input" />
+          <button v-if="editMode" @click="updateInput2" class="updateBtn">
+            Update
+          </button>
         </div>
       </div>
       <div class="detailsPurchase poprow">
@@ -118,6 +129,12 @@
           <option value="2">Amazon</option>
           <option value="3">Blick</option>
           <option value="4">Home Depot</option>
+          <option value="5">Form Labs</option>
+          <option value="7">Hobby Lobby</option>
+          <option value="8">Fastenal</option>
+          <option value="9">Glass Crafters</option>
+          <option value="10">Michaels</option>
+          <option value="11">Adorama</option>
         </select>
       </div>
       <div class="detailsDate poprow">
@@ -184,6 +201,9 @@ export default {
       { value: 16, name: "Printmaking", shtName: "PRTM" },
       { value: 17, name: "Paper", shtName: "PAP" },
       { value: 18, name: "Drawing", shtName: "DR" },
+      { value: 19, name: "Resin Printer", shtName: "RES"},
+      { value: 20, name: "3D Printer", shtName: "3D"},
+      { value: 21, name: "Stained Glass", shtName:"STGL"}
       //add the other categories if their is more
     ];
     const CategoryIndex =
@@ -196,6 +216,13 @@ export default {
       { value: 2, name: "Amazon", shtName: "AMZ" },
       { value: 3, name: "Blick", shtName: "BLICK" },
       { value: 4, name: "Home Depot", shtName: "HD" },
+      { value: 5, name: "Form Labs", shtName: "FL" },
+      { value: 6, name: "Bambu Lab", shtName: "BL" },
+      { value: 7, name: "Hobby Lobby", shtName: "HL" },
+      { value: 8, name: "Fastenal", shtName: "FAST" },
+      { value: 9, name: "Glass Crafters", shtName: "GLCRFT" },
+      { value: 10, name: "Michaels", shtName: "MIC" },
+      { value: 11, name: "Adorama", shtName: "ADO" },
       // ... add other vendors here
     ];
     const VendorIndex =
@@ -216,9 +243,32 @@ export default {
       editvendor: VendorIndex + 1,
       listVendorsName: listVendors,
       editDate: this.date,
+      changes: "",
     };
   },
   methods: {
+
+findchange(){
+  if(this.editname != this.name){
+    this.changes = this.changes+ "Name: " + this.editname + " "
+  }
+  if(this.listCategoryName[this.editcategory-1].name != (this.category)){
+    this.changes = this.changes+ ", " +"Category: " + this.listCategoryName[this.editcategory-1].name
+  }
+  if(this.quantity1 != this.quantM ){
+    this.changes = this.changes+ ", " +"Makerspace Quantity: " + this.quantity1
+  }
+  if(this.quantity2 != this.quantB){
+    this.changes = this.changes+ ", " +"Backroom Quantity: " + this.quantity2
+  }
+  if(this.editLink != this.link){
+    this.changes = this.changes+ ", " +"Purchase Link: " + this.editLink 
+  }
+  if(this.listVendorsName[this.editvendor-1].name != (this.vendor)){
+    this.changes = this.changes+ ", " + "Vendor: " + this.listVendorsName[this.editvendor-1].name 
+  }
+  console.log(this.changes)
+},  
     changeobd() {
       this.ascending = !this.ascending; // Toggle the state
       this.store.logs.reverse();
@@ -251,29 +301,60 @@ export default {
         category: newCategory,
         backroom_quantity: parseInt(this.editquantity),
         makerspace_quantity: parseInt(this.editquantity),
+        // backroom_quantity: parseInt(this.quantity2),
+        // makerspace_quantity: parseInt(this.quantity1),
         vendor: newVendor,
         purchase_link: this.editLink,
         pub_date: this.editDate,
+        change: this.changes
         // Add other properties as needed
       };
-      const config = useRuntimeConfig()
-      fetch(`${config.public.protocol}://${config.public.baseurl}:${config.public.port}/items/addLog/`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-CSRFToken": this.getCookie("csrftoken"),
-        },
-        body: JSON.stringify(logData),
-      })
+      const config = useRuntimeConfig();
+      fetch(
+        `${config.public.protocol}://${config.public.baseurl}:${config.public.port}/items/addLog/`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": this.getCookie("csrftoken"),
+          },
+          body: JSON.stringify(logData),
+        }
+      )
         .then((response) => response.json())
         .then((data) => {
           console.log(data);
         })
         .catch((error) => console.error("Error:", error));
     },
+    updateInput() {
+      const number = parseInt(this.input);
+      if (this.input.match(/^[+-]?\d+$/) || this.input == "") {
+        this.quantity1 += number;
+        if (this.quantity1 < 0) {
+          this.quantity1 = 0;
+        }
+      } else {
+        alert("Please enter a number with a + or - sign.");
+      }
+      this.input = "";
+    },
+    updateInput2() {
+      const number = parseInt(this.input2);
+      if (this.input2.match(/^[+-]?\d+$/) || this.input2 == "") {
+        this.quantity2 += number;
+        if (this.quantity2 < 0) {
+          this.quantity2 = 0;
+        }
+      } else {
+        alert("Please enter a number with a + or - sign.");
+      }
+      this.input2 = "";
+    },
     calculateTotalQuantity() {
       return this.quantity1 + this.quantity2;
     },
+
     vendorInfo() {
       this.store.$patch({ vendor: true, vendorHeader: true });
       this.store.inactive(".extraTab", ".tab1", ".tab1btn");
@@ -308,6 +389,7 @@ export default {
       this.editDate = currentDate;
     },
     async saveChanges() {
+      this.findchange();
       this.saveLogs();
       console.log("name:", this.editname);
       const formData = new FormData();
@@ -325,17 +407,18 @@ export default {
       this.store.getLogs(this.editname);
 
       try {
-
-        console.log(this.store.id)
-        const config = useRuntimeConfig()
-        const response = await fetch(`${config.public.protocol}://${config.public.baseurl}:${config.public.port}/items/editItems/${this.store.id}/`, {
-          method: "PUT",
-          mode: "cors",
-          cache: "no-cache",
-          credentials: "same-origin",
-          body: formData,
-        });
-
+        console.log(this.store.id);
+        const config = useRuntimeConfig();
+        const response = await fetch(
+          `${config.public.protocol}://${config.public.baseurl}:${config.public.port}/items/editItems/${this.store.id}/`,
+          {
+            method: "PUT",
+            mode: "cors",
+            cache: "no-cache",
+            credentials: "same-origin",
+            body: formData,
+          }
+        );
 
         const data = await response.json();
         this.store.edit = true;
@@ -345,8 +428,10 @@ export default {
       } catch (error) {
         console.log(error);
       }
-      const config = useRuntimeConfig()
-      const response = await fetch(`${config.public.protocol}://${config.public.baseurl}:${config.public.port}/items/category/`);
+      const config = useRuntimeConfig();
+      const response = await fetch(
+        `${config.public.protocol}://${config.public.baseurl}:${config.public.port}/items/category/`
+      );
       const new_items = await response.json();
       const newresults = new_items.sort((a, b) =>
         a.category_name > b.category_name
@@ -355,7 +440,7 @@ export default {
           ? -1
           : 0
       );
-      store.$patch({ items: newresults });
+      this.store.$patch({ items: newresults });
     },
   },
 
@@ -379,11 +464,13 @@ export default {
     quantity1(newValue) {
       if (this.editMode) {
         this.editquantity = newValue + this.quantity2;
+
       }
     },
     quantity2(newValue) {
       if (this.editMode) {
         this.editquantity = this.quantity1 + newValue;
+
       }
     },
     $props: {
@@ -407,6 +494,9 @@ export default {
           { value: 16, name: "Printmaking" },
           { value: 17, name: "Paper" },
           { value: 18, name: "Drawing" },
+          { value: 19, name: "Resin Printer"},
+          { value: 20, name: "3D Printer"},
+          { value: 21, name: "Stained Glass"}
           //add the other categories if their is more
         ];
         const listVendors = [
@@ -414,6 +504,13 @@ export default {
           { value: 2, name: "Amazon" },
           { value: 3, name: "Blick" },
           { value: 4, name: "Home Depot" },
+          { value: 5, name: "Form Labs" },
+          { value: 6, name: "Bambu Lab" },
+          { value: 7, name: "Hobby Lobby" },
+          { value: 8, name: "Fastenal" },
+          { value: 9, name: "Glass Crafters" },
+          { value: 10, name: "Michaels" },
+          { value: 11, name: "Adorama" },
           // ... add other vendors here
         ];
         (this.editname = this.name),
@@ -444,7 +541,6 @@ export default {
 <style>
 #logs {
   height: 9vw;
-  overflow-y: auto;
 }
 .editPop {
   height: 5rem;
@@ -510,6 +606,7 @@ export default {
   width: 100%;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
 }
 
 .imagePop {
@@ -546,7 +643,6 @@ export default {
 
 .col2 {
   width: 70%;
-  margin-right: 5rem;
 }
 
 .col2name {
@@ -556,7 +652,6 @@ export default {
 .purchlink {
   width: 30rem;
   overflow: hidden;
-
   white-space: nowrap;
   text-overflow: ellipsis;
 }
@@ -575,12 +670,29 @@ export default {
 
 .changelog {
   border-top: var(--border);
+  background-color: white;
 }
 
 .logorg {
   text-align: left;
   width: 100%;
   font-weight: 400;
+  /* margin-bottom: 50px; */
+}
+
+.input {
+  width: 10%;
+  margin-left: 10px;
+}
+
+.updateBtn {
+  width: 55px;
+  height: 23px;
+  background-color: white;
+  color: black;
+  font-size: 13px;
+  margin-left: 10px;
+  border: solid black 1px;
 }
 
 .logPop,
@@ -594,14 +706,7 @@ export default {
 }
 
 .detailsPop {
-  min-width: fit-content;
-  width: 90%;
-}
-
-@media screen and (max-width: 760px) {
-  .col2 {
-    padding-right: 0;
-  }
+  background-color: white;
 }
 
 input,
@@ -640,6 +745,26 @@ select {
   .save {
     width: 100%;
     /* Full width on smaller screens */
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .purchlink {
+    width: 20rem;
+  }
+}
+
+@media screen and (max-width: 280px) {
+  .popUpPanel {
+    overflow-x: scroll;
+  }
+  .col2 {
+    padding-right: 0;
+  }
+  .extrabtn {
+    min-width: min-content;
+    width: 50%;
+    text-align: left;
   }
 }
 </style>

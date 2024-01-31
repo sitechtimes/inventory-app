@@ -1,5 +1,6 @@
 category_code,category_name
 
+3D,3D Printer
 CM,Coloring Materials
 CS,Craft Supplies
 DR,Drawing
@@ -12,8 +13,10 @@ PT,Paint
 PAP,Paper
 PM,Paper Mache
 PRTM,Printmaking
+RES,Resin Printer
 SC,Sculpture
 SE,Sewing
+STGL,Stained Glass
 TP,Tape
 TLS,Tools
 WR,Wire

@@ -6,12 +6,10 @@ from inventory.models import Item
 from inventory.models import Category
 from inventory.models import Vendor
 
-categories = [('TLS', 'Tools'), ('PT', 'Paint'), ('TP', 'Tape'), ('WR', 'Wire'), ('FA', 'First Aid'), ('FAB', 'Fabric'), ('PM', 'Paper Mache'), ('GL', 'Glue'), ('SE', 'Sewing'), ('MISC',
-                                                                                                                                                                                   'Miscellaneous'), ('CM', 'Coloring Materials'), ('SC', 'Sculpture'), ('WD', 'Wood'), ('CS', 'Craft Supplies'), ('FM', 'Foam'), ('PRTM', 'Printmaking'), ('PAP', 'Paper'), ('DR', 'Drawing')]
+categories = [('TLS', 'Tools'), ('PT', 'Paint'), ('TP', 'Tape'), ('WR', 'Wire'), ('FA', 'First Aid'), ('FAB', 'Fabric'), ('PM', 'Paper Mache'), ('GL', 'Glue'), ('SE', 'Sewing'), ('MISC', 'Miscellaneous'), ('CM', 'Coloring Materials'), ('SC', 'Sculpture'), ('WD', 'Wood'), ('CS', 'Craft Supplies'), ('FM', 'Foam'), ('PRTM', 'Printmaking'), ('PAP', 'Paper'), ('DR', 'Drawing'), ('RES', 'Resin Printer'), ('3D', '3D Printer'), ('STGL', 'Stained Glass')]
 
 
-vendors = [('DOE', 'ShopDOE'), ('AMZ', 'Amazon'),
-           ('BLICK', 'Blick'), ('HD', 'Home Depot')]
+vendors = [('DOE', 'ShopDOE'), ('AMZ', 'Amazon'), ('BLICK', 'Blick'), ('HD', 'Home Depot'),('Fl' , 'Form Labs'),('BL' , 'Bambu Lab'),('HL' , 'Hobby Lobby'),('FAST' , 'Fastenal'),('GLCRFT' , 'Glass Crafters'),('MIC' , 'Michaels'),('ADO' , 'Adorama')]
 
 
 def run():
