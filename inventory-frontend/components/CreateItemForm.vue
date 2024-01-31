@@ -84,6 +84,7 @@
           <option value="3">Blick</option>
           <option value="4">Home Depot</option>
           <option value="5">Form Labs</option>
+          <option value="6">Bambu Lab</option>
           <option value="7">Hobby Lobby</option>
           <option value="8">Fastenal</option>
           <option value="9">Glass Crafters</option>
