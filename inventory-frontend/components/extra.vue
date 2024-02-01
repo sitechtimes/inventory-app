@@ -450,6 +450,17 @@ export default {
           : 0
       );
       this.store.$patch({ items: newresults });
+
+      document.querySelectorAll(".itemMain").forEach((item) => {
+        if (item.lastElementChild.textContent === this.editname) {
+          item.classList.add("infoFull");
+          item.classList.remove("mainSize");
+          console.log("it resized");
+          console.log("YIPPEE");
+        } else {
+          console.log("cannot find");
+        }
+      });
     },
   },
 
