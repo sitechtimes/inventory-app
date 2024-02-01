@@ -73,6 +73,8 @@ let isMaximized = ref(false);
 let seller = ref();
 let toggle = ref(store.toggleModule);
 
+//store.$subscribe((mutation, dataObject) => {});
+
 onMounted(() => {
   toggle.value = false;
   const config = useRuntimeConfig();

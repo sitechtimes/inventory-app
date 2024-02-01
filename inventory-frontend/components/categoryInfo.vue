@@ -26,13 +26,16 @@
 import { ref, onMounted } from "vue";
 import { Chart } from "chart.js/auto";
 import { getRelativePosition } from "chart.js/helpers";
+import { useItemsStore } from "~/store/ItemsStore";
+
 const props = defineProps(["categoryName"]);
+const store = useItemsStore();
 
 const isMaximized = ref(false);
 const chart2 = ref();
 let CategoryItem = ref([]);
 let ItemCount = ref([]);
-let object = ref(null);
+let dataArray = ref(null);
 
 const maximizeChart = () => {
   isMaximized.value = !isMaximized.value;
@@ -101,15 +104,34 @@ const createChart = () => {
   const chart1 = new Chart(ctx1, {
     type: "bar",
     data: chartData.value,
-    options: chartOptions.value,
+    options: {
+      ...chartOptions.value,
+      onClick: (e) => {
+        let smallChart = Chart.getChart("myChart1");
+        const canvasPosition = getRelativePosition(e, smallChart);
+        const dataX = smallChart.scales.x.getValueForPixel(canvasPosition.x);
+        const arr = dataArray.value[dataX];
+        const item = arr.itemsCategory[dataX];
+        store.$patch({ dataObject: item });
+      },
+    },
   });
-
   const ctx2 = document.getElementById("myChart2").getContext("2d");
 
   const chart2 = new Chart(ctx2, {
     type: "bar",
     data: chartData.value,
-    options: chartOptions.value,
+    options: {
+      ...chartOptions.value,
+      onClick: (e) => {
+        let smallChart = Chart.getChart("myChart2");
+        const canvasPosition = getRelativePosition(e, smallChart);
+        const dataX = smallChart.scales.x.getValueForPixel(canvasPosition.x);
+        const arr = dataArray.value[dataX];
+        const item = arr.itemsCategory[dataX];
+        store.$patch({ dataObject: item });
+      },
+    },
   });
 };
 
@@ -136,10 +158,8 @@ async function fetchData() {
     );
 
     const data = await response.json();
-
     const CategoryName = props.categoryName;
     data.forEach((category) => {
-      console.log(category);
       if (CategoryName === category.category_name) {
         category.itemsCategory.forEach((item) => {
           CategoryItem.value.push(item.name);
@@ -147,7 +167,7 @@ async function fetchData() {
         });
       }
     });
-
+    dataArray.value = data;
     createChart();
   } catch (error) {
     console.log("Error fetching data:", error);

@@ -113,6 +113,7 @@ const createChart = () => {
         const dataX = smallChart.scales.x.getValueForPixel(canvasPosition.x);
         const vendor_array = dataArray.value;
         let payload = vendor_array[dataX];
+        console.log(payload);
         store.$patch({ dataObject: payload });
       },
     },
