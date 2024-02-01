@@ -1,3 +1,4 @@
+
 describe('template spec', () => {
   it('passes', () => {
     cy.visit('/')
@@ -13,6 +14,5 @@ describe('template spec', () => {
     cy.get('#Category').select(11)
     cy.get('#image_url').type('https://i.pinimg.com/736x/1b/23/07/1b230783cb0d380a4586f386c4cd7e29.jpg')
     cy.get('.submit-button').click()
-
   })
 })
