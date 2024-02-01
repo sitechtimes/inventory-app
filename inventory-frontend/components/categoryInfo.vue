@@ -101,17 +101,7 @@ const createChart = () => {
   const chart1 = new Chart(ctx1, {
     type: "bar",
     data: chartData.value,
-    options: {
-      ...chartOptions.value,
-      onClick: (e) => {
-        let smallChart = Chart.getChart("myChart1");
-        const canvasPosition = getRelativePosition(e, smallChart);
-        const dataX = smallChart.scales.x.getValueForPixel(canvasPosition.x);
-        const bar = Chart.getChart("myChart1").data.labels[dataX];
-        console.log(bar);
-        object.value = bar;
-      },
-    },
+    options: chartOptions.value,
   });
 
   const ctx2 = document.getElementById("myChart2").getContext("2d");
@@ -119,24 +109,7 @@ const createChart = () => {
   const chart2 = new Chart(ctx2, {
     type: "bar",
     data: chartData.value,
-    options: {
-      ...chartOptions.value,
-      onClick: (e) => {
-        let smallChart = Chart.getChart("cont1");
-        const canvasPosition = getRelativePosition(e, smallChart);
-        const dataX = smallChart.scales.x.getValueForPixel(canvasPosition.x);
-        const bar = Chart.getChart("cont1").data.labels[dataX];
-        console.log(vendor.value);
-        console.log(seller);
-        const vendor_array = vendor.value.find(
-          (object) => object.vendor_name == seller
-        ).itemsVendor;
-        const item = vendor_array[dataX];
-        console.log(bar);
-        console.log(vendor_array[dataX]);
-        object.value = item;
-      },
-    },
+    options: chartOptions.value,
   });
 };
 
