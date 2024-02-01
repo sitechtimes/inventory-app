@@ -19,6 +19,7 @@ export const useItemsStore = defineStore("items", {
     categoryPop: false,
     categoryHeader: false,
     editform: false,
+    toggleModule: false, //toggle vendor chart popup
     //for resizing on toggling extra info
     main: [],
     textbox: [],
@@ -34,6 +35,8 @@ export const useItemsStore = defineStore("items", {
     alerts: 0,
     alerted_items: [],
     viewNotif: false,
+    //vendor chart popup thing
+    dataObject: null,
   }),
   getters: {},
   

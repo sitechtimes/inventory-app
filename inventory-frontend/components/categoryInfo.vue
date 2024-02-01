@@ -26,13 +26,13 @@
 import { ref, onMounted } from "vue";
 import { Chart } from "chart.js/auto";
 import { getRelativePosition } from "chart.js/helpers";
-//import { chownSync } from "fs";
 const props = defineProps(["categoryName"]);
 
 const isMaximized = ref(false);
 const chart2 = ref();
 let CategoryItem = ref([]);
 let ItemCount = ref([]);
+let object = ref(null);
 
 const maximizeChart = () => {
   isMaximized.value = !isMaximized.value;
@@ -62,14 +62,6 @@ const chartData = ref({
 const chartOptions = ref({
   responsive: true,
   events: ["click", "mousemove"],
-  onClick: (e) => {
-    const canvasPosition = getRelativePosition(e, chart2);
-
-    // Substitute the appropriate scale IDs
-    const dataX = chart2.scales.x.getValueForPixel(canvasPosition.x);
-    const dataY = chart2.scales.y.getValueForPixel(canvasPosition.y);
-    console.log(dataX);
-  },
   scales: {
     y: {
       beginAtZero: true,
@@ -109,7 +101,17 @@ const createChart = () => {
   const chart1 = new Chart(ctx1, {
     type: "bar",
     data: chartData.value,
-    options: chartOptions.value,
+    options: {
+      ...chartOptions.value,
+      onClick: (e) => {
+        let smallChart = Chart.getChart("myChart1");
+        const canvasPosition = getRelativePosition(e, smallChart);
+        const dataX = smallChart.scales.x.getValueForPixel(canvasPosition.x);
+        const bar = Chart.getChart("myChart1").data.labels[dataX];
+        console.log(bar);
+        object.value = bar;
+      },
+    },
   });
 
   const ctx2 = document.getElementById("myChart2").getContext("2d");
@@ -117,7 +119,24 @@ const createChart = () => {
   const chart2 = new Chart(ctx2, {
     type: "bar",
     data: chartData.value,
-    options: chartOptions.value,
+    options: {
+      ...chartOptions.value,
+      onClick: (e) => {
+        let smallChart = Chart.getChart("cont1");
+        const canvasPosition = getRelativePosition(e, smallChart);
+        const dataX = smallChart.scales.x.getValueForPixel(canvasPosition.x);
+        const bar = Chart.getChart("cont1").data.labels[dataX];
+        console.log(vendor.value);
+        console.log(seller);
+        const vendor_array = vendor.value.find(
+          (object) => object.vendor_name == seller
+        ).itemsVendor;
+        const item = vendor_array[dataX];
+        console.log(bar);
+        console.log(vendor_array[dataX]);
+        object.value = item;
+      },
+    },
   });
 };
 

@@ -25,13 +25,17 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { Chart } from "chart.js/auto";
+import { getRelativePosition } from "chart.js/helpers";
+import { useItemsStore } from "~/store/ItemsStore";
 
+const store = useItemsStore();
 const props = defineProps(["vendorName"]);
 
 const isMaximized = ref(false);
 const chart2 = ref();
 let VendorItem = ref([]);
 let ItemCount = ref([]);
+let dataArray = ref([]);
 
 const maximizeChart = () => {
   isMaximized.value = !isMaximized.value;
@@ -101,9 +105,21 @@ const createChart = () => {
   const chart1 = new Chart(ctx1, {
     type: "bar",
     data: chartData.value,
-    options: chartOptions.value,
+    options: {
+      ...chartOptions.value,
+      onClick: (e) => {
+        let smallChart = Chart.getChart("myChart1");
+        const canvasPosition = getRelativePosition(e, smallChart);
+        const dataX = smallChart.scales.x.getValueForPixel(canvasPosition.x);
+        //const bar = Chart.getChart("myChart1").data.labels[dataX];
+        const vendor_array = dataArray.value;
+        //console.log(bar);
+        let payload = vendor_array[dataX];
+        store.dataObject = payload;
+        console.log(store.dataObject);
+      },
+    },
   });
-
   const ctx2 = document.getElementById("myChart2").getContext("2d");
 
   const chart2 = new Chart(ctx2, {
@@ -143,6 +159,7 @@ async function fetchData() {
         vendor.itemsVendor.forEach((item) => {
           VendorItem.value.push(item.name);
           ItemCount.value.push(item.total);
+          dataArray.value.push(item);
         });
       }
     });

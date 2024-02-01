@@ -36,24 +36,28 @@
       </div>
     </div>
 
-    <div v-if="hi">
+    <div v-if="toggle">
       <Info
-        :img_link="object.image_url"
-        :name="object.name"
-        :category="object.category"
-        :quantity="object.makerspace_quantity + object.backroom_quantity"
-        :link="object.purchase_link"
-        :vendor="object.vendor"
-        :date="object.last_purchased"
-        :backroom_quantity="object.backroom_quantity"
-        :makerspace_quantity="object.makerspace_quantity"
+        :img_link="store.dataObject.image_url"
+        :name="store.dataObject.name"
+        :category="store.dataObject.category"
+        :quantity="
+          store.dataObject.makerspace_quantity +
+          store.dataObject.backroom_quantity
+        "
+        :link="store.dataObject.purchase_link"
+        :vendor="store.dataObject.vendor"
+        :date="store.dataObject.last_purchased"
+        :backroom_quantity="store.dataObject.backroom_quantity"
+        :makerspace_quantity="store.dataObject.makerspace_quantity"
+        @closeModule="closeModule"
       />
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, nextTick } from "vue";
+import { ref, onMounted } from "vue";
 import { Chart } from "chart.js/auto";
 import { useItemsStore } from "~/store/ItemsStore";
 import { getRelativePosition } from "chart.js/helpers";
@@ -67,10 +71,10 @@ let canvas = ref();
 let store = useItemsStore();
 let isMaximized = ref(false);
 let seller = ref();
-let object = ref(null);
-let hi = ref(false);
+let toggle = ref(store.toggleModule);
 
 onMounted(() => {
+  toggle.value = false;
   const config = useRuntimeConfig();
   fetch(
     `${config.public.protocol}://${config.public.baseurl}:${config.public.port}/items/vendor/`,
@@ -154,16 +158,12 @@ function createChart() {
         const canvasPosition = getRelativePosition(e, smallChart);
         const dataX = smallChart.scales.x.getValueForPixel(canvasPosition.x);
         const bar = Chart.getChart("cont1").data.labels[dataX];
-        console.log(vendor.value);
-        console.log(seller);
         const vendor_array = vendor.value.find(
           (object) => object.vendor_name == seller
         ).itemsVendor;
         const item = vendor_array[dataX];
-        console.log(bar);
-        console.log(vendor_array[dataX]);
-        object.value = item;
-        hi.value = true;
+        store.$patch({ toggleModule: true, dataObject: item });
+        toggle.value = store.toggleModule;
       },
     },
   });
@@ -185,13 +185,8 @@ function createChart() {
           (object) => object.vendor_name == seller
         ).itemsVendor;
         const item = vendor_array[dataX];
-        console.log(bar);
-        console.log(vendor_array[dataX]);
-        object = item;
-        nextTick(() => {
-          hi.value = true;
-          infoKey += 1;
-        });
+        store.$patch({ toggleModule: true, dataObject: item });
+        toggle.value = store.toggleModule;
       },
     },
   });
@@ -241,6 +236,10 @@ const maximizeChart = () => {
     chart2.value.classList.remove("fullScreen");
   }
 };
+
+function closeModule() {
+  toggle.value = store.toggleModule;
+}
 </script>
 
 <style scoped>
