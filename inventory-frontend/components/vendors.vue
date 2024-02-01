@@ -178,9 +178,6 @@ function createChart() {
         let smallChart = Chart.getChart("cont2");
         const canvasPosition = getRelativePosition(e, smallChart);
         const dataX = smallChart.scales.x.getValueForPixel(canvasPosition.x);
-        const bar = Chart.getChart("cont2").data.labels[dataX];
-        console.log(vendor.value);
-        console.log(seller);
         const vendor_array = vendor.value.find(
           (object) => object.vendor_name == seller
         ).itemsVendor;

@@ -247,7 +247,6 @@ export default {
     },
     exit() {
       this.store.$patch({ info: false, toggleModule: false });
-      console.log(this.store.toggleModule);
       this.closeVendor();
       this.closeCat();
       this.swapMain();

@@ -111,12 +111,9 @@ const createChart = () => {
         let smallChart = Chart.getChart("myChart1");
         const canvasPosition = getRelativePosition(e, smallChart);
         const dataX = smallChart.scales.x.getValueForPixel(canvasPosition.x);
-        //const bar = Chart.getChart("myChart1").data.labels[dataX];
         const vendor_array = dataArray.value;
-        //console.log(bar);
         let payload = vendor_array[dataX];
-        store.dataObject = payload;
-        console.log(store.dataObject);
+        store.$patch({ dataObject: payload });
       },
     },
   });
@@ -125,7 +122,17 @@ const createChart = () => {
   const chart2 = new Chart(ctx2, {
     type: "bar",
     data: chartData.value,
-    options: chartOptions.value,
+    options: {
+      ...chartOptions.value,
+      onClick: (e) => {
+        let smallChart = Chart.getChart("myChart2");
+        const canvasPosition = getRelativePosition(e, smallChart);
+        const dataX = smallChart.scales.x.getValueForPixel(canvasPosition.x);
+        const vendor_array = dataArray.value;
+        let payload = vendor_array[dataX];
+        store.$patch({ dataObject: payload });
+      },
+    },
   });
 };
 
