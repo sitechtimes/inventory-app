@@ -80,35 +80,59 @@ export const useItemsStore = defineStore("items", {
     resizing() {
       if (this.info === true || this.editform === true) {
         this.textbox.forEach((item) => {
-          item.classList.add("info-name-avail");
+          if (item) {
+            item.classList.add("info-name-avail");
+          }
         });
         this.name.forEach((item) => {
-          item.classList.add("info-name");
+          if (item) {
+            item.classList.add("info-name");
+          }
         });
         this.quant.forEach((item) => {
-          item.classList.add("info-quantity");
+          if (item) {
+            item.classList.add("info-quantity");
+          }
         });
-
+    
         this.main.forEach((item) => {
-          item.classList.remove("mainSize");
-          item.classList.add("infoFull");
+          if (item) {
+            item.classList.remove("mainSize");
+            item.classList.add("infoFull");
+          }
         });
-        this.cat.forEach((item) => item.classList.add("info-cat"));
+        this.cat.forEach((item) => {
+          if (item) {
+            item.classList.add("info-cat");
+          }
+        });
       } else {
         this.main.forEach((item) => {
-          item.classList.add("mainSize");
-          item.classList.remove("infoFull");
+          if (item) {
+            item.classList.add("mainSize");
+            item.classList.remove("infoFull");
+          }
         });
         this.textbox.forEach((item) => {
-          item.classList.remove("info-name-avail");
+          if (item) {
+            item.classList.remove("info-name-avail");
+          }
         });
         this.name.forEach((item) => {
-          item.classList.remove("info-name");
+          if (item) {
+            item.classList.remove("info-name");
+          }
         });
         this.quant.forEach((item) => {
-          item.classList.remove("info-quantity");
+          if (item) {
+            item.classList.remove("info-quantity");
+          }
         });
-        this.cat.forEach((item) => item.classList.remove("info-cat"));
+        this.cat.forEach((item) => {
+          if (item) {
+            item.classList.remove("info-cat");
+          }
+        });
       }
     },
     //change classes for info pop up headers - inactive

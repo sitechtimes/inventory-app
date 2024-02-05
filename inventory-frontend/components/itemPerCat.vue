@@ -28,19 +28,20 @@
       </div>
       <div class="itemHolder itemHolderM" v-if="store.monitor === true">
         <ItemMonitor
-          v-for="result in list"
-          :key="result.id"
-          :name="result.name"
-          :quantity="result.total"
-          :image="result.image_url"
-          :updated="result.last_purchased"
-          :vendor="result.vendor"
-          :link="result.purchase_link"
-          :category="result.category"
-          :backroom="result.backroom_quantity"
-          :makerspace="result.makerspace_quantity"
-          :alert="result.alert"
-        />
+  v-for="result in list"
+  :key="result.id"
+  :data-testid="result.id"
+  :name="result.name"
+  :quantity="result.total"
+  :image="result.image_url"
+  :updated="result.last_purchased"
+  :vendor="result.vendor"
+  :link="result.purchase_link"
+  :category="result.category"
+  :backroom="result.backroom_quantity"
+  :makerspace="result.makerspace_quantity"
+  :alert="result.alert"
+/>
       </div>
     </div>
   </div>
