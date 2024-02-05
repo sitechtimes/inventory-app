@@ -452,13 +452,12 @@ export default {
       this.store.$patch({ items: newresults });
 
       document.querySelectorAll(".itemMain").forEach((item) => {
-        if (item.lastElementChild.textContent === this.editname) {
+        if (
+          item.lastElementChild.firstElementChild.textContent === this.editname
+        ) {
           item.classList.add("infoFull");
           item.classList.remove("mainSize");
-          console.log("it resized");
-          console.log("YIPPEE");
-        } else {
-          console.log("cannot find");
+          console.log(item.classList);
         }
       });
     },
