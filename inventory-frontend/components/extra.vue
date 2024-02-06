@@ -397,6 +397,19 @@ export default {
       const currentDate = new Date().toISOString().slice(0, 10);
       this.editDate = currentDate;
     },
+
+    changeSize() {
+      document.querySelectorAll(".itemMain").forEach((item) => {
+        if (
+          item.lastElementChild.firstElementChild.textContent === this.editname
+        ) {
+          item.classList.add("infoFull");
+          item.classList.remove("mainSize");
+          console.log(item.classList);
+        }
+      });
+    },
+
     async saveChanges() {
       this.findchange();
       this.saveLogs();
@@ -451,15 +464,7 @@ export default {
       );
       this.store.$patch({ items: newresults });
 
-      document.querySelectorAll(".itemMain").forEach((item) => {
-        if (
-          item.lastElementChild.firstElementChild.textContent === this.editname
-        ) {
-          item.classList.add("infoFull");
-          item.classList.remove("mainSize");
-          console.log(item.classList);
-        }
-      });
+      setTimeout(this.changeSize, 5);
     },
   },
 
