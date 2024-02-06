@@ -14,9 +14,24 @@ describe('template spec', () => {
     cy.get('#image_url').type('https://i.pinimg.com/736x/1b/23/07/1b230783cb0d380a4586f386c4cd7e29.jpg')
     cy.get('.submit-button').click()
     cy.wait(1000) // Wait for the element to become visible
-    cy.window().its('store').then((store) => {
-      store.monitor = true;
-    })
-    cy.get('[data-testid]:last-child').click()
+    cy.get(':nth-child(2) > [data-v-inspector="components/itemPerCat.vue:3:5"] > .itemHolder >').last().click()
+    cy.get('.editbtn').click()
+    cy.get('.col2 > input').click()
+    cy.get('.col2 > input').type('edited')
+    cy.get('#Category').select(20)
+    cy.get('#Vendor').select(2)
+    cy.get('.detailsStock > .col2').click()
+    cy.get('[data-v-inspector="components/extra.vue:84:9"] > [type="number"]').type('{backspace}{backspace}{backspace}1')
+    cy.get('[data-v-inspector="components/extra.vue:84:9"] > .input').type('2')
+    cy.get('[data-v-inspector="components/extra.vue:84:9"] > .updateBtn').click()
+    cy.get('[data-v-inspector="components/extra.vue:95:9"] > [type="number"]').type('{backspace}{backspace}{backspace}1')
+    cy.get('[data-v-inspector="components/extra.vue:95:9"] > .input').type('-1')
+    cy.get('[data-v-inspector="components/extra.vue:95:9"] > .updateBtn').click()
+    cy.get('.detailsPurchase > input').clear()
+    cy.get('.detailsPurchase > input').type('gowatchonepiece.com')
+    cy.get('.addCurrentDate').click()
+    cy.get('.save').click()
+    cy.get('.tab1 > .exitbtn').click()
+
   })
 })

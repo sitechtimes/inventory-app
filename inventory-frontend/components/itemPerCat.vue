@@ -56,6 +56,7 @@ import { ref } from "vue";
 export default {
   name: "ItemPerCat",
   props: { list: Array, name: String },
+  
   components: { Item, ItemMonitor },
   data() {
     return {
