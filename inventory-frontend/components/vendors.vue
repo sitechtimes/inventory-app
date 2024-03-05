@@ -310,7 +310,7 @@ function closeModule() {
 
 .canvas1 {
   height: 50rem !important;
-  width: 60rem !important;
+
 }
 
 
@@ -368,6 +368,8 @@ width: 90rem !important;
 
 
 .maximize-button {
+  position: relative;
+    left: 40%;
   width: 8rem;
 }
 
@@ -472,9 +474,8 @@ width: 90rem !important;
 
   .minimize-button {  
    position:relative;
-   right: 0% ;
-   left: 0% ;
-
+   margin-bottom: 10px;
+   left: 50% ;
 
   }
     .buttons {
