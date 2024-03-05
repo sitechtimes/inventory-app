@@ -25,13 +25,17 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { Chart } from "chart.js/auto";
+import { getRelativePosition } from "chart.js/helpers";
+import { useItemsStore } from "~/store/ItemsStore";
 
+const store = useItemsStore();
 const props = defineProps(["vendorName"]);
 
 const isMaximized = ref(false);
 const chart2 = ref();
 let VendorItem = ref([]);
 let ItemCount = ref([]);
+let dataArray = ref([]);
 
 const maximizeChart = () => {
   isMaximized.value = !isMaximized.value;
@@ -53,7 +57,7 @@ const chartData = ref({
       data: ItemCount.value,
       fill: false,
       borderColor: "rgb(75, 192, 192)",
-      backgroundColor: "rgb(75, 1, 192)",
+      backgroundColor: "rgb(32, 116, 180)",
       tension: 0.1,
     },
   ],
@@ -101,15 +105,35 @@ const createChart = () => {
   const chart1 = new Chart(ctx1, {
     type: "bar",
     data: chartData.value,
-    options: chartOptions.value,
+    options: {
+      ...chartOptions.value,
+      onClick: (e) => {
+        let smallChart = Chart.getChart("myChart1");
+        const canvasPosition = getRelativePosition(e, smallChart);
+        const dataX = smallChart.scales.x.getValueForPixel(canvasPosition.x);
+        const vendor_array = dataArray.value;
+        let payload = vendor_array[dataX];
+        console.log(payload);
+        store.$patch({ dataObject: payload });
+      },
+    },
   });
-
   const ctx2 = document.getElementById("myChart2").getContext("2d");
 
   const chart2 = new Chart(ctx2, {
     type: "bar",
     data: chartData.value,
-    options: chartOptions.value,
+    options: {
+      ...chartOptions.value,
+      onClick: (e) => {
+        let smallChart = Chart.getChart("myChart2");
+        const canvasPosition = getRelativePosition(e, smallChart);
+        const dataX = smallChart.scales.x.getValueForPixel(canvasPosition.x);
+        const vendor_array = dataArray.value;
+        let payload = vendor_array[dataX];
+        store.$patch({ dataObject: payload });
+      },
+    },
   });
 };
 
@@ -143,6 +167,7 @@ async function fetchData() {
         vendor.itemsVendor.forEach((item) => {
           VendorItem.value.push(item.name);
           ItemCount.value.push(item.total);
+          dataArray.value.push(item);
         });
       }
     });

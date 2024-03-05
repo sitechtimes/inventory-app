@@ -187,6 +187,7 @@ import CategoryInfo from "./categoryInfo.vue";
 
 export default {
   name: "Info",
+  emits: ["closeModule"],
   props: {
     img_link: String,
     name: String,
@@ -245,10 +246,11 @@ export default {
       this.swapMain();
     },
     exit() {
-      this.store.$patch({ info: false });
+      this.store.$patch({ info: false, toggleModule: false });
       this.closeVendor();
       this.closeCat();
       this.swapMain();
+      this.$emit("closeModule"); //tells parent, vendors.vue to hide the popup
       if (this.store.catalog) {
         this.store.resizing();
       } else if (this.store.monitor) {
