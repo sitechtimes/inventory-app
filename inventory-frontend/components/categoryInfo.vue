@@ -25,13 +25,17 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { Chart } from "chart.js/auto";
+import { getRelativePosition } from "chart.js/helpers";
+import { useItemsStore } from "~/store/ItemsStore";
 
 const props = defineProps(["categoryName"]);
+const store = useItemsStore();
 
 const isMaximized = ref(false);
 const chart2 = ref();
 let CategoryItem = ref([]);
 let ItemCount = ref([]);
+let dataArray = ref(null);
 
 const maximizeChart = () => {
   isMaximized.value = !isMaximized.value;
@@ -52,7 +56,7 @@ const chartData = ref({
       data: ItemCount.value,
       fill: false,
       borderColor: "rgb(75, 192, 192)",
-      backgroundColor: "rgb(75, 1, 192)",
+      backgroundColor: "rgb(32, 116, 180)",
       tension: 0.1,
     },
   ],
@@ -60,6 +64,7 @@ const chartData = ref({
 
 const chartOptions = ref({
   responsive: true,
+  events: ["click", "mousemove"],
   scales: {
     y: {
       beginAtZero: true,
@@ -99,15 +104,34 @@ const createChart = () => {
   const chart1 = new Chart(ctx1, {
     type: "bar",
     data: chartData.value,
-    options: chartOptions.value,
+    options: {
+      ...chartOptions.value,
+      onClick: (e) => {
+        let smallChart = Chart.getChart("myChart1");
+        const canvasPosition = getRelativePosition(e, smallChart);
+        const dataX = smallChart.scales.x.getValueForPixel(canvasPosition.x);
+        const arr = dataArray.value[dataX];
+        const item = arr.itemsCategory[dataX];
+        store.$patch({ dataObject: item });
+      },
+    },
   });
-
   const ctx2 = document.getElementById("myChart2").getContext("2d");
 
   const chart2 = new Chart(ctx2, {
     type: "bar",
     data: chartData.value,
-    options: chartOptions.value,
+    options: {
+      ...chartOptions.value,
+      onClick: (e) => {
+        let smallChart = Chart.getChart("myChart2");
+        const canvasPosition = getRelativePosition(e, smallChart);
+        const dataX = smallChart.scales.x.getValueForPixel(canvasPosition.x);
+        const arr = dataArray.value[dataX];
+        const item = arr.itemsCategory[dataX];
+        store.$patch({ dataObject: item });
+      },
+    },
   });
 };
 
@@ -134,10 +158,8 @@ async function fetchData() {
     );
 
     const data = await response.json();
-
     const CategoryName = props.categoryName;
     data.forEach((category) => {
-      console.log(category);
       if (CategoryName === category.category_name) {
         category.itemsCategory.forEach((item) => {
           CategoryItem.value.push(item.name);
@@ -145,7 +167,7 @@ async function fetchData() {
         });
       }
     });
-
+    dataArray.value = data;
     createChart();
   } catch (error) {
     console.log("Error fetching data:", error);
@@ -186,6 +208,7 @@ async function fetchData() {
 }
 
 .chart2-cont {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -193,8 +216,10 @@ async function fetchData() {
 }
 
 #myChart2 {
+  position: relative;
   height: 65rem !important;
   width: fit-content !important;
+  padding: 2vw;
 }
 
 .maximize-button,
@@ -247,6 +272,7 @@ async function fetchData() {
 
 @media screen and (orientation: landscape) and (max-height: 540px) {
   #myChart1 {
+    position: relative;
     height: 25rem !important;
     width: 80% !important;
   }
@@ -292,6 +318,7 @@ async function fetchData() {
 }
 @media screen and (max-width: 375px) {
   #myChart1 {
+    position: relative;
     height: 20rem !important;
     width: 35rem !important;
   }
@@ -309,6 +336,7 @@ async function fetchData() {
 
 @media screen and (max-width: 280px) {
   #myChart1 {
+    position: relative;
     width: 25rem !important;
     height: 20rem !important;
   }
