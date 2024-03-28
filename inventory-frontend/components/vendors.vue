@@ -2,42 +2,8 @@
   <div class="container">
     <div class="header itemHeader subheading">Vendors</div>
     <div class="content">
-      <div class="buttons">
-        <button
-          v-for="data in vendor"
-          :key="data"
-          class="vendor-container"
-          @click="showChartfuc(data.itemsVendor, data.vendor_name)"
-        >
-          <h1 class="vendor-name subheading">{{ data.vendor_name }}</h1>
-        </button>
-      </div>
-      <div class="info canvas" v-show="showInfo" id="canvas" ref="canvas">
-        <div class="extraInfoPanel">
-          <div class="chart1-cont">
-            <div ref="chart1">
-              <canvas class="canvas1" id="cont1"></canvas>
-            </div>
-            <div class="btn-cont1">
-              <button @click="maximizeChart()" class="maximize-button">
-                <font-awesome-icon :icon="['fas', 'maximize']" />
-              </button>
-            </div>
-          </div>
-          <div class="no-show" ref="chart2">
-            <div>
-              <canvas class="canvas2" id="cont2"></canvas>
-              <button class="minimize-button" @click="maximizeChart()">
-                <font-awesome-icon :icon="['fas', 'minimize']" />
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div v-if="toggle">
-      <Info
+      <div v-if="toggle">
+        <Info
         :img_link="store.dataObject.image_url"
         :name="store.dataObject.name"
         :category="store.dataObject.category"
@@ -53,7 +19,44 @@
         @closeModule="closeModule"
       />
     </div>
+      <div class="info canvas" v-show="showInfo" id="canvas" ref="canvas">
+        <div class="extraInfoPanel">
+          <div class="chart1-cont">
+            <div class="yesir">
+            <div ref="chart1">
+              <canvas class="canvas1" id="cont1"></canvas>
+            </div>
+  </div> 
+  
+            <div class="btn-cont1">
+              <button @click="maximizeChart()" class="maximize-button">
+                <font-awesome-icon :icon="['fas', 'maximize']" />
+              </button>
+
+            </div>
+          </div>
+          <div class="no-show" ref="chart2">
+            <div>
+              <canvas class="canvas2" id="cont2"></canvas>
+              <button class="minimize-button" @click="maximizeChart()">
+                <font-awesome-icon :icon="['fas', 'minimize']" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+  <div class="buttons">
+        <button
+          v-for="data in vendor"
+          :key="data"
+          class="vendor-container"
+          @click="showChartfuc(data.itemsVendor, data.vendor_name)"
+        >
+          <h1 class="vendor-name subheading">{{ data.vendor_name }}</h1>
+        </button>
+      </div>
 </template>
 
 <script setup>
@@ -246,6 +249,9 @@ function closeModule() {
   height: 100vh;
   width: fit-content;
 }
+.yesir{
+  display: inline
+}
 .fullScreen {
   display: block;
   position: fixed;
@@ -282,12 +288,6 @@ function closeModule() {
   padding: 20px;
 }
 
-
-.content {
-  display: flex;
-  flex-direction: row;
-  padding-top: 3rem;
-}
 
 
 .buttons {
@@ -361,16 +361,21 @@ width: 90rem !important;
 
 .minimize-button {
   position: relative;
-  left: 45%;
+  left: 40%;
   width: 8rem;
   margin-top: 100px;
 }
 
+.btn-cont1{
+  align-self: self-start;
+}
 
 .maximize-button {
   position: relative;
-    left: 40%;
+    left: 50%;
   width: 8rem;
+  margin-top: 10px;
+  margin-bottom: 10px
 }
 
 
@@ -398,7 +403,6 @@ width: 90rem !important;
   display: flex;
   justify-content: center;
 }
-
 
 @media only screen and (orientation: landscape){
   .minimize-button {
@@ -437,7 +441,7 @@ width: 90rem !important;
 }
 .minimize-button {
   margin-top: 100px;
-  left: 45%;
+  left: 40%;
 }
 }
 
@@ -488,6 +492,9 @@ width: 90rem !important;
  #Vendor {
   width: 50rem !important;
  }
+ .maximize-button{
+    left: 40%
+  }
  
 }
 
@@ -511,6 +518,7 @@ width: 90rem !important;
     height: 40rem !important;
     width: 18rem !important;
   }
+
 }
 
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div class="infoPop">
     <div class="tabPop">
-      <div class="tab1 tab">
+      <div class="tab1 tab" >
         <button class="extraTab tabtext text" @click="swapMain">
           {{ name }}
         </button>
@@ -55,7 +55,6 @@
 .infoPop {
   height: 100%;
   width: 100%;
-
   background-color: var(--whitebg);
   display: flex;
   flex-direction: column;

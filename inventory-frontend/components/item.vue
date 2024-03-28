@@ -208,7 +208,8 @@
 
 @media screen and (max-width: 375px) {
   .name {
-    font-size: 10px;
+    font-size: 13px;
+    text-overflow: ellipsis;  
   }
 }
 </style>

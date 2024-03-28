@@ -10,7 +10,6 @@
         </button>
       </div>
     </div>
-
     <div class="no-show" ref="chart2">
       <div class="chart2-cont">
         <canvas id="myChart2"></canvas>
@@ -216,9 +215,8 @@ async function fetchData() {
 }
 
 #myChart2 {
-  position: relative;
-  height: 65rem !important;
-  width: fit-content !important;
+  height: 70rem !important;
+    width: 90% !important;
   padding: 2vw;
 }
 
@@ -305,8 +303,8 @@ async function fetchData() {
 
 @media screen and (max-width: 667px) {
   #myChart2 {
-    height: 50rem !important;
-    width: fit-content !important;
+    height: 80% !important;
+    width: 80% !important;
   }
 }
 
@@ -318,13 +316,13 @@ async function fetchData() {
 }
 @media screen and (max-width: 375px) {
   #myChart1 {
-    position: relative;
     height: 20rem !important;
     width: 35rem !important;
   }
 
   #myChart2 {
-    height: 30rem !important; 
+    height: 30rem !important;
+    width: 35rem !important;
   }
 }
 
@@ -336,14 +334,13 @@ async function fetchData() {
 
 @media screen and (max-width: 280px) {
   #myChart1 {
-    position: relative;
     width: 25rem !important;
     height: 20rem !important;
   }
 
   #myChart2 {
-    width: 25rem !important;
-    height: fit-content !important;
+    width: 30rem !important;
+    height: 25rem !important;
   }
   .minimize-button {
     position: relative;

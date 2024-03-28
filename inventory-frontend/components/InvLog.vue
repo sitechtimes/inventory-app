@@ -2,7 +2,7 @@
   <div id="logCon">
     <div v-for="each in store.logs" :key="each.id">
       <p id="log">
-        {{ formatDateTime(each.dateTime) }} {{ each.change }}
+        {{ formatDateTime(each.dateTime) }} {{ each.change }} , {{ each.name }}
       </p>
     </div>
   </div>
