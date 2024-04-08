@@ -130,6 +130,7 @@
           <option value="3">Blick</option>
           <option value="4">Home Depot</option>
           <option value="5">Form Labs</option>
+          <option value="6">Bambu Lab</option>
           <option value="7">Hobby Lobby</option>
           <option value="8">Fastenal</option>
           <option value="9">Glass Crafters</option>
@@ -201,9 +202,9 @@ export default {
       { value: 16, name: "Printmaking", shtName: "PRTM" },
       { value: 17, name: "Paper", shtName: "PAP" },
       { value: 18, name: "Drawing", shtName: "DR" },
-      { value: 19, name: "Resin Printer", shtName: "RES"},
-      { value: 20, name: "3D Printer", shtName: "3D"},
-      { value: 21, name: "Stained Glass", shtName:"STGL"}
+      { value: 19, name: "Resin Printer", shtName: "RES" },
+      { value: 20, name: "3D Printer", shtName: "3D" },
+      { value: 21, name: "Stained Glass", shtName: "STGL" },
       //add the other categories if their is more
     ];
     const CategoryIndex =
@@ -247,28 +248,37 @@ export default {
     };
   },
   methods: {
-
-findchange(){
-  if(this.editname != this.name){
-    this.changes = this.changes+ "Name: " + this.editname + " "
-  }
-  if(this.listCategoryName[this.editcategory-1].name != (this.category)){
-    this.changes = this.changes+ ", " +"Category: " + this.listCategoryName[this.editcategory-1].name
-  }
-  if(this.quantity1 != this.quantM ){
-    this.changes = this.changes+ ", " +"Makerspace Quantity: " + this.quantity1
-  }
-  if(this.quantity2 != this.quantB){
-    this.changes = this.changes+ ", " +"Backroom Quantity: " + this.quantity2
-  }
-  if(this.editLink != this.link){
-    this.changes = this.changes+ ", " +"Purchase Link: " + this.editLink 
-  }
-  if(this.listVendorsName[this.editvendor-1].name != (this.vendor)){
-    this.changes = this.changes+ ", " + "Vendor: " + this.listVendorsName[this.editvendor-1].name 
-  }
-  console.log(this.changes)
-},  
+    findchange() {
+      if (this.editname != this.name) {
+        this.changes = this.changes + "Name: " + this.editname + " ";
+      }
+      if (this.listCategoryName[this.editcategory - 1].name != this.category) {
+        this.changes =
+          this.changes +
+          ", " +
+          "Category: " +
+          this.listCategoryName[this.editcategory - 1].name;
+      }
+      if (this.quantity1 != this.quantM) {
+        this.changes =
+          this.changes + ", " + "Makerspace Quantity: " + this.quantity1;
+      }
+      if (this.quantity2 != this.quantB) {
+        this.changes =
+          this.changes + ", " + "Backroom Quantity: " + this.quantity2;
+      }
+      if (this.editLink != this.link) {
+        this.changes = this.changes + ", " + "Purchase Link: " + this.editLink;
+      }
+      if (this.listVendorsName[this.editvendor - 1].name != this.vendor) {
+        this.changes =
+          this.changes +
+          ", " +
+          "Vendor: " +
+          this.listVendorsName[this.editvendor - 1].name;
+      }
+      console.log(this.changes);
+    },
     changeobd() {
       this.ascending = !this.ascending; // Toggle the state
       this.store.logs.reverse();
@@ -306,7 +316,7 @@ findchange(){
         vendor: newVendor,
         purchase_link: this.editLink,
         pub_date: this.editDate,
-        change: this.changes
+        change: this.changes,
         // Add other properties as needed
       };
       const config = useRuntimeConfig();
@@ -388,6 +398,19 @@ findchange(){
       const currentDate = new Date().toISOString().slice(0, 10);
       this.editDate = currentDate;
     },
+
+    changeSize() {
+      document.querySelectorAll(".itemMain").forEach((item) => {
+        if (
+          item.lastElementChild.firstElementChild.textContent === this.editname
+        ) {
+          item.classList.add("infoFull");
+          item.classList.remove("mainSize");
+          console.log(item.classList);
+        }
+      });
+    },
+
     async saveChanges() {
       this.findchange();
       this.saveLogs();
@@ -441,6 +464,8 @@ findchange(){
           : 0
       );
       this.store.$patch({ items: newresults });
+
+      setTimeout(this.changeSize, 5);
     },
   },
 
@@ -464,13 +489,11 @@ findchange(){
     quantity1(newValue) {
       if (this.editMode) {
         this.editquantity = newValue + this.quantity2;
-
       }
     },
     quantity2(newValue) {
       if (this.editMode) {
         this.editquantity = this.quantity1 + newValue;
-
       }
     },
     $props: {
@@ -494,9 +517,9 @@ findchange(){
           { value: 16, name: "Printmaking" },
           { value: 17, name: "Paper" },
           { value: 18, name: "Drawing" },
-          { value: 19, name: "Resin Printer"},
-          { value: 20, name: "3D Printer"},
-          { value: 21, name: "Stained Glass"}
+          { value: 19, name: "Resin Printer" },
+          { value: 20, name: "3D Printer" },
+          { value: 21, name: "Stained Glass" },
           //add the other categories if their is more
         ];
         const listVendors = [

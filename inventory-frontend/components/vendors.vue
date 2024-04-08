@@ -2,58 +2,84 @@
   <div class="container">
     <div class="header itemHeader subheading">Vendors</div>
     <div class="content">
-      <div class="buttons">
-        <button
-          v-for="data in vendor"
-          :key="data"
-          class="vendor-container"
-          @click="showChartfuc(data.itemsVendor)"
-        >
-          <h1 class="vendor-name subheading">{{ data.vendor_name }}</h1>
-        </button>
-      </div>
+      <div v-if="toggle">
+        <Info
+        :img_link="store.dataObject.image_url"
+        :name="store.dataObject.name"
+        :category="store.dataObject.category"
+        :quantity="
+          store.dataObject.makerspace_quantity +
+          store.dataObject.backroom_quantity
+        "
+        :link="store.dataObject.purchase_link"
+        :vendor="store.dataObject.vendor"
+        :date="store.dataObject.last_purchased"
+        :backroom_quantity="store.dataObject.backroom_quantity"
+        :makerspace_quantity="store.dataObject.makerspace_quantity"
+        @closeModule="closeModule"
+      />
+    </div>
       <div class="info canvas" v-show="showInfo" id="canvas" ref="canvas">
         <div class="extraInfoPanel">
-          <div class="canvas-cont">
-            <div
-              :class="{ 'chart-cont-big': minMax, 'chart-cont-small': !minMax }"
-            >
-              <canvas id="Vendor"></canvas>
+          <div class="chart1-cont">
+            <div class="yesir">
+            <div ref="chart1">
+              <canvas class="canvas1" id="cont1"></canvas>
             </div>
-            <div class="btn-cont">
-              <button
-                v-if="!minMax"
-                @click="fullScreen()"
-                class="maximize-button"
-              >
+  </div> 
+  
+            <div class="btn-cont1">
+              <button @click="maximizeChart()" class="maximize-button">
                 <font-awesome-icon :icon="['fas', 'maximize']" />
               </button>
-            </div>
 
-            <button class="minimize-button" v-if="minMax" @click="fullScreen()">
-              <font-awesome-icon :icon="['fas', 'minimize']" />
-            </button>
+            </div>
+          </div>
+          <div class="no-show" ref="chart2">
+            <div>
+              <canvas class="canvas2" id="cont2"></canvas>
+              <button class="minimize-button" @click="maximizeChart()">
+                <font-awesome-icon :icon="['fas', 'minimize']" />
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+  <div class="buttons">
+        <button
+          v-for="data in vendor"
+          :key="data"
+          class="vendor-container"
+          @click="showChartfuc(data.itemsVendor, data.vendor_name)"
+        >
+          <h1 class="vendor-name subheading">{{ data.vendor_name }}</h1>
+        </button>
+      </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from "vue";
 import { Chart } from "chart.js/auto";
 import { useItemsStore } from "~/store/ItemsStore";
+import { getRelativePosition } from "chart.js/helpers";
 
 let showChart = ref(false);
 let vendor = ref([]);
-let chart = ref();
+let chart1 = ref(null);
+let chart2 = ref(null);
 let showInfo = ref(false); // Step 1
-let minMax = ref(false);
 let canvas = ref();
 let store = useItemsStore();
+let isMaximized = ref(false);
+let seller = ref();
+let toggle = ref(store.toggleModule);
+
+//store.$subscribe((mutation, dataObject) => {});
 
 onMounted(() => {
+  toggle.value = false;
   const config = useRuntimeConfig();
   fetch(
     `${config.public.protocol}://${config.public.baseurl}:${config.public.port}/items/vendor/`,
@@ -83,7 +109,7 @@ const chartData = ref({
       data: [],
       fill: false,
       borderColor: "rgb(75, 192, 192)",
-      backgroundColor: "rgb(75, 1, 192)",
+      backgroundColor: "rgb(32, 116, 180)",
       tension: 0.1,
     },
   ],
@@ -126,63 +152,129 @@ const chartOptions = ref({
 });
 
 function createChart() {
-  const ctx = document.getElementById("Vendor").getContext("2d");
-  const chart1 = new Chart(ctx, {
+  const ctx1 = document.getElementById("cont1").getContext("2d");
+  let tempchart1 = new Chart(ctx1, {
     type: "bar",
     data: chartData.value,
-    options: chartOptions.value,
+    options: {
+      ...chartOptions.value,
+      onClick: (e) => {
+        let smallChart = Chart.getChart("cont1");
+        const canvasPosition = getRelativePosition(e, smallChart);
+        const dataX = smallChart.scales.x.getValueForPixel(canvasPosition.x);
+        const bar = Chart.getChart("cont1").data.labels[dataX];
+        const vendor_array = vendor.value.find(
+          (object) => object.vendor_name == seller
+        ).itemsVendor;
+        const item = vendor_array[dataX];
+        store.$patch({ toggleModule: true, dataObject: item });
+        toggle.value = store.toggleModule;
+      },
+    },
   });
-  chart = chart1;
+
+  const ctx2 = document.getElementById("cont2").getContext("2d");
+  let tempchart2 = new Chart(ctx2, {
+    type: "bar",
+    data: chartData.value,
+    options: {
+      ...chartOptions.value,
+      onClick: (e) => {
+        let smallChart = Chart.getChart("cont2");
+        const canvasPosition = getRelativePosition(e, smallChart);
+        const dataX = smallChart.scales.x.getValueForPixel(canvasPosition.x);
+        const vendor_array = vendor.value.find(
+          (object) => object.vendor_name == seller
+        ).itemsVendor;
+        const item = vendor_array[dataX];
+        store.$patch({ toggleModule: true, dataObject: item });
+        toggle.value = store.toggleModule;
+      },
+    },
+  });
+
+  chart1.value = tempchart1;
+  chart2.value = tempchart2;
 }
 
 function updateChart(tag, quantity) {
-  chart.data.labels = tag;
-  chart.data.datasets[0].data = quantity;
-  chart.update();
+  Chart.getChart("cont1").data.labels = tag;
+  Chart.getChart("cont1").data.datasets[0].data = quantity;
+  Chart.getChart("cont2").data.labels = tag;
+  Chart.getChart("cont2").data.datasets[0].data = quantity;
+  Chart.getChart("cont1").update();
+  Chart.getChart("cont2").update();
 }
 
-const showChartfuc = (vendorItem) => {
+const showChartfuc = (vendorItem, vendor) => {
+  console.log(vendorItem);
+  console.log(vendor);
+  seller = vendor;
   showInfo.value = true; // Step 3
-
-  if (!showChart.value) {
-    showChart.value = true;
-
-    let labels = [];
-    let quantity = [];
-    vendorItem.forEach((item) => {
-      labels.push(item.name);
-      quantity.push(item.total);
-    });
+  showChart.value = true;
+  if (!Chart.getChart("cont1")) {
     createChart();
-    updateChart(labels, quantity);
-  } else if (showChart.value) {
-    let labels = [];
-    let quantity = [];
-    vendorItem.forEach((item) => {
-      labels.push(item.name);
-      quantity.push(item.total);
-    });
-    updateChart(labels, quantity);
   }
+  let labels = [];
+  let quantity = [];
+  vendorItem.forEach((item) => {
+    labels.push(item.name);
+    quantity.push(item.total);
+  });
+  updateChart(labels, quantity);
   if (store.dismiss === false) {
     store.NavMenu();
   }
 };
 
-const fullScreen = () => {
-  if (minMax.value) {
-    minMax.value = false;
-    canvas.value.classList.remove("fullScreen");
-  } else if (!minMax.value) {
-    minMax.value = true;
-    canvas.value.classList.add("fullScreen");
-    //canvas.value.style.width = "100%";
-    //canvas.value.style.height = "100%";
+const maximizeChart = () => {
+  isMaximized.value = !isMaximized.value;
+  if (isMaximized.value) {
+    console.log(chart2.value);
+    chart2.value.classList.remove("no-show");
+    chart2.value.classList.add("fullScreen");
+  } else if (!isMaximized.value) {
+    chart2.value.classList.add("no-show");
+    chart2.value.classList.remove("fullScreen");
   }
 };
+
+function closeModule() {
+  toggle.value = store.toggleModule;
+}
 </script>
 
 <style scoped>
+.canvas2 {
+  height: 100vh;
+  width: fit-content;
+}
+.yesir{
+  display: inline
+}
+.fullScreen {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0;
+  margin: 0;
+  z-index: 9999;
+  background-color: white;
+  overflow: auto;
+  height: 100vh !important;
+}
+
+.canvas2 {
+  height: 90vh !important;
+  width: fit-content;
+  position: relative;
+}
+.no-show {
+  display: none;
+}
 .container {
   display: flex;
   flex-direction: column;
@@ -197,12 +289,6 @@ const fullScreen = () => {
 }
 
 
-.content {
-  display: flex;
-  flex-direction: row;
-  padding-top: 3rem;
-}
-
 
 .buttons {
   flex: 1;
@@ -213,30 +299,18 @@ const fullScreen = () => {
 .info {
   flex: 1;
 }
-
-
 .bigdiv {
   display: flex;
   flex-flow: column nowrap;
 }
-
-
 .other-stuff {
   display: flex;
   flex-flow: row nowrap;
 }
 
+.canvas1 {
+  height: 50rem !important;
 
-.chart-cont {
-  height: 70rem;
-  width: 70rem;
-}
-
-
-.vendors {
-  display: flex;
-  max-width: 60%;
-  flex-flow: row wrap;
 }
 
 
@@ -254,8 +328,6 @@ const fullScreen = () => {
   background-color: var(--halflightgray);
   cursor: pointer;
 }
-
-
 .vendor-name {
   color: #333;
   font-size: 20px;
@@ -267,23 +339,6 @@ const fullScreen = () => {
 height: 60rem !important;
 width: 90rem !important;
 }
-
-
-.fullScreen {
-  display: block;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  padding: 0;
-  margin: 0;
-  z-index: 9999;
-  background-color: white;
-  overflow: auto;
-}
-
-
 .canvas-cont {
   display: flex;
   flex-flow: column nowrap;
@@ -306,14 +361,21 @@ width: 90rem !important;
 
 .minimize-button {
   position: relative;
-  left: 45%;
+  left: 40%;
   width: 8rem;
   margin-top: 100px;
 }
 
+.btn-cont1{
+  align-self: self-start;
+}
 
 .maximize-button {
+  position: relative;
+    left: 50%;
   width: 8rem;
+  margin-top: 10px;
+  margin-bottom: 10px
 }
 
 
@@ -341,7 +403,6 @@ width: 90rem !important;
   display: flex;
   justify-content: center;
 }
-
 
 @media only screen and (orientation: landscape){
   .minimize-button {
@@ -380,7 +441,7 @@ width: 90rem !important;
 }
 .minimize-button {
   margin-top: 100px;
-  left: 45%;
+  left: 40%;
 }
 }
 
@@ -417,9 +478,8 @@ width: 90rem !important;
 
   .minimize-button {  
    position:relative;
-   right: 0% ;
-   left: 0% ;
-
+   margin-bottom: 10px;
+   left: 50% ;
 
   }
     .buttons {
@@ -432,6 +492,9 @@ width: 90rem !important;
  #Vendor {
   width: 50rem !important;
  }
+ .maximize-button{
+    left: 40%
+  }
  
 }
 
@@ -455,6 +518,7 @@ width: 90rem !important;
     height: 40rem !important;
     width: 18rem !important;
   }
+
 }
 
 </style>

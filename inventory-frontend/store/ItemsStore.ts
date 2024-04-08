@@ -19,6 +19,7 @@ export const useItemsStore = defineStore("items", {
     categoryPop: false,
     categoryHeader: false,
     editform: false,
+    toggleModule: false, //toggle vendor chart popup
     //for resizing on toggling extra info
     main: [],
     textbox: [],
@@ -34,6 +35,8 @@ export const useItemsStore = defineStore("items", {
     alerts: 0,
     alerted_items: [],
     viewNotif: false,
+    //vendor chart popup thing
+    dataObject: null,
   }),
   getters: {},
   
@@ -74,40 +77,27 @@ export const useItemsStore = defineStore("items", {
       );
       this.returnlist = newresults;
       this.items = newresults;
-      return newresults;
+
+     
+
+      this.resizing()
     },   
     //resize individual items when clicked for more information by adding/removing classes
     resizing() {
+      
       if (this.info === true || this.editform === true) {
-        this.textbox.forEach((item) => {
-          item.classList.add("info-name-avail");
-        });
-        this.name.forEach((item) => {
-          item.classList.add("info-name");
-        });
-        this.quant.forEach((item) => {
-          item.classList.add("info-quantity");
-        });
-
-        this.main.forEach((item) => {
+        document.querySelectorAll('.itemMain').forEach((item) => {
           item.classList.remove("mainSize");
           item.classList.add("infoFull");
         });
         this.cat.forEach((item) => item.classList.add("info-cat"));
+        console.log('LOL')
       } else {
-        this.main.forEach((item) => {
+        document.querySelectorAll('.itemMain').forEach((item) => {
           item.classList.add("mainSize");
           item.classList.remove("infoFull");
         });
-        this.textbox.forEach((item) => {
-          item.classList.remove("info-name-avail");
-        });
-        this.name.forEach((item) => {
-          item.classList.remove("info-name");
-        });
-        this.quant.forEach((item) => {
-          item.classList.remove("info-quantity");
-        });
+        console.log('RESIZE')
         this.cat.forEach((item) => item.classList.remove("info-cat"));
       }
     },
