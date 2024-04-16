@@ -12,7 +12,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public:{
       baseurl: '100.101.79.68',
-      port: '8000',
+      port: '8888',
       protocol: "http"
     }
   }
