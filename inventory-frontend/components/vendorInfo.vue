@@ -40,7 +40,6 @@ let dataArray = ref([]);
 const maximizeChart = () => {
   isMaximized.value = !isMaximized.value;
   if (isMaximized.value) {
-    console.log(chart2.value);
     chart2.value.classList.remove("no-show");
     chart2.value.classList.add("fullScreen");
   } else if (!isMaximized.value) {
@@ -113,7 +112,6 @@ const createChart = () => {
         const dataX = smallChart.scales.x.getValueForPixel(canvasPosition.x);
         const vendor_array = dataArray.value;
         let payload = vendor_array[dataX];
-        console.log(payload);
         store.$patch({ dataObject: payload });
       },
     },
@@ -174,7 +172,6 @@ async function fetchData() {
 
     createChart();
   } catch (error) {
-    console.log("Error fetching data:", error);
   }
 }
 </script>
