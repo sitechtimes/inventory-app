@@ -41,7 +41,6 @@ export default {
 
         this.newlist.push(categories);
       });
-      console.log(this.newlist);
 
       this.store.$patch({
         items: this.newlist,
@@ -53,7 +52,7 @@ export default {
       this.store.items.forEach((item) => {
         if (item[1].length < 1) {
           this.empties++;
-          console.log(this.empties);
+
         }
       });
       if (this.empties >= this.store.items.length) {

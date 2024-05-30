@@ -277,7 +277,7 @@ export default {
           "Vendor: " +
           this.listVendorsName[this.editvendor - 1].name;
       }
-      console.log(this.changes);
+  
     },
     changeobd() {
       this.ascending = !this.ascending; // Toggle the state
@@ -291,21 +291,16 @@ export default {
     saveLogs() {
       let newCategory = "";
       let newVendor = "";
-      console.log("saving", this.editcategory);
       this.listCategoryName.forEach((element) => {
         if (parseInt(this.editcategory) === element.value) {
-          console.log(element.name);
           newCategory = element.shtName;
         }
       });
       this.listVendorsName.forEach((element) => {
         if (parseInt(this.editvendor) === element.value) {
-          console.log(element.name);
           newVendor = element.shtName;
         }
       });
-      console.log("Category:", newCategory);
-      console.log("Vendor:", newVendor);
       let logData = {
         name: this.editname,
         category: newCategory,
@@ -333,7 +328,6 @@ export default {
       )
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
         })
         .catch((error) => console.error("Error:", error));
     },
@@ -406,7 +400,6 @@ export default {
         ) {
           item.classList.add("infoFull");
           item.classList.remove("mainSize");
-          console.log(item.classList);
         }
       });
     },
@@ -414,7 +407,6 @@ export default {
     async saveChanges() {
       this.findchange();
       this.saveLogs();
-      console.log("name:", this.editname);
       const formData = new FormData();
       formData.append("name", this.editname);
       formData.append("category", this.editcategory);
@@ -422,15 +414,12 @@ export default {
       formData.append("makerspace_quantity", this.quantity1);
       formData.append("backroom_quantity", this.quantity2);
       formData.append("purchase_link", this.editLink);
-      console.log("vendor", this.editvendor);
       formData.append("vendor", this.editvendor);
-      console.log("vendor", this.editvendor);
       formData.append("last_purchased", this.editDate);
       this.store.getLogs(this.editname);
       this.store.getLogs(this.editname);
 
       try {
-        console.log(this.store.id);
         const config = useRuntimeConfig();
         const response = await fetch(
           `${config.public.protocol}://${config.public.baseurl}:${config.public.port}/items/editItems/${this.store.id}/`,
@@ -445,8 +434,6 @@ export default {
 
         const data = await response.json();
         this.store.edit = true;
-        console.log(this.store.edit);
-        console.log(data);
         this.editMode = false;
       } catch (error) {
         console.log(error);
@@ -552,11 +539,6 @@ export default {
       deep: true,
       immediate: true,
     },
-  },
-  mounted() {
-    console.log(this.category);
-    console.log(this.editcategory);
-    console.log(this.vendor, this.editvendor);
   },
 };
 </script>

@@ -48,7 +48,6 @@ onMounted(() => {
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
       category.value = data;
     });
 });
