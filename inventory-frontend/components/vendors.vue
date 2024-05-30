@@ -207,8 +207,6 @@ function updateChart(tag, quantity) {
 }
 
 const showChartfuc = (vendorItem, vendor) => {
-  console.log(vendorItem);
-  console.log(vendor);
   seller = vendor;
   showInfo.value = true; // Step 3
   showChart.value = true;

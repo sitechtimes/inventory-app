@@ -88,7 +88,6 @@ function toBackRoom() {
     referrerPolicy: "no-referrer",
   })
     .then((response) => {
-      console.log(response);
       Backroom.value += 1;
       Makerspace.value -= 1;
     })
@@ -146,7 +145,6 @@ function manualEdit() {
       }
     )
       .then((response) => {
-        console.log(response);
         edit.value = false;
       })
       .catch((error) => {

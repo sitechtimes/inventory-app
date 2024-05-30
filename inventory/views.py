@@ -5,10 +5,11 @@ from django.http import JsonResponse, Http404
 from rest_framework.response import Response
 from .models import Item, Category, Vendor, Log
 from .serializer import ItemSerializer, CategorySerializer, VendorSerializer, LogSerializer
+from django.http import HttpResponse
 import datetime
 from rest_framework.parsers import MultiPartParser, FormParser
 import json
-
+import csv
 
 
 class LogView(generics.ListAPIView):
@@ -138,6 +139,8 @@ class AddLog(generics.CreateAPIView):
             serializer.save()
             return JsonResponse(serializer.data, status=201)
         return JsonResponse(serializer.errors, status=400)
+
+
 # delete item by pk value (id)
 
 
@@ -170,3 +173,21 @@ class updateMinAmount(generics.UpdateAPIView):
 class editItems(generics.RetrieveUpdateAPIView):
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
+
+
+# def item_csv(request):
+#     response = HttpResponse(content_type='text/csv')
+#     response['Content-Disposition'] = 'attachment ; filename= items.csv'
+#
+#     writer = csv.writer(response)
+#
+#     items = Log.objects.all()
+#
+#     writer.writerow(
+#         ['Item Name', 'Time', 'Category', 'Link', 'Backroom Quantity', 'Makerspace Quantity', 'Vendor', 'Pub Date',
+#          'Change'])
+#
+#     for item in items:
+#       writer.writerow([ item.name, item.time, item.category, item.link , item.backroom_quantity , item.makerspace_quantity , item.vendor , item.last_purchased , item.change])
+#
+#       return response

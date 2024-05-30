@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import { onMounted } from 'vue';
 import { useItemsStore } from "~/store/ItemsStore";
 export default {
   name: "Alerts",
@@ -31,7 +32,11 @@ export default {
       store: useItemsStore(),
     };
   },
+  onMounted(){
+    console.log(store)
+  }
 };
+
 </script>
 
 <style>

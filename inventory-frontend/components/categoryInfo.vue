@@ -39,7 +39,6 @@ let dataArray = ref(null);
 const maximizeChart = () => {
   isMaximized.value = !isMaximized.value;
   if (isMaximized.value) {
-    console.log(chart2.value);
     chart2.value.classList.remove("no-show");
     chart2.value.classList.add("fullScreen");
   } else if (!isMaximized.value) {

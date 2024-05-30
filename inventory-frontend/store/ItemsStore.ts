@@ -1,5 +1,10 @@
 import { defineStore } from "pinia";
 import { showNotification } from "assets/globalVar";
+import { arrayBuffer } from "stream/consumers";
+import { interfacearr } from "./interface";
+import { type } from "os";
+let arr = ref((type: interfacearr) => [])
+
 export const useItemsStore = defineStore("items", {
 
   state: () => ({
@@ -33,7 +38,7 @@ export const useItemsStore = defineStore("items", {
     vendors: false,
     //notifying minimum
     alerts: 0,
-    alerted_items: [],
+    alerted_items: [ref((type: interfacearr) => [])],
     viewNotif: false,
     //vendor chart popup thing
     dataObject: null,
@@ -43,17 +48,14 @@ export const useItemsStore = defineStore("items", {
   actions: {
     //fetch api
 
-    async getLogs(itemname){
+    async getLogs(itemname: string | undefined){
       try {
-        console.log("LOGS")
         const config = useRuntimeConfig()
         const response = await fetch(`${config.public.protocol}://${config.public.baseurl}:${config.public.port}/items/log/`);
         const results = await response.json();
-        console.log(results);
-        this.logs = results.filter(el => el.name === itemname);
-        this.logs.sort((a, b) => a.pub_date.localeCompare(b.pub_date));
+        this.logs = results.filter((el: { name: any; }) => el.name === itemname);
+        this.logs.sort((a : {pub_date: any}, b : {pub_date: any}) => a.pub_date.localeCompare(b.pub_date));
         this.logs = this.logs.reverse()
-        console.log(this.logs)
       } catch (error) {
         // TypeError: Failed to fetch ubgiiuhguygivuyig
         console.log('There was an error', error);
@@ -66,9 +68,7 @@ export const useItemsStore = defineStore("items", {
       const config = useRuntimeConfig()
       const response = await fetch(`${config.public.protocol}://${config.public.baseurl}:${config.public.port}/items/category/`);
       const results = await response.json();
-      console.log(results);
-      const newresults = results.sort((a, b) =>
-
+      const newresults = results.sort((a: { category_name: number; }, b: { category_name: number; }) =>
         a.category_name > b.category_name
           ? 1
           : b.category_name > a.category_name
@@ -77,38 +77,36 @@ export const useItemsStore = defineStore("items", {
       );
       this.returnlist = newresults;
       this.items = newresults;
-
-     
-
       this.resizing()
     },   
     //resize individual items when clicked for more information by adding/removing classes
     resizing() {
+    
+        if (this.info === true || this.editform === true) {
+          document.querySelectorAll('.itemMain').forEach((item) => {
+            item.classList.remove("mainSize");
+            item.classList.add("infoFull");
+          });
+        } else {
+          document.querySelectorAll('.itemMain').forEach((item) => {
+            item.classList.add("mainSize");
+            item.classList.remove("infoFull");
+          });
+        }
       
-      if (this.info === true || this.editform === true) {
-        document.querySelectorAll('.itemMain').forEach((item) => {
-          item.classList.remove("mainSize");
-          item.classList.add("infoFull");
-        });
-        this.cat.forEach((item) => item.classList.add("info-cat"));
-        console.log('LOL')
-      } else {
-        document.querySelectorAll('.itemMain').forEach((item) => {
-          item.classList.add("mainSize");
-          item.classList.remove("infoFull");
-        });
-        console.log('RESIZE')
-        this.cat.forEach((item) => item.classList.remove("info-cat"));
-      }
+     
     },
     //change classes for info pop up headers - inactive
-    inactive(maintab, tabnumber, btn) {
-      document.querySelector(maintab).classList.add("inactive");
-      document.querySelector(tabnumber).classList.add("inactive");
-      document.querySelector(btn).classList.add("inactivebtn");
+    inactive(maintab: any, tabnumber: any, btn: any) {
+      if (document != null){
+        document.querySelector(maintab).classList.add("inactive");
+        document.querySelector(tabnumber).classList.add("inactive");
+        document.querySelector(btn).classList.add("inactivebtn");
+      }
+    
     },
     //change classes for info pop up headers - active
-    active(maintab, tabnumber, btn) {
+    active(maintab: any, tabnumber: any, btn: any) {
       document.querySelector(maintab).classList.add("active");
       document.querySelector(maintab).classList.remove("inactive");
       document.querySelector(tabnumber).classList.remove("inactive");
@@ -122,18 +120,18 @@ export const useItemsStore = defineStore("items", {
         items: this.returnlist,
       });
 
-      document.getElementById("searchform").value = "";
+      (<HTMLInputElement>document.getElementById("searchform")).value = "";
     },
     //nav menu reshape
     NavMenu() {
       this.viewNotif = false;
       this.editform = false;
-      const appDOM = document.querySelector(".app");
-      const menubtn = document.querySelectorAll(".menu-btn");
+      const appDOM: any  = document.querySelector(".app");
+      const menubtn: any = document.querySelectorAll(".menu-btn");
       if (appDOM.classList.contains("selected")) {
         appDOM.classList.remove("selected");
         appDOM.classList.add("dismiss");
-        menubtn.forEach((btn) => {
+        menubtn.forEach((btn: any) => {
           btn.classList.remove("stretch");
           btn.classList.add("shrink");
         });
@@ -145,42 +143,33 @@ export const useItemsStore = defineStore("items", {
         this.dismiss = false;
         this.info = false;
         appDOM.classList.add("selected");
-        menubtn.forEach((btn) => {
+        menubtn.forEach((btn: any) => {
           btn.classList.remove("shrink");
           btn.classList.add("stretch");
         });
-        console.log("selected");
       } else if (
         !appDOM.classList.contains("dismiss") ||
         !appDOM.classList.contains("selected")
       ) {
         appDOM.classList.add("selected");
-        console.log("selected");
-        menubtn.forEach((btn) => {
+        menubtn.forEach((btn: any) => {
           btn.classList.add("stretch");
         });
       }
     },
     //counting alerts
     countAlerts() {
-      this.returnlist.forEach((list) => {
-        console.log(list);
-        list.itemsCategory.forEach((item) => {
-          if (item.alert === true) {
+      this.returnlist.forEach((list: {itemsCategory: any},) => {
+        list.itemsCategory.forEach((item: { alert: boolean; name:  string; total: number; name_id: string;}) => {
+          if (item.alert === true) {  
             this.alerts++;
-            this.alerted_items.push({
-              name: item.name,
-              quantity: item.total,
-              name_id: item.name_id,
-            });
+            this.alerted_items.push({name: item.name, quantity: item.total, name_id: item.name_id,})
           }
         });
       });
-      console.log(this.alerts);
     },
     //add item form
     addItems() {
-      console.log('pp')
       if (this.editform === true) {
         this.editform = false;
       } else {

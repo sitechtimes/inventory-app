@@ -242,8 +242,6 @@ export default {
   methods: {
     clicked() {
       this.store.getLogs(this.name);
-      console.log("clicked");
-      console.log(this.store.vendor);
       if (this.store.popup.name === this.name) {
         if (this.store.info === false) {
           this.store.$patch({ info: true, viewNotif: false });
@@ -278,8 +276,7 @@ export default {
           categoryHeader: false,
           viewNotif: false,
           editform: false,
-        });
-        console.log(this.store.id);
+        })
       }
       if (this.store.dismiss === false) {
         this.store.NavMenu();
