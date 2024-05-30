@@ -175,19 +175,19 @@ class editItems(generics.RetrieveUpdateAPIView):
     serializer_class = ItemSerializer
 
 
-def item_csv(request):
-    response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment ; filename= items.csv'
-
-    writer = csv.writer(response)
-
-    items = Log.objects.all()
-
-    writer.writerow(
-        ['Item Name', 'Time', 'Category', 'Link', 'Backroom Quantity', 'Makerspace Quantity', 'Vendor', 'Pub Date',
-         'Change'])
-
-    for item in items:
-      writer.writerow([ item.name, item.time, item.category, item.link , item.backroom_quantity , item.makerspace_quantity , item.vendor , item.last_purchased , item.change])
-
-      return response
+# def item_csv(request):
+#     response = HttpResponse(content_type='text/csv')
+#     response['Content-Disposition'] = 'attachment ; filename= items.csv'
+#
+#     writer = csv.writer(response)
+#
+#     items = Log.objects.all()
+#
+#     writer.writerow(
+#         ['Item Name', 'Time', 'Category', 'Link', 'Backroom Quantity', 'Makerspace Quantity', 'Vendor', 'Pub Date',
+#          'Change'])
+#
+#     for item in items:
+#       writer.writerow([ item.name, item.time, item.category, item.link , item.backroom_quantity , item.makerspace_quantity , item.vendor , item.last_purchased , item.change])
+#
+#       return response

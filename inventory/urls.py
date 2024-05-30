@@ -21,6 +21,6 @@ urlpatterns = [
     path("addItems/", views.AddItems.as_view()),
     path('addLog/', views.AddLog.as_view()),
     path("editItems/<int:pk>/", views.editItems.as_view()),
-    path('items_csv', views.item_csv, name='items_csv')
+    # path('items_csv', views.item_csv, name='items_csv')
 ]
 urlpatterns = format_suffix_patterns(urlpatterns)
