@@ -38,11 +38,6 @@
 
       <div class="heading sitename">Makerspace Inventory</div>
     </div>
-    <li>
-      <a class="nav-link" href="{% url'items_csv'%}">
-          Item Csv
-      </a>
-    </li>
     <div class="searchbar">
       <Search />
     </div>
